@@ -19,7 +19,7 @@
 
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 import { profileUtils } from '@evan.network/ui';
-import { session } from '@evan.network/ui-session';
+import { session, bccHelper } from '@evan.network/ui-session';
 
 // vue imports
 import Component, { mixins } from 'vue-class-component';
@@ -94,7 +94,7 @@ export default class WalletCardComponent extends mixins(EvanComponent) {
       })(),
       (async (): Promise<void> => {
         // load balance and parse it to 2 decimal places
-        const amount = await session.getBalance(this.address);
+        const amount = await bccHelper.getBalance(this.address);
         this.balance = {
           amount: amount.toLocaleString(this.$i18n.locale(), {
             minimumFractionDigits: 2,

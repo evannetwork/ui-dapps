@@ -110,7 +110,7 @@ export default class LoginComponent extends mixins(EvanComponent) {
         }
 
         if (this.dapp.baseHash.endsWith(`onboarding.vue.${getDomainName()}`)) {
-          session.setCurrentProvider('internal');
+          session.provider = 'internal';
           window.location.hash = `/${this.$route.query.origin
             || `dashboard.vue.${getDomainName()}`}`;
         }

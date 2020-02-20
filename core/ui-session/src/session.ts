@@ -17,145 +17,109 @@
   the following URL: https://evan.network/license/
 */
 
-import { utils, routing } from '@evan.network/ui-dapp-browser';
+import { config, routing } from '@evan.network/ui-dapp-browser';
+import {
+  ExecutorAgent,
+  logLog,
+  logLogLevel,
+  Runtime,
+} from '@evan.network/api-blockchain-core';
 
 import lightwallet from './lightwallet';
-import { getWeb3Instance } from './web3Helper';
+import * as bccHelper from './bccHelper';
 
-/**
- * is inserted when the application was bundled, used to prevent window usage
- */
-declare let evanGlobals: any;
-
-/**
- * valid login providers
- */
-const validProviders = [
-  'metamask',
-  'internal',
-];
-
-/**
- * external executor variables
- */
+// external executor variables
 let agentExecutor;
-
-/**
- * save the current account for later usage
- */
+// save the current account for later usage
 let lastAccount = '';
+// save the current account for later usage
+let lastIdentity = '';
+// used to check for url overwritten account / identity parameters
+const queryParams = routing.getQueryParameters();
 
 export default class EvanSession {
   /**
-   * Logout the current user. Removes the active account, provider and terms of use acceptance.
-   *
-   * @param      {boolean}  disabledReload  disable window reload
+   * Runtime, started for the current account (configured in localStorage) and it's profile
+   * identity.
    */
-  static logout(disabledReload?: boolean) {
-    // reset account and providers
-    EvanSession.setCurrentProvider('');
-    EvanSession.setAccountId('');
-
-    // clear localStorage values
-    delete window.localStorage['evan-terms-of-use'];
-    delete window.localStorage['evan-account'];
-    delete window.localStorage['evan-provider'];
-    delete window.localStorage['evan-alias'];
-
-    // remove decrypted vault from runtime and localStorage
-    lightwallet.deleteActiveVault();
-
-    // unregister notifications
-    window.localStorage['evan-notifications'] = 'false';
-    utils.sendEvent('evan-notifications-toggled');
-
-    // reload the window
-    setTimeout(() => {
-      window.location.reload();
-    });
-  }
+  static accountRuntime: Runtime;
 
   /**
-   * Get the current, in local storage, configured provider.
-   *
-   * @return     {string}  The current provider (internal, external, agent-executor).
+   * Runtime, started for the current account (configured in localStorage) and the localStorage
+   * configured identity.
    */
-  static getCurrentProvider() {
-    let provider;
+  static identityRuntime: Runtime;
+
+  /**
+   * identity address of the activeAccount
+   */
+  static accountIdentity: string;
+
+  /**
+   * Has the account a old profile, that is bount to the account and not to the identity?
+   */
+  static isOldProfile: boolean;
+
+  static get provider(): string {
+    let provider = 'internal';
 
     if (agentExecutor) {
       provider = 'agent-executor';
-    } else if (evanGlobals.queryParams.provider) {
-      provider = evanGlobals.queryParams.provider;
-    } else {
-      const currentProvider = window.localStorage['evan-provider'];
-
-      if (currentProvider && validProviders.indexOf(currentProvider) !== -1) {
-        provider = currentProvider;
-      }
+    } else if (queryParams.provider) {
+      provider = queryParams.provider;
     }
 
-    return provider || 'internal';
+    return provider;
   }
 
-  /**
-   * Check if we should use internal provider.
-   *
-   * @return     {boolean}  True if internal provider, False otherwise.
-   */
-  static isInternalProvider() {
-    return EvanSession.getCurrentProvider();
+  static set provider(value: string) {
+    window.localStorage['evan-provider'] = value;
   }
 
-  /**
-   * Sets the current provider that should be used.
-   *
-   * @param      {string}  provider  provider to switch to
-   */
-  static setCurrentProvider(provider: string) {
-    window.localStorage['evan-provider'] = provider;
-  }
-
-  /**
-   * Get the current selected account included the check of the current provider.
-   *
-   * @return     {string}  account id of the current user (0x0...)
-   */
-  static activeAccount(): string {
-    switch (EvanSession.getCurrentProvider()) {
+  static get activeAccount(): string {
+    switch (EvanSession.provider) {
       case 'agent-executor': {
         return agentExecutor.accountId;
       }
       // internal
       default: {
         // if the url was opened using an specific accountId, use this one!
-        if (evanGlobals.queryParams.accountId) {
-          return evanGlobals.queryParams.accountId;
+        if (queryParams.accountId) {
+          return queryParams.accountId;
         }
+      }
+    }
 
-        const vault = lightwallet.loadVault();
+    return window.localStorage['evan-account'];
+  }
 
-        // get the first account from the vault and set it as evan-account to localStorage
-        if (vault) {
-          const accounts = lightwallet.getAccounts(vault);
-          const accountId = EvanSession.getAccountId();
+  static set activeAccount(accountId: string) {
+    lastAccount = accountId;
+    window.localStorage['evan-account'] = accountId;
+  }
 
-          if (accountId && accounts.indexOf(accountId) === -1) {
-            if (accounts.length > 0) {
-              EvanSession.setAccountId(accounts[0]);
-            } else {
-              delete window.localStorage['evan-account'];
-            }
-          }
-        } else {
-          delete window.localStorage['evan-account'];
+  static get activeIdentity(): string {
+    switch (EvanSession.provider) {
+      case 'agent-executor': {
+        return agentExecutor.identity;
+      }
+      // internal
+      default: {
+        // if the url was opened using an specific identity, use this one!
+        if (queryParams.identity) {
+          return queryParams.identity;
         }
 
         break;
       }
     }
 
-    return EvanSession.getAccountId();
+    return window.localStorage['evan-identity'] || EvanSession.accountIdentity;
+  }
+
+  static set activeIdentity(accountId: string) {
+    lastIdentity = accountId;
+    window.localStorage['evan-account'] = accountId;
   }
 
   /**
@@ -164,11 +128,11 @@ export default class EvanSession {
    * @return     {any}  all agent-exeutor parameters for requesting smart-agents and decrypting the
    *                    profile ({ accountId, agentUrl, key, token, })
    */
-  static async getAgentExecutor() {
+  static async getAgentExecutor(): Promise<any> {
     // if the agentExecutor wasn't loaded before, check if the query parameter was specified
     if (typeof agentExecutor === 'undefined') {
-      const token = routing.getQueryParameterValue('agent-executor');
-      const agentUrl = routing.getQueryParameterValue('agent-executor-url')
+      const token = queryParams['agent-executor'];
+      const agentUrl = queryParams['agent-executor-url']
         || 'https://agents.test.evan.network';
 
       /* if an token is specified, load the data from the edge-server
@@ -189,8 +153,8 @@ export default class EvanSession {
           }, 10 * 1000);
 
           // load data from edge-server
-          const accountId = routing.getQueryParameterValue('agent-executor-account-id');
-          const key = routing.getQueryParameterValue('agent-executor-key');
+          const accountId = queryParams['agent-executor-account-id'];
+          const key = queryParams['agent-executor-key'];
 
           // if all parameters are valid, set the executor agent
           if (accountId && key) {
@@ -210,105 +174,185 @@ export default class EvanSession {
       } else {
         agentExecutor = false;
       }
-
-      evanGlobals.agentExecutor = agentExecutor;
     }
 
     return agentExecutor;
   }
 
   /**
-   * Returns the current (in the localStorage) saved account id
+   * Create the runtimes for the current session and uses the event handler to handle login /
+   * onboarding processes.
    *
-   * @return     {string}  account id;
+   * @param      {Function}  eventHandler  function that is called with several events types as
+   *                                       first parameter (onboarding, password, ...)
    */
-  static getAccountId() {
-    if (agentExecutor) {
-      return agentExecutor.accountId;
+  static async setRuntimes(eventHandler: Function): Promise<void> {
+    const { activeAccount, activeIdentity } = EvanSession;
+
+    let loggedIn = false;
+    let isOnboarded = false;
+
+    // check if a user is already logged in, if yes, navigate to the signed in route
+    if (activeAccount && window.localStorage['evan-vault']) {
+      loggedIn = true;
+
+      // setup runtime and save it to the axios store
+      EvanSession.accountIdentity = await bccHelper.getIdentityForAccount(
+        activeAccount,
+        await bccHelper.getContextLessRuntime(),
+      );
+
+      isOnboarded = await bccHelper.isOnboarded(EvanSession.accountIdentity);
+      // check for old profile
+      if (!isOnboarded) {
+        isOnboarded = await bccHelper.isOnboarded(activeAccount);
+
+        if (isOnboarded) {
+          EvanSession.isOldProfile = true;
+        }
+      }
     }
 
-    if (window.localStorage['evan-account']) {
-      const checkSumAddress = getWeb3Instance().utils.toChecksumAddress(
-        window.localStorage['evan-account'],
+    if (!isOnboarded || !loggedIn) {
+      await eventHandler('onboarding');
+      await EvanSession.setRuntimes(eventHandler);
+    } else {
+      let encryptionKey; let privateKey; let executor;
+
+      if (EvanSession.provider === 'agent-executor') {
+        await EvanSession.getAgentExecutor();
+        const coreRuntime = await bccHelper.createRuntime();
+
+        encryptionKey = agentExecutor.key;
+        executor = new ExecutorAgent({
+          agentUrl: agentExecutor.agentUrl,
+          config: {},
+          contractLoader: coreRuntime.contractLoader,
+          logLog,
+          logLogLevel,
+          signer: coreRuntime.signer,
+          token: agentExecutor.token,
+          web3: coreRuntime.web3,
+        });
+      } else {
+        // set the password function
+        lightwallet.setPasswordFunction(() => eventHandler('password'));
+        // unlock the profile directly
+        const vault = await lightwallet.loadUnlockedVault();
+        encryptionKey = vault.encryptionKey;
+        privateKey = lightwallet.getPrivateKey(vault, activeAccount);
+      }
+
+      EvanSession.accountRuntime = await bccHelper.createRuntime(
+        activeAccount,
+        EvanSession.accountIdentity,
+        encryptionKey,
+        privateKey,
+        JSON.parse(JSON.stringify(config)),
+        null,
+        { executor },
       );
-      return checkSumAddress;
+      EvanSession.identityRuntime = await bccHelper.createRuntime(
+        activeAccount,
+        activeIdentity,
+        encryptionKey,
+        privateKey,
+        JSON.parse(JSON.stringify(config)),
+        null,
+        { executor },
+      );
     }
-    return '';
   }
 
   /**
-   * Sets an account id as active one to the local storage.
+   * Logout the current user. Removes the active account, provider and terms of use acceptance.
    *
-   * @param      {string}  accountId  account id to set to the localStorage
+   * @param      {boolean}  disabledReload  disable window reload
    */
-  static setAccountId(accountId: string) {
-    lastAccount = accountId;
-    window.localStorage['evan-account'] = accountId;
+  static logout(reload = true): void {
+    // reset account and providers
+    EvanSession.provider = '';
+    EvanSession.activeAccount = '';
+    EvanSession.activeIdentity = '';
+
+    // clear localStorage values
+    delete window.localStorage['evan-terms-of-use'];
+    delete window.localStorage['evan-account'];
+    delete window.localStorage['evan-provider'];
+    delete window.localStorage['evan-alias'];
+
+    // remove decrypted vault from runtime and localStorage
+    lightwallet.deleteActiveVault();
+
+    // reload the window
+    if (reload) {
+      setTimeout(() => window.location.reload());
+    }
   }
 
   /**
    * Watches for account changes and reload the page if nessecary
    */
-  static watchAccountChange() {
-    lastAccount = EvanSession.getAccountId();
-
-    window.addEventListener('storage', (event: StorageEvent) => {
-      if (event.key === 'evan-account') {
-        if (lastAccount !== EvanSession.getAccountId()) {
-          window.location.reload();
-        }
+  static onAccountChange(callback: Function): Function {
+    const storage = window.localStorage;
+    const watcher = (event: StorageEvent): void => {
+      if (event.key === 'evan-account' && lastAccount !== storage['evan-account']) {
+        EvanSession.isOldProfile = false;
+        callback(EvanSession.activeAccount);
       }
-    });
+    };
+
+    lastAccount = storage['evan-account'];
+    window.addEventListener('storage', watcher);
+    return (): void => window.removeEventListener('storage', watcher);
   }
 
   /**
-   * Return the name of the current used browser =>
-   * https://stackoverflow.com/questions/9847580/how-to-detect-safari-chrome-ie-firefox-and-opera-browser
-   *
-   * @return     {string}  opera / firefox / safari / ie / edge / chrome
+   * Watches for account changes and reload the page if nessecary
    */
-  static currentBrowser() {
-    const win: any = window;
-    if ((!!win.opr && !!win.opr.addons) || !!win.opera
-      || navigator.userAgent.indexOf(' OPR/') >= 0) {
-      return 'opera';
-    }
-    if (typeof win.InstallTrigger !== 'undefined') {
-      return 'firefox';
-    }
-    const isSafari = ((p) => p.toString() === '[object SafariRemoteNotification]')(!win.safari || (typeof win.safari !== 'undefined' && win.safari.pushNotification));
-    if (/constructor/i.test(win.HTMLElement) || isSafari) {
-      return 'safari';
-    }
-    // eslint-disable-next-line
-    if (/*@cc_on!@*/false || !!(document as any).documentMode) {
-      return 'ie';
-    }
-    if (win.StyleMedia) {
-      return 'edge';
-    }
-    if (!!win.chrome && !!win.chrome.webstore) {
-      return 'chrome';
-    }
+  static onIdentityChange(callback: Function): Function {
+    const storage = window.localStorage;
+    const watcher = (event: StorageEvent): void => {
+      if (event.key === 'evan-identity' && lastIdentity !== storage['evan-identity']) {
+        callback(EvanSession.activeAccount);
+      }
+    };
 
-    return '';
+    lastIdentity = storage['evan-identity'];
+    window.addEventListener('storage', watcher);
+    return (): void => window.removeEventListener('storage', watcher);
   }
 
   /**
-   * Gets the balance of the provided or current account id
-   *
-   * @param      {string}  accountId  account id to get the balance from
-   * @return     {number}  The balance for the specific account id
+   * if no session was started before, initialize everything!
    */
-  static getBalance(accountId = EvanSession.activeAccount()): Promise<number> {
-    const web3 = getWeb3Instance();
+  static async start(eventHandler: Function, watchForChanges = true): Promise<Function> {
+    // early exit, when session was already started
+    if (!(EvanSession.accountRuntime && EvanSession.identityRuntime)) {
+      await EvanSession.setRuntimes(eventHandler);
+    }
+    eventHandler('runtimeUpdate');
 
-    return new Promise((resolve, reject) => web3.eth.getBalance(accountId, (err, balance) => {
-      if (err) {
-        reject(err);
-      } else {
-        resolve(parseFloat(web3.utils.fromWei(balance, 'ether')));
-      }
-    }));
+    // create watchers, so runtimes will update on account / identity switches
+    let watchers = [];
+    if (watchForChanges) {
+      watchers = [
+        EvanSession.onAccountChange(async () => {
+          // reset current session runtimes
+          EvanSession.accountRuntime = null;
+          EvanSession.identityRuntime = null;
+          await EvanSession.setRuntimes(eventHandler);
+          eventHandler('account');
+          eventHandler('runtimeUpdate');
+        }),
+        EvanSession.onIdentityChange(async () => {
+          EvanSession.identityRuntime = null;
+          await EvanSession.setRuntimes(eventHandler);
+          eventHandler('identity');
+          eventHandler('runtimeUpdate');
+        }),
+      ];
+    }
+    return (): void => watchers.forEach((watcher) => watcher());
   }
 }

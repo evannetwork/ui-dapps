@@ -106,7 +106,7 @@ export default class SignIn extends mixins(EvanComponent) {
     const accountId = lightwallet.getAccounts(vault, 1)[0];
 
     // check if the current account is onboarded
-    this.profileExists = await bccHelper.isAccountOnboarded(accountId);
+    this.profileExists = await bccHelper.isOnboarded(accountId);
 
     // when it's onboarded, navigte to password dialog
     if (this.profileExists) {
@@ -136,8 +136,7 @@ export default class SignIn extends mixins(EvanComponent) {
 
       // get the current account id
       try {
-        password._error = !(await bccHelper.isAccountPasswordValid(bcc,
-          this.accountId, password.value));
+        password._error = !(await bccHelper.isAccountPasswordValid(this.accountId, password.value));
       } catch (ex) {
         password._error = true;
       }
@@ -146,7 +145,7 @@ export default class SignIn extends mixins(EvanComponent) {
          applications can access it */
       if (!password._error) {
         await lightwallet.createVaultAndSetActive(this.mnemonic, password.value);
-        session.setCurrentProvider('internal');
+        session.provider = 'internal';
 
         if (!this.$route.query.inviteeAlias) {
           this.navigateToEvan();

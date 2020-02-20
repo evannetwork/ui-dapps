@@ -23,11 +23,10 @@ import { Prop } from 'vue-property-decorator';
 
 // evan.network imports
 import { EvanComponent } from '@evan.network/ui-vue-core';
-import * as dappBrowser from '@evan.network/ui-dapp-browser';
-import { bccHelper, session, lightwallet } from '@evan.network/ui-session';
+import { Mnemonic } from '@evan.network/api-blockchain-core';
 
 @Component({ })
-export default class Mnemonic extends mixins(EvanComponent) {
+export default class MnemonicComponent extends mixins(EvanComponent) {
   /**
    * incoming mnemonic, if empty, input will automatically enabled
    */
@@ -74,7 +73,7 @@ export default class Mnemonic extends mixins(EvanComponent) {
   mnemonicText = '';
 
   // all words that are available for our mnemonics
-  lightWalletWords = lightwallet.getMnemonicLib().Words.ENGLISH;
+  lightWalletWords = Mnemonic.Words.ENGLISH;
 
   // current words that will be selectable by the autocompletion
   mnemonicWords = [] as any;
@@ -181,8 +180,7 @@ export default class Mnemonic extends mixins(EvanComponent) {
 
     try {
       // set current mnemonic integrity, to show a warning within the ui
-      this.mnemonicIntegrity = lightwallet.getMnemonicLib()
-        .isValid(this.mnemonicText, this.lightWalletWords);
+      this.mnemonicIntegrity = Mnemonic.isValid(this.mnemonicText, this.lightWalletWords);
     } catch (ex) {
       this.mnemonicIntegrity = false;
     }

@@ -94,7 +94,7 @@ export default class AcceptContact extends mixins(EvanComponent) {
     }
 
     this.runtime = this.$store.state.runtime;
-    this.accountId = session.activeAccount();
+    this.accountId = session.activeAccount;
     this.inviteeAddress = this.$route.query.inviteeAddress;
 
     if (this.inviteeAddress || this.$props.loadAlias) {

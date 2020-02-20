@@ -202,6 +202,12 @@ export default class DAppWrapperComponent extends mixins(EvanComponent) {
   onboarding: Function|boolean = false;
 
   /**
+   * Function for unsubscribing from session changes, so the ui is able to react for account /
+   * identity switches.
+   */
+  stopSessionWatcher: Function;
+
+  /**
    * Watch for hash updates when the user is on the onboarding screen. Wait for the user to finished
    * the process.
    */
@@ -211,7 +217,7 @@ export default class DAppWrapperComponent extends mixins(EvanComponent) {
    * current user information
    */
   userInfo = {
-    address: session.activeAccount(), // TODO: wording "address" vs "accountId" in different components
+    address: session.activeAccount, // TODO: wording "address" vs "accountId" in different components
     addressBook: {} as any, // TODO: resolve any
     alias: '',
     loading: false,
@@ -374,6 +380,10 @@ export default class DAppWrapperComponent extends mixins(EvanComponent) {
     if (this.dispatcherHandler) {
       this.dispatcherHandler.destroy();
     }
+    // stop the ui session and runtime updates
+    if (this.stopSessionWatcher) {
+      this.stopSessionWatcher();
+    }
     // unbind dapp-wrapper-sidebar level handlers
     window.removeEventListener('dapp-wrapper-sidebar-2-enable', this.sidebar2EnableWatcher);
     window.removeEventListener('dapp-wrapper-sidebar-2-disable', this.sidebar2DisableWatcher);
@@ -403,115 +413,80 @@ export default class DAppWrapperComponent extends mixins(EvanComponent) {
    * runtimes
    */
   async handleLoginOnboarding(): Promise<void> {
-    // check for logged in account and if its onboarded
-    const activeAccount = session.activeAccount();
-    let loggedIn = false;
-    let isOnboarded = false;
+    this.stopSessionWatcher = await session.start(async (action: string) => {
+      switch (action) {
+        case 'onboarding': {
+          await new Promise((resolve) => {
+            this.loading = false;
+            this.onboarding = true;
 
-    // check if a user is already logged in, if yes, navigate to the signed in route
-    if (activeAccount && window.localStorage['evan-vault']) {
-      loggedIn = true;
+            // if the watcher was already bound, remove it!
+            if (this.hashChangeWatcher) {
+              window.removeEventListener('hashchange', this.hashChangeWatcher);
+            }
 
-      try {
-        isOnboarded = await bccHelper.isAccountOnboarded(activeAccount);
-      } catch (ex) {
-        // user isn't onboarded
-      }
-    }
+            // set the hash change watcher, so we can check that the user finished the onboarding process
+            this.hashChangeWatcher = (): void => {
+              if (window.location.hash.indexOf(`onboarding.vue.${this.domainName}`) === -1) {
+                // recheck login and onboarding
+                resolve();
+              }
+            };
 
-    if (!isOnboarded || !loggedIn) {
-      this.loading = false;
-      this.onboarding = true;
+            // add the hash change listener
+            window.addEventListener('hashchange', this.hashChangeWatcher);
 
-      // if the watcher was already bound, remove it!
-      if (this.hashChangeWatcher) {
-        window.removeEventListener('hashchange', this.hashChangeWatcher);
-      }
+            if (this.$route.path.indexOf(`/onboarding.vue.${this.domainName}`) === -1) {
+              /* navigate to the onboarding and apply the current hash as origin, so the onboarding can
+                 navigate back their */
+              this.$router.push({
+                path: `${this.dapp.baseHash}/onboarding.vue.${this.domainName}`,
+                query: {
+                  origin: this.$route.path,
+                  ...this.$route.query,
+                },
+              });
+            }
+          });
 
-      // set the hash change watcher, so we can check that the user finished the onboarding process
-      this.hashChangeWatcher = (): void => {
-        if (window.location.hash.indexOf(`onboarding.vue.${this.domainName}`) === -1) {
-          // recheck login and onboarding
-          this.handleLoginOnboarding();
+          break;
         }
-      };
+        case 'password': {
+          return new Promise((resolve) => {
+            this.loading = false;
+            this.login = (password: string): void => resolve(password);
+          });
+        }
+        case 'runtimeUpdate': {
+          this.loading = true;
+          this.$store.state.runtime = session.identityRuntime;
 
-      // add the hash change listener
-      window.addEventListener('hashchange', this.hashChangeWatcher);
+          /* create and register a vue dispatcher handler, so applications can easily access dispatcher data
+             from vuex store */
+          if (this.dispatcherHandler) {
+            this.dispatcherHandler.destroy();
+          }
+          this.dispatcherHandler = new EvanVueDispatcherHandler(this);
+          await this.dispatcherHandler.initialize();
 
-      if (this.$route.path.indexOf(`/onboarding.vue.${this.domainName}`) === -1) {
-        /* navigate to the onboarding and apply the current hash as origin, so the onboarding can
-           navigate back their */
-        this.$router.push({
-          path: `${this.dapp.baseHash}/onboarding.vue.${this.domainName}`,
-          query: {
-            origin: this.$route.path,
-            ...this.$route.query,
-          },
-        });
-      }
-    } else {
-      this.onboarding = false;
-
-      let encryptionKey; let privateKey; let
-        executor;
-
-      // if agent-executor is passed to the dapp-browser, do not try to unlock the current vault
-      const provider = session.getCurrentProvider();
-      if (provider !== 'agent-executor') {
-        // set the password function
-        lightwallet.setPasswordFunction(() => new Promise((resolve) => {
+          // send logged in event
+          this.$emit('loggedin', this.$store.state.runtime);
           this.loading = false;
-          this.login = (password: string): void => resolve(password);
-        }));
+          this.login = false;
+          this.isLoggedin = true;
 
-        // unlock the profile directly
-        const vault = await lightwallet.loadUnlockedVault();
-        encryptionKey = vault.encryptionKey;
-        privateKey = lightwallet.getPrivateKey(vault, activeAccount);
-      } else {
-        const agentExecutor = await session.getAgentExecutor();
-        const coreRuntime = await bccHelper.createRuntime('0x000');
-
-        encryptionKey = agentExecutor.key;
-        executor = new bcc.ExecutorAgent({
-          agentUrl: agentExecutor.agentUrl,
-          config: {},
-          contractLoader: coreRuntime.contractLoader,
-          logLog: bcc.logLog,
-          logLogLevel: bcc.logLogLevel,
-          signer: coreRuntime.signer,
-          token: agentExecutor.token,
-          web3: coreRuntime.web3,
-        });
+          // load the user infos like alias, mails, dispatchers ...
+          if (this.topLevel) {
+            await this.loadUserSpecific();
+            window.localStorage.setItem('evan-alias', this.userInfo.alias);
+          }
+          break;
+        }
+        default: {
+          // uknown event type?
+        }
       }
-
-      // setup runtime and save it to the axios store
-      this.$store.state.runtime = await bccHelper.createRuntime(
-        activeAccount,
-        encryptionKey,
-        privateKey,
-        JSON.parse(JSON.stringify(dappBrowser.config)),
-        null,
-        { executor },
-      );
-      /* create and register a vue dispatcher handler, so applications can easily access dispatcher data
-         from vuex store */
-      this.dispatcherHandler = new EvanVueDispatcherHandler(this);
-      await this.dispatcherHandler.initialize();
-
-      // send logged in event
-      this.$emit('loggedin', this.$store.state.runtime);
-      this.loading = false;
-      this.login = false;
-      this.isLoggedin = true;
-
-      // load the user infos like alias, mails, dispatchers ...
-      if (this.topLevel) {
-        await this.loadUserSpecific();
-        window.localStorage.setItem('evan-alias', this.userInfo.alias);
-      }
-    }
+    });
   }
 
   /**
@@ -519,7 +494,7 @@ export default class DAppWrapperComponent extends mixins(EvanComponent) {
    */
   async loadUserSpecific(): Promise<void> {
     this.userInfo.loading = true;
-    this.userInfo.address = session.activeAccount();
+    this.userInfo.address = session.activeAccount;
 
     // load alias from addressbook
     this.userInfo.addressBook = await this.$store.state.runtime.profile.getAddressBook();

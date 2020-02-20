@@ -25,7 +25,7 @@ import { EvanComponent, ContactInterface } from '@evan.network/ui-vue-core';
 import { PermissionUtils } from '@evan.network/digital-twin-lib';
 import { Profile, ProfileOptions } from '@evan.network/api-blockchain-core';
 import { profileUtils } from '@evan.network/ui';
-import { session } from '@evan.network/ui-session';
+import { bccHelper } from '@evan.network/ui-session';
 
 import * as dispatchers from '../../dispatchers/registry';
 
@@ -90,7 +90,7 @@ export default class ProfileDetailComponent extends mixins(EvanComponent) {
     this.address = (this as any).$store.state.profileDApp.address;
     this.userInfo = (this as any).$store.state.profileDApp.data.accountDetails;
     // load balance and parse it to 3 decimal places
-    const amount = parseFloat((await session.getBalance(this.address)).toFixed(3));
+    const amount = parseFloat((await bccHelper.getBalance(this.address)).toFixed(3));
     this.balance = {
       amount: amount.toLocaleString((this as any).$i18n.locale()),
       timestamp: Date.now(),

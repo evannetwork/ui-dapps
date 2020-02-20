@@ -420,7 +420,7 @@ export default class SignUp extends mixins(EvanComponent) {
 
     // profile is setup!
     await lightwallet.createVaultAndSetActive(this.mnemonic, password);
-    session.setCurrentProvider('internal');
+    session.provider = 'internal';
 
     // set encrypted mnemonic for temporary usage
     this.persistMnemonic(runtime, vault);

@@ -40,7 +40,7 @@ import ProfileWalletComponent from './components/wallet/wallet.vue';
 const redirectToDefault = (to, childPath = 'detail'): string => [
   to.path.split(`/profile.vue.${dappBrowser.getDomainName()}`)[0],
   `profile.vue.${dappBrowser.getDomainName()}`,
-  session.getAccountId(),
+  session.activeAccount,
   childPath,
 ].join('/');
 

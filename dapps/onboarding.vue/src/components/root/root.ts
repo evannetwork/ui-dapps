@@ -32,7 +32,7 @@ export default class Root extends mixins(EvanComponent) {
   async created() {
     /* if we are directly on the onboarding, the signup is disabled
         => redirect user to the dashboard, so this dapp will handle the correct vue logic */
-    const activeAccount = session.activeAccount();
+    const activeAccount = session.activeAccount;
 
     // check if a user is already logged in, if yes, navigate to the signed in route
     if (activeAccount && window.localStorage['evan-vault']) {

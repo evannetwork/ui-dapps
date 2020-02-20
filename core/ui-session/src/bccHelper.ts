@@ -25,19 +25,25 @@ import {
   Profile,
   Runtime,
 } from '@evan.network/api-blockchain-core';
-import { config, ipfs } from '@evan.network/ui-dapp-browser';
+import { config, ipfs, routing } from '@evan.network/ui-dapp-browser';
 import * as SmartContracts from '@evan.network/smart-contracts-core';
 
 import { getWeb3Instance } from './web3Helper';
-import EvanSession from './session';
 import EvanlightWallet from './lightwallet';
+
+/**
+ * Runtime, started with 0x0000
+ */
+let contextlessRuntime: Runtime;
+
+const accountIdentityCache = { };
 
 /**
  * Wraps the original create default runtime bcc function to simplify key and account map
  * management.
  *
- * @param      {any}     CoreBundle     blockchain-core ipfs bundle
  * @param      {string}  accountId      account id to create the runtime for
+ * @param      {string}  identity       identity id that should be used
  * @param      {string}  encryptionKey  enryption key of the users profile
  * @param      {string}  privateKey     account id's private key
  * @param      {any}     config         overwrite the ui configuration with a custom config
@@ -47,6 +53,7 @@ import EvanlightWallet from './lightwallet';
  */
 async function createRuntime(
   accountId = '0x0000000000000000000000000000000000000000',
+  identity = '0x0000000000000000000000000000000000000000',
   encryptionKey?: string,
   privateKey?: string,
   inputConfig?: any,
@@ -57,6 +64,8 @@ async function createRuntime(
   const web3 = getWeb3Instance();
   const { soliditySha3 } = web3.utils;
   const options = inputOptions;
+
+  // TODO: use identity!
 
   // get accounthash for easy acces within keyConfig
   const accountHash = soliditySha3(accountId);
@@ -102,7 +111,7 @@ async function createRuntime(
   }
 
   // TODO: fix temporary payments for agent-executors and disable file pinnging
-  if (EvanSession.getCurrentProvider() === 'agent-executor') {
+  if (routing.getQueryParameters()['agent-executor']) {
     delete (runtime.dfs as any).accountId;
     // runtime.executor.signer.accountStore = runtime.accountStore;
   }
@@ -119,19 +128,65 @@ async function createRuntime(
 }
 
 /**
+ * Gets the balance of the provided or current account id
+ *
+ * @param      {string}  accountId  account id to get the balance from
+ * @return     {number}  The balance for the specific account id
+ */
+async function getBalance(accountId: string): Promise<number> {
+  const web3 = getWeb3Instance();
+
+  return new Promise((resolve, reject) => web3.eth.getBalance(accountId, (err, balance) => {
+    if (err) {
+      reject(err);
+    } else {
+      resolve(parseFloat(web3.utils.fromWei(balance, 'ether')));
+    }
+  }));
+}
+
+/**
+ * Returns a bcc runtime without any user context.
+ */
+async function getContextLessRuntime(): Promise<Runtime> {
+  contextlessRuntime = contextlessRuntime || await createRuntime(
+    '0x0000000000000000000000000000000000000000',
+    '0x0000000000000000000000000000000000000000',
+    null,
+    null,
+    JSON.parse(JSON.stringify(config)),
+    null,
+  );
+
+  return contextlessRuntime;
+}
+
+/**
+ * Returns the identity address for a account
+ *
+ * @param      {string}   address  The address
+ * @param      {Runtime}  runtime  The runtime
+ * @return     {string}   The identity for account.
+ */
+async function getIdentityForAccount(address: string, runtime: Runtime): Promise<string> {
+  return accountIdentityCache[address]
+    || runtime.verifications.getIdentityForAccount(address, true);
+}
+
+/**
  * Check if the password for a given account id and its profile is valid.
  *
- * @param      {any}      CoreBundle      blockchain-core ipfs bundle
- * @param      {string}   accountId       account id to check
- * @param      {string}   password        password to check
- * @param      {string}   encryptionSalt  encryption salt to retrieve the encryption key with
- *                                        (default account id)
+ * @param      {string}  accountId       account id to check
+ * @param      {string}  password        password to check
+ * @param      {string}  encryptionSalt  encryption salt to retrieve the encryption key with
+ *                                       (default account id)
  * @return     {boolean}  True if account password valid, False otherwise
  */
 async function isAccountPasswordValid(accountId: string, password: string,
   encryptionSalt = accountId): Promise<boolean> {
   const encryptionkey = EvanlightWallet.getEncryptionKeyFromPassword(encryptionSalt, password);
-  const runtime = await createRuntime(accountId, encryptionkey);
+  const accountIdentity = await getIdentityForAccount(accountId, await getContextLessRuntime());
+  const runtime = await createRuntime(accountId, accountIdentity, encryptionkey);
 
   let targetPrivateKey;
   try {
@@ -149,6 +204,7 @@ async function isAccountPasswordValid(accountId: string, password: string,
     // TODO: remove duplicated check, when old profiles without accountId salt are gone
   }
 
+
   // WARNING: for old accounts: overwrite current encryption key, to use the key without a accountId
   if (encryptionSalt && await isAccountPasswordValid(accountId, password, '')) {
     await EvanlightWallet.overwriteVaultEncryptionKey(
@@ -165,26 +221,28 @@ async function isAccountPasswordValid(accountId: string, password: string,
 /**
  * Check if a account is onboarded
  *
- * @param      {string}   account  account id to test
+ * @param      {string}  account   account id to test
+ * @param      {string}  identity  identity that should be controlled by the user
  * @return     {boolean}  True if account onboarded, False otherwise
  */
-async function isAccountOnboarded(account: string): Promise<boolean> {
+async function isOnboarded(address: string): Promise<boolean> {
   try {
-    const runtime = await createRuntime(account);
+    // load profile index
+    const runtime = await createRuntime(address);
     const ensName = runtime.nameResolver.getDomainName(runtime.nameResolver.config.domains.profile);
-    const address = await runtime.nameResolver.getAddress(ensName);
-    const contract = runtime.nameResolver.contractLoader.loadContract('ProfileIndexInterface', address);
-    const hash = await runtime.nameResolver.executor.executeContractCall(contract, 'getProfile',
-      account, { from: account });
+    const profileIndexAddress = await runtime.nameResolver.getAddress(ensName);
+    const profileIndex = runtime.nameResolver.contractLoader
+      .loadContract('ProfileIndexInterface', profileIndexAddress);
 
-    if (hash === '0x0000000000000000000000000000000000000000') {
-      const identity = await runtime.verifications.getIdentityForAccount(account, true);
-      const identityProfile = await runtime.nameResolver.executor.executeContractCall(contract,
-        'getProfile', identity, { from: account });
-      if (identityProfile === '0x0000000000000000000000000000000000000000') {
-        return false;
-      }
-    }
+    // Check if a account / identity address has a underlying profile
+    const profileAddress = await runtime.nameResolver.executor.executeContractCall(
+      profileIndex,
+      'getProfile',
+      address,
+      { from: address },
+    );
+
+    return profileAddress !== '0x0000000000000000000000000000000000000000';
   } catch (ex) {
     return false;
   }
@@ -193,7 +251,10 @@ async function isAccountOnboarded(account: string): Promise<boolean> {
 }
 
 export {
-  isAccountOnboarded,
-  isAccountPasswordValid,
   createRuntime,
+  getBalance,
+  getContextLessRuntime,
+  getIdentityForAccount,
+  isAccountPasswordValid,
+  isOnboarded,
 };

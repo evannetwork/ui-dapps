@@ -67,9 +67,6 @@ export default class AddComponent extends mixins(EvanComponent) {
         }
       },
     }));
-
-     // TODO: throws sometimes error: TypeError: Cannot read property 'focus' of undefined
-    this.$nextTick(() => (this.$refs['address'] as any).focus());
   }
 
   /**

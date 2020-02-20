@@ -172,8 +172,7 @@ export default class EvanLightWallet {
     // if the url was opened using an specific mnemonic and password, use this one!
     }
 
-    const currentProvider = session.getCurrentProvider();
-    if (currentProvider === 'internal') {
+    if (session.provider === 'internal') {
       const vault = await EvanLightWallet.loadUnlockedVault();
 
       if (vault) {
