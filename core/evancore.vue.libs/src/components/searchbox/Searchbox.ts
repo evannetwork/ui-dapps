@@ -30,6 +30,9 @@ import EvanComponent from '../../component';
 export default class SearchBoxComponent extends mixins(EvanComponent) {
   @Prop() id: string;
 
+  /**
+   * No debounce by default, value in ms
+   */
   @Prop({ default: 0 }) debounceTime: number;
 
   isActiveSearch = false;
