@@ -42,19 +42,3 @@ export interface ContactFormData {
   msgTitle: string;
   updatedAt: string;
 }
-
-export interface ContactTableItem {
-  item: Contact;
-  index: number;
-  field: Field;
-  unformatted: string;
-  value: string;
-  detailsShowing: boolean;
-  rowSelected: boolean;
-}
-
-export interface Field {
-  key: string;
-  label: string;
-  sortable: boolean;
-}
