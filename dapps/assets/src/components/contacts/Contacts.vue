@@ -82,7 +82,7 @@
           :show-empty="!isLoading"
           :show-scrollbar="true"
           :sticky-header="'calc(100vh - 85px)'"
-          :tbody-transition-props="{ name: 'list' }"
+          :tbody-transition-props="{ name: 'list', mode: 'out-in' }"
           @row-clicked="handleRowClicked"
         >
           <template v-slot:cell(alias)="contacts">

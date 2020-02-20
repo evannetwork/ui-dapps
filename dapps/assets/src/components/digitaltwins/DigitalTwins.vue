@@ -72,7 +72,7 @@
           :sticky-header="'calc(100vh - 85px)'"
           :sort-by="sortBy"
           :sort-direction="reverse ? 'desc' : 'asc'"
-          :tbody-transition-props="{ name: 'list' }"
+          :tbody-transition-props="{ name: 'list', mode: 'out-in' }"
           no-local-sorting="true"
           @sort-changed="sortHandler"
           @scroll="scrollHandler"
