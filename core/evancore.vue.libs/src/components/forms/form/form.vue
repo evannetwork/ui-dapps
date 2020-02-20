@@ -75,6 +75,7 @@
                 :placeholder="getTranslation(form[controlName], 'placeholder')"
                 :stacked="stacked"
                 :prohibited="form[controlName].uiSpecs.prohibited"
+                :required="form[controlName].uiSpecs && form[controlName].uiSpecs.attr ? form[controlName].uiSpecs.attr.required : false"
                 v-bind="form[controlName].uiSpecs && form[controlName].uiSpecs.attr ? form[controlName].uiSpecs.attr : { }"
                 @blur="form[controlName].setDirty()"
                 @input="form[controlName].uiSpecs && form[controlName].uiSpecs.input ? form[controlName].uiSpecs.input($event) : null"
@@ -119,6 +120,13 @@
     </template>
   </div>
 </template>
+
+<style lang="scss" scoped>
+  .evan i.mdi {
+    font-size: inherit;
+    vertical-align: baseline;
+  }
+</style>
 
 <script lang="ts">
 import FormDataWrapper from './form';
