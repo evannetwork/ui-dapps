@@ -70,6 +70,7 @@ import TableComponent from './table/table.vue';
 import TooltipComponent from './tooltip/tooltip.vue';
 import UnderDevelopmentComponent from './under-development/under-development.vue';
 import WalletCardComponent from './profile/wallet-card/wallet-card.vue';
+import SearchBoxComponent from './searchbox/Searchbox.vue';
 // export them all, so other applications can access them
 export {
   AddressComponent,
@@ -160,6 +161,7 @@ const componentRegistration: Array<ComponentRegistrationInterface> = [
   { name: 'evan-profile-picture', component: ProfilePicture },
   { name: 'evan-profile-preview', component: ProfilePreview },
   { name: 'evan-qr-code', component: QRCodeComponent },
+  { name: 'evan-searchbox', component: SearchBoxComponent },
   { name: 'evan-shared-contact', component: SharedContact },
   { name: 'evan-steps', component: StepsComponent },
   { name: 'evan-success', component: SuccessComponent },
