@@ -85,7 +85,7 @@ $arrow-up: '<svg xmlns="http://www.w3.org/2000/svg" style="width:24px;height:24p
         width: 200px;
       }
       &.th-date {
-        width: 120px;
+        width: 150px;
       }
       &.th-icon {
         width: 70px;
@@ -161,6 +161,7 @@ $arrow-up: '<svg xmlns="http://www.w3.org/2000/svg" style="width:24px;height:24p
         th {
           font-size: 12px !important;
           font-weight: 600;
+          vertical-align: top;
 
           box-shadow: none !important;
         }
@@ -182,6 +183,9 @@ $arrow-up: '<svg xmlns="http://www.w3.org/2000/svg" style="width:24px;height:24p
       tbody {
         tr {
           height: 40px !important;
+          &:hover {
+            box-shadow: none !important;
+          }
         }
       }
     }
