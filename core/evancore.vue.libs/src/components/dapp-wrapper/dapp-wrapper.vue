@@ -190,7 +190,7 @@
                         </strong>
                         <span class="mx-auto" />
                         <span>
-                          {{ `${ (instance.stepIndex / instance.dispatcher.steps.length) * 100 }%` }}
+                          {{ `${ ~~((instance.stepIndex / instance.dispatcher.steps.length) * 100) } %` }}
                         </span>
                       </div>
 
