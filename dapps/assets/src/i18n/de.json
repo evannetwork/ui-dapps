@@ -31,6 +31,7 @@
       "message": "Nachricht",
       "name": "Name",
       "note": "Notiz",
+      "pending": "ausstehend ...",
       "remove-contact-button": "Kontakt löschen",
       "remove-contact-desc": "Achtung: Ein gelöschter Kontakt kann nur durch eine erneute Anfrage wiederhegestellt werden.",
       "sender-placeholder": "Absender",

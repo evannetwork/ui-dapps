@@ -38,6 +38,8 @@ export class ContactsService {
   async getContacts(): Promise<Contact[]> {
     this.contacts = await this.runtime.profile.getAddressBook();
 
+    console.log('this.contacts', this.contacts);
+
     const data: Contact[] = [];
     await Promise.all(Object.keys(this.contacts.profile).map(async (contactAddress) => {
       // filter out own account

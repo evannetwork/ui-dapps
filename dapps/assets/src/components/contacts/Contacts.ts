@@ -24,7 +24,6 @@ import Component, { mixins } from 'vue-class-component';
 import {
   EvanComponent, EvanTableColumn, EvanTableItem,
 } from '@evan.network/ui-vue-core';
-import { profileUtils } from '@evan.network/ui';
 import { ContactsService } from './ContactsService';
 import { Contact } from './ContactInterfaces';
 import EditContactComponent from './EditContact';
