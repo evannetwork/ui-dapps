@@ -342,7 +342,7 @@ export default class SignUp extends mixins(EvanComponent) {
     const privateKey = lightwallet.getPrivateKey(vault, accountId);
 
     const runtime = await bccHelper.createRuntime(
-      accountId, vault.encryptionKey, privateKey,
+      accountId, null, vault.encryptionKey, privateKey,
     );
 
     return {

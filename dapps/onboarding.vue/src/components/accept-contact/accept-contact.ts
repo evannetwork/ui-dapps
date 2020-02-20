@@ -86,6 +86,7 @@ export default class AcceptContact extends mixins(EvanComponent) {
       // setup runtime and save it to the axios store
       this.$store.state.runtime = await bccHelper.createRuntime(
         activeAccount,
+        null,
         vault.encryptionKey,
         lightwallet.getPrivateKey(vault, activeAccount),
       );

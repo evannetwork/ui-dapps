@@ -36,6 +36,8 @@ let lastAccount = '';
 let lastIdentity = '';
 // used to check for url overwritten account / identity parameters
 const queryParams = routing.getQueryParameters();
+// used to only start runtime resolve once
+const runtimeLoadCache = { };
 
 export default class EvanSession {
   /**
@@ -188,80 +190,92 @@ export default class EvanSession {
    */
   static async setRuntimes(eventHandler: Function): Promise<void> {
     const { activeAccount, activeIdentity } = EvanSession;
+    const cacheKey = `${activeAccount}${activeIdentity}`;
 
-    let loggedIn = false;
-    let isOnboarded = false;
+    if (!runtimeLoadCache[cacheKey]) {
+      runtimeLoadCache[cacheKey] = (async (): Promise<void> => {
+        let loggedIn = false;
+        let isOnboarded = false;
 
-    // check if a user is already logged in, if yes, navigate to the signed in route
-    if (activeAccount && window.localStorage['evan-vault']) {
-      loggedIn = true;
+        // check if a user is already logged in, if yes, navigate to the signed in route
+        if (activeAccount && window.localStorage['evan-vault']) {
+          loggedIn = true;
 
-      // setup runtime and save it to the axios store
-      EvanSession.accountIdentity = await bccHelper.getIdentityForAccount(
-        activeAccount,
-        await bccHelper.getContextLessRuntime(),
-      );
+          // setup runtime and save it to the axios store
+          EvanSession.accountIdentity = await bccHelper.getIdentityForAccount(
+            activeAccount,
+            await bccHelper.getContextLessRuntime(),
+          );
 
-      isOnboarded = await bccHelper.isOnboarded(EvanSession.accountIdentity);
-      // check for old profile
-      if (!isOnboarded) {
-        isOnboarded = await bccHelper.isOnboarded(activeAccount);
+          isOnboarded = await bccHelper.isOnboarded(EvanSession.accountIdentity);
+          // check for old profile
+          if (!isOnboarded) {
+            isOnboarded = await bccHelper.isOnboarded(activeAccount);
 
-        if (isOnboarded) {
-          EvanSession.isOldProfile = true;
+            if (isOnboarded) {
+              EvanSession.isOldProfile = true;
+            }
+          }
         }
-      }
+
+        if (!isOnboarded || !loggedIn) {
+          await eventHandler('onboarding');
+          await EvanSession.setRuntimes(eventHandler);
+        } else {
+          let encryptionKey; let privateKey; let executor;
+
+          if (EvanSession.provider === 'agent-executor') {
+            await EvanSession.getAgentExecutor();
+            const coreRuntime = await bccHelper.createRuntime();
+
+            encryptionKey = agentExecutor.key;
+            executor = new ExecutorAgent({
+              agentUrl: agentExecutor.agentUrl,
+              config: {},
+              contractLoader: coreRuntime.contractLoader,
+              logLog,
+              logLogLevel,
+              signer: coreRuntime.signer,
+              token: agentExecutor.token,
+              web3: coreRuntime.web3,
+            });
+          } else {
+            // set the password function
+            lightwallet.setPasswordFunction(() => eventHandler('password'));
+            // unlock the profile directly
+            const vault = await lightwallet.loadUnlockedVault();
+            encryptionKey = vault.encryptionKey;
+            privateKey = lightwallet.getPrivateKey(vault, activeAccount);
+          }
+
+          EvanSession.accountRuntime = await bccHelper.createRuntime(
+            activeAccount,
+            EvanSession.accountIdentity,
+            encryptionKey,
+            privateKey,
+            JSON.parse(JSON.stringify(config)),
+            null,
+            { executor },
+          );
+          EvanSession.identityRuntime = await bccHelper.createRuntime(
+            activeAccount,
+            activeIdentity,
+            encryptionKey,
+            privateKey,
+            JSON.parse(JSON.stringify(config)),
+            null,
+            { executor },
+          );
+        }
+      })();
+
+      // reset runtime loading cache
+      setTimeout(() => {
+        delete runtimeLoadCache[cacheKey];
+      });
     }
 
-    if (!isOnboarded || !loggedIn) {
-      await eventHandler('onboarding');
-      await EvanSession.setRuntimes(eventHandler);
-    } else {
-      let encryptionKey; let privateKey; let executor;
-
-      if (EvanSession.provider === 'agent-executor') {
-        await EvanSession.getAgentExecutor();
-        const coreRuntime = await bccHelper.createRuntime();
-
-        encryptionKey = agentExecutor.key;
-        executor = new ExecutorAgent({
-          agentUrl: agentExecutor.agentUrl,
-          config: {},
-          contractLoader: coreRuntime.contractLoader,
-          logLog,
-          logLogLevel,
-          signer: coreRuntime.signer,
-          token: agentExecutor.token,
-          web3: coreRuntime.web3,
-        });
-      } else {
-        // set the password function
-        lightwallet.setPasswordFunction(() => eventHandler('password'));
-        // unlock the profile directly
-        const vault = await lightwallet.loadUnlockedVault();
-        encryptionKey = vault.encryptionKey;
-        privateKey = lightwallet.getPrivateKey(vault, activeAccount);
-      }
-
-      EvanSession.accountRuntime = await bccHelper.createRuntime(
-        activeAccount,
-        EvanSession.accountIdentity,
-        encryptionKey,
-        privateKey,
-        JSON.parse(JSON.stringify(config)),
-        null,
-        { executor },
-      );
-      EvanSession.identityRuntime = await bccHelper.createRuntime(
-        activeAccount,
-        activeIdentity,
-        encryptionKey,
-        privateKey,
-        JSON.parse(JSON.stringify(config)),
-        null,
-        { executor },
-      );
-    }
+    await runtimeLoadCache[cacheKey];
   }
 
   /**

@@ -471,6 +471,7 @@ export default class DAppWrapperComponent extends mixins(EvanComponent) {
 
           // send logged in event
           this.$emit('loggedin', this.$store.state.runtime);
+          this.onboarding = false;
           this.loading = false;
           this.login = false;
           this.isLoggedin = true;
