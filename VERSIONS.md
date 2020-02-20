@@ -1,9 +1,25 @@
 # evan.network ui-dapps
 
+
 ## Next Version
+### Features
+- dapps
+  - `digital-twin-detail`
+    - add UI for twins where current user has no or only partial permissions
+
+### Fixes
+
+### Deprecations
+- core
+  - `ui.libs`, `evancore.vue.libs`
+    - remove `.evan-nav-list` css class in favor of `<evan-nav-list>` component
+
+
+## Version 4.0.0
 ### Features
 - combine vue, core, dapps and e2e tests within this project
 - add`i18n-ajv` library
+- general performance increase of dapp loading
 - core
   - add `bootstrap.vue.libs` (v2.1.0)
     - add bootstrap-vue import and expose it as dapp (currently only TableLitePlugin, TablePlugin, TableSimplePlugin exported)
@@ -19,9 +35,6 @@
     - fix sharing sidebar removes contact selection on permission checkbox select
   - `onboarding.vue` (3.3.1)
     - onboarding formulars exceeded screen width on small devices
-  - `datacontainer.digitaltwin` (1.8.3)
-    - fix empty number values
-    - use default values for 0x0... entries
 - core
   - `evancore.vue.libs` (v1.10.0)
     - fix unchecking all read properties are not unchecking all readWrite fields in `evan-permission-editor`
@@ -38,7 +51,11 @@
     - refactor old digital twin lib for new twin functions
 
 # Archived repository history
-DApps were previously organized in several github projects. Please have a look at the following projects for previous dapp versions
+DApps were previously organized in several github projects. Please have a look at the following projects for previous dapp versions:
+
+- [ui-core](https://github.com/evannetwork/ui-core)
+- [ui-core-dapps](https://github.com/evannetwork/ui-core-dapps)
+- [ui-vue](https://github.com/evannetwork/ui-vue)
 
 ## [ui-core](https://github.com/evannetwork/ui-core)
 
@@ -182,7 +199,7 @@ DApps were previously organized in several github projects. Please have a look a
 
 #### Fixes
 - `ui.libs`
-  - dapp-wrapper flex overflow horizontal sizing 
+  - dapp-wrapper flex overflow horizontal sizing
 
 
 ### Version 1.3.2

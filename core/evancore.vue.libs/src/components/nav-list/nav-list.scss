@@ -1,0 +1,91 @@
+/*
+  Copyright (C) 2018-present evan GmbH.
+
+  This program is free software: you can redistribute it and/or modify it
+  under the terms of the GNU Affero General Public License, version 3,
+  as published by the Free Software Foundation.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  See the GNU Affero General Public License for more details.
+
+  You should have received a copy of the GNU Affero General Public License
+  along with this program. If not, see http://www.gnu.org/licenses/ or
+  write to the Free Software Foundation, Inc., 51 Franklin Street,
+  Fifth Floor, Boston, MA, 02110-1301 USA, or download the license from
+  the following URL: https://evan.network/license/
+*/
+
+@import '~@evan.network/ui/src/style/utils';
+
+.evan-nav-list {
+  height: 100%;
+  padding-bottom: 1px;
+
+  &, .nav-entries {
+    display: flex;
+    flex-direction: column;
+  }
+
+  // use separated nav-entries, so we can apply custom entries at the bottom and at the top,
+  // without using my-auto
+  .nav-entries {
+    flex: 1;
+
+    a, button {
+      font-size: 15px;
+      font-weight: 600;
+
+      display: flex;
+      align-items: center;
+
+      height: 70px;
+      padding-left: 22px;
+
+      cursor: pointer;
+      transition: background-color 0.5s ease-out, color 0.5s ease-out;
+      text-decoration: none;
+
+      border: none;
+      outline: none;
+      background-color: white;
+
+      &, * {
+        color: cssVar('gray-900');
+      }
+
+      &.active {
+        background-color: cssVar('bg-level-2');
+
+        &, * {
+          color: cssVar('dark');
+        }
+      };
+
+      &:hover {
+        &, * {
+          color: cssVar('primary');
+        }
+      }
+
+      &:disabled {
+        cursor: default;
+
+        border-color: cssVar('gray-500');
+        background-color: white;
+        box-shadow: none;
+        &[class*='-outline-'] {
+          background-color: transparent;
+
+          &, * {
+            color: cssVar('gray-500');
+          }
+        }
+        &, *, &:hover, &:hover * {
+          color: cssVar('gray-500');
+        }
+      }
+    }
+  }
+}

@@ -25,7 +25,7 @@ import EvanForm from './form';
 import EvanFormControl from './formControl';
 import { getDomainName } from './utils';
 import { NavEntryInterface } from './components/nav-list/NavEntryInterface';
-import { EvanTableItem } from './components/table/EvanTableInterfaces';
+import { EvanTableItem, EvanTableColumn } from './components/table/EvanTableInterfaces';
 
 System.map['@evan.network/ui-vue-core'] = `evancore.vue.libs.${getDomainName()}!dapp-content`;
 
@@ -36,5 +36,5 @@ export * from './routing';
 export * from './utils';
 export * from './vue-core';
 export { NavEntryInterface };
-export { EvanTableItem };
+export { EvanTableItem, EvanTableColumn };
 export { EvanComponent, EvanForm, EvanFormControl };

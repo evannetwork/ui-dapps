@@ -21,8 +21,6 @@ import Component, { mixins } from 'vue-class-component';
 import { EvanComponent } from '@evan.network/ui-vue-core';
 import {
   Runtime,
-  Profile,
-  ProfileOptions,
 } from '@evan.network/api-blockchain-core';
 import { DAppTwin, TwinTransaction, SearchService } from '@evan.network/digital-twin-lib';
 import { profileUtils } from '@evan.network/ui';
@@ -99,7 +97,7 @@ export default class DetailOverviewComponent extends mixins(EvanComponent) {
               (transaction.gas * parseFloat(transaction.gasPrice)).toString(),
               'ether',
             ),
-          ).toFixed(4);
+          ).toFixed(3);
         } catch (err) {
           this.runtime.logger.log(`Error while calculating EVE fee ${err.message}.`, 'error');
         }

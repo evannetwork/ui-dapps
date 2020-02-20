@@ -64,6 +64,10 @@
       "template-select-placeholder": "Select a template",
       "updated": "Updated"
     },
+    "dispatcher": {
+      "remove-contact": "Remove Contact",
+      "update-contact": "Save Contact Changes"
+    },
     "my-assets": "My Assets",
     "optional": "optional",
     "search": {

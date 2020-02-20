@@ -86,7 +86,7 @@ $table-row-height: 56px;
         width: 200px;
       }
       &.th-date {
-        width: 120px;
+        width: 150px;
       }
       &.th-icon {
         width: 70px;
@@ -175,6 +175,7 @@ $table-row-height: 56px;
         th {
           font-size: 12px !important;
           font-weight: 600;
+          vertical-align: top;
 
           box-shadow: none !important;
         }
@@ -196,6 +197,9 @@ $table-row-height: 56px;
       tbody {
         tr {
           height: 40px !important;
+          &:hover {
+            box-shadow: none !important;
+          }
         }
       }
     }

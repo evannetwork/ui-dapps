@@ -124,6 +124,10 @@ export default class DigitalTwinDetailComponent extends mixins(EvanComponent) {
     this.close();
   }
 
+  /**
+   * Retrieves the array for populating navigation items.
+   * Removes sharing if current user is not the twin owner.
+   */
   getNavItems(): NavEntryInterface[] {
     return [
       {
@@ -142,12 +146,12 @@ export default class DigitalTwinDetailComponent extends mixins(EvanComponent) {
         to: { name: 'verifications' },
         disabled: !this.$store.state.twin?.isOwner,
       },
-      {
+      ...(this.$store.state.twin.isOwner ? [{
         text: '_twin-detail.nav-items.sharings',
         icon: 'mdi mdi-share-variant',
         to: { name: 'sharings' },
         disabled: !this.$store.state.twin?.isOwner,
-      },
+      }] : []),
       {
         text: '_twin-detail.nav-items.did',
         icon: 'mdi mdi-identifier',

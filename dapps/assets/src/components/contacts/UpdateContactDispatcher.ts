@@ -21,7 +21,6 @@ import { Dispatcher, DispatcherInstance } from '@evan.network/ui';
 import { getDomainName } from '@evan.network/ui-dapp-browser';
 import { Contact } from './ContactInterfaces';
 
-
 const updateContactDispatcher = new Dispatcher(
   `assets.${getDomainName()}`,
   'updateContactDispatcher',

@@ -40,12 +40,11 @@ export default class DetailOverviewTransactionsComponent extends mixins(EvanComp
       label: this.$t('_twin-detail.overview.date'),
       thClass: 'th-date',
     },
-    {
-      key: 'action',
-      label: '',
-      thClass: 'th-icon',
-    },
   ];
+
+  onRowClicked(row: TwinTransaction): void {
+    window.open(this.getRouteToTransactionExplorer(row.hash), '_blank');
+  }
 
   getRouteToTransactionExplorer(transactionId: string): string {
     const baseUrl = this.getRuntime().environment === 'core'

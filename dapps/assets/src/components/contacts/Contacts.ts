@@ -21,8 +21,9 @@
 import Component, { mixins } from 'vue-class-component';
 
 // evan.network imports
-import { EvanComponent, EvanTableItem } from '@evan.network/ui-vue-core';
-import { debounce } from 'lodash';
+import {
+  EvanComponent, EvanTableColumn, EvanTableItem,
+} from '@evan.network/ui-vue-core';
 import { ContactsService } from './ContactsService';
 import { Contact } from './ContactInterfaces';
 import EditContactComponent from './EditContact';
@@ -50,7 +51,7 @@ export default class ContactsComponent extends mixins(EvanComponent) {
 
   selectedContact: Contact = null;
 
-  columns = [
+  columns: EvanTableColumn[] = [
     {
       key: 'icon',
       label: '',

@@ -19,7 +19,7 @@
 
 <template>
   <div
-    class="evan-profile-preview d-flex align-items-center text-decoration-none overflow-hidden"
+    class="evan-profile-preview d-flex align-items-center text-decoration-none"
     :class="size"
   >
     <div
