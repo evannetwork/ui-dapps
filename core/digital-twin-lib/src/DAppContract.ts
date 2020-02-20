@@ -36,6 +36,7 @@ export interface DBCPDescriptionInterface {
     };
   };
   name: string;
+  identity?: string;
 }
 
 /**
