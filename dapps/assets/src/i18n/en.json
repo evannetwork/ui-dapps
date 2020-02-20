@@ -31,6 +31,7 @@
       "message": "Message",
       "name": "Name",
       "note": "Note",
+      "note-placeholder": "e.g. an alias",
       "pending": "pending ...",
       "remove-contact-button": "Remove Contact",
       "remove-contact-desc": "Warning: Removing a contact is irreversible unless the contact accepts your request again.",

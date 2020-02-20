@@ -46,8 +46,8 @@
 
       <evan-form-control-input
         v-model="alias"
-        :label="$t('_assets.contacts.contact-name')"
-        :placeholder="$t('_assets.contacts.contact-name-placeholder')"
+        :label="$t('_assets.contacts.note')"
+        :placeholder="$t('_assets.contacts.note-placeholder')"
         :required="true"
       />
 

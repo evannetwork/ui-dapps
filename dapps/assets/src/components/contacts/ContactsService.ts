@@ -23,6 +23,7 @@ import InviteDispatcher from './InviteDispatcher';
 import { Contact, ContactFormData } from './ContactInterfaces';
 import removeContactDispatcher from './RemoveContactDispatcher';
 
+// TODO: Should come from runtime profile
 interface AddressbookEntry {
   alias?: string;
   accountId?: string;
