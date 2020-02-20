@@ -23,9 +23,8 @@ import { Prop, Watch } from 'vue-property-decorator';
 
 // evan.network imports
 import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
-import { profileUtils, bccUtils } from '@evan.network/ui';
-import { Runtime } from '@evan.network/api-blockchain-core';
-
+import { profileUtils, } from '@evan.network/ui';
+import * as bcc from '@evan.network/api-blockchain-core';
 
 // internal
 import * as dispatchers from '../../../../../dispatchers/registry';
@@ -74,7 +73,6 @@ export default class IdentNotaryRequestComponent extends mixins(EvanComponent) {
    * Currents user active account that must be passed into the info-content component
    */
   activeAccount = '';
-
   identity = '';
 
   /**
@@ -86,7 +84,6 @@ export default class IdentNotaryRequestComponent extends mixins(EvanComponent) {
    * Used to create the summary page.
    */
   approveData: LabeledEntry[] = [];
-
   approveAddress: LabeledEntry[] = [];
 
   /**
@@ -103,23 +100,21 @@ export default class IdentNotaryRequestComponent extends mixins(EvanComponent) {
    * Fund information of the current user
    */
   readableFunds: string = null;
-
   enoughFunds: boolean = null;
 
   /**
    * listen for dispatcher updates
    */
-  listeners: Array<Function> = [];
+  listeners: Array<Function> = [ ];
 
   /**
    * List of missing company information.
    */
   requiredCompanyFields = {
-    contact: ['city', 'country', 'postalCode', 'streetAndNumber'],
-    registration: ['court', 'register', 'registerNumber'],
+    contact: [ 'city', 'country', 'postalCode', 'streetAndNumber' ],
+    registration: [ 'court', 'register', 'registerNumber' ],
   };
-
-  missingCompanyFields = { contact: [], registration: [] };
+  missingCompanyFields = { contact: [ ], registration: [ ] };
 
   /**
    * Show loading until the request was finished.
@@ -137,50 +132,50 @@ export default class IdentNotaryRequestComponent extends mixins(EvanComponent) {
    */
   steps = [
     {
-      title: this.$i18n.translate('_profile.verifications.notary.step.your_data'),
-      disabled: false,
+      title: (<any>this).$i18n.translate('_profile.verifications.notary.step.your_data'),
+      disabled: false
     },
     {
-      title: this.$i18n.translate('_profile.verifications.notary.step.summary'),
-      disabled: true,
+      title: (<any>this).$i18n.translate('_profile.verifications.notary.step.summary'),
+      disabled: true
     },
     {
-      title: this.$i18n.translate('_profile.verifications.notary.step.costs'),
-      disabled: true,
+      title: (<any>this).$i18n.translate('_profile.verifications.notary.step.costs'),
+      disabled: true
     },
   ];
 
   /**
    * minimum value of the verification costs (200 EVE)
    */
-  verificationCost = notaryLib.verificationCost;
+  verificationCost =  notaryLib.verificationCost;
 
   /**
    * Watch if form validity changed and update steps accordingly
    */
   @Watch('requestForm.isValid')
-  onValidate(valid: boolean, oldValid: boolean): void {
+  onValidate(valid: boolean, oldValid: boolean) {
     if (valid !== oldValid) {
       this.steps[1].disabled = !valid;
       this.steps[2].disabled = !valid;
     }
   }
 
-  async created(): Promise<void> {
-    this.requestForm = (new EvanForm(this, {
+  async created() {
+    this.requestForm = (<RequestFormIdentInterface>new EvanForm(this, {
       contact: {
         value: '',
-        validate(vueInstance: IdentNotaryRequestComponent, form: RequestFormIdentInterface) {
+        validate: function(vueInstance: IdentNotaryRequestComponent, form: RequestFormIdentInterface) {
           return this.value.length !== 0;
-        },
+        }
       },
       department: {
         value: '',
-        validate(vueInstance: IdentNotaryRequestComponent, form: RequestFormIdentInterface) {
+        validate: function(vueInstance: IdentNotaryRequestComponent, form: RequestFormIdentInterface) {
           return true;
-        },
-      },
-    }) as RequestFormIdentInterface);
+        }
+      }
+    }));
 
     await this.loadCompanyData();
     await this.loadFunds();
@@ -193,7 +188,8 @@ export default class IdentNotaryRequestComponent extends mixins(EvanComponent) {
           this.status = 3;
           this.sending = false;
         }
-      }));
+      })
+    );
 
     // watch for company data updates
     this.listeners.push(dispatchers.updateProfileDispatcher.watch(($event: any) => {
@@ -207,62 +203,61 @@ export default class IdentNotaryRequestComponent extends mixins(EvanComponent) {
    * Clear listeners...
    */
   beforeDestroy() {
-    this.listeners.forEach((listener) => listener());
+    this.listeners.forEach(listener => listener());
   }
 
   /**
    * Takes the users information and pass them into the apporve objects, so it can be displayed
    * using the key-value component.
    */
-  async setupSummary(): Promise<void> {
-    const { profileDApp } = this.$store.state;
+  async setupSummary() {
+    const profileDApp = (this as any).$store.state.profileDApp;
     this.approveData = [
       {
-        label: this.$i18n.translate('_profile.company.registration.company.label'),
+        label: (<any>this).$i18n.translate('_profile.company.registration.company.label'),
         value: await profileUtils.getUserAlias(
           this.getRuntime(),
           profileDApp.address,
-          profileDApp.accountDetails,
+          profileDApp.accountDetails
         ),
       },
       {
-        label: this.$i18n.translate('_profile.company.contact.country.label'),
-        value: this.$i18n.translate(
-          `_countries.${this.companyData.contact.country}`,
-        ),
+        label: (<any>this).$i18n.translate('_profile.company.contact.country.label'),
+        value: (<any>this).$i18n.translate(
+          `_countries.${ this.companyData.contact.country }`),
       },
       {
-        label: this.$i18n.translate('_profile.company.registration.court.label'),
-        value: this.companyData.registration.court,
+        label: (<any>this).$i18n.translate('_profile.company.registration.court.label'),
+        value: this.companyData.registration.court
       },
       {
-        label: this.$i18n.translate('_profile.company.registration.registerNumber.label'),
-        value: `${this.companyData.registration.register} ${this.companyData.registration.registerNumber}`,
-      },
+        label: (<any>this).$i18n.translate('_profile.company.registration.registerNumber.label'),
+        value: `${this.companyData.registration.register} ${this.companyData.registration.registerNumber}`
+      }
     ];
 
     this.approveAddress = [
       {
-        label: this.$i18n.translate('_profile.verifications.notary.request.contact.label'),
-        value: this.requestForm.contact.value,
+        label: (<any>this).$i18n.translate('_profile.verifications.notary.request.contact.label'),
+        value: this.requestForm.contact.value
       }, {
-        label: this.$i18n.translate('_profile.verifications.notary.request.department.label'),
-        value: this.requestForm.department.value,
+        label: (<any>this).$i18n.translate('_profile.verifications.notary.request.department.label'),
+        value: this.requestForm.department.value
       }, {
-        label: this.$i18n.translate('_profile.company.contact.address.label'),
+        label: (<any>this).$i18n.translate('_profile.company.contact.address.label'),
         value: this.companyData.contact.streetAndNumber,
       }, {
-        label: this.$i18n.translate('_profile.company.contact.city.label'),
-        value: `${this.companyData.contact.postalCode} ${this.companyData.contact.city}`,
-      },
+        label: (<any>this).$i18n.translate('_profile.company.contact.city.label'),
+        value: `${this.companyData.contact.postalCode} ${this.companyData.contact.city}`
+      }
     ];
   }
 
   /**
    * check if currently a verification gets accepted.
    */
-  async checkSending(): Promise<void> {
-    const runtime: Runtime = this.getRuntime();
+  async checkSending() {
+    const runtime: bcc.Runtime = (<any>this).getRuntime();
     const instances = await dispatchers.requestIdentificationDispatcher.getInstances(runtime);
 
     this.sending = instances.length !== 0;
@@ -271,23 +266,23 @@ export default class IdentNotaryRequestComponent extends mixins(EvanComponent) {
   /**
    * Show the info modal.
    */
-  show(): void {
-    (this.$refs.requestModal as any).show();
+  show() {
+    (<any>this.$refs).requestModal.show();
   }
 
   /**
    * Hide the info modal.
    */
-  hide(): void {
-    (this.$refs.requestModal as any).hide();
+  hide() {
+    (<any>this.$refs).requestModal.hide();
   }
 
   /**
    * Load the current funds of the user and check, if they are enough for requesting a notary
    * verification.
    */
-  async loadFunds(): Promise<void> {
-    const runtime: Runtime = this.getRuntime();
+  async loadFunds() {
+    const runtime: bcc.Runtime = (<any>this).getRuntime();
     const fundsAvailable = await runtime.web3.eth.getBalance(runtime.activeAccount);
     this.activeAccount = runtime.activeAccount;
     this.identity = await runtime.verifications.getIdentityForAccount(this.activeAccount, true);
@@ -300,8 +295,8 @@ export default class IdentNotaryRequestComponent extends mixins(EvanComponent) {
   /**
    * Load currents users company data and checks, if some information are missing.
    */
-  async loadCompanyData(): Promise<void> {
-    const { $store } = this as any;
+  async loadCompanyData() {
+    const $store = (this as any).$store;
     // wait until profile was reloaded
     await $store.state.loadingProfile;
 
@@ -312,8 +307,8 @@ export default class IdentNotaryRequestComponent extends mixins(EvanComponent) {
     };
 
     // detect empty values, that are required
-    Object.keys(this.requiredCompanyFields).forEach((category) => {
-      this.missingCompanyFields[category] = [];
+    Object.keys(this.requiredCompanyFields).forEach(category => {
+      this.missingCompanyFields[category] = [ ];
       this.requiredCompanyFields[category].forEach((field: string) => {
         if (this.companyData[category] && !this.companyData[category][field]) {
           this.missingCompanyFields[category].push(field);
@@ -325,7 +320,7 @@ export default class IdentNotaryRequestComponent extends mixins(EvanComponent) {
   /**
    * Move to next status tab.
    */
-  async nextStatus(): Promise<void> {
+  async nextStatus() {
     this.status += 1;
 
     // setup summary data
@@ -337,18 +332,18 @@ export default class IdentNotaryRequestComponent extends mixins(EvanComponent) {
   /**
    * Send the request verification b-mail, so the process will be triggered.
    */
-  async requestIdentification(): Promise<void> {
+  async requestIdentification() {
     this.sending = true;
-    const runtime: Runtime = this.getRuntime();
+    const runtime: bcc.Runtime = (<any>this).getRuntime();
     const organizationEvanId = await runtime.verifications.getIdentityForAccount(runtime.activeAccount, true);
 
     // define the request data, so we can append it into the attachment and as payload in the body
-    const { profileDApp } = this.$store.state;
+    const profileDApp = (this as any).$store.state.profileDApp;
     const requestData = {
       organizationCity: this.companyData.contact.city,
       organizationContact: this.requestForm.contact.value,
       organizationCountry: this.companyData.contact.country,
-      organizationEvanId: bccUtils.getDidFromAddress(runtime, organizationEvanId),
+      organizationEvanId: `did:evan:${organizationEvanId}`,
       accountId: runtime.activeAccount,
       court: this.companyData.registration.court,
       organizationRegistration: `${this.companyData.registration.register} ${this.companyData.registration.registerNumber}`,
@@ -362,10 +357,10 @@ export default class IdentNotaryRequestComponent extends mixins(EvanComponent) {
     };
 
     // send the verification request
-    dispatchers.requestIdentificationDispatcher.start(this.getRuntime(), {
+    dispatchers.requestIdentificationDispatcher.start((<any>this).getRuntime(), {
       mail: {
-        title: this.$i18n.translate('_profile.verifications.notary.request.mail.title'),
-        body: this.$i18n.translate('_profile.verifications.notary.request.mail.body', requestData),
+        title: (<any>this).$i18n.translate('_profile.verifications.notary.request.mail.title'),
+        body: (<any>this).$i18n.translate('_profile.verifications.notary.request.mail.body', requestData),
       },
       requestData,
     });
@@ -374,7 +369,7 @@ export default class IdentNotaryRequestComponent extends mixins(EvanComponent) {
   /**
    * Trigger reloading of verification requests, when a new one was successfully requested.
    */
-  modalClosed(): void {
+  modalClosed() {
     if (this.status === 3) {
       notaryLib.triggerRequestReload(this.address, {
         status: 'requested',

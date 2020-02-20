@@ -19,9 +19,9 @@
 
 // vue imports
 import Component, { mixins } from 'vue-class-component';
-import { bccUtils } from '@evan.network/ui';
-import { Prop } from 'vue-property-decorator';
 import EvanComponent from '../../component';
+import Vue from 'vue';
+import { Prop } from 'vue-property-decorator';
 
 /**
  * Displays a account / contract address and applies generalized interactions like copy, open in
@@ -36,6 +36,10 @@ export default class AddressComponent extends mixins(EvanComponent) {
    */
   @Prop() address;
 
+  @Prop({
+    default: 'did:evan:'
+  }) didPrefix: String;
+
   /**
    * Specific custom classes
    */
@@ -46,19 +50,15 @@ export default class AddressComponent extends mixins(EvanComponent) {
    */
   hover = false;
 
-  get did(): string {
-    return bccUtils.getDidFromAddress(this.getRuntime(), this.address);
-  }
-
   /**
    * Copy the current address to the users clipboard
    */
-  copyAddress(toCopy: string): void {
+  copyAddress() {
     // create temporary element
-    const $temp: HTMLInputElement = document.createElement('input');
+    const $temp: any = document.createElement('input');
     document.body.appendChild($temp);
     // apply copy value
-    $temp.value = toCopy;
+    $temp.value = `${this.didPrefix}${this.address}`;
     // trigger copy
     $temp.select();
     document.execCommand('copy');
