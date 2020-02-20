@@ -205,7 +205,7 @@
             "name": "Specifications",
             "owner": {
               "description": "Details of the owner",
-              "name": "Name",
+              "name": "Owner",
               "properties": {
                 "city": {
                   "label": "City",
@@ -220,7 +220,7 @@
                   "placeholder": "Max Mustermann"
                 },
                 "plz": {
-                  "label": "Post-Code",
+                  "label": "Postal Code",
                   "placeholder": "10115"
                 },
                 "streetNumber": {

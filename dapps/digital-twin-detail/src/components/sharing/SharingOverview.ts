@@ -21,7 +21,7 @@
 import Component, { mixins } from 'vue-class-component';
 
 // evan.network imports
-import { EvanComponent } from '@evan.network/ui-vue-core';
+import { EvanComponent, EvanTableColumn } from '@evan.network/ui-vue-core';
 import { DAppContainer, dispatchers } from '@evan.network/digital-twin-lib';
 import { profileUtils } from '@evan.network/ui';
 
@@ -48,17 +48,9 @@ interface SharedUserInterface {
   type: string; // account type
 }
 
-interface ColumnInterface {
-  key: string;
-  label: string;
-  sortable?: boolean;
-  tdClass?: string;
-  thClass?: string;
-}
-
 @Component
 export default class SharingOverview extends mixins(EvanComponent) {
-  columns: ColumnInterface[] = [];
+  columns: EvanTableColumn[] = [];
 
   data: SharedUserInterface[] = [];
 

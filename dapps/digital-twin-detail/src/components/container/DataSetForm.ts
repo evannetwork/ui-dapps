@@ -103,7 +103,7 @@ export default class DataSetFormComponent extends mixins(EvanComponent) {
   static isControlRequired(controlOpts: EvanFormControlOptions, type: string, subSchema: any): boolean {
     // check if min value is set required flag
     return type === 'array' || type === 'object' || type === 'boolean'
-      || (ajvMinProperties[type] && !Number.isNaN(subSchema[ajvMinProperties[type]]));
+      || (ajvMinProperties[type] && subSchema[ajvMinProperties[type]]) > 0;
   }
 
   /**
@@ -180,9 +180,6 @@ export default class DataSetFormComponent extends mixins(EvanComponent) {
     // add the control to the current formular definition
     this.form.addControl(name, control);
     this.$set(control, 'value', control.value);
-    /* set the control directly dirty, so empty initial values will be directly validated and the
-       form will be blocked */
-    this.form[name].dirty = true;
     this.form[name].validate();
   }
 
@@ -250,6 +247,11 @@ export default class DataSetFormComponent extends mixins(EvanComponent) {
     ): boolean | string => {
       let controlValue = control.value;
       let validationSchema = subSchema;
+
+      // skip validation if empty and optional
+      if (!controlOpts.uiSpecs.attr.required && !controlValue) {
+        return true;
+      }
 
       // parse input value to numbers to check for correct number format with ajv
       if (type === 'number') {
