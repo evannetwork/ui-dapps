@@ -123,8 +123,10 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
   }
 
   onSearchChange(searchTerm: string): void {
-    this.searchTerm = searchTerm;
-    this.searchHandlerDebounced();
+    if (this.searchTerm !== searchTerm) {
+      this.searchTerm = searchTerm;
+      this.searchHandlerDebounced();
+    }
   }
 
   @Watch('selectedFilter') onFilterChanged(newFilter: string, oldFilter: string): void{
@@ -182,8 +184,7 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
   handleSearchShortcut(e: KeyboardEvent): void {
     if ((e.ctrlKey || e.metaKey) && e.keyCode === 70) {
       e.preventDefault();
-      this.searchTerm = '';
-      this.$nextTick(() => (this.$refs.searchInput as HTMLInputElement).focus());
+      this.$nextTick(() => (this.$refs.searchbox as any).focusInput());
     }
   }
 

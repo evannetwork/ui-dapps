@@ -26,6 +26,7 @@
       >
         <evan-searchbox
           id="searchInput"
+          ref="searchbox"
           @keyup="onSearchChange($event.target.value)"
         >
           <span v-if="searchTerm">{{ searchTerm }}</span>

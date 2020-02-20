@@ -38,4 +38,11 @@ export default class SearchBoxComponent extends mixins(EvanComponent) {
       this.isActiveSearch = false;
     }
   }
+
+  async focusInput(): Promise<void> {
+    this.isActiveSearch = true;
+    this.searchTerm = '';
+    await this.$nextTick();
+    (this.$refs.searchInput as HTMLInputElement).focus();
+  }
 }

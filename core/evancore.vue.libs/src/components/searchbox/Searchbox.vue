@@ -35,6 +35,7 @@
     <input
       v-show="isActiveSearch"
       :id="id"
+      ref="searchInput"
       v-model="searchTerm"
       autocomplete="off"
       v-on="$listeners"
