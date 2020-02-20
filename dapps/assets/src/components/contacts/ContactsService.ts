@@ -23,9 +23,16 @@ import InviteDispatcher from './InviteDispatcher';
 import { Contact, ContactFormData } from './ContactInterfaces';
 import removeContactDispatcher from './RemoveContactDispatcher';
 
-export class ContactsService {
-  private contacts;
+interface AddressbookEntry {
+  alias?: string;
+  accountId?: string;
+  email?: string;
+  createdAt?: string;
+  updatedAt?: string;
+  isFavorite: string;
+}
 
+export class ContactsService {
   private runtime: Runtime;
 
   constructor(runtime: Runtime) {
@@ -36,16 +43,14 @@ export class ContactsService {
    * Return well-formatted list of contacts
    */
   async getContacts(): Promise<Contact[]> {
-    this.contacts = await this.runtime.profile.getAddressBook();
-
-    console.log('this.contacts', this.contacts);
+    const { profile }: { profile: AddressbookEntry } = await this.runtime.profile.getAddressBook();
 
     const data: Contact[] = [];
-    await Promise.all(Object.keys(this.contacts.profile).map(async (contactAddress) => {
+    await Promise.all(Object.keys(profile).map(async (contactAddress: string) => {
       // filter out own account
       if (contactAddress !== this.runtime.activeAccount) {
         const type = await profileUtils.getProfileType(this.runtime, contactAddress);
-        const isPending = ContactsService.isPending(this.contacts.profile[contactAddress]);
+        const isPending = ContactsService.isPending(profile[contactAddress]);
         let displayName;
         if (isPending) {
           // email address
@@ -56,14 +61,14 @@ export class ContactsService {
         }
         data.push({
           address: contactAddress,
-          alias: this.contacts.profile[contactAddress].alias,
-          createdAt: this.contacts.profile[contactAddress].createdAt,
+          alias: profile[contactAddress].alias,
+          createdAt: profile[contactAddress].createdAt,
           displayName,
           icon: profileUtils.getProfileTypeIcon(type),
-          isFavorite: this.contacts.profile[contactAddress].isFavorite,
+          isFavorite: profile[contactAddress].isFavorite,
           isPending,
           type,
-          updatedAt: this.contacts.profile[contactAddress].updatedAt,
+          updatedAt: profile[contactAddress].updatedAt,
         });
       }
     }));
@@ -108,13 +113,4 @@ export class ContactsService {
     }
     return false;
   }
-}
-
-interface AddressbookEntry {
-  alias?: string;
-  accountId?: string;
-  email?: string;
-  createdAt?: string;
-  updatedAt?: string;
-  isFavorite: string;
 }
