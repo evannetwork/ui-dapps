@@ -24,6 +24,7 @@ import Component, { mixins } from 'vue-class-component';
 import {
   EvanComponent, EvanTableColumn, EvanTableItem,
 } from '@evan.network/ui-vue-core';
+import { profileUtils } from '@evan.network/ui';
 import { ContactsService } from './ContactsService';
 import { Contact } from './ContactInterfaces';
 import EditContactComponent from './EditContact';
@@ -59,16 +60,16 @@ export default class ContactsComponent extends mixins(EvanComponent) {
       thClass: 'th-icon',
     },
     {
-      key: 'alias',
+      key: 'displayName',
       label: this.$t('_assets.contacts.name'),
       sortable: true,
       tdClass: 'truncate',
     },
     {
-      key: 'updatedAt',
-      label: this.$t('_assets.contacts.updated'),
+      key: 'alias',
+      label: this.$t('_assets.contacts.note'),
       sortable: true,
-      thClass: 'th-date',
+      tdClass: 'truncate',
     },
     {
       key: 'createdAt',

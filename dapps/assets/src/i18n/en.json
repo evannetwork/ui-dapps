@@ -18,6 +18,7 @@
       "edit-contact-btn": "Save",
       "edit-contact-title": "Edit Contact",
       "email-desc": "The selected user will be notified with your contact request. In the following form you can adjust the request message.",
+      "error-added": "The selected account is already in your contact list",
       "error-id-or-email": "Please enter a valid Evan ID or email address",
       "favorites": "Favorites",
       "filtered-empty": "No results for this filter.",

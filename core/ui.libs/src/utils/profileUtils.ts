@@ -18,7 +18,9 @@
 */
 
 
-import { Profile, lodash, Runtime } from '@evan.network/api-blockchain-core';
+import {
+  Profile, lodash, Runtime, ProfileOptions,
+} from '@evan.network/api-blockchain-core';
 import { cloneDeep } from './utils';
 
 export enum ProfileType {
@@ -80,6 +82,27 @@ export async function getUserAlias(
   }
 
   return aliasCache[cacheID];
+}
+
+/**
+ * Display the shared profile name if possible. If not, display the hash address.
+ * @param runtime Runtime
+ * @param address hash address of the profile
+ */
+export async function getDisplayName(runtime: Runtime, address: string): Promise<string> {
+  const otherProfile = new Profile({
+    ...(runtime as ProfileOptions),
+    profileOwner: address,
+    accountId: runtime.activeAccount,
+  });
+  let details;
+  try {
+    details = await otherProfile.getProfileProperty('accountDetails');
+  } catch (ex) {
+    // no permissions
+  }
+
+  return details?.accountName || address;
 }
 
 /**

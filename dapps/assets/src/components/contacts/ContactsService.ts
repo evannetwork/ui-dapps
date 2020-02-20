@@ -39,18 +39,29 @@ export class ContactsService {
     this.contacts = await this.runtime.profile.getAddressBook();
 
     const data: Contact[] = [];
-    await Promise.all(Object.keys(this.contacts.profile).map(async (contact) => {
+    await Promise.all(Object.keys(this.contacts.profile).map(async (contactAddress) => {
       // filter out own account
-      if (contact !== this.runtime.activeAccount) {
-        const type = await profileUtils.getProfileType(this.runtime, contact);
+      if (contactAddress !== this.runtime.activeAccount) {
+        const type = await profileUtils.getProfileType(this.runtime, contactAddress);
+        const isPending = ContactsService.isPending(this.contacts.profile[contactAddress]);
+        let displayName;
+        if (isPending) {
+          // email address
+          displayName = contactAddress;
+        } else {
+          // either shared name or hash address
+          displayName = await profileUtils.getDisplayName(this.runtime, contactAddress);
+        }
         data.push({
-          address: contact,
-          alias: this.contacts.profile[contact].alias,
-          createdAt: this.contacts.profile[contact].createdAt,
+          address: contactAddress,
+          alias: this.contacts.profile[contactAddress].alias,
+          createdAt: this.contacts.profile[contactAddress].createdAt,
+          displayName,
           icon: profileUtils.getProfileTypeIcon(type),
-          isFavorite: this.contacts.profile[contact].isFavorite,
+          isFavorite: this.contacts.profile[contactAddress].isFavorite,
+          isPending,
           type,
-          updatedAt: this.contacts.profile[contact].updatedAt,
+          updatedAt: this.contacts.profile[contactAddress].updatedAt,
         });
       }
     }));
@@ -88,4 +99,20 @@ export class ContactsService {
   removeContact(contact: Contact): Promise<DispatcherInstance> {
     return removeContactDispatcher.start(this.runtime, contact);
   }
+
+  static isPending(contact: AddressbookEntry): boolean {
+    if (!contact.accountId && contact.email) {
+      return true;
+    }
+    return false;
+  }
+}
+
+interface AddressbookEntry {
+  alias?: string;
+  accountId?: string;
+  email?: string;
+  createdAt?: string;
+  updatedAt?: string;
+  isFavorite: string;
 }
