@@ -22,18 +22,23 @@
     class="evan-address"
     :class="this.class"
     @mouseenter="hover = true;"
-    @mouseleave="hover = false;">
+    @mouseleave="hover = false;"
+  >
     {{ `${didPrefix}${address}` }}
     <div class="interactions">
-      <button class="btn btn-sm btn-icon"
-        @click="copyAddress();">
-        <i class="mdi mdi-content-copy"></i>
+      <button
+        class="btn btn-sm btn-icon"
+        @click="copyAddress();"
+      >
+        <i class="mdi mdi-content-copy" />
         <evan-tooltip>{{ '_evan.address.copy' | translate }}</evan-tooltip>
       </button>
-      <a class="btn btn-sm btn-icon"
+      <a
+        class="btn btn-sm btn-icon"
         target="_blank"
-        :href="`https://testexplorer.evan.network/address/${ address }/transactions`">
-        <i class="mdi mdi-map-marker-path"></i>
+        :href="`https://testexplorer.evan.network/address/${ address }/transactions`"
+      >
+        <i class="mdi mdi-map-marker-path" />
         <evan-tooltip>{{ '_evan.address.open-in-explorer' | translate }}</evan-tooltip>
       </a>
     </div>
@@ -41,11 +46,11 @@
 </template>
 
 <script lang="ts">
-  import Component from './address';
-  export default Component;
+import Component from './address';
+
+export default Component;
 </script>
 
 <style lang="scss" scoped>
   @import './address.scss';
 </style>
-

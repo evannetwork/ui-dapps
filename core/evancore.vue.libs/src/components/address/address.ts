@@ -19,9 +19,9 @@
 
 // vue imports
 import Component, { mixins } from 'vue-class-component';
-import EvanComponent from '../../component';
 import Vue from 'vue';
 import { Prop } from 'vue-property-decorator';
+import EvanComponent from '../../component';
 
 /**
  * Displays a account / contract address and applies generalized interactions like copy, open in
@@ -37,8 +37,8 @@ export default class AddressComponent extends mixins(EvanComponent) {
   @Prop() address;
 
   @Prop({
-    default: 'did:evan:'
-  }) didPrefix: String;
+    default: 'did:evan:',
+  }) didPrefix: string;
 
   /**
    * Specific custom classes
