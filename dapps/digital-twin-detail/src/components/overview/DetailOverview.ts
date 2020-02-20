@@ -22,8 +22,9 @@ import { EvanComponent } from '@evan.network/ui-vue-core';
 import {
   Runtime,
 } from '@evan.network/api-blockchain-core';
+
 import { DAppTwin, TwinTransaction, SearchService } from '@evan.network/digital-twin-lib';
-import { profileUtils } from '@evan.network/ui';
+import { bccUtils, profileUtils } from '@evan.network/ui';
 
 @Component
 export default class DetailOverviewComponent extends mixins(EvanComponent) {
@@ -34,6 +35,10 @@ export default class DetailOverviewComponent extends mixins(EvanComponent) {
   transactions: TwinTransaction[] = null;
 
   search: SearchService = null;
+
+  get did(): string {
+    return bccUtils.getDidFromAddress(this.getRuntime(), this.twin.description.identity);
+  }
 
   async created(): Promise<void> {
     this.search = new SearchService(this.runtime);

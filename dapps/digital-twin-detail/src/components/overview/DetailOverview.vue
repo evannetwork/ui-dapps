@@ -24,7 +24,7 @@
       <detail-overview-general
         v-if="twin"
         class="mb-3"
-        :did="`did:evan:${twin.description.identity}`"
+        :did="did"
         :owner-name="twin.ownerName"
         :owner-address="twin.ownerAddress"
         :created-at="twin.createdAt"
