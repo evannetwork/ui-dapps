@@ -20,12 +20,14 @@
 // import evan libs
 import { ComponentRegistrationInterface } from '@evan.network/ui-vue-core';
 import AddContactComponent from './contacts/AddContact.vue';
+import EditContactComponent from './contacts/EditContact.vue';
 import AddDigitalTwinComponent from './digitaltwins/AddDigitalTwin.vue';
 
 // map them to element names, so they can be used within templates
 const componentRegistration: Array<ComponentRegistrationInterface> = [
   { name: 'add-contact', component: AddContactComponent },
   { name: 'add-digital-twin', component: AddDigitalTwinComponent },
+  { name: 'edit-contact', component: EditContactComponent },
 ];
 
 export default componentRegistration;
