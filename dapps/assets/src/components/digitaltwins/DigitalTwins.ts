@@ -125,7 +125,7 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
   onSearchChange(searchTerm: string): void {
     if (this.searchTerm !== searchTerm) {
       this.searchTerm = searchTerm;
-      this.searchHandlerDebounced();
+      this.performSearch();
     }
   }
 
@@ -140,7 +140,7 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
         return;
       }
 
-      this.searchHandlerDebounced();
+      this.performSearch();
     }
   }
 
@@ -208,9 +208,6 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
     { trailing: true },
   );
 
-  /**
-   * Helper method to keep class this-context for debounced search.
-   */
   performSearch(): void {
     if (typeof this.search === 'function') {
       this.search(this.searchTerm, {
@@ -234,14 +231,6 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
     }
   }
 
-  /**
-   * Debounce the search.
-   */
-  searchHandlerDebounced = debounce(this.performSearch, 250, {
-    trailing: true,
-    leading: false,
-  });
-
   handleRowClicked(twin: DigitalTwin): void {
     window.location.hash = `/${this.dapp.rootEns}/detail.digital-twin.${this.dapp.domainName}/${twin.address}`;
   }
@@ -251,7 +240,7 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
 
     this.sortBy = sortBy;
     this.reverse = reverse;
-    this.searchHandlerDebounced();
+    this.performSearch();
   }
 
   async addFavorite(twin: EvanTableItem<DigitalTwin>): Promise<void> {

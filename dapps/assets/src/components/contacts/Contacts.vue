@@ -26,7 +26,8 @@
       >
         <evan-searchbox
           id="contactSearchbox"
-          @keyup="onSearchChange($event.target.value)"
+          :debounce-time="250"
+          @keyup="filterBySearchTerm($event.target.value)"
         >
           <span>{{ '_assets.contacts.contacts-title' | translate }}</span>
         </evan-searchbox>

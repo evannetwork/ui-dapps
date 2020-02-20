@@ -27,6 +27,7 @@
         <evan-searchbox
           id="searchInput"
           ref="searchbox"
+          :debounce-time="250"
           @keyup="onSearchChange($event.target.value)"
         >
           <span v-if="searchTerm">{{ searchTerm }}</span>

@@ -175,8 +175,6 @@ export default class ContactsComponent extends mixins(EvanComponent) {
     this.filter = null;
   }
 
-  onSearchChange = debounce(this.filterBySearchTerm, 250);
-
   filterBySearchTerm(searchTerm: string): void {
     this.filterBy = [];
     this.filter = searchTerm;

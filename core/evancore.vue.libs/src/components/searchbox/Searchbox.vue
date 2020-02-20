@@ -38,7 +38,7 @@
       ref="searchInput"
       v-model="searchTerm"
       autocomplete="off"
-      v-on="$listeners"
+      @keyup="onKeyUp"
       @blur="onBlur"
       @keydown.enter="$event.target.blur()"
     >

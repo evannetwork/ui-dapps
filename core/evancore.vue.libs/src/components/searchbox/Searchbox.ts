@@ -19,6 +19,7 @@
 
 import Component, { mixins } from 'vue-class-component';
 import { Prop } from 'vue-property-decorator';
+import { debounce } from 'lodash';
 import EvanComponent from '../../component';
 
 /**
@@ -29,9 +30,13 @@ import EvanComponent from '../../component';
 export default class SearchBoxComponent extends mixins(EvanComponent) {
   @Prop() id: string;
 
+  @Prop({ default: 0 }) debounceTime: number;
+
   isActiveSearch = false;
 
   searchTerm = '';
+
+  onKeyUp = debounce(this.emitKeyEvent, this.debounceTime)
 
   onBlur(): void {
     if (this.searchTerm.length === 0) {
@@ -44,5 +49,9 @@ export default class SearchBoxComponent extends mixins(EvanComponent) {
     this.searchTerm = '';
     await this.$nextTick();
     (this.$refs.searchInput as HTMLInputElement).focus();
+  }
+
+  private emitKeyEvent(ev: KeyboardEvent): void {
+    this.$emit('keyup', ev);
   }
 }
