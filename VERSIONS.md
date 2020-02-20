@@ -3,10 +3,16 @@
 
 ## Next Version
 ### Features
+- dapps
+  - `digital-twin-detail`
+    - add UI for twins where current user has no or only partial permissions
 
 ### Fixes
 
 ### Deprecations
+- core
+  - `ui.libs`, `evancore.vue.libs`
+    - remove `.evan-nav-list` css class in favor of `<evan-nav-list>` component
 
 
 ## Version 4.0.0
@@ -193,7 +199,7 @@ DApps were previously organized in several github projects. Please have a look a
 
 #### Fixes
 - `ui.libs`
-  - dapp-wrapper flex overflow horizontal sizing 
+  - dapp-wrapper flex overflow horizontal sizing
 
 
 ### Version 1.3.2

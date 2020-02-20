@@ -82,6 +82,7 @@
                       {{ '_twin-detail.data.context-menu.export-template' | translate }}
                     </b-dropdown-item>
                     <b-dropdown-item
+                      v-if="$store.state.twin.isOwner"
                       @click="$refs.deleteModal.show()"
                     >
                       {{ '_twin-detail.data.context-menu.delete-twin' | translate }}
@@ -111,6 +112,7 @@
                 <evan-profile-picture
                   class="mt-3 twin-avatar"
                   type="device"
+                  is-editable="$store.state.twin.isOwner"
                   :src="$store.state.twin.description.imgSquare"
                 />
                 <h4 class="twin-name text-center mt-2">
