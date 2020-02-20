@@ -64,6 +64,10 @@
       "template-select-placeholder": "Wählen Sie ein Template",
       "updated": "Aktualisiert"
     },
+    "dispatcher": {
+      "remove-contact": "Kontakt löschen",
+      "update-contact": "Kontakt aktualisieren"
+    },
     "my-assets": "Meine Assets",
     "optional": "optional",
     "search": {
