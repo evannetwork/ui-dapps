@@ -63,7 +63,7 @@ $open-indicator-size: 0.8;
   }
 }
 
-.vs__search {
+.vs__search, .vs__search:focus {
   padding: 0;
   font-size: 12px !important;
   text-indent: 1.125rem;
