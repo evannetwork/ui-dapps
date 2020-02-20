@@ -83,5 +83,5 @@ export default Component;
 </script>
 
 <style lang="scss" scoped>
-  @import './nav-list.scss'
+  @import './nav-list.scss';
 </style>
