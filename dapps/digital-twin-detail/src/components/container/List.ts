@@ -20,7 +20,7 @@
 // vue imports
 import Component, { mixins } from 'vue-class-component';
 import { Prop } from 'vue-property-decorator';
-import { EvanComponent } from '@evan.network/ui-vue-core';
+import { EvanComponent, EvanTableColumn } from '@evan.network/ui-vue-core';
 import { DAppContainer } from '@evan.network/digital-twin-lib';
 import { ListSchema } from './DataSchemaInterface';
 import ShareContainerComponent from './ShareContainer';
@@ -35,14 +35,6 @@ interface File {
   size: number;
 }
 
-interface ColumnInterface {
-  key: string;
-  label: string;
-  sortable?: boolean;
-  tdClass?: string;
-  thClass?: string;
-}
-
 @Component
 export default class ContainerListComponent extends mixins(EvanComponent) {
   @Prop() name: string;
@@ -53,7 +45,7 @@ export default class ContainerListComponent extends mixins(EvanComponent) {
 
   container: DAppContainer;
 
-  columns: ColumnInterface[];
+  columns: EvanTableColumn[];
 
   selectedValue = null;
 

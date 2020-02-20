@@ -8,6 +8,14 @@ export interface EvanTableItem<T> {
   rowSelected: boolean;
 }
 
+export interface EvanTableColumn {
+  key: string;
+  label: string;
+  sortable?: boolean;
+  tdClass?: string;
+  thClass?: string;
+}
+
 export interface Field {
   key: string;
   label: string;
