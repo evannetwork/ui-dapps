@@ -23,7 +23,7 @@ import EvanComponent from '../../component';
 
 /**
  * Search input with a placeholder label, that can be used as a normal text
- * element such as heading
+ * element such as heading.
  */
 @Component
 export default class SearchBoxComponent extends mixins(EvanComponent) {
