@@ -50,7 +50,7 @@
       class="px-0"
       :class="{
         'container': stacked,
-        'pt-4': !onlyForm,
+        'pt-3': !onlyForm,
       }"
     >
       <form
