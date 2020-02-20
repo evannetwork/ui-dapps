@@ -124,6 +124,10 @@ export default class DigitalTwinDetailComponent extends mixins(EvanComponent) {
     this.close();
   }
 
+  /**
+   * Retrieves the array for populating navigation items.
+   * Removes sharing if current user is not the twin owner.
+   */
   getNavItems(): NavEntryInterface[] {
     return [
       {
