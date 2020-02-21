@@ -72,7 +72,7 @@ export default class ContactsComponent extends mixins(EvanComponent) {
     },
     {
       key: 'createdAt',
-      label: this.$t('_assets.contacts.added-on'),
+      label: this.$t('_assets.contacts.added'),
       sortable: true,
       thClass: 'th-date',
     },
