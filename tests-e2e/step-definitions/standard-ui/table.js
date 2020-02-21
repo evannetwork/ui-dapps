@@ -28,10 +28,10 @@ Then('I want to see a table having {int} headers', async (count) => {
 Then('I want to see a table having headers {string}', async (headers) => {
   client.useXpath();
   // Check for every head available
-  headers.split(/\||,/).forEach(async (head) => {
+  await Promise.all(headers.split(/\||,/).map(async (head) => {
     const xPathSelector = `//table//th[normalize-space(text()) = "${head.trim()}"]`;
     await client.expect.element(xPathSelector).to.be.present;
-  });
+  }));
 
   client.useCss();
 });
