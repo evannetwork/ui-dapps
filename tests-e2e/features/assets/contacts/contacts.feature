@@ -15,7 +15,7 @@ Feature: Contacts assets
     Then I want to see a "plus" icon button
     When I click on the "plus" icon button
     Then I want to see a swipe-panel with the title "Add new Contact"
-@only
+
   Scenario: Check filtering for a user
     Given I am on the path "#/dashboard.vue.evan/assets.evan/contacts"
     Then I want to see a table having "at least" 4 rows
