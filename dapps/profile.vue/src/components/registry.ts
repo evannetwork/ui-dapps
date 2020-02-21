@@ -32,9 +32,6 @@ import LabeledList from './utils/labeled-list/labeled-list.vue';
 // verification specific components
 import NotaryVerificationComponent from './verifications/notary/notary.vue';
 import VerificationsOverviewComponent from './verifications/overview/overview.vue';
-
-// verification components
-// single notary verification detail (takes a request or company verifications)
 import NotaryCardComponent from './verifications/notary/card/card.vue';
 
 // info content of the notary verification
@@ -55,27 +52,27 @@ import TransactionsComponent from './wallet/transactions/transactions.vue';
 // map them to element names, so they can be used within templates
 const componentRegistration: Array<ComponentRegistrationInterface> = [
   // profile
-  { name: 'profile-company-contact', component: CompanyContactForm, },
-  { name: 'profile-company-registration', component: CompanyRegistrationForm, },
-  { name: 'profile-device-detail', component: DeviceDetailForm, },
-  { name: 'profile-permission-wrapper', component: PermissionWrapperComponent, },
+  { name: 'profile-company-contact', component: CompanyContactForm },
+  { name: 'profile-company-registration', component: CompanyRegistrationForm },
+  { name: 'profile-device-detail', component: DeviceDetailForm },
+  { name: 'profile-permission-wrapper', component: PermissionWrapperComponent },
   // general
   { name: 'labeled-list', component: LabeledList },
   // verification specific components
-  { name: 'notary-verification', component: NotaryVerificationComponent, },
+  { name: 'notary-verification', component: NotaryVerificationComponent },
   { name: 'profile-verifications', component: VerificationsOverviewComponent },
   // notary verification components
-  { name: 'notary-action-issue', component: NotaryIssueComponent, },
-  { name: 'notary-action-pin', component: NotaryPinComponent, },
-  { name: 'notary-action-request', component: NotaryRequestComponent, },
-  { name: 'notary-info-content', component: NotaryInfoContentComponent, },
-  { name: 'notary-info-dialog', component: NotaryInfoModalComponent, },
-  { name: 'notary-topic-display', component: NotaryTopicDisplayComponent, },
-  { name: 'notary-verification-card', component: NotaryCardComponent, },
+  { name: 'notary-action-issue', component: NotaryIssueComponent },
+  { name: 'notary-action-pin', component: NotaryPinComponent },
+  { name: 'notary-action-request', component: NotaryRequestComponent },
+  { name: 'notary-info-content', component: NotaryInfoContentComponent },
+  { name: 'notary-info-dialog', component: NotaryInfoModalComponent },
+  { name: 'notary-topic-display', component: NotaryTopicDisplayComponent },
+  { name: 'notary-verification-card', component: NotaryCardComponent },
   // payment
   { name: 'profile-buy-eve', component: BuyEveComponent },
   { name: 'profile-send-eve', component: SendEveComponent },
-  { name: 'profile-transactions', component: TransactionsComponent }
+  { name: 'profile-transactions', component: TransactionsComponent },
 ];
 
 export default componentRegistration;
