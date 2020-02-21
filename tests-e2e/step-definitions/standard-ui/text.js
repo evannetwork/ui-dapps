@@ -35,9 +35,6 @@ Then(/I want to see a text including ("([^"]*)"|`([^`]*)`)$/,
 
 Then('I want to see a {string} headline including {string}',
   async (element, content) => {
-    if (!/^h\d$/i.test(element)) {
-      throw new Error('The `element` param must be a html headline tag h1, h2, h3, ...');
-    }
     // xpath will be used as the locating strategy so all the selectors you pass should be xpath selectors
     client.useXpath();
     const xPathSelector = `//${element}[normalize-space(text()) = "${content}"]`;
