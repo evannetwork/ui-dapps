@@ -33,7 +33,6 @@
       :title="$t('_assets.contacts.add-contact-title')"
       @hide="initState"
     >
-      <!-- :label="$t('_assets.contacts.id-or-email')" -->
       <p>{{ '_assets.contacts.add-contact-desc' | translate }}</p>
       <evan-form-control-input
         v-model="idOrEmail"
