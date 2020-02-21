@@ -18,16 +18,19 @@
 */
 
 <template>
-  <span
-    class="evan-address"
-    :class="this.class"
-    @mouseenter="hover = true;"
-    @mouseleave="hover = false;"
-  >
-    {{ did }}
+  <div class="wrapper">
+    <span
+      class="evan-address"
+      :class="this.class"
+      @mouseenter="hover = true;"
+      @mouseleave="hover = false;"
+    >
+      {{ did }}
+    </span>
     <div class="interactions">
       <button
         class="btn btn-sm btn-icon"
+        :title="'_evan.address.copy' | translate"
         @click="copyAddress(did);"
       >
         <i class="mdi mdi-content-copy" />
@@ -42,7 +45,7 @@
         <evan-tooltip>{{ '_evan.address.open-in-explorer' | translate }}</evan-tooltip>
       </a>
     </div>
-  </span>
+  </div>
 </template>
 
 <script lang="ts">
