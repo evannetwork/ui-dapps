@@ -83,6 +83,18 @@ class Permissions extends mixins(EvanComponent) {
     return this.sortFilter === null ? Object.keys(this.permissions) : this.sortFilter;
   }
 
+  getPropertyFieldDescription(permissions, property: string): string {
+    if (!permissions[property].fields) {
+      return property;
+    }
+
+    return permissions[property].fields.map((field) => this.getTranslation(
+      `${property}.properties.${field}.label`,
+      `${property}.properties.${field}`,
+      field,
+    )).join(', ');
+  }
+
   /**
    * Set all permissions in a contract at once.
    *
