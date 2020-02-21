@@ -24,30 +24,16 @@
         class="d-flex flex-row justify-content-between align-items-center"
         style="max-height: 33px"
       >
-        <div class="search">
-          <label
-            id="twin-enable-search"
-            for="searchInput"
-            @click="isActiveSearch = true"
-          >
-            <i
-              class="mdi mdi-magnify mr-1"
-              style="font-size: 22px"
-            />
-            <span v-if="!isActiveSearch">{{
-              '_assets.digitaltwins.digitaltwins-title' | translate
-            }}</span>
-          </label>
-          <input
-            v-show="isActiveSearch"
-            id="searchInput"
-            ref="searchInput"
-            v-model="searchTerm"
-            autocomplete="off"
-            @blur="handleSearchBlur"
-            @keydown.enter="$event.target.blur()"
-          >
-        </div>
+        <evan-searchbox
+          id="searchInput"
+          ref="searchbox"
+          :debounce-time="250"
+          @keyup="onSearchChange($event.target.value)"
+        >
+          <span v-if="searchTerm">{{ searchTerm }}</span>
+          <span v-else>{{ '_assets.digitaltwins.digitaltwins-title' | translate }}</span>
+        </evan-searchbox>
+
         <div>
           <evan-button
             class="ml-3"
@@ -88,7 +74,7 @@
           :sticky-header="'calc(100vh - 85px)'"
           :sort-by="sortBy"
           :sort-direction="reverse ? 'desc' : 'asc'"
-          :tbody-transition-props="{ name: 'list' }"
+          :tbody-transition-props="{ name: 'list', mode: 'out-in' }"
           no-local-sorting="true"
           @sort-changed="sortHandler"
           @scroll="scrollHandler"
@@ -98,10 +84,10 @@
             <i class="table-icon mdi mdi-cube-outline" />
           </template>
           <template v-slot:cell(updated)="data">
-            {{ data.item.updated | moment('DD.MM.YYYY HH:mm') }}
+            {{ data.item.updated | moment('L') }}
           </template>
           <template v-slot:cell(created)="data">
-            {{ data.item.created | moment('DD.MM.YYYY HH:mm') }}
+            {{ data.item.created | moment('L') }}
           </template>
           <template v-slot:cell(isFavorite)="twin">
             <evan-loading
