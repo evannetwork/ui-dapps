@@ -31,3 +31,4 @@ jobs:
         env:
          TESTPATTERN: ${{ matrix.tests }}
          NIGHTWATCH_ENV: "chrome"
+         NODE_DEBUG: "http"
