@@ -47,8 +47,8 @@ if (localBrowser) {
     globals: {
       accounts,
     },
-    /* silent: false,
-       disable_error_log: false, */
+    silent: false,
+    disable_error_log: false,
     webdriver: {
       keep_alive: true,
       timeout_options: { timeout: 30000, retry_attempts: 5 },
