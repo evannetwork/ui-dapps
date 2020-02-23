@@ -1,13 +1,13 @@
 const { config } = require('dotenv-safe');
 
-const { accounts } = require('./conf/accounts.js');
 
 const seleniumServer = require('selenium-server-standalone-jar');
 const chromeDriver = require('chromedriver');
+const { accounts } = require('./conf/accounts.js');
 
 config({ allowEmptyValues: true });
 
-let localBrowser = process.env.LOCAL_BROWSER ? JSON.parse(process.env.LOCAL_BROWSER) : false;
+const localBrowser = process.env.LOCAL_BROWSER ? JSON.parse(process.env.LOCAL_BROWSER) : false;
 let defaultConfig;
 if (localBrowser) {
   defaultConfig = {
@@ -17,12 +17,12 @@ if (localBrowser) {
       port: 4444,
       cli_args: {
         port: 4444,
-        'webdriver.chrome.driver': chromeDriver.path
-      }
+        'webdriver.chrome.driver': chromeDriver.path,
+      },
     },
     webdriver: {
       keep_alive: true,
-      cli_args: ['--port=4444']
+      cli_args: ['--port=4444'],
     },
     globals: {
       accounts,
@@ -33,23 +33,24 @@ if (localBrowser) {
     selenium: {
       start_process: false,
       host: 'hub-cloud.browserstack.com',
-      port: 443
+      port: 443,
     },
     desiredCapabilities: {
       'browserstack.user': process.env.BROWSERSTACK_USERNAME,
       'browserstack.key': process.env.BROWSERSTACK_ACCESS_KEY,
       'browserstack.selenium_version': '3.141.59',
-      'resolution': '1920x1080',
+      resolution: '1920x1080',
       os: 'Windows',
-      os_version: '10'
+      os_version: '10',
+      build: process.env.TESTPATTERN,
     },
     globals: {
       accounts,
     },
     disable_error_log: true,
     webdriver: {
-      keep_alive: true
-    }
+      keep_alive: true,
+    },
   };
 }
 
@@ -67,7 +68,7 @@ const chromeSettings = {
         'disable-gpu',
         'use-fake-device-for-media-stream',
         'use-fake-ui-for-media-stream',
-        'incognito'
+        'incognito',
       ],
     },
   },
@@ -78,7 +79,7 @@ const firefoxSettings = {
     javascriptEnabled: true,
     acceptSslCerts: true,
     marionette: false,
-  }
+  },
 };
 if (process.env.LOCAL_BROWSER_HEADLESS && JSON.parse(process.env.LOCAL_BROWSER_HEADLESS)) {
   chromeSettings.desiredCapabilities.chromeOptions.args.push('headless');
