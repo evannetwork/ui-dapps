@@ -27,8 +27,7 @@ jobs:
         with:
           node-version: 11.15.0
       - run: node --version
-      - run: cd tests-e2e && npm install && npm run test-testnet-specific
+      - run: cd tests-e2e && npm install && NODE_DEBUG=http npm run test-testnet-specific
         env:
          TESTPATTERN: ${{ matrix.tests }}
          NIGHTWATCH_ENV: "chrome"
-         NODE_DEBUG: "http"
