@@ -49,6 +49,7 @@ if (localBrowser) {
     },
     silent: false,
     disable_error_log: false,
+    output_timestamp: true,
     webdriver: {
       keep_alive: true,
       timeout_options: { timeout: 100000, retry_attempts: 5 },
