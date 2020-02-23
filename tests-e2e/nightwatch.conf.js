@@ -33,7 +33,7 @@ if (localBrowser) {
     selenium: {
       start_process: false,
       host: 'hub-cloud.browserstack.com',
-      port: 443,
+      port: 80,
     },
     desiredCapabilities: {
       'browserstack.user': process.env.BROWSERSTACK_USERNAME,
