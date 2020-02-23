@@ -1,5 +1,7 @@
 name: UI Tests
 
+on: [push]
+
 jobs:
   build:
     runs-on: ubuntu-16.04
