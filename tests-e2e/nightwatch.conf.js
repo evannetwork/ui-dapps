@@ -38,10 +38,9 @@ if (localBrowser) {
     desiredCapabilities: {
       'browserstack.user': process.env.BROWSERSTACK_USERNAME,
       'browserstack.key': process.env.BROWSERSTACK_ACCESS_KEY,
-      'browserstack.selenium_version': '4.0.0-alpha-2',
+      'browserstack.selenium_version': '3.141.59',
       resolution: '1920x1080',
-      os: 'Windows',
-      os_version: '10',
+      os: 'OS X',
       build: process.env.TESTPATTERN,
     },
     globals: {
