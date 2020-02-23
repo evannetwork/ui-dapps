@@ -51,6 +51,7 @@ if (localBrowser) {
     disable_error_log: false,
     webdriver: {
       keep_alive: true,
+      request_timeout_options: { timeout: 15000, retry_attempts: 5 },
     },
   };
 }
