@@ -50,7 +50,7 @@ if (localBrowser) {
     disable_error_log: false,
     output_timestamp: true,
     webdriver: {
-      keep_alive: true,
+      keep_alive: false,
       timeout_options: { timeout: 100000, retry_attempts: 5 },
     },
   };
