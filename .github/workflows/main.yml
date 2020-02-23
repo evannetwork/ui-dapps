@@ -8,19 +8,14 @@ jobs:
     strategy:
       matrix:
         tests: [
-          {
-            env: "chrome",
-            pattern: "features/core/login.feature"
-          }
+          "features/core/login.feature"
         ]
     name: Node ${{ matrix.node }} sample
     steps:
       - uses: actions/checkout@v2
       - name: Setup node
         uses: actions/setup-node@v1
+      - run: cd tests-e2e && npm install && npm run test-testnet-specific
         env:
-         TESTPATTERN: ${{ matrix.pattern }}
-         NIGHTWATCH_ENV: ${{ matrix.env }}
-      - run: cd tests-e2e
-      - run: cd tests-e2e && npm install
-      - run: cd tests-e2e && npm run test-testnet-specific
+         TESTPATTERN: ${{ matrix.tests }}
+         NIGHTWATCH_ENV: "chrome"
