@@ -49,7 +49,7 @@ if (localBrowser) {
     },
     silent: false,
     disable_error_log: false,
-    request_timeout_options: { timeout: 15000, retry_attempts: 5 },
+    request_timeout_options: { timeout: 30000, retry_attempts: 5 },
     webdriver: {
       keep_alive: true,
     },
