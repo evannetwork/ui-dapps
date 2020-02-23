@@ -65,7 +65,6 @@ const chromeSettings = {
     javascriptEnabled: true,
     acceptSslCerts: true,
     chromeOptions: {
-      w3c: false,
       args: [
         'disable-gpu',
         'use-fake-device-for-media-stream',
