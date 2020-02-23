@@ -6,9 +6,17 @@ jobs:
   build:
     runs-on: ubuntu-16.04
     strategy:
+      max-parallel: 3
       matrix:
         tests: [
-          "features/core/login.feature"
+          "features/core/login.feature",
+          "features/core/dashboard.feature",
+          "features/core/onboarding.feature",
+          "features/profile/eve-payment-vue.feature",
+          "features/profile/eve-sending.feature",
+          "features/assets/contacts.feature",
+          "features/assets/digital-twins.feature",
+          "features/assets/digital-twin-edit.feature"
         ]
     name: Node ${{ matrix.node }} sample
     steps:
