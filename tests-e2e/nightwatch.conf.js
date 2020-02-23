@@ -40,14 +40,14 @@ if (localBrowser) {
       'browserstack.key': process.env.BROWSERSTACK_ACCESS_KEY,
       'browserstack.selenium_version': '3.141.59',
       resolution: '1920x1080',
-      os: 'Windows',
+      // os: 'Windows',
       os_version: '10',
       build: process.env.TESTPATTERN,
     },
     globals: {
       accounts,
     },
-    disable_error_log: true,
+    disable_error_log: false,
     webdriver: {
       keep_alive: true,
     },
