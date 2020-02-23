@@ -22,5 +22,5 @@ jobs:
          TESTPATTERN: ${{ matrix.pattern }}
          NIGHTWATCH_ENV: ${{ matrix.env }}
       - run: cd tests-e2e
-      - run: npm install
-      - run: npm run test-testnet-specific
+      - run: cd tests-e2e && npm install
+      - run: cd tests-e2e && npm run test-testnet-specific
