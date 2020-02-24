@@ -17,6 +17,8 @@
   the following URL: https://evan.network/license/
 */
 
+const AddAssetPlugin = require('add-asset-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
@@ -24,6 +26,7 @@ const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const webpack = require('webpack');
+const path = require('path');
 const getExternals = require('./webpack.externals');
 
 /**
@@ -46,11 +49,16 @@ module.exports = function getWebpackConfig(
   externals = getExternals(),
 ) {
   const prodMode = forceProdMode || process.env.NODE_ENV === 'production';
+  const devtool = prodMode ? 'none' : 'eval-source-map';
+  const dappFolder = path.resolve(dist, '../');
+
   const webpackConfig = {
+    context: dappFolder,
     entry: './src/index.ts',
     externals,
-    devtool: '#eval-source-map',
+    devtool,
     mode: prodMode ? 'production' : 'development',
+    stats: { children: false },
     output: {
       path: dist,
       publicPath: '/dist/',
@@ -125,6 +133,22 @@ module.exports = function getWebpackConfig(
         filename: `${name}.css`,
         chunkFilename: `${name}.css`,
       }),
+      new CopyPlugin([
+        { from: 'dbcp.json', to: path.join(dist, 'dbcp.json') },
+        { // copy the dbcp.json and all css files into the runtimeFolder
+          from: path.join(dappFolder, 'src/**/*.css'),
+          to: dist,
+        },
+        { // copy all assets to the dist assets folder
+          from: path.join(dappFolder, 'src', 'assets'),
+          to: path.join(dist, 'assets'),
+        },
+      ], { force: true }),
+      // create dbcp origin path json
+      new AddAssetPlugin('dbcpPath.json',
+        JSON.stringify({
+          dbcpPath: path.join(dappFolder, 'dbcp.json'),
+        })),
     ],
     resolve: {
       extensions: ['.ts', '.js', '.vue', '.json'],
@@ -142,7 +166,8 @@ module.exports = function getWebpackConfig(
   };
 
   if (prodMode) {
-    webpackConfig.devtool = '#source-map';
+    // webpackConfig.devtool = '#source-map';
+
     // http://vue-loader.vuejs.org/en/workflow/production.html
     webpackConfig.plugins = (webpackConfig.plugins || []).concat([
       new webpack.DefinePlugin({
@@ -164,9 +189,12 @@ module.exports = function getWebpackConfig(
       new OptimizeCSSAssetsPlugin({}),
     ]);
   } else if (!transpileOnly) {
-    webpackConfig.plugins.push(
+    webpackConfig.plugins.concat([
       new HardSourceWebpackPlugin({ cacheDirectory: 'build-cache' }),
-    );
+      new webpack.DefinePlugin({
+        'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
+      }),
+    ]);
   }
   return webpackConfig;
 };

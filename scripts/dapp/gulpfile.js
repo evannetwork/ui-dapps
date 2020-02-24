@@ -17,29 +17,26 @@
   the following URL: https://evan.network/license/
 */
 
-const { lstatSync, readdirSync } = require('fs');
 const del = require('del');
-const fs = require('fs');
 const gulp = require('gulp');
-const path = require('path');
-const exec = require('child_process').exec;
+
 const dappDir = process.argv[process.argv.indexOf('--dapp') + 1];
-const { runExec, scriptsFolder, isDirectory, getDirectories } = require('../lib');
+const {
+  runExec,
+} = require('../lib');
 
 // Run Express, auto rebuild and restart on src changes
-gulp.task('build', async function () {
+gulp.task('build', async (cb) => {
   process.chdir(dappDir);
 
-  // load the dapp dbcp
-  const dbcp = require(`${ dappDir }/dbcp.json`);
-  const dappConfig = dbcp.public.dapp;
+  /* load the dapp dbcp */
+  const dbcp = require(`${dappDir}/dbcp.json`);
   const runtimeFolder = `../../node_modules/@evan.network/ui-dapp-browser/runtime/external/${dbcp.public.name}`;
-
   const distSources = [
-    `${ dappDir }/dist/**/*`,
-    `!${ dappDir }/dist/build-cache`,
-    `!${ dappDir }/dist/build-cache/**/*`,
-  ];  
+    `${dappDir}/dist/**/*`,
+    `!${dappDir}/dist/build-cache`,
+    `!${dappDir}/dist/build-cache/**/*`,
+  ];
 
   // clear the dist folder
   del.sync(distSources, { force: true });
@@ -52,40 +49,15 @@ gulp.task('build', async function () {
     return setTimeout(() => process.exit(9));
   }
 
-  // copy the dbcp.json and all css files into the runtimeFolder
-  await new Promise((resolve, reject) => {
-    gulp
-      .src([
-        `${ dappDir }/dbcp.json`,
-        `${ dappDir }/src/**/*.css`,
-      ])
-      .pipe(gulp.dest(`${ dappDir }/dist`))
-      .on('end', () => resolve());
-  });
-
-  // copy all assets to the dist assets folder
-  await new Promise((resolve, reject) => {
-    gulp
-      .src([
-        `${ dappDir }/src/assets/**`,
-      ])
-      .pipe(gulp.dest(`${ dappDir }/dist/assets`))
-      .on('end', () => resolve());
-  });
-
-  // create dbcp origin path json
-  fs.writeFileSync(
-    `${ dappDir }/dist/dbcpPath.json`,
-    JSON.stringify({ dbcpPath: `${ dappDir }/dbcp.json` })
-  );
-
-  // copy the build files into the runtimeFolder
+  /* copy the build files into the runtimeFolder */
   await new Promise((resolve, reject) => {
     gulp
       .src(distSources)
       .pipe(gulp.dest(runtimeFolder))
       .on('end', () => resolve());
   });
+
+  cb();
 });
 
-gulp.task('default', gulp.series([ 'build' ]));
+gulp.task('default', gulp.series(['build']));
