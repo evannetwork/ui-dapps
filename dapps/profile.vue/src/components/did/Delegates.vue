@@ -18,41 +18,24 @@
 */
 
 <template>
-  <div class="d-flex">
-    <div class="content">
-      <div>
-        <div class="heading-row">
-          <h1>DID</h1>
-        </div>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rerum fuga officia dolorum maiores minima nisi soluta? Rem hic deserunt dolore debitis, rerum praesentium quos necessitatibus non eum eos ad tempora.</p>
-      </div>
-
-      <service-endpoints
-        class="mb-3"
-      />
-
-      <delegates />
-    </div>
+  <div class="content-card">
+    <h2 class="card-heading mb-3">
+      {{ '_twin-detail.overview.general-title' | translate }}
+    </h2>
   </div>
 </template>
 
 <script lang="ts">
-import Component from './DID';
+import Component from './Delegates';
 
 export default Component;
 </script>
 
 <style lang="scss" scoped>
-.content {
-  margin-left: auto;
-  margin-right: auto;
-  padding-top: 56px;
-  width: 560px;
-}
-
 .content-card {
   background: white;
   border-radius: 4px;
+  width: 560px;
   padding: 24px 24px;
 
   .card-heading {
