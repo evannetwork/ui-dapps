@@ -23,8 +23,8 @@ $walletYellow: #fbe19e;
 .wallet-container {
   position: relative;
 
-  width: 85.60mm;
-  height: 53.98mm;
+  width: 323px;
+  height: 204px;
 }
 
 .evan-wallet {
@@ -37,6 +37,9 @@ $walletYellow: #fbe19e;
   height: 100%;
   padding: 1.5em;
 
+  cursor: pointer;
+
+  border: 2px solid cssVar('bg-level-2');
   border-radius: 15px;
   background-repeat: no-repeat;
   background-size: cover;
@@ -50,6 +53,12 @@ $walletYellow: #fbe19e;
     font-weight: 600;
 
     margin-bottom: 0;
+  }
+
+  &:hover {
+    transition: 0.3s ease-out border;
+
+    border-color: cssVar('primary');
   }
 
   .account-info {

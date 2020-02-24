@@ -20,14 +20,14 @@
 <template>
   <div class="wrapper">
     <span
-      class="evan-address"
+      class="evan-address force-oneline"
       :class="this.class"
       @mouseenter="hover = true;"
       @mouseleave="hover = false;"
     >
       {{ did }}
     </span>
-    <div class="interactions">
+    <div class="interactions force-oneline">
       <button
         class="btn btn-sm btn-icon"
         :title="'_evan.address.copy' | translate"
