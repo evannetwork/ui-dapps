@@ -20,7 +20,7 @@
 <template>
   <div class="content-card">
     <h2 class="card-heading mb-3">
-      {{ '_twin-detail.overview.general-title' | translate }}
+      {{ '_profile.did.service-endpoint-title' | translate }}
     </h2>
   </div>
 </template>

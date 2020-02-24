@@ -20,11 +20,27 @@
 <template>
   <div class="d-flex">
     <div class="content">
-      <div>
-        <div class="heading-row">
-          <h1>DID</h1>
+      <div class="mb-3">
+        <div class="mb-1 d-flex flex-row justify-content-between">
+          <div>
+            <h1>{{ '_profile.did.did-title' | translate }} (DID)</h1>
+            <p>TODO created at 04-21-2020 updated at 04-29-2020</p>
+          </div>
+          <evan-button>
+            {{ '_profile.did.export-document' | translate }}
+          </evan-button>
         </div>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rerum fuga officia dolorum maiores minima nisi soluta? Rem hic deserunt dolore debitis, rerum praesentium quos necessitatibus non eum eos ad tempora.</p>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+          Rerum fuga officia dolorum maiores minima nisi soluta?
+          Rem hic deserunt dolore debitis, rerum praesentium quos necessitatibus non eum eos ad tempora.
+        </p>
+      </div>
+
+      <div class="content-card mb-3">
+        <h2 class="card-heading">
+          {{ '_profile.did.did-title' | translate }}
+        </h2>
       </div>
 
       <service-endpoints
@@ -49,10 +65,10 @@ export default Component;
   padding-top: 56px;
   width: 560px;
 }
-
 .content-card {
   background: white;
   border-radius: 4px;
+  width: 560px;
   padding: 24px 24px;
 
   .card-heading {
