@@ -19,7 +19,7 @@
 
 import { getDomainName, System } from '@evan.network/ui-dapp-browser';
 
-import * as bccHelper from './bccHelper';
+import bccHelper from './bccHelper';
 import EvanLightwallet from './lightwallet';
 import EvanSession from './session';
 import * as web3Helper from './web3Helper';

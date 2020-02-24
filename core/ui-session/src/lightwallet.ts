@@ -172,19 +172,9 @@ export default class EvanLightWallet {
     // if the url was opened using an specific mnemonic and password, use this one!
     }
 
-    if (session.provider === 'internal') {
-      const vault = await EvanLightWallet.loadUnlockedVault();
-
-      if (vault) {
-        return vault.encryptionKey;
-      }
-    } else {
-      const password = await EvanLightWallet.getPassword();
-
-      return EvanLightWallet.getEncryptionKeyFromPassword(
-        getWeb3Instance().eth.defaultAccount,
-        password,
-      );
+    const vault = await EvanLightWallet.loadUnlockedVault();
+    if (vault) {
+      return vault.encryptionKey;
     }
 
     return '';
@@ -211,13 +201,13 @@ export default class EvanLightWallet {
    */
   static async getNewVault(mnemonic: string, password: string): Promise<any> {
     const vault = await EvanLightWallet.createVault(mnemonic, password);
-    const pwDerivedKey = await EvanLightWallet.keyFromPassword(vault, password);
 
-    vault.pwDerivedKey = pwDerivedKey;
-    vault.encryptionKey = EvanLightWallet.getEncryptionKeyFromPassword(
-      EvanLightWallet.getPrimaryAccount(vault),
-      password,
-    );
+    vault.pwDerivedKey = await EvanLightWallet.keyFromPassword(vault, password);
+ 
+    // TODO: shall we use identity here?
+    const primaryAccount = EvanLightWallet.getPrimaryAccount(vault);
+    vault.encryptionKey = customEncryptionKeys[primaryAccount]
+      || EvanLightWallet.getEncryptionKeyFromPassword(primaryAccount, password);
 
     /* if the accountId was specified externally, we should load the first account to be able to run
        calls for this account */
@@ -331,6 +321,8 @@ export default class EvanLightWallet {
          overwriteVaultEncryptionKey for old or custom logic accounts) */
       primaryAccount = EvanLightWallet.getPrimaryAccount(vault);
       if (!customEncryptionKeys[primaryAccount]) {
+        throw new Error(`No encryption key is set for ${primaryAccount}!`
+          + 'Please use overwriteVaultEncryptionKey function or run bccHelper.setEncryptionKeyForAccount before.');
         vault.encryptionKey = EvanLightWallet.getEncryptionKeyFromPassword(
           EvanLightWallet.getPrimaryAccount(vault),
           password,

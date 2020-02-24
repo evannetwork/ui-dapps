@@ -217,7 +217,7 @@ export default class DAppWrapperComponent extends mixins(EvanComponent) {
    * current user information
    */
   userInfo = {
-    address: session.activeAccount, // TODO: wording "address" vs "accountId" in different components
+    address: '', // TODO: wording "address" vs "accountId" in different components
     addressBook: {} as any, // TODO: resolve any
     alias: '',
     loading: false,
@@ -454,6 +454,7 @@ export default class DAppWrapperComponent extends mixins(EvanComponent) {
         case 'password': {
           return new Promise((resolve) => {
             this.loading = false;
+            this.userInfo.address = session.activeAccount;
             this.login = (password: string): void => resolve(password);
           });
         }
@@ -495,7 +496,7 @@ export default class DAppWrapperComponent extends mixins(EvanComponent) {
    */
   async loadUserSpecific(): Promise<void> {
     this.userInfo.loading = true;
-    this.userInfo.address = session.activeAccount;
+    this.userInfo.address = session.activeIdentity;
 
     // load alias from addressbook
     this.userInfo.addressBook = await this.$store.state.runtime.profile.getAddressBook();
@@ -675,7 +676,7 @@ export default class DAppWrapperComponent extends mixins(EvanComponent) {
 
     // load queue for the current account and load the queue entries
     const { runtime } = this.$store.state;
-    const queue = await new EvanQueue(this.$store.state.runtime.activeAccount);
+    const queue = await new EvanQueue(this.$store.state.runtime.activeIdentity);
     const dispatchers = await queue.load('*');
 
     // load all dispatcher instances for this user

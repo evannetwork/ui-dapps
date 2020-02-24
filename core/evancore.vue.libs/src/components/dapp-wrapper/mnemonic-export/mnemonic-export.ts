@@ -18,7 +18,7 @@
 */
 
 // vue imports
-import { lightwallet } from '@evan.network/ui-session';
+import { lightwallet, bccHelper } from '@evan.network/ui-session';
 import * as bcc from '@evan.network/api-blockchain-core';
 
 import Component, { mixins } from 'vue-class-component';
@@ -51,11 +51,11 @@ export default class MnemonicExport extends mixins(EvanComponent) {
   async created() {
     const runtime = this.getRuntime();
 
-    this.address = runtime.activeAccount;
+    this.address = runtime.activeIdentity;
     this.mnemonic = await this.getMnemonic();
     this.now = new Date();
     this.alias = window.localStorage.getItem('evan-alias');
-    this.identityAddress = await runtime.verifications.getIdentityForAccount(this.address, true);
+    this.identityAddress = await bccHelper.getIdentityForAccount(this.address);
 
     // Show the mnemonic export directly and do not allow closing.
     this.mnemonic && this.$nextTick(() => this.showModal());

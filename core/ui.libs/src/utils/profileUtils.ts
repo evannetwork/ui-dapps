@@ -42,17 +42,17 @@ export const aliasCache = { };
  */
 export async function getUserAlias(
   runtime: Runtime,
-  accountId: string = runtime.activeAccount,
+  accountId: string = runtime.activeIdentity,
   accountDetails?: any,
 ): Promise<string> {
-  const cacheID = `${runtime.activeAccount}.${accountId}`;
+  const cacheID = `${runtime.activeIdentity}.${accountId}`;
 
   if (!aliasCache[cacheID]) {
     aliasCache[cacheID] = (async () => {
       const otherProfile = new Profile({
         ...(runtime as any),
         profileOwner: accountId,
-        accountId: runtime.activeAccount,
+        accountId: runtime.activeIdentity,
       });
       let details = { ...accountDetails };
 
@@ -93,7 +93,7 @@ export async function getProfileType(runtime: Runtime, accountId: string): Promi
     const otherProfile = new Profile({
       ...(runtime as any),
       profileOwner: accountId,
-      accountId: runtime.activeAccount,
+      accountId: runtime.activeIdentity,
     });
 
     const { profileType } = await otherProfile.getProfileProperty(
@@ -149,5 +149,5 @@ export async function getContacts(
     return contacts;
   }
 
-  return contacts.filter((entry) => entry.value !== runtime.activeAccount && !/@/.test(entry.value));
+  return contacts.filter((entry) => entry.value !== runtime.activeIdentity && !/@/.test(entry.value));
 }

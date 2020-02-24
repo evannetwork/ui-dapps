@@ -72,7 +72,7 @@ export default class IdentNotaryRequestComponent extends mixins(EvanComponent) {
   /**
    * Currents user active account that must be passed into the info-content component
    */
-  activeAccount = '';
+  activeIdentity = '';
   identity = '';
 
   /**
@@ -283,9 +283,9 @@ export default class IdentNotaryRequestComponent extends mixins(EvanComponent) {
    */
   async loadFunds() {
     const runtime: bcc.Runtime = (<any>this).getRuntime();
-    const fundsAvailable = await runtime.web3.eth.getBalance(runtime.activeAccount);
-    this.activeAccount = runtime.activeAccount;
-    this.identity = await runtime.verifications.getIdentityForAccount(this.activeAccount, true);
+    const fundsAvailable = await runtime.web3.eth.getBalance(runtime.activeIdentity);
+    this.activeIdentity = runtime.activeIdentity;
+    this.identity = await runtime.verifications.getIdentityForAccount(this.activeIdentity, true);
     this.readableFunds = parseFloat(runtime.web3.utils.fromWei(fundsAvailable)).toFixed(2);
     this.enoughFunds = runtime.web3.utils
       .toBN(fundsAvailable)
@@ -335,7 +335,7 @@ export default class IdentNotaryRequestComponent extends mixins(EvanComponent) {
   async requestIdentification() {
     this.sending = true;
     const runtime: bcc.Runtime = (<any>this).getRuntime();
-    const organizationEvanId = await runtime.verifications.getIdentityForAccount(runtime.activeAccount, true);
+    const organizationEvanId = await runtime.verifications.getIdentityForAccount(runtime.activeIdentity, true);
 
     // define the request data, so we can append it into the attachment and as payload in the body
     const profileDApp = (this as any).$store.state.profileDApp;
@@ -344,7 +344,7 @@ export default class IdentNotaryRequestComponent extends mixins(EvanComponent) {
       organizationContact: this.requestForm.contact.value,
       organizationCountry: this.companyData.contact.country,
       organizationEvanId: `did:evan:${organizationEvanId}`,
-      accountId: runtime.activeAccount,
+      accountId: runtime.activeIdentity,
       court: this.companyData.registration.court,
       organizationRegistration: `${this.companyData.registration.register} ${this.companyData.registration.registerNumber}`,
       organizationName: await profileUtils.getUserAlias(

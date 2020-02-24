@@ -136,7 +136,7 @@ export default class SignIn extends mixins(EvanComponent) {
 
       // get the current account id
       try {
-        password._error = !(await bccHelper.isAccountPasswordValid(this.accountId, password.value));
+        password._error = !(await bccHelper.setEncryptionKeyForAccount(this.accountId, password.value));
       } catch (ex) {
         password._error = true;
       }

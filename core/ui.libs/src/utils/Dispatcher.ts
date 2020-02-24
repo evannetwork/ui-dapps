@@ -144,7 +144,7 @@ export default class Dispatcher {
     asArray = true,
   ): Promise<DispatcherInstance[]|{[name: string]: DispatcherInstance}> {
     // create a new queue and initialize it
-    const uiCoreQueue = await new EvanQueue(runtime.activeAccount);
+    const uiCoreQueue = await new EvanQueue(runtime.activeIdentity);
 
     // recover all previous running instances for this dispatcher
     const entries = await uiCoreQueue.load(this.id);
@@ -183,7 +183,7 @@ export default class Dispatcher {
    * @param      {number}  price      The custom calculated price
    */
   async start(runtime: Runtime, data: any, stepIndex = 0, price?: number): Promise<DispatcherInstance> {
-    const uiCoreQueue = await new EvanQueue(runtime.activeAccount);
+    const uiCoreQueue = await new EvanQueue(runtime.activeIdentity);
 
     /* map the original dispatcher instance to the current one => other dapps can create a
        dispatcher instance pointing to the original ens and can watch and start the dispatcher

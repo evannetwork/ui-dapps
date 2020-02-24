@@ -56,7 +56,7 @@
             <evan-profile-preview
               size="default"
               :editable="false"
-              :address="activeAccount"
+              :address="activeIdentity"
             />
 
             <template v-if="companyData.contact.country !== 'DE' || missingCompanyFields.registration.length !== 0 || missingCompanyFields.contact.length !== 0">

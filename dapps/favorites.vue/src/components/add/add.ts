@@ -94,7 +94,7 @@ export default class AddComponent extends mixins(EvanComponent) {
       // check if the description exists
       try {
         const description = await runtime.description.getDescription(
-          this.favoriteForm.address.value, runtime.activeAccount);
+          this.favoriteForm.address.value, runtime.activeIdentity);
 
         // if it is invalid, show the not found
         if (description && description.public) {

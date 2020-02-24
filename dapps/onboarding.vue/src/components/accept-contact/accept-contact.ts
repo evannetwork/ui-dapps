@@ -130,7 +130,7 @@ export default class AcceptContact extends mixins(EvanComponent) {
       // trigger smart agent to pay out credit eves
       await axios.post(`${agentUrl}/api/smart-agents/onboarding/accept`, {
         invitationId: this.$route.query.onboardingID,
-        accountId: this.runtime.activeAccount,
+        accountId: this.runtime.activeIdentity,
       });
 
 

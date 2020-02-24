@@ -31,7 +31,7 @@ const dispatcher = new Dispatcher(
 dispatcher
   .step(async (instance: DispatcherInstance, data: any) => {
     const twin = new DigitalTwin(instance.runtime as DigitalTwinOptions, {
-      accountId: instance.runtime.activeAccount,
+      accountId: instance.runtime.activeIdentity,
       address: data.address,
     });
     await twin.removeFromFavorites();

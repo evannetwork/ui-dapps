@@ -26,7 +26,7 @@ import {
 } from '@evan.network/api-blockchain-core';
 
 import lightwallet from './lightwallet';
-import * as bccHelper from './bccHelper';
+import bccHelper from './bccHelper';
 
 // external executor variables
 let agentExecutor;
@@ -61,22 +61,6 @@ export default class EvanSession {
    * Has the account a old profile, that is bount to the account and not to the identity?
    */
   static isOldProfile: boolean;
-
-  static get provider(): string {
-    let provider = 'internal';
-
-    if (agentExecutor) {
-      provider = 'agent-executor';
-    } else if (queryParams.provider) {
-      provider = queryParams.provider;
-    }
-
-    return provider;
-  }
-
-  static set provider(value: string) {
-    window.localStorage['evan-provider'] = value;
-  }
 
   static get activeAccount(): string {
     switch (EvanSession.provider) {
@@ -119,9 +103,25 @@ export default class EvanSession {
     return window.localStorage['evan-identity'] || EvanSession.accountIdentity;
   }
 
-  static set activeIdentity(accountId: string) {
-    lastIdentity = accountId;
-    window.localStorage['evan-account'] = accountId;
+  static set activeIdentity(identity: string) {
+    lastIdentity = identity;
+    window.localStorage['evan-identity'] = identity;
+  }
+
+  static get provider(): string {
+    let provider = 'internal';
+
+    if (agentExecutor) {
+      provider = 'agent-executor';
+    } else if (queryParams.provider) {
+      provider = queryParams.provider;
+    }
+
+    return provider;
+  }
+
+  static set provider(value: string) {
+    window.localStorage['evan-provider'] = value;
   }
 
   /**
@@ -182,6 +182,65 @@ export default class EvanSession {
   }
 
   /**
+   * Logout the current user. Removes the active account, provider and terms of use acceptance.
+   *
+   * @param      {boolean}  disabledReload  disable window reload
+   */
+  static logout(reload = true): void {
+    // reset account and providers
+    EvanSession.provider = '';
+    EvanSession.activeAccount = '';
+    EvanSession.activeIdentity = '';
+
+    // clear localStorage values
+    delete window.localStorage['evan-terms-of-use'];
+    delete window.localStorage['evan-account'];
+    delete window.localStorage['evan-provider'];
+    delete window.localStorage['evan-alias'];
+
+    // remove decrypted vault from runtime and localStorage
+    lightwallet.deleteActiveVault();
+
+    // reload the window
+    if (reload) {
+      setTimeout(() => window.location.reload());
+    }
+  }
+
+  /**
+   * Watches for account changes and reload the page if nessecary
+   */
+  static onAccountChange(callback: Function): Function {
+    const storage = window.localStorage;
+    const watcher = (event: StorageEvent): void => {
+      if (event.key === 'evan-account' && lastAccount !== storage['evan-account']) {
+        EvanSession.isOldProfile = false;
+        callback(EvanSession.activeAccount);
+      }
+    };
+
+    lastAccount = storage['evan-account'];
+    window.addEventListener('storage', watcher);
+    return (): void => window.removeEventListener('storage', watcher);
+  }
+
+  /**
+   * Watches for account changes and reload the page if nessecary
+   */
+  static onIdentityChange(callback: Function): Function {
+    const storage = window.localStorage;
+    const watcher = (event: StorageEvent): void => {
+      if (event.key === 'evan-identity' && lastIdentity !== storage['evan-identity']) {
+        callback(EvanSession.activeAccount);
+      }
+    };
+
+    lastIdentity = storage['evan-identity'];
+    window.addEventListener('storage', watcher);
+    return (): void => window.removeEventListener('storage', watcher);
+  }
+
+  /**
    * Create the runtimes for the current session and uses the event handler to handle login /
    * onboarding processes.
    *
@@ -201,20 +260,10 @@ export default class EvanSession {
         if (activeAccount && window.localStorage['evan-vault']) {
           loggedIn = true;
 
-          // setup runtime and save it to the axios store
-          EvanSession.accountIdentity = await bccHelper.getIdentityForAccount(
-            activeAccount,
-            await bccHelper.getContextLessRuntime(),
-          );
-
-          isOnboarded = await bccHelper.isOnboarded(EvanSession.accountIdentity);
+          isOnboarded = await bccHelper.isOnboarded(activeAccount, activeIdentity);
           // check for old profile
-          if (!isOnboarded) {
-            isOnboarded = await bccHelper.isOnboarded(activeAccount);
-
-            if (isOnboarded) {
-              EvanSession.isOldProfile = true;
-            }
+          if (isOnboarded) {
+            EvanSession.isOldProfile = await bccHelper.checkUseIdentity(activeAccount, activeIdentity);
           }
         }
 
@@ -279,68 +328,31 @@ export default class EvanSession {
   }
 
   /**
-   * Logout the current user. Removes the active account, provider and terms of use acceptance.
-   *
-   * @param      {boolean}  disabledReload  disable window reload
+   * Checks if currently a active account and a identity is set, so we can check for old / new
+   * profiles to enable useIdentity. If useIdentity is false, force activeIdentity to activeAccount.
    */
-  static logout(reload = true): void {
-    // reset account and providers
-    EvanSession.provider = '';
-    EvanSession.activeAccount = '';
-    EvanSession.activeIdentity = '';
+  static async initialCheck(): Promise<void> {
+    if (EvanSession.activeAccount) {
+      const useIdentity = await bccHelper.checkUseIdentity(
+        EvanSession.activeAccount,
+        EvanSession.accountIdentity,
+      );
 
-    // clear localStorage values
-    delete window.localStorage['evan-terms-of-use'];
-    delete window.localStorage['evan-account'];
-    delete window.localStorage['evan-provider'];
-    delete window.localStorage['evan-alias'];
-
-    // remove decrypted vault from runtime and localStorage
-    lightwallet.deleteActiveVault();
-
-    // reload the window
-    if (reload) {
-      setTimeout(() => window.location.reload());
+      if (useIdentity) {
+        EvanSession.activeIdentity = await bccHelper.getIdentityForAccount(EvanSession.activeAccount);
+      } else {
+        EvanSession.activeIdentity = EvanSession.activeAccount;
+      }
+    } else {
+      EvanSession.activeIdentity = '';
     }
-  }
-
-  /**
-   * Watches for account changes and reload the page if nessecary
-   */
-  static onAccountChange(callback: Function): Function {
-    const storage = window.localStorage;
-    const watcher = (event: StorageEvent): void => {
-      if (event.key === 'evan-account' && lastAccount !== storage['evan-account']) {
-        EvanSession.isOldProfile = false;
-        callback(EvanSession.activeAccount);
-      }
-    };
-
-    lastAccount = storage['evan-account'];
-    window.addEventListener('storage', watcher);
-    return (): void => window.removeEventListener('storage', watcher);
-  }
-
-  /**
-   * Watches for account changes and reload the page if nessecary
-   */
-  static onIdentityChange(callback: Function): Function {
-    const storage = window.localStorage;
-    const watcher = (event: StorageEvent): void => {
-      if (event.key === 'evan-identity' && lastIdentity !== storage['evan-identity']) {
-        callback(EvanSession.activeAccount);
-      }
-    };
-
-    lastIdentity = storage['evan-identity'];
-    window.addEventListener('storage', watcher);
-    return (): void => window.removeEventListener('storage', watcher);
   }
 
   /**
    * if no session was started before, initialize everything!
    */
   static async start(eventHandler: Function, watchForChanges = true): Promise<Function> {
+    await EvanSession.initialCheck();
     // early exit, when session was already started
     if (!(EvanSession.accountRuntime && EvanSession.identityRuntime)) {
       await EvanSession.setRuntimes(eventHandler);
@@ -350,18 +362,22 @@ export default class EvanSession {
     // create watchers, so runtimes will update on account / identity switches
     let watchers = [];
     if (watchForChanges) {
+      const onChange = async (): Promise<void> => {
+        await EvanSession.initialCheck();
+        EvanSession.identityRuntime = null;
+        await EvanSession.setRuntimes(eventHandler);
+      };
+
       watchers = [
         EvanSession.onAccountChange(async () => {
           // reset current session runtimes
           EvanSession.accountRuntime = null;
-          EvanSession.identityRuntime = null;
-          await EvanSession.setRuntimes(eventHandler);
+          await onChange();
           eventHandler('account');
           eventHandler('runtimeUpdate');
         }),
         EvanSession.onIdentityChange(async () => {
-          EvanSession.identityRuntime = null;
-          await EvanSession.setRuntimes(eventHandler);
+          await onChange();
           eventHandler('identity');
           eventHandler('runtimeUpdate');
         }),

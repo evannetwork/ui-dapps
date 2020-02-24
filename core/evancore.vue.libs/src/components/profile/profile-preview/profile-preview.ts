@@ -106,7 +106,7 @@ export default class ProfilePreviewComponent extends mixins(EvanComponent) {
   async created(): Promise<void> {
     const runtime = this.getRuntime() as any;
     this.profile = new bcc.Profile({
-      accountId: runtime.activeAccount,
+      accountId: runtime.activeIdentity,
       profileOwner: this.address,
       ...runtime,
     });
@@ -159,7 +159,7 @@ export default class ProfilePreviewComponent extends mixins(EvanComponent) {
    * Can the edit modee be used?
    */
   canEdit(): boolean {
-    return this.editable && this.size === 'lg' && this.address === this.$store.state.runtime.activeAccount;
+    return this.editable && this.size === 'lg' && this.address === this.$store.state.runtime.activeIdentity;
   }
 
   /**

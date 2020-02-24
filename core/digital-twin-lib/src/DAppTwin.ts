@@ -84,7 +84,7 @@ class DAppTwin extends DigitalTwin {
    * Call super and initialize new twin class.
    */
   constructor(vue: EvanComponent, runtime: Runtime, address: string) {
-    super(runtime as DigitalTwinOptions, { accountId: runtime.activeAccount, address });
+    super(runtime as DigitalTwinOptions, { accountId: runtime.activeIdentity, address });
     this.containerContracts = { };
     this.baseConstructor(vue, runtime, address);
   }

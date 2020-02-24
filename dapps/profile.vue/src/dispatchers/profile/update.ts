@@ -33,7 +33,7 @@ const dispatcher = new Dispatcher(
 dispatcher
   .step(async (instance: DispatcherInstance, data: any) => {
     const profile = new bcc.Profile({
-      accountId: instance.runtime.activeAccount,
+      accountId: instance.runtime.activeIdentity,
       profileOwner: data.address,
       ...instance.runtime,
     });
@@ -43,7 +43,7 @@ dispatcher
     } catch (ex) { }
 
     // do not allow profile migration for foreign profiles
-    if (data.address && instance.runtime.activeAccount !== data.address) {
+    if (data.address && instance.runtime.activeIdentity !== data.address) {
       if (!profile.profileContainer) {
         throw new Error('Cannot migrate the profile for an other account!');
       }

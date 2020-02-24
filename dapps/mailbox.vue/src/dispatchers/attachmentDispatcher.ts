@@ -33,7 +33,7 @@ dispatcher
     const runtime = instance.runtime;
     if (data.attachment.type === 'commKey') {
       const privateKey = await runtime.profile.getContactKey(
-        runtime.activeAccount,
+        runtime.activeIdentity,
         'dataKey'
       );
       const myPubKey = await runtime.profile.getPublicKey();
@@ -73,14 +73,14 @@ dispatcher
       for (let verification of data.attachment.verifications) {
         // load nested verifications
         const nestedVerification = await runtime.verifications.getNestedVerificationsV2(
-          runtime.activeAccount,
+          runtime.activeIdentity,
           verification,
           false
         );
 
         await runtime.verifications.confirmVerification(
-          runtime.activeAccount,
-          runtime.activeAccount,
+          runtime.activeIdentity,
+          runtime.activeIdentity,
           nestedVerification.verifications[0].details.id,
         );
       }
@@ -93,7 +93,7 @@ dispatcher
       if (!storeValue) {
         const contractDefinition = await runtime.description.getDescriptionFromContract(
           data.attachment.address,
-          runtime.activeAccount
+          runtime.activeIdentity
         );
         storeValue = contractDefinition.public;
       }

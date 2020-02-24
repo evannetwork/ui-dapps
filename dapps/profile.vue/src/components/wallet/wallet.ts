@@ -70,6 +70,6 @@ export default class WalletComponent extends mixins(EvanComponent) {
   }
 
   async loadBalance() {
-    this.balance = parseFloat(await bccHelper.getBalance((this as any).getRuntime().activeAccount));
+    this.balance = await bccHelper.getBalance((this as any).getRuntime().activeAccount);
   }
 }

@@ -40,7 +40,7 @@ export default class SharingUtils {
   static async getTwinShareBMail(vueInstance: EvanComponent): Promise<BmailContent> {
     const runtime = vueInstance.getRuntime();
     const { twin } = vueInstance.$store.state;
-    const alias = await profileUtils.getUserAlias(runtime, runtime.activeAccount);
+    const alias = await profileUtils.getUserAlias(runtime, runtime.activeIdentity);
     // ensure profile container is setup
     await runtime.profile.loadForAccount();
 
@@ -52,7 +52,7 @@ export default class SharingUtils {
 
     return {
       content: {
-        from: runtime.activeAccount,
+        from: runtime.activeIdentity,
         fromAlias: alias,
         // TODO: Hard coded content for now. This must be translated in the bmail-dapp instead of here.
         title: 'New access to Digital Twin',
@@ -72,13 +72,13 @@ export default class SharingUtils {
 
   static async getProfileShareBMail(vueInstance: EvanComponent): Promise<BmailContent> {
     const runtime = vueInstance.getRuntime();
-    const alias = await profileUtils.getUserAlias(runtime, runtime.activeAccount);
+    const alias = await profileUtils.getUserAlias(runtime, runtime.activeIdentity);
     // ensure profile container is setup
     await runtime.profile.loadForAccount();
 
     return {
       content: {
-        from: vueInstance.getRuntime().activeAccount,
+        from: vueInstance.getRuntime().activeIdentity,
         fromAlias: alias,
         title: vueInstance.$t('_profile.bmail.share.title'),
         body: vueInstance.$t('_profile.bmail.share.body', { alias }).replace(/\n/g, '<br>'),
@@ -87,7 +87,7 @@ export default class SharingUtils {
             fullPath: [
               `/${vueInstance.dapp.rootEns}`,
               `profile.vue.${getDomainName()}`,
-              vueInstance.getRuntime().activeAccount,
+              vueInstance.getRuntime().activeIdentity,
             ].join('/'),
             type: 'url',
           },

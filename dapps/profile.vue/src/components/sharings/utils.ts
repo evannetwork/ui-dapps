@@ -107,7 +107,7 @@ export const getContacts = async (runtime): Promise<ContactInterface[]> => {
  * @param accountId
  */
 export const getPermissions = async (vueInstance, containerAddress,
-  accountId = vueInstance.getRuntime().activeAccount) => {
+  accountId = vueInstance.getRuntime().activeIdentity) => {
   const container = getContainer(vueInstance.getRuntime(), containerAddress, accountId);
   const shareConfigs = await container.getContainerShareConfigs();
 
@@ -152,7 +152,7 @@ export const getProfileShareBMail = async (vueInstance) => {
 
   return {
     content: {
-      from: vueInstance.getRuntime().activeAccount,
+      from: vueInstance.getRuntime().activeIdentity,
       fromAlias: alias,
       title: vueInstance.$t('_profile.bmail.share.title'),
       body: vueInstance.$t('_profile.bmail.share.body', { alias }).replace(/\n/g, '<br>'),
@@ -161,7 +161,7 @@ export const getProfileShareBMail = async (vueInstance) => {
           fullPath: [
             `/${ vueInstance.dapp.rootEns }`,
             `profile.vue.${ getDomainName() }`,
-            vueInstance.getRuntime().activeAccount,
+            vueInstance.getRuntime().activeIdentity,
           ].join('/'),
           type: 'url',
         },

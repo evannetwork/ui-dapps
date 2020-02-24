@@ -144,7 +144,7 @@ export default class SharingOverview extends mixins(EvanComponent) {
 
       // iterate through all permitted users and apply them to the permitted users mapping
       unique.forEach((address: string): void => {
-        if (address !== runtime.activeAccount) {
+        if (address !== runtime.activeIdentity) {
           if (!permittedUsers[address]) {
             permittedUsers[address] = {
               type: profileUtils.getProfileType(runtime, address),

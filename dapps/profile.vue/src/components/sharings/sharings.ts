@@ -222,9 +222,9 @@ class ProfileSharingsComponent extends mixins(EvanComponent) {
     const runtime = this.getRuntime();
     let profileAddress = runtime.profile.profileContract.options.address;
 
-    if (runtime.activeAccount !== this.$route.params.address) {
+    if (runtime.activeIdentity !== this.$route.params.address) {
       const profile = new Profile({
-        accountId: runtime.activeAccount,
+        accountId: runtime.activeIdentity,
         profileOwner: this.$route.params.address,
         ...(runtime as ProfileOptions),
       });

@@ -25,7 +25,7 @@
       :handleShare="() => $store.commit('toggleSidePanel', 'sharing')"
       :i18nScope="'_profile.device.detail'"
       :isLoading="$store.state.dispatcher.curr.running.updateProfileDispatcher"
-      :shareable="$route.params.address === $store.state.runtime.activeAccount"
+      :shareable="$route.params.address === $store.state.runtime.activeIdentity"
       :title="'_profile.device.detail.title' | translate"
       @save="changeProfileData()">
     </evan-form>

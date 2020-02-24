@@ -20,6 +20,7 @@
 // vue imports
 import Component, { mixins } from 'vue-class-component';
 import { Prop } from 'vue-property-decorator';
+import { utils } from '@evan.network/ui-dapp-browser';
 import { session, bccHelper, lightwallet } from '@evan.network/ui-session';
 
 import { getDomainName } from '../../utils';
@@ -89,11 +90,12 @@ export default class LoginComponent extends mixins(EvanComponent) {
 
       // get the current account id
       try {
-        this.form.password.valid = await bccHelper.isAccountPasswordValid(
+        this.form.password.valid = await bccHelper.setEncryptionKeyForAccount(
           this.accountId,
           this.form.password.value,
         );
       } catch (ex) {
+        utils.devLog(ex, 'error');
         this.form.password.value = false;
       }
 

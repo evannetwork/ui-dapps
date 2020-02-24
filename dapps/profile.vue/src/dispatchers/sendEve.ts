@@ -33,7 +33,7 @@ dispatcher
     const runtime = instance.runtime;
 
     await runtime.executor.executeSend({
-      from: runtime.activeAccount,
+      from: runtime.activeIdentity,
       to: data.accountId,
       value: runtime.web3.utils.toWei(data.amount.toString(), 'ether'),
     });

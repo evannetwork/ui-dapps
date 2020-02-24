@@ -41,7 +41,7 @@ export class ContactsService {
     const data: Contact[] = [];
     Object.keys(this.contacts.profile).forEach(async (contact) => {
       // filter out own account
-      if (contact !== this.runtime.activeAccount) {
+      if (contact !== this.runtime.activeIdentity) {
         const type = await profileUtils.getProfileType(this.runtime, contact);
         data.push({
           address: contact,

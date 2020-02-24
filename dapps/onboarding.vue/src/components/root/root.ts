@@ -38,7 +38,7 @@ export default class Root extends mixins(EvanComponent) {
     if (activeAccount && window.localStorage['evan-vault']) {
       let isOnboarded = false;
       try {
-        isOnboarded = await bccHelper.isAccountOnboarded(activeAccount);
+        isOnboarded = await bccHelper.isOnboarded(activeAccount);
       } catch (ex) { }
 
       if (isOnboarded) {

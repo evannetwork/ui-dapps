@@ -28,7 +28,7 @@
       :i18nScope="'_profile.company.contact'"
       :isLoading="!onlyForm && $store.state.dispatcher.curr.running.updateProfileDispatcher"
       :onlyForm="onlyForm"
-      :shareable="$store.state.runtime && $route.params.address === $store.state.runtime.activeAccount"
+      :shareable="$store.state.runtime && $route.params.address === $store.state.runtime.activeIdentity"
       :stacked="stacked"
       :title="'_profile.company.contact.title' | translate"
       @save="changeProfileData()">
