@@ -16,14 +16,11 @@
   Fifth Floor, Boston, MA, 02110-1301 USA, or download the license from
   the following URL: https://evan.network/license/
 */
-// map the original System.path to @evan.network/api-blockchain-core
-try {
-  // eslint-disable-next-line
-  const { getDomainName, System } = require('@evan.network/ui-dapp-browser');
-  System.map['@evan.network/api-blockchain-core'] = `bcc.${getDomainName()}!dapp-content`;
-  System.map['@evan.network/dbcp'] = `bcc.${getDomainName()}!dapp-content`;
-} catch (ex) {
-  // ignore this warning
-}
 
-export * from '@evan.network/api-blockchain-core';
+// load not the name from package.json, it useds @evan.network/ui-vue-core and not the dbcp origin
+module.exports = require('../../scripts/dapp/webpack.config')(
+  require('./dbcp.json').public.name,
+  require('path').resolve(__dirname, './dist'),
+  true,
+  false,
+);

@@ -16,14 +16,20 @@
   Fifth Floor, Boston, MA, 02110-1301 USA, or download the license from
   the following URL: https://evan.network/license/
 */
-// map the original System.path to @evan.network/api-blockchain-core
-try {
-  // eslint-disable-next-line
-  const { getDomainName, System } = require('@evan.network/ui-dapp-browser');
-  System.map['@evan.network/api-blockchain-core'] = `bcc.${getDomainName()}!dapp-content`;
-  System.map['@evan.network/dbcp'] = `bcc.${getDomainName()}!dapp-content`;
-} catch (ex) {
-  // ignore this warning
+
+const path = require('path');
+const fs = require('fs');
+const { runExec, scriptsFolder, isDirectory, getDirectories } = require('../../../scripts/lib');
+const dbcpFolder = path.resolve(`../../node_modules/@evan.network/dbcp`);
+const bccFolder = path.resolve(`../../node_modules/@evan.network/api-blockchain-core`);
+
+async function build() {
+  if (fs.existsSync(`${ dbcpFolder }/src/index.ts`)) {
+    await runExec('npm run build', dbcpFolder);
+  }
+  if (fs.existsSync(`${ bccFolder }/src/index.ts`)) {
+    await runExec('npm run build', bccFolder);
+  }
 }
 
-export * from '@evan.network/api-blockchain-core';
+build();
