@@ -276,7 +276,8 @@ export default class BccHelper {
     let checks: Function[];
     if (useIdentity) {
       // 1. Check for new identity logic
-      checks = [(): Promise<boolean> => passwordCheck(accountIdentity)];
+      // TODO: use account identity salting! (passwordCheck(accountIdentity))
+      checks = [(): Promise<boolean> => passwordCheck(accountId)];
     } else {
       checks = [
         // 2. check for password salting with account id
