@@ -24,37 +24,48 @@
         <h3 class="font-weight-bold mb-0">
           {{ '_profile.verifications.title' | translate }}
         </h3>
-        <button class="btn" @click="rerender = true; $nextTick(() => rerender = false);">
-          <i class="mdi mdi-reload"></i>
+        <button
+          class="btn"
+          @click="rerender = true; $nextTick(() => rerender = false);"
+        >
+          <i class="mdi mdi-reload" />
           <evan-tooltip :placement="'bottom'">
             {{ `_profile.verifications.reload` | translate }}
           </evan-tooltip>
         </button>
-      </div>  
-      <span class="mx-auto"></span>
+      </div>
+      <span class="mx-auto" />
       <div v-if="canIssue">
         <notary-action-issue
+          ref="orgIdentIssue"
           :address="address"
-          ref="orgIdentIssue">
-        </notary-action-issue>
-        <button type="button" class="btn btn-primary"
+        />
+        <button
           id="ident-request"
-          @click="$refs.orgIdentIssue.show()">
+          type="button"
+          class="btn btn-primary"
+          @click="$refs.orgIdentIssue.show()"
+        >
           {{ `_profile.verifications.notary.issue.issue` | translate }}
-          <i class="mdi mdi-arrow-right label ml-3"></i>
+          <i class="mdi mdi-arrow-right label ml-3" />
         </button>
       </div>
     </div>
     <p>{{ '_profile.verifications.description' | translate }}</p>
-    <div class="w-100 mt-5 d-flex flex-wrap flex-row"
-      v-if="!rerender">
-      <evan-loading v-if="loading"></evan-loading>
+    <div
+      v-if="!rerender"
+      class="w-100 mt-5 d-flex flex-wrap flex-row"
+    >
+      <evan-loading v-if="loading" />
       <template v-else>
-        <div class="text-center mt-5" v-if="type !== 'company'">
+        <div
+          v-if="type !== 'company'"
+          class="text-center mt-5"
+        >
           <h5>{{ '_profile.type.no-verifications-avaiable' | translate }}</h5>
         </div>
         <template v-else-if="type === 'company'">
-          <notary-verification :address="address"></notary-verification>
+          <notary-verification :address="address" />
         </template>
       </template>
     </div>
@@ -62,8 +73,9 @@
 </template>
 
 <script lang="ts">
-  import Component from './overview';
-  export default Component;
+import Component from './overview';
+
+export default Component;
 </script>
 
 <style lang="scss">

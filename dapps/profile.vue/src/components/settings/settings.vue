@@ -19,7 +19,7 @@
 
 <template>
   <div class="container-wide">
-    <evan-loading v-if="loading"></evan-loading>
+    <evan-loading v-if="loading" />
     <template v-else>
       <div class="d-flex mb-5 align-items-center">
         <div style="width: calc(100% - 200px)">
@@ -33,13 +33,22 @@
         <label for="language">
           {{ `_profile.settings.language` | translate }}
         </label>
-        <select class="form-control custom-select"
-          id="language" ref="language"
+        <select
+          id="language"
+          ref="language"
           v-model="language"
-          @change="languageChanged()">
-          <option value="">{{ '_profile.settings.languages.browser' | translate }}</option>
-          <option value="de">{{ '_profile.settings.languages.de' | translate }}</option>
-          <option value="en">{{ '_profile.settings.languages.en' | translate }}</option>
+          class="form-control custom-select"
+          @change="languageChanged()"
+        >
+          <option value="">
+            {{ '_profile.settings.languages.browser' | translate }}
+          </option>
+          <option value="de">
+            {{ '_profile.settings.languages.de' | translate }}
+          </option>
+          <option value="en">
+            {{ '_profile.settings.languages.en' | translate }}
+          </option>
         </select>
         <span class="text-muted small">
           {{ '_profile.settings.reload-hint' | translate }}
@@ -49,34 +58,42 @@
       <div class="white-box border-smooth rounded p-4 mt-3">
         <div class="d-flex">
           <evan-form-control-checkbox
-            class="mr-3" style="min-width: 0;"
             id="devMode"
             v-model="devMode"
+            class="mr-3"
+            style="min-width: 0;"
             @input="devModeChanged()"
           />
-          <label class="form-check-label" for="devMode">
-            {{  '_profile.settings.developer-mode' | translate }}
+          <label
+            class="form-check-label"
+            for="devMode"
+          >
+            {{ '_profile.settings.developer-mode' | translate }}
           </label>
         </div>
 
         <template v-if="devMode">
           <div class="d-flex align-items-center mt-3">
             <evan-form-control-checkbox
-              class="mr-3" style="min-width: 0;"
               id="devDomainEnabled"
               v-model="devDomainEnabled"
+              class="mr-3"
+              style="min-width: 0;"
               @input="devDomainChanged()"
             />
             <div class="form-group w-100">
               <label for="devDomain">
                 {{ `_profile.settings.dev-domain.title` | translate }}
               </label>
-              <input class="form-control"
-                id="devDomain" ref="devDomain"
+              <input
+                id="devDomain"
+                ref="devDomain"
+                v-model="devDomain"
+                class="form-control"
                 :placeholder="`_profile.settings.dev-domain.desc` | translate"
                 :disabled="!devDomainEnabled"
-                v-model="devDomain"
-                @change="devDomainChanged()">
+                @change="devDomainChanged()"
+              >
             </div>
           </div>
           <span class="text-muted small">
@@ -89,7 +106,7 @@
 </template>
 
 <script lang="ts">
-  import Component from './settings';
-  export default Component;
-</script>
+import Component from './settings';
 
+export default Component;
+</script>

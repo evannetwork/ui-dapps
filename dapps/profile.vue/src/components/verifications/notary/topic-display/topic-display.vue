@@ -19,11 +19,18 @@
 
 <template>
   <div>
-    <evan-card class="mt-3" type="filled" highlight="true"
-      @click="showDetail()">
-      <evan-loading v-if="loading"></evan-loading>
+    <evan-card
+      class="mt-3"
+      type="filled"
+      highlight="true"
+      @click="showDetail()"
+    >
+      <evan-loading v-if="loading" />
       <template v-else>
-        <img :src="`${ $store.state.uiLibBaseUrl }/assets/verification.svg`" width="80" />
+        <img
+          :src="`${ $store.state.uiLibBaseUrl }/assets/verification.svg`"
+          width="80"
+        >
         <h5 class="font-weight-semibold">
           {{ title }}
         </h5>
@@ -37,36 +44,40 @@
           {{ issuerName }}
         </small>
 
-        <button type="button"
-          class="btn btn-primary mt-3"
+        <button
           v-if="verification.status === 'yellow'"
+          type="button"
+          class="btn btn-primary mt-3"
           :disabled="accepting"
-          @click="acceptVerification()">
+          @click="acceptVerification()"
+        >
           {{ `_profile.verifications.notary.verification.accept` | translate }}
         </button>
       </template>
     </evan-card>
-    <evan-swipe-panel class="light"
+    <evan-swipe-panel
       v-if="!loading"
-      alignment="right"
       ref="verificationDetail"
-      showBackdrop="true"
+      class="light"
+      alignment="right"
+      show-backdrop="true"
       type="default"
-      :isOpen="$store.state.uiState.swipePanel === topic"
-      @hide="$store.state.uiState.swipePanel = ''">
+      :is-open="$store.state.uiState.swipePanel === topic"
+      @hide="$store.state.uiState.swipePanel = ''"
+    >
       <div class="h-100 d-flex flex-column">
         <div>
           <div class="text-center">
             <img
               width="80"
               :src="`${ $store.state.uiLibBaseUrl }/assets/verification.svg`"
-            />
+            >
             <h3 class="font-weight-semibold mt-3">
               {{ title }}
             </h3>
             <p :class="{ 'text-primary': !isExpired, 'text-warning': isExpired }">
-                {{ expiredTranslationString }}
-                {{ expirationDate ? (expirationDate | moment('LLL')) : ''}}
+              {{ expiredTranslationString }}
+              {{ expirationDate ? (expirationDate | moment('LLL')) : '' }}
             </p>
           </div>
           <small class="d-block text-justify text-muted">
@@ -83,7 +94,7 @@
                 <span class="d-block">{{ issuerName }}</span>
                 <small class="d-block text-muted">{{ issuer }}</small>
                 <small class="d-block text-muted">
-                <strong>{{ '_profile.verifications.notary.verification.topic' | translate }}:</strong> {{ topic }}</small>
+                  <strong>{{ '_profile.verifications.notary.verification.topic' | translate }}:</strong> {{ topic }}</small>
               </div>
             </div>
           </div>
@@ -93,30 +104,40 @@
               {{ '_profile.verifications.notary.verification.attachments' | translate }}
             </h5>
 
-            <a class="d-flex align-items-center p-2 pl-3 border border-sm bg-level-3 dark-link"
+            <a
               v-for="(file, index) in files"
               :id="`file-input-download-${ index }`"
+              :key="index"
+              class="d-flex align-items-center p-2 pl-3 border border-sm bg-level-3 dark-link"
               :href="file.blobUri"
-              :download="file.name" :key="index">
+              :download="file.name"
+            >
               <small class="force-oneline font-weight-semibold pr-2">{{ file.name }}</small>
-              <i class="mdi mdi-file-document-box-outline text-dark" style="font-size: 24px"></i>
+              <i
+                class="mdi mdi-file-document-box-outline text-dark"
+                style="font-size: 24px"
+              />
             </a>
           </div>
 
-          <button type="button"
-            class="btn btn-primary mt-5"
+          <button
             v-if="verification.status === 'yellow'"
+            type="button"
+            class="btn btn-primary mt-5"
             :disabled="accepting"
-            @click="acceptVerification()">
+            @click="acceptVerification()"
+          >
             {{ `_profile.verifications.notary.verification.accept` | translate }}
           </button>
         </div>
 
-        <span class="my-auto"></span>
+        <span class="my-auto" />
 
-        <button type="button"
+        <button
+          type="button"
           class="btn btn-primary mt-5 w-100"
-          @click="$store.commit('toggleSidePanel', topic)">
+          @click="$store.commit('toggleSidePanel', topic)"
+        >
           {{ `_profile.verifications.notary.verification.close-detail` | translate }}
         </button>
       </div>
@@ -125,6 +146,7 @@
 </template>
 
 <script lang="ts">
-  import Component from './topic-display';
-  export default Component;
+import Component from './topic-display';
+
+export default Component;
 </script>

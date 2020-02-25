@@ -21,30 +21,36 @@ import * as bcc from '@evan.network/api-blockchain-core';
 import axios from 'axios';
 import { agentUrl } from '@evan.network/ui';
 
+import moment from 'moment';
 import {
   ErrorStatus,
   CustomerInterface,
   OptionsInterface,
   VatValidationInterface,
   TransferringTransactionInterface,
-  CustomerParams
+  CustomerParams,
 } from './interfaces';
 import { PUB_KEY, stripeScriptId, stripeScriptPath } from './stripe-config';
 import { StatusResponse } from './StatusResponse.interface';
 import { StripeSource } from './StripeSource.interface';
-import moment from 'moment';
 
-declare var Stripe: any;
+declare let Stripe: any;
 
 export class PaymentService {
   private static PAYMENT_TIMEOUT = 1000 * 60 * 10; // 10 minutes
+
   private static PAYMENT_RETRY = 5000; // 5 seconds
 
   private intervalTimer = null;
+
   private requestId = null;
+
   private agentUrl = null;
+
   private stripe;
+
   private authorization;
+
   private runtime;
 
   /**
@@ -53,7 +59,7 @@ export class PaymentService {
    * @param agentUrl
    */
   constructor(runtime: any) {
-    this.agentUrl = `${ agentUrl }/api`;
+    this.agentUrl = `${agentUrl}/api`;
     this.runtime = runtime;
   }
 
@@ -65,20 +71,19 @@ export class PaymentService {
       if (document.getElementById(stripeScriptId) !== null) {
         this.initStripe();
         return resolve();
-      } else {
-        const s = document.createElement('script');
-
-        s.setAttribute('id', stripeScriptId);
-        s.setAttribute('type', 'text/javascript');
-        s.setAttribute('src', stripeScriptPath);
-
-        s.onload = () => {
-          this.initStripe();
-          resolve();
-        };
-
-        document.head.append(s);
       }
+      const s = document.createElement('script');
+
+      s.setAttribute('id', stripeScriptId);
+      s.setAttribute('type', 'text/javascript');
+      s.setAttribute('src', stripeScriptPath);
+
+      s.onload = () => {
+        this.initStripe();
+        resolve();
+      };
+
+      document.head.append(s);
     });
   }
 
@@ -94,25 +99,25 @@ export class PaymentService {
    */
   createStripeSourceData(
     customer: CustomerInterface,
-    { type = 'card', currency = 'eur', notification_method = 'email' }
+    { type = 'card', currency = 'eur', notification_method = 'email' },
   ): StripeSource {
     const usageTypes = {
       card: 'single_use',
-      sepa_debit: 'reusable'
+      sepa_debit: 'reusable',
     };
 
     return {
-      type: type,
-      currency: currency,
+      type,
+      currency,
       owner: {
         name: customer.shipping.name,
         email: customer.email,
-        address: customer.shipping.address
+        address: customer.shipping.address,
       },
       usage: usageTypes[type],
       mandate: {
-        notification_method: notification_method
-      }
+        notification_method,
+      },
     };
   }
 
@@ -128,9 +133,10 @@ export class PaymentService {
     customer: CustomerInterface,
     eveAmount: string,
     stripeElement: any,
-    options?: OptionsInterface
+    options?: OptionsInterface,
   ): Promise<StatusResponse | ErrorStatus> {
-    let source, error;
+    let source; let
+      error;
 
     try {
       const sourceData = this.createStripeSourceData(customer, options);
@@ -147,7 +153,7 @@ export class PaymentService {
     if (!error) {
       if (!source) {
         throw new Error(
-          'Received neither `source` nor `error` from stripe createSource().'
+          'Received neither `source` nor `error` from stripe createSource().',
         );
       }
 
@@ -163,7 +169,7 @@ export class PaymentService {
     if (error) {
       return {
         status: 'error',
-        code: this.getErrorCode(error.message)
+        code: this.getErrorCode(error.message),
       };
     }
   }
@@ -179,22 +185,22 @@ export class PaymentService {
     id: string,
     amount: string,
     customer: any,
-    requestId = this.requestId
+    requestId = this.requestId,
   ): Promise<StatusResponse> {
-    return new Promise(async resolve => {
+    return new Promise(async (resolve) => {
       const res = await axios.post<StatusResponse>(
         `${this.agentUrl}/smart-agents/payment-processor/executePayment`,
         {
           token: id,
           amount,
           customer,
-          requestId
+          requestId,
         },
         {
           headers: {
-            authorization: await this.getAuthHeaders()
-          }
-        }
+            authorization: await this.getAuthHeaders(),
+          },
+        },
       );
       resolve(res.data);
     });
@@ -227,7 +233,7 @@ export class PaymentService {
   private async getStatus(
     id: string,
     amount: string,
-    customer: any
+    customer: any,
   ): Promise<StatusResponse> {
     return new Promise((resolve, reject) => {
       this.intervalTimer = setInterval(async () => {
@@ -264,21 +270,19 @@ export class PaymentService {
   private async executePayment(
     id: string,
     amount: string,
-    customer: any
+    customer: any,
   ): Promise<StatusResponse | ErrorStatus> {
     // return the first resolving promise
     return Promise.race([
       this.getStatus(id, amount, customer),
-      new Promise<ErrorStatus>(resolve =>
-        setTimeout(() => {
-          clearInterval(this.intervalTimer);
-          resolve({
-            code: 'timeout',
-            status: 'error',
-            result: 'timeout for payment'
-          });
-        }, PaymentService.PAYMENT_TIMEOUT)
-      )
+      new Promise<ErrorStatus>((resolve) => setTimeout(() => {
+        clearInterval(this.intervalTimer);
+        resolve({
+          code: 'timeout',
+          status: 'error',
+          result: 'timeout for payment',
+        });
+      }, PaymentService.PAYMENT_TIMEOUT)),
     ]);
   }
 
@@ -292,7 +296,7 @@ export class PaymentService {
       customer: response.requesterInformation.receivedParams.customer,
       requestId: this.requestId,
       timestamp: response.serverInformation.currentTime,
-      type: 'transferringTransaction'
+      type: 'transferringTransaction',
     };
 
     // get all transferring transactions from local storage
@@ -314,12 +318,12 @@ export class PaymentService {
       ? JSON.parse(window.localStorage['evan-credit-recharge'])
       : [];
     // filter null objects
-    transactions = transactions.filter(e => e);
+    transactions = transactions.filter((e) => e);
 
     // check transferring transaction status
     let transferringTransactions = await this.checkTransferringTransactions(transactions);
     // filter null objects
-    transferringTransactions = transferringTransactions.filter(e => e);
+    transferringTransactions = transferringTransactions.filter((e) => e);
 
     // write transaction back to local storage
     if (transferringTransactions.length > 0) {
@@ -338,12 +342,12 @@ export class PaymentService {
    * @param {TransferringTransaction[]} transactions
    */
   private async checkTransferringTransactions(
-    transactions: TransferringTransactionInterface[]
+    transactions: TransferringTransactionInterface[],
   ): Promise<TransferringTransactionInterface[]> {
     return transactions.length <= 0 ? [] : Promise.all(
-      transactions.map(async element => {
-        // delete transaction from local storage
-        // if type is failedTransaction and timestamp is older than 1 week
+      transactions.map(async (element) => {
+        /* delete transaction from local storage
+           if type is failedTransaction and timestamp is older than 1 week */
         if (element.type === 'failedTransaction') {
           if (moment(element.timestamp).add(1, 'week').isBefore(moment())) {
             return null;
@@ -355,7 +359,7 @@ export class PaymentService {
           element.token,
           element.amount.toString(),
           element.customer,
-          element.requestId
+          element.requestId,
         );
 
         // delete transaction from local storage if status is "success"
@@ -369,7 +373,7 @@ export class PaymentService {
         }
 
         return element;
-      })
+      }),
     );
   }
 
@@ -382,14 +386,14 @@ export class PaymentService {
    */
   private async requestVatValidation(
     country: string,
-    vat?: string
+    vat?: string,
   ): Promise<VatValidationInterface> {
-    const requestUrl = `${ this.agentUrl }/smart-agents/payment-processor/checkVat`;
+    const requestUrl = `${this.agentUrl}/smart-agents/payment-processor/checkVat`;
     const params = { country, vat };
     const {
       data: {
-        result: { isValidVat, tax, error }
-      }
+        result: { isValidVat, tax, error },
+      },
     } = await axios.get(requestUrl, { params });
 
     if (error) {
@@ -405,12 +409,14 @@ export class PaymentService {
    * @param customer
    */
   getCustomer(customer: CustomerParams): CustomerInterface {
-    const { name, email, company, street, city, zip, country, vat } = customer;
+    const {
+      name, email, company, street, city, zip, country, vat,
+    } = customer;
     const tax_info = vat
       ? {
-          tax_id: vat,
-          type: 'vat'
-        }
+        tax_id: vat,
+        type: 'vat',
+      }
       : undefined;
 
     return {
@@ -422,15 +428,15 @@ export class PaymentService {
           country,
           line1: company || name,
           line2: street,
-          postal_code: zip
-        }
+          postal_code: zip,
+        },
       },
-      tax_info
+      tax_info,
     };
   }
 
   getStripeElements(locale) {
-    return this.stripe.elements({ locale, });
+    return this.stripe.elements({ locale });
   }
 
   private getErrorCode(code: string) {
@@ -441,7 +447,7 @@ export class PaymentService {
       'invalid_customer',
       'price_not_okay',
       'too_many_accounts',
-      'wallet_not_enough_funds'
+      'wallet_not_enough_funds',
     ];
 
     return translatedCodes.indexOf(code) !== -1 ? code : 'unknown_state';
