@@ -49,8 +49,8 @@
             </label>
             <input
               ref="pin-input"
-              class="form-control pin-input"
               v-model="pinForm.pin.value"
+              class="form-control pin-input"
               type="text"
               pattern="^\d{6}$"
               maxlength="6"
