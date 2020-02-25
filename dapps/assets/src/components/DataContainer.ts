@@ -35,7 +35,7 @@ export default class DataContainerComponent extends mixins(EvanComponent) {
 
   data = [];
 
-  isLoading = false;
+  isLoading = true;
 
   page = 0;
 

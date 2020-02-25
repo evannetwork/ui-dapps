@@ -16,7 +16,6 @@
   Fifth Floor, Boston, MA, 02110-1301 USA, or download the license from
   the following URL: https://evan.network/license/
 */
-
 import { getDomainName, System } from '@evan.network/ui-dapp-browser';
 
 import bccHelper from './bccHelper';

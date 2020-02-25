@@ -18,39 +18,43 @@
 */
 
 import Component, { mixins } from 'vue-class-component';
-import { EvanComponent } from '@evan.network/ui-vue-core';
 import { Prop } from 'vue-property-decorator';
-import { TwinTransaction } from '@evan.network/digital-twin-lib';
+import { debounce } from 'lodash';
+import EvanComponent from '../../component';
 
+/**
+ * Search input with a placeholder label, that can be used as a normal text
+ * element such as heading.
+ */
 @Component
-export default class DetailOverviewTransactionsComponent extends mixins(EvanComponent) {
-  @Prop() transactions: TwinTransaction[];
+export default class SearchBoxComponent extends mixins(EvanComponent) {
+  @Prop() id: string;
 
-  columns = [
-    {
-      key: 'feeInEve',
-      label: this.$t('_twin-detail.overview.fee'),
-    },
-    {
-      key: 'initiator',
-      label: this.$t('_twin-detail.overview.initiator'),
-    },
-    {
-      key: 'timestamp',
-      label: this.$t('_twin-detail.overview.date'),
-      thClass: 'th-date',
-    },
-  ];
+  /**
+   * No debounce by default, value in ms
+   */
+  @Prop({ default: 0 }) debounceTime: number;
 
-  onRowClicked(row: TwinTransaction): void {
-    window.open(this.getRouteToTransactionExplorer(row.hash), '_blank');
+  isActiveSearch = false;
+
+  searchTerm = '';
+
+  onKeyUp = debounce(this.emitKeyEvent, this.debounceTime)
+
+  onBlur(): void {
+    if (this.searchTerm.length === 0) {
+      this.isActiveSearch = false;
+    }
   }
 
-  getRouteToTransactionExplorer(transactionId: string): string {
-    const baseUrl = this.getRuntime().environment === 'core'
-      ? 'https://explorer.evan.network'
-      : 'https://testexplorer.evan.network';
+  async focusInput(): Promise<void> {
+    this.isActiveSearch = true;
+    this.searchTerm = '';
+    await this.$nextTick();
+    (this.$refs.searchInput as HTMLInputElement).focus();
+  }
 
-    return `${baseUrl}/tx/${transactionId}`;
+  private emitKeyEvent(ev: KeyboardEvent): void {
+    this.$emit('keyup', ev);
   }
 }

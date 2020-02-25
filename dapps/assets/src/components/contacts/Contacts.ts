@@ -21,10 +21,13 @@
 import Component, { mixins } from 'vue-class-component';
 
 // evan.network imports
-import { EvanComponent } from '@evan.network/ui-vue-core';
+import {
+  EvanComponent, EvanTableColumn, EvanTableItem,
+} from '@evan.network/ui-vue-core';
 import { ContactsService } from './ContactsService';
 import { Contact } from './ContactInterfaces';
-import { EvanTableItem } from '../../shared/EvanTable';
+import EditContactComponent from './EditContact';
+import updateContactDispatcher from './UpdateContactDispatcher';
 
 @Component
 export default class ContactsComponent extends mixins(EvanComponent) {
@@ -44,9 +47,11 @@ export default class ContactsComponent extends mixins(EvanComponent) {
 
   filterBy: string[] = [];
 
-  contacts: Contact[] = [];
+  contacts: Contact[] = null;
 
-  columns = [
+  selectedContact: Contact = null;
+
+  columns: EvanTableColumn[] = [
     {
       key: 'icon',
       label: '',
@@ -54,37 +59,36 @@ export default class ContactsComponent extends mixins(EvanComponent) {
       thClass: 'th-icon',
     },
     {
-      key: 'alias',
+      key: 'displayName',
       label: this.$t('_assets.contacts.name'),
       sortable: true,
       tdClass: 'truncate',
     },
     {
-      key: 'updatedAt',
-      label: this.$t('_assets.contacts.updated'),
+      key: 'alias',
+      label: this.$t('_assets.contacts.note'),
       sortable: true,
-      thClass: 'th-date',
+      tdClass: 'truncate',
     },
     {
       key: 'createdAt',
-      label: this.$t('_assets.contacts.created'),
+      label: this.$t('_assets.contacts.added'),
       sortable: true,
       thClass: 'th-date',
     },
     {
-      key: 'isFavorite',
+      key: 'actions',
       label: '',
       sortable: false,
       thClass: 'th-icon',
+      tdClass: 'td-multi-icon',
     },
   ];
 
-  created(): void {
+  async created(): Promise<void> {
     const runtime = this.getRuntime();
     this.contactService = new ContactsService(runtime);
-  }
 
-  async mounted(): Promise<void> {
     this.contacts = await this.fetchContacts();
     this.isLoading = false;
   }
@@ -106,8 +110,30 @@ export default class ContactsComponent extends mixins(EvanComponent) {
     this.isLoading = false;
   }
 
+  async onDeleteContact(contact: Contact): Promise<void> {
+    await this.contactService.removeContact(contact);
+    this.contacts = this.contacts.filter((item) => item.address !== contact.address);
+  }
+
+  async onUpdateContact(updatedContact: Contact): Promise<void> {
+    await updateContactDispatcher.start(this.getRuntime(), updatedContact);
+    // Optimistic updating of the contact
+    this.contacts = this.contacts.map((item: Contact) => {
+      const contact = item;
+      if (item.address === updatedContact.address) {
+        contact.alias = updatedContact.alias;
+      }
+      return contact;
+    });
+  }
+
   async fetchContacts(): Promise<Contact[]> {
     return this.contactService.getContacts();
+  }
+
+  editContact(contact: EvanTableItem<Contact>): void {
+    this.selectedContact = { ...contact.item };
+    (this.$refs.editContact as EditContactComponent).showPanel();
   }
 
   async addFavorite(contact: EvanTableItem<Contact>): Promise<void> {
@@ -148,5 +174,10 @@ export default class ContactsComponent extends mixins(EvanComponent) {
   resetFilter(): void {
     this.filterBy = [];
     this.filter = null;
+  }
+
+  filterBySearchTerm(searchTerm: string): void {
+    this.filterBy = [];
+    this.filter = searchTerm;
   }
 }

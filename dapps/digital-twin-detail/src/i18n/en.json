@@ -26,10 +26,13 @@
           "submit": "Add Entry",
           "title": "Add an Entry"
         },
+        "count-out-of-total": "{count} out of {total}",
+        "count-entries": "{count} Entries",
         "list-item-detail": {
           "close": "Close",
           "title": "Detail"
         },
+        "no-entries": "No entries",
         "show-all": "Show all",
         "value": "Value"
       },
@@ -38,7 +41,7 @@
       },
       "sharing": {
         "cancel": "Cancel",
-        "description": "To share your digital twin data with another contact, fill out the form below and click on “update sharing options”",
+        "description": "To share your digital twin data with another contact, fill out the form below and click on “update sharing options”.",
         "sharing-title": "Share your Digital Twin",
         "update-sharing": "Update Sharing Options"
       },
@@ -83,7 +86,7 @@
         "user": "Users"
       },
       "no-sharings": "This Digital Twin is not shared with any user.",
-      "no-sharings-filter": "This digital twin was not shared with any user with this filter. (Search: {searchTerm} and filter: {filter})",
+      "no-sharings-filter": "This digital twin was not shared with any users matching \"{searchTerm}\" and type: \"{filter}\"",
       "sharings-title": "Sharings",
       "table": {
         "containers": "Shared Containers",

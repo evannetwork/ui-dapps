@@ -17,36 +17,10 @@
   the following URL: https://evan.network/license/
 */
 
-/**
- * apply default evan theme
- */
-@import './style/definitions/evan.theme';
-@include themeEvan();
+import { Runtime } from '@evan.network/api-blockchain-core';
 
-/**
- * load general styles at first, they will partially overwritten
- */
-@import './style/general';
+export function getDidFromAddress(runtime: Runtime, identity: string): string {
+  const infix = runtime.environment === 'testcore' ? 'testcore:' : '';
 
-/**
- * load evan specific styles
- */
-@import './style/breadcrumb';
-@import './style/buttons';
-@import './style/card';
-@import './style/colors';
-@import './style/content';
-@import './style/dapp-wrapper';
-@import './style/dropdown';
-@import './style/forms';
-@import './style/icons';
-@import './style/loading';
-@import './style/modal';
-@import './style/open-sans';
-@import './style/steps';
-@import './style/table';
-@import './style/tabs';
-@import './style/text';
-@import './style/toasted';
-@import './style/tooltip';
-@import './style/transitions';
+  return `did:evan:${infix}${identity.toLowerCase()}`;
+}

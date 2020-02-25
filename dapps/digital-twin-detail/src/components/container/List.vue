@@ -19,14 +19,16 @@
 
 <template>
   <div class="content-card">
-    <div class="d-flex justify-content-between align-items-center pb-1">
+    <div class="d-flex justify-content-between align-items-baseline pb-1">
       <div>
-        <h5 class="my-0 py-0 font-weight-bold d-flex">
+        <h5 class="my-0 py-0 d-flex align-items-baseline">
           <i class="mdi mr-2 mdi-lock" />
-          <div>
-            {{ $t(`${$route.params.container}.${name}`, name) }}
-            <small class="d-block">
-              {{ getValues().length }} / {{ getTotalEntries() }}
+          <div class="d-flex flex-column">
+            <span class="font-weight-bold h5 my-0">{{ $t(`${$route.params.container}.${name}`, name) }}</span>
+            <small
+              v-if="!isProhibited()"
+            >
+              {{ getEntriesCount() }}
             </small>
           </div>
         </h5>
@@ -89,7 +91,7 @@
       ref="shareContainer"
     />
 
-    <div class="mt-3">
+    <div>
       <evan-table
         v-if="!$store.state.reloadFlags[$route.params.container][name]"
         class="simple clickable-rows"

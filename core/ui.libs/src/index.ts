@@ -22,6 +22,7 @@ import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
 import './index.scss';
 import * as FileHandler from './utils/Files';
+import * as bccUtils from './utils/bccUtils';
 import * as profileUtils from './utils/profileUtils';
 import EvanQueue from './utils/Queue';
 import Dispatcher from './utils/Dispatcher';
@@ -33,6 +34,7 @@ dappBrowser.System.map['@evan.network/ui'] = `ui.libs.${dappBrowser.getDomainNam
 export * from './config';
 export * from './utils/utils';
 export {
+  bccUtils,
   Dispatcher,
   DispatcherInstance,
   EvanQueue,

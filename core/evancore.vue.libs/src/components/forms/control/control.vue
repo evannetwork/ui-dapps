@@ -27,6 +27,7 @@
       v-if="label"
       class="col-form-label"
       :for="id"
+      :title="label"
     >
       <div>
         <p class="m-0">{{ label }}</p>

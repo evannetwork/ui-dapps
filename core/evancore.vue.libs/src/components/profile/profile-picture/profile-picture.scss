@@ -20,22 +20,20 @@
 @import '~@evan.network/ui/src/style/utils';
 
 @mixin masks($size) {
-  --size: #{$size};
-
-  width: var(--size);
-  height: var(--size);
+  width: $size;
+  height: $size;
 
   .verification-icon {
     position: absolute;
-    right: calc(var(--size) / -15);
-    bottom: calc(var(--size) / -15);
-    width: calc(var(--size) / 3);
-    height: calc(var(--size) / 3);
+    right: calc(#{$size} / -15);
+    bottom: calc(#{$size} / -15);
+    width: calc(#{$size} / 3);
+    height: calc(#{$size} / 3);
   }
 
   .mask {
-    width: var(--size);
-    height: var(--size);
+    width: $size;
+    height: $size;
 
     overflow: hidden;
     position: absolute;
@@ -46,8 +44,8 @@
     &.user {
       img,
       .image-placeholder {
-        width: var(--size);
-        height: var(--size);
+        width: $size;
+        height: $size;
         border-radius: 50%;
       }
 
@@ -60,6 +58,8 @@
     &.device img,
     &.device .image-placeholder {
       clip-path: polygon(50% 0, 100% 22.5%, 100% 77.5%, 50% 100%, 0 77.5%, 0 22.5%);
+      /* prefix necessary for safari */
+      -webkit-clip-path: polygon(50% 0, 100% 22.5%, 100% 77.5%, 50% 100%, 0 77.5%, 0 22.5%);
     }
 
     .image-placeholder {

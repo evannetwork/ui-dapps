@@ -139,7 +139,8 @@
         "user": "User"
       },
       "wallet": {
-        "current-balance": "Balance"
+        "current-balance": "Balance",
+        "show-qr-code": "Show QR-Code"
       }
     },
     "profile-picture": {

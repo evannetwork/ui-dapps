@@ -21,7 +21,7 @@
 import Component, { mixins } from 'vue-class-component';
 
 // evan.network imports
-import { EvanComponent, EvanForm } from '@evan.network/ui-vue-core';
+import { EvanComponent, EvanForm, SwipePanelComponentClass } from '@evan.network/ui-vue-core';
 import { ContactsService } from './ContactsService';
 import { ContactFormData } from './ContactInterfaces';
 
@@ -143,10 +143,10 @@ export default class AddContactComponent extends mixins(EvanComponent) {
   }
 
   showPanel(): void {
-    (this.$refs.addContactPanel as any).show();
+    (this.$refs.addContactPanel as SwipePanelComponentClass).show();
   }
 
   closePanel(): void {
-    (this.$refs.addContactPanel as any).hide();
+    (this.$refs.addContactPanel as SwipePanelComponentClass).hide();
   }
 }

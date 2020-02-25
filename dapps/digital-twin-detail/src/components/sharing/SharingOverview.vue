@@ -97,13 +97,19 @@
             {{ data.item.containerNames.join(', ') }}
           </template>
           <template v-slot:empty>
-            <span v-if="selectedFilter === 'all' && !searchTerm">
+            <span
+              v-if="selectedFilter === 'all' && !searchTerm"
+              class="text-center d-block"
+            >
               {{ '_twin-detail.sharings.no-sharings' | translate }}
             </span>
-            <span v-else>
+            <span
+              v-else
+              class="text-center d-block"
+            >
               {{
                 $t('_twin-detail.sharings.no-sharings-filter', {
-                  searchTerm: searchterm || '*',
+                  searchTerm: searchTerm || '*',
                   filter: $t(`_twin-detail.sharings.filters.${selectedFilter}`)
                 })
               }}
