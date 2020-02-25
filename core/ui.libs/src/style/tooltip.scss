@@ -53,10 +53,9 @@
 
     &.bs-tooltip-top, &.bs-tooltip-bottom {
       right: 0;
-      left: 0;
       left: 50% !important;
 
-      transform: translateX(-100%);
+      transform: translateX(-50%);
     }
 
     &.bs-tooltip-left, &.bs-tooltip-right {

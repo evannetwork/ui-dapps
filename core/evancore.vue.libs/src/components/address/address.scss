@@ -18,38 +18,49 @@
 */
 
 @import '~@evan.network/ui/src/style/utils';
-
-.evan-address {
-  position: relative;
-
+.wrapper {
   display: flex;
+  overflow: visible;
   align-items: center;
 
-  max-height: 20px;
+  .evan-address {
+    position: relative;
 
-  word-break: break-all;
+    overflow: hidden;
+
+    min-width: 0;
+
+    text-overflow: ellipsis;
+    word-break: break-all;
+
+    &:hover + .interactions {
+      opacity: 1;
+    }
+  }
 
   .interactions {
-    display: none;
+    overflow: visible;
 
-    margin-left: 20px;
+    height: 24px;
+    margin-top: -8px;
+    padding-left: 20px;
+
+    transition: opacity 0.2s;
+
+    opacity: 0.2;
 
     .btn {
-      line-height: 25px;
+      line-height: 24px;
 
-      width: 25px !important;
-      height: 25px !important;
       padding: 0;
 
       i {
         font-size: 16px;
       }
     }
-  }
 
-  &:hover {
-    .interactions {
-      display: block;
+    &:hover {
+      opacity: 1;
     }
   }
 }

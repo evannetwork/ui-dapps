@@ -98,13 +98,11 @@
             />
           </template>
           <template v-slot:cell(createdAt)="contacts">
-            <template v-if="contacts.item.createdAt">
+            <template v-if="contacts.item.createdAt && !contacts.item.isPending">
               {{ contacts.item.createdAt | moment('L') }}
             </template>
-          </template>
-          <template v-slot:cell(updatedAt)="contacts">
-            <template v-if="contacts.item.updatedAt">
-              {{ contacts.item.updatedAt | moment('L') }}
+            <template v-else-if="contacts.item.isPending">
+              {{ '_assets.contacts.pending' | translate }}
             </template>
           </template>
           <template v-slot:cell(actions)="contact">

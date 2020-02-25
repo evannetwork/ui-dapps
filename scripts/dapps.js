@@ -18,7 +18,6 @@
 */
 
 /* eslint-disable no-console */
-
 const express = require('express');
 const gulp = require('gulp');
 const inquirer = require('inquirer');
@@ -36,6 +35,7 @@ let longestDAppName;
 let serves;
 let watching;
 let expressApp;
+let logLoop = null;
 
 /**
  * Initialize dapp folders and symlink core projects
@@ -112,17 +112,26 @@ const getCategoryDAppDirs = (category) => {
 /**
  * Show the current wachting status
  */
-const logServing = async () => {
+const logServing = () => {
+  Object.keys(serves).forEach((key) => {
+    if (!serves[key].loading) {
+      return;
+    }
+
+    serves[key].duration = Math.round((Date.now() - serves[key].startTime) / 1000);
+  });
+
   console.clear();
+  const output = [];
 
-  console.log('----------------------');
-  console.log('│ evan.network dapps │');
-  console.log('----------------------');
+  output.push('----------------------');
+  output.push('│ evan.network dapps │');
+  output.push('----------------------');
 
-  console.log(`\nbuild type           : ${watching ? 'serving' : 'building'}`);
-  console.log(`environment          : ${nodeEnv}`);
+  output.push(`\nbuild type           : ${watching ? 'serving' : 'building'}`);
+  output.push(`environment          : ${nodeEnv}`);
   if (expressApp) {
-    console.log('started local server : http://localhost:3000');
+    output.push('started local server : http://localhost:3000');
   }
 
   categories.forEach((category) => {
@@ -131,7 +140,7 @@ const logServing = async () => {
     while (categoryTitle.length < longestDAppName + 16) {
       categoryTitle = categoryTitle.length % 2 ? `${categoryTitle}-` : `-${categoryTitle}`;
     }
-    console.log(`\n${categoryTitle}`);
+    output.push(`\n${categoryTitle}`);
 
     getCategoryDAppDirs(category).forEach((dappDir) => {
       const dappName = dappDir.split('/').pop();
@@ -154,17 +163,23 @@ const logServing = async () => {
         statusMsg = ` ${logDAppName} ${wasBuild ? '√' : '»'}     ${timeLog}`;
       }
 
-      console.log(statusMsg);
+      output.push(statusMsg);
 
       if (serves[dappName].error) {
-        console.log();
-        console.error(serves[dappName].error.replace(/^/gm, '      '));
+        output.push();
+        if (typeof serves[dappName].error === 'string') {
+          console.error(serves[dappName].error.replace(/^/gm, '      '));
+        } else {
+          console.error(serves[dappName].error);
+        }
       }
     });
   });
 
-  console.log('\n');
+  output.push('\n');
+  console.log(output.join('\n'));
 };
+
 /**
  * Build a specific DApp and log the status.
  *
@@ -175,15 +190,13 @@ const buildDApp = async (dappDir) => {
   // if its not already building, build the dapp
   const dappName = dappDir.split('/').pop();
   if (!serves[dappName].loading) {
+    serves[dappName].startTime = Date.now();
     serves[dappName].duration = 0;
     serves[dappName].error = '';
     serves[dappName].loading = true;
     logServing();
 
-    // track the build time
-    const startTime = Date.now();
-    const timeCounter = setInterval(() => {
-      serves[dappName].duration = Math.round((Date.now() - startTime) / 1000);
+    logLoop = logLoop || setInterval(() => {
       logServing();
     }, 1000);
 
@@ -195,7 +208,7 @@ const buildDApp = async (dappDir) => {
       await runExec(require(`${dappDir}/package.json`).scripts.build, dappDir);
 
       // clear timer and calculate time
-      serves[dappName].lastDuration = Math.round((Date.now() - startTime) / 1000);
+      serves[dappName].lastDuration = Math.round((Date.now() - serves[dappName].startTime) / 1000);
 
       try {
         // show mac notification
@@ -223,8 +236,6 @@ const buildDApp = async (dappDir) => {
       }
       serves[dappName].error = ex;
     }
-
-    clearInterval(timeCounter);
 
     // reset loading, rebuild if nessecary
     serves[dappName].loading = false;
@@ -275,13 +286,17 @@ gulp.task('dapps-serve', async () => {
   watching = true;
 
   // start watching
-  dappDirs.forEach((dappDir) => gulp.watch(`${dappDir}/src/**/*`, () => buildDApp(dappDir)));
+  const options = {
+    queue: false,
+    delay: 1000,
+  };
+  dappDirs.forEach((dappDir) => gulp.watch(`${dappDir}/src/**/*`, options, () => buildDApp(dappDir)));
 
   setTimeout(() => logServing());
 });
 
 // Run Express, auto rebuild and restart on src changes
-gulp.task('dapps-build', async () => {
+gulp.task('dapps-build', async (cb) => {
   // check which dapp categories should be build
   await initialize();
 
@@ -295,20 +310,26 @@ gulp.task('dapps-build', async () => {
     } catch (ex) {
       console.error(ex);
     }
-  } else {
-    // build all categories
-    for (let i = 0; i < categories.length; i += 1) {
-      // eslint-disable-next-line no-await-in-loop
-      await Throttle.all(getCategoryDAppDirs(categories[i]).map((dappDir) => async () => {
-        try {
-          // navigate to the dapp dir and run the build command
-          await buildDApp(dappDir);
-        } catch (ex) {
-          console.error(ex);
-        }
-      }), { maxInProgress: 10 });
-    }
+    return cb();
   }
+
+  const buildDappPromises = [];
+  // build all categories
+  categories.forEach((category) => {
+    getCategoryDAppDirs(category).forEach((dappDir) => {
+      try {
+        // navigate to the dapp dir and run the build command
+        console.log(dappDir);
+        buildDappPromises.push(() => buildDApp(dappDir));
+      } catch (ex) {
+        console.error(ex);
+      }
+    });
+  });
+
+  await Throttle.all(buildDappPromises, { maxInProgress: 4 });
+  clearInterval(logLoop);
+  return cb();
 });
 
 // start local file server and start dapp watching
