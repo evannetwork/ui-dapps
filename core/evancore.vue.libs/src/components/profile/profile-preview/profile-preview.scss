@@ -20,6 +20,10 @@
 @import '~@evan.network/ui/src/style/utils';
 
 .profile-preview {
+  &, & > .info {
+    min-width: 0;
+  }
+
   &.default {
     .account-name {
       font-size: 24px;

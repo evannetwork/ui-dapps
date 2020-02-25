@@ -18,14 +18,11 @@
 */
 
 // vue imports
-import Vue from 'vue';
 import Component, { mixins } from 'vue-class-component';
 import { Prop } from 'vue-property-decorator';
 
 // evan.network imports
 import EvanComponent from '../../component';
-import * as bcc from '@evan.network/api-blockchain-core';
-import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
 /**
  * Bootstrap tooltip wrapper.
@@ -53,12 +50,13 @@ export default class EvanTooltip extends mixins(EvanComponent) {
   /**
    * Is it displayed?
    */
-  showTooltip = false;
+  showTooltip = true;
 
   /**
    * tooltip toggle functions
    */
   onMouseEnter: Function;
+
   onMouseLeave: Function;
 
   /**
@@ -84,15 +82,15 @@ export default class EvanTooltip extends mixins(EvanComponent) {
     };
 
     // bind mouse events
-    this.$el.parentElement.addEventListener('mouseenter', <any>this.onMouseEnter);
-    this.$el.parentElement.addEventListener('mouseleave', <any>this.onMouseLeave);
+    this.$el.parentElement.addEventListener('mouseenter', (this.onMouseEnter as any));
+    this.$el.parentElement.addEventListener('mouseleave', (this.onMouseLeave as any));
   }
 
   /**
    * unbind parent element watchers
    */
   beforeDestroy() {
-    this.$el.parentElement.removeEventListener('mouseenter', <any>this.onMouseEnter);
-    this.$el.parentElement.removeEventListener('mouseleave', <any>this.onMouseLeave);
+    this.$el.parentElement.removeEventListener('mouseenter', (this.onMouseEnter as any));
+    this.$el.parentElement.removeEventListener('mouseleave', (this.onMouseLeave as any));
   }
 }
