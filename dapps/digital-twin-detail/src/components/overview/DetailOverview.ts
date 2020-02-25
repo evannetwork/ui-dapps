@@ -36,17 +36,17 @@ export default class DetailOverviewComponent extends mixins(EvanComponent) {
 
   search: SearchService = null;
 
-  get did(): string {
-    return bccUtils.getDidFromAddress(this.getRuntime(), this.twin.description.identity);
-  }
+  did = '';
 
   async created(): Promise<void> {
     this.search = new SearchService(this.runtime);
+
     if (!this.$store.state.twin.createdAt) {
       this.$store.state.twin = await this.attachCreatedAt(this.$store.state.twin);
     }
     this.twin = this.$store.state.twin;
     this.transactions = await this.getLastTransactions(this.twin);
+    this.did = bccUtils.getDidFromIdentity(this.getRuntime(), this.twin.description.identity);
   }
 
   /**
