@@ -19,7 +19,7 @@
 
 <template>
   <div>
-    <div class="wallet-container evan-highlight">
+    <div class="wallet-container">
       <a
         class="evan-wallet"
         :href="walletLink"
@@ -46,6 +46,7 @@
         </template>
       </a>
       <div
+        :title="'_evan.profile.wallet.show-qr-code' | translate"
         class="qr-code-open"
         @click="showQRCode($event)"
       >
