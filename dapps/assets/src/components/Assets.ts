@@ -28,7 +28,7 @@ export default class AssetsComponent extends mixins(EvanComponent) {
   navItems: NavEntryInterface[] = [
     {
       key: 'digitaltwins',
-      icon: 'mdi mdi-cube-outline',
+      icon: 'mdi mdi-car',
     },
     {
       key: 'contacts',

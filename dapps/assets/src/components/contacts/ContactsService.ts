@@ -23,9 +23,17 @@ import InviteDispatcher from './InviteDispatcher';
 import { Contact, ContactFormData } from './ContactInterfaces';
 import removeContactDispatcher from './RemoveContactDispatcher';
 
-export class ContactsService {
-  private contacts;
+// TODO: Should come from runtime profile
+interface AddressbookEntry {
+  alias?: string;
+  accountId?: string;
+  email?: string;
+  createdAt?: string;
+  updatedAt?: string;
+  isFavorite: string;
+}
 
+export class ContactsService {
   private runtime: Runtime;
 
   constructor(runtime: Runtime) {
@@ -36,21 +44,32 @@ export class ContactsService {
    * Return well-formatted list of contacts
    */
   async getContacts(): Promise<Contact[]> {
-    this.contacts = await this.runtime.profile.getAddressBook();
+    const { profile }: { profile: AddressbookEntry } = await this.runtime.profile.getAddressBook();
 
     const data: Contact[] = [];
-    await Promise.all(Object.keys(this.contacts.profile).map(async (contact) => {
+    await Promise.all(Object.keys(profile).map(async (contactAddress: string) => {
       // filter out own account
-      if (contact !== this.runtime.activeAccount) {
-        const type = await profileUtils.getProfileType(this.runtime, contact);
+      if (contactAddress !== this.runtime.activeAccount) {
+        const type = await profileUtils.getProfileType(this.runtime, contactAddress);
+        const isPending = ContactsService.isPending(profile[contactAddress]);
+        let displayName;
+        if (isPending) {
+          // email address
+          displayName = contactAddress;
+        } else {
+          // either shared name or hash address
+          displayName = await profileUtils.getDisplayName(this.runtime, contactAddress);
+        }
         data.push({
-          address: contact,
-          alias: this.contacts.profile[contact].alias,
-          createdAt: this.contacts.profile[contact].createdAt,
+          address: contactAddress,
+          alias: profile[contactAddress].alias,
+          createdAt: profile[contactAddress].createdAt,
+          displayName,
           icon: profileUtils.getProfileTypeIcon(type),
-          isFavorite: this.contacts.profile[contact].isFavorite,
+          isFavorite: profile[contactAddress].isFavorite,
+          isPending,
           type,
-          updatedAt: this.contacts.profile[contact].updatedAt,
+          updatedAt: profile[contactAddress].updatedAt,
         });
       }
     }));
@@ -87,5 +106,12 @@ export class ContactsService {
 
   removeContact(contact: Contact): Promise<DispatcherInstance> {
     return removeContactDispatcher.start(this.runtime, contact);
+  }
+
+  static isPending(contact: AddressbookEntry): boolean {
+    if (!contact.accountId && contact.email) {
+      return true;
+    }
+    return false;
   }
 }
