@@ -18,10 +18,9 @@
 */
 
 import { lightwallet } from '@evan.network/ui-session';
+import { ipfs } from '@evan.network/ui-dapp-browser';
 
 import { config } from '../config';
-import { ipfsConfig } from '../ipfs';
-import { IPFSCache } from '../ipfs-cache';
 import { getWeb3Instance } from '../web3';
 import { Solc } from '../solc';
 import * as core from '../core';
@@ -49,9 +48,9 @@ const profileRuntimes = { };
  */
 async function getCoreOptions(CoreBundle: any, SmartContracts: any, provider?: string): Promise<any> {
   const coreOptions: any = {
-    config: config,
-    dfsConfig: ipfsConfig,
-    ipfsCache: new IPFSCache(),
+    config,
+    dfsConfig: ipfs.ipfsConfig,
+    ipfsCache: ipfs.getIpfsCache(),
     solc: new Solc(SmartContracts),
   };
 

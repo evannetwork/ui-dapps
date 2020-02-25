@@ -17,7 +17,7 @@
   the following URL: https://evan.network/license/
 */
 
-import { routing, System } from '@evan.network/ui-dapp-browser';
+import { routing, System, ipfs, loading } from '@evan.network/ui-dapp-browser';
 import * as CoreBundle from '@evan.network/api-blockchain-core';
 import * as SmartContracts from '@evan.network/smart-contracts-core';
 import { lightwallet } from '@evan.network/ui-session';
@@ -25,8 +25,6 @@ import { lightwallet } from '@evan.network/ui-session';
 import * as bccHelper from './bcc/bcc';
 import * as core from './core';
 import * as dapp from './dapp';
-import * as ipfs from './ipfs';
-import * as loading from './loading';
 import * as notifications from './notifications';
 import * as queue from './queue';
 import * as solc from './solc';
@@ -110,9 +108,6 @@ export async function initializeEvanNetworkStructure(enableRouting = true): Prom
       utils.getBrowserName(),
       utils.getIsPrivateMode(),
     ]);
-
-    // set initial loadin step
-    utils.raiseProgress(5);
 
     // load smart-contracts and blockchain-core minimal setup for accessing ens from ipfs
     try {

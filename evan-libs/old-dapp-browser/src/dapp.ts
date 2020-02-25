@@ -17,10 +17,9 @@
   the following URL: https://evan.network/license/
 */
 import { lightwallet } from '@evan.network/ui-session';
+import { ipfs, loading } from '@evan.network/ui-dapp-browser';
 
 import * as core from './core';
-import * as ipfs  from './ipfs';
-import * as loading  from './loading';
 import * as utils from './utils';
 import { config } from './config';
 import { watchForEveLow } from './watchers';
@@ -350,13 +349,13 @@ export async function loadDAppDependencies(dappEns: string, useDefaultDomain?: b
           loadedDeps[dep.location] = true;
         }
 
-        utils.raiseProgress(loadingSteps);
+        loading.raiseProgress(loadingSteps);
       }));
     }
   }
   window['Promise'] = zoneJSPromise;
 
-  utils.raiseProgress(loadingSteps);
+  loading.raiseProgress(loadingSteps);
   return ensDefinition;
 }
 

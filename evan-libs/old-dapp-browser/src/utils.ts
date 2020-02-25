@@ -17,6 +17,8 @@
   the following URL: https://evan.network/license/
 */
 
+import { loading } from '@evan.network/ui-dapp-browser';
+
 /**
  * is inserted when the application was bundled, used to prevent window usage
  */
@@ -148,26 +150,7 @@ export function showError() {
  * @return     {string}  additional returnObject
  */
 export async function raiseProgress(percentage: number, returnObj?: any) {
-  // wait for last animation to be finished
-  await this.waitForLoadingAnimation;
-
-  lastPercentage += percentage;
-  if (lastPercentage > 100) {
-    lastPercentage = 100;
-  }
-
-  // set the percentage only, if it wasn't set before
-  if (!percentagesSet[lastPercentage]) {
-    percentagesSet[lastPercentage] = true;
-    const loadingProgress = document.getElementById(`loading-progress`);
-    if (loadingProgress) {
-      loadingProgress.style.transform = `scaleX(${ lastPercentage / 100 })`;
-    }
-
-    // wait until animation is finished
-    this.waitForLoadingAnimation = new Promise(resolve => setTimeout(resolve, 100));
-  }
-
+  await loading.raiseProgress(percentage);
   return returnObj;
 }
 
