@@ -46,7 +46,7 @@
         </template>
       </a>
       <div
-        title="show QR code"
+        :title="'_evan.profile.wallet.show-qr-code' | translate"
         class="qr-code-open"
         @click="showQRCode($event)"
       >

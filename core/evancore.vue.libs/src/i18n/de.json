@@ -138,7 +138,8 @@
         "user": "User"
       },
       "wallet": {
-        "current-balance": "Kontostand"
+        "current-balance": "Kontostand",
+        "show-qr-code": "QR-Code anzeigen"
       }
     },
     "profile-picture": {
