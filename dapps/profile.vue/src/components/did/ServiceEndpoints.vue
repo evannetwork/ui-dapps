@@ -27,7 +27,7 @@
         v-if="!isEditMode"
         @click="onEditStart"
       >
-        TODO Edit
+        {{ '_evan.edit' | translate }}
       </evan-button>
     </div>
     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem nemo possimus corrupti voluptates. Doloribus ab harum exercitationem a! Fuga ipsum molestias nisi ad unde exercitationem velit quia porro eius ullam!</p>
@@ -37,6 +37,10 @@
       :fields="columns"
       :items="endpoints"
     >
+      <template v-slot:empty>
+        {{ '_profile.did.empty-service-endpoints' }}
+      </template>
+
       <template
         v-if="isEditMode"
         v-slot:cell(label)="data"
@@ -95,13 +99,26 @@
       </template>
     </evan-table>
 
-    <div v-if="isEditMode">
-      <evan-button @click="onEditCancel">
-        TODO Cancel
-      </evan-button>
-      <evan-button @click="saveEndpoints">
-        TODO Save
-      </evan-button>
+    <div
+      v-if="isEditMode"
+      class="d-flex mt-3 align-items-center justify-content-between"
+    >
+      <div class="d-flex align-items-center">
+        <i class="mdi mdi-information-outline mr-2" />
+        <span>{{ '_evan.transaction_costs_hint' | translate }}</span>
+      </div>
+      <div>
+        <evan-button @click="onEditCancel">
+          {{ '_evan.cancel' | translate }}
+        </evan-button>
+        <evan-button
+          class="ml-1"
+          type="primary"
+          @click="saveEndpoints"
+        >
+          {{ '_evan.save' | translate }}
+        </evan-button>
+      </div>
     </div>
   </div>
 </template>
