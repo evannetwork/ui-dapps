@@ -20,6 +20,8 @@
 import Component, { mixins } from 'vue-class-component';
 import { EvanComponent, EvanTableColumn } from '@evan.network/ui-vue-core';
 import { bccUtils } from '@evan.network/ui';
+import { getUserAlias } from '@evan.network/ui/dist/utils/profileUtils';
+import { getDisplayName } from '@evan.network/ui/src/utils/profileUtils';
 
 @Component
 export default class DelegatesComponent extends mixins(EvanComponent) {
@@ -61,6 +63,14 @@ export default class DelegatesComponent extends mixins(EvanComponent) {
     ];
 
     this.contacts = await bccUtils.getContacts(this.getRuntime());
+  }
+
+  async onSelectContact(did: string): Promise<void> {
+    const note = await getDisplayName(this.getRuntime(), did);
+    this.delegates = [...this.delegates, {
+      did,
+      note,
+    }];
   }
 
   /**

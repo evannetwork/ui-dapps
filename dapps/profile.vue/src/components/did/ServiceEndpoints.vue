@@ -20,9 +20,7 @@
 <template>
   <div class="content-card">
     <div class="card-heading mb-3 d-flex flex-row justify-content-between align-items-center">
-      <h2>
-        {{ '_profile.did.service-endpoint-title' | translate }}
-      </h2>
+      <h2>{{ '_profile.did.service-endpoint-title' | translate }}</h2>
       <evan-button
         v-if="!isEditMode"
         @click="onEditStart"

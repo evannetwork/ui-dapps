@@ -20,9 +20,7 @@
 <template>
   <div class="content-card">
     <div class="card-heading mb-3 d-flex flex-row justify-content-between align-items-center">
-      <h2>
-        {{ '_profile.did.delegates-title' | translate }}
-      </h2>
+      <h2>{{ '_profile.did.delegates-title' | translate }}</h2>
       <evan-button
         v-if="!isEditMode"
         @click="onEditStart"
@@ -79,6 +77,7 @@
             v-model="newDelegate"
             class="clean-input"
             :options="contacts"
+            @select="onSelectContact"
           />
         </b-td>
         <b-td>
@@ -129,7 +128,7 @@ export default Component;
   width: 560px;
   padding: 24px 24px;
 
-  .card-heading {
+  .card-heading h2 {
     font-size: 18px;
     font-weight: bold;
   }

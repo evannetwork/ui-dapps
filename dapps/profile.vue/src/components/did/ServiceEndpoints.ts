@@ -79,6 +79,20 @@ export default class ServiceEndpointsComponent extends mixins(EvanComponent) {
   }
 
   /**
+   * Removes the selected endpoint temporarily
+   * @param index row index of the item to be removed
+   */
+  deleteEndpoint(index: number): void {
+    this.endpoints = this.endpoints.filter((_, i) => i !== index);
+  }
+
+  saveEndpoints(): void {
+    this.addEndpointRow();
+    console.log('this.endpoints', this.endpoints);
+    this.isEditMode = false;
+  }
+
+  /**
    * Enable edit mode and save current data
    */
   onEditStart(): void {
@@ -91,20 +105,6 @@ export default class ServiceEndpointsComponent extends mixins(EvanComponent) {
    */
   onEditCancel(): void {
     this.endpoints = this.previousData;
-    this.isEditMode = false;
-  }
-
-  /**
-   * Removes the selected endpoint temporarily
-   * @param index row index of the item to be removed
-   */
-  deleteEndpoint(index: number): void {
-    this.endpoints = this.endpoints.filter((_, i) => i !== index);
-  }
-
-  saveEndpoints(): void {
-    this.addEndpointRow();
-    console.log('this.endpoints', this.endpoints);
     this.isEditMode = false;
   }
 }
