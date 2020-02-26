@@ -23,14 +23,86 @@
       <h2>
         {{ '_profile.did.service-endpoint-title' | translate }}
       </h2>
-      <evan-button>TODO Edit</evan-button>
+      <evan-button
+        v-if="!isEditMode"
+        @click="onEditStart"
+      >
+        TODO Edit
+      </evan-button>
     </div>
     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem nemo possimus corrupti voluptates. Doloribus ab harum exercitationem a! Fuga ipsum molestias nisi ad unde exercitationem velit quia porro eius ullam!</p>
 
     <evan-table
       class="simple"
+      :fields="columns"
       :items="endpoints"
-    />
+    >
+      <template
+        v-if="isEditMode"
+        v-slot:cell(label)="data"
+      >
+        <evan-form-control-input
+          class="clean-input"
+          :value="data.item.label"
+        />
+      </template>
+
+      <template
+        v-if="isEditMode"
+        v-slot:cell(url)="data"
+      >
+        <evan-form-control-input
+          class="clean-input"
+          :value="data.item.url"
+        />
+      </template>
+
+      <template
+        v-slot:cell(action)="data"
+      >
+        <evan-button
+          v-show="isEditMode"
+          type="icon-secondary"
+          icon="mdi mdi-trash-can-outline"
+          @click="deleteEndpoint(data.item)"
+        />
+      </template>
+
+      <template
+        v-if="isEditMode"
+        v-slot:bottom-row
+      >
+        <b-td>
+          <evan-form-control-input
+            v-model="newLabel"
+            class="clean-input"
+          />
+        </b-td>
+        <b-td>
+          <evan-form-control-input
+            v-model="newUrl"
+            class="clean-input"
+          />
+        </b-td>
+        <b-td>
+          <evan-button
+            type="icon-secondary"
+            icon="mdi mdi-plus"
+            :disabled="!newLabel || !newUrl"
+            @click="addEndpointRow"
+          />
+        </b-td>
+      </template>
+    </evan-table>
+
+    <div v-if="isEditMode">
+      <evan-button @click="onEditCancel">
+        TODO Cancel
+      </evan-button>
+      <evan-button @click="saveEndpoints">
+        TODO Save
+      </evan-button>
+    </div>
   </div>
 </template>
 
@@ -51,5 +123,9 @@ export default Component;
     font-size: 18px;
     font-weight: bold;
   }
+}
+
+.clean-input {
+  margin: 0 !important;
 }
 </style>

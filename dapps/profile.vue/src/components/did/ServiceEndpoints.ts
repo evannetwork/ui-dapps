@@ -18,10 +18,32 @@
 */
 
 import Component, { mixins } from 'vue-class-component';
-import { EvanComponent } from '@evan.network/ui-vue-core';
+import { EvanComponent, EvanTableColumn } from '@evan.network/ui-vue-core';
 
 @Component
 export default class ServiceEndpointsComponent extends mixins(EvanComponent) {
+  isEditMode = false;
+
+  newUrl = '';
+
+  newLabel = '';
+
+  columns: EvanTableColumn[] = [
+    {
+      key: 'label',
+      label: this.$t('_profile.did.label'),
+    },
+    {
+      key: 'url',
+      label: 'URL',
+    },
+    {
+      key: 'action',
+      label: '',
+      thClass: 'th-icon',
+    },
+  ]
+
   endpoints = [
     {
       label: 'asd',
@@ -32,4 +54,44 @@ export default class ServiceEndpointsComponent extends mixins(EvanComponent) {
       url: 'wqewqeqwewq',
     },
   ]
+
+  previousData;
+
+  /**
+   * Temporarily add new entry to row  and add new empty row
+   */
+  addEndpointRow(): void {
+    if (!this.newLabel || !this.newUrl) {
+      return;
+    }
+
+    this.endpoints = [...this.endpoints, {
+      label: this.newLabel,
+      url: this.newUrl,
+    }];
+    this.newLabel = '';
+    this.newUrl = '';
+  }
+
+  /**
+   * Enable edit mode and save current data
+   */
+  onEditStart(): void {
+    this.previousData = this.endpoints;
+    this.isEditMode = true;
+  }
+
+  /**
+   * Disable edit mode and recover previous data
+   */
+  onEditCancel(): void {
+    this.endpoints = this.previousData;
+    this.isEditMode = false;
+  }
+
+  saveEndpoints(): void {
+    this.addEndpointRow();
+    console.log('this.endpoints', this.endpoints);
+    this.isEditMode = false;
+  }
 }
