@@ -18,7 +18,8 @@
 */
 
 <template>
-  <div class="tooltip evan-tooltip"
+  <div
+    class="tooltip evan-tooltip"
     :class="[
       `bs-tooltip-${ placement }`,
       {
@@ -26,15 +27,17 @@
         'multiline': multiline,
       },
     ]"
-    role="tooltip">
-    <div class="arrow"></div>
+    role="tooltip"
+  >
+    <div class="arrow" />
     <div class="tooltip-inner">
-      <slot></slot>
+      <slot />
     </div>
   </div>
 </template>
 
 <script lang="ts">
-  import Component from './tooltip';
-  export default Component;
+import Component from './tooltip';
+
+export default Component;
 </script>

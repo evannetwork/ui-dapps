@@ -16,6 +16,7 @@
   Fifth Floor, Boston, MA, 02110-1301 USA, or download the license from
   the following URL: https://evan.network/license/
 */
+import { Runtime } from '@evan.network/api-blockchain-core';
 
 /**
  * Returns all contacts from current user addressbook
@@ -25,7 +26,7 @@
  *                                    test entries, as well.
  */
 export async function getContacts(
-  runtime: any,
+  runtime: Runtime,
   unfiltered = false,
 ): Promise<{label: string; value: string}[]> {
   // load the contacts for the current user, so we can display correct contact alias
@@ -41,4 +42,10 @@ export async function getContacts(
   }
 
   return contacts.filter((entry) => entry.value !== runtime.activeAccount && !/@/.test(entry.value));
+}
+
+export function getDidFromAddress(runtime: Runtime, identity: string): string {
+  const infix = runtime.environment === 'testcore' ? 'testcore:' : '';
+
+  return `did:evan:${infix}${identity.toLowerCase()}`;
 }
