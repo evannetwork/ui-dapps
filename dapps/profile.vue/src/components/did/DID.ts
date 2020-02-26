@@ -19,6 +19,41 @@
 
 import Component, { mixins } from 'vue-class-component';
 import { EvanComponent } from '@evan.network/ui-vue-core';
+import { Did, DidOptions, Runtime } from '@evan.network/api-blockchain-core';
 
 @Component
-export default class DIDComponent extends mixins(EvanComponent) {}
+export default class DIDComponent extends mixins(EvanComponent) {
+  didDocument = null;
+
+  runtime: Runtime = null;
+
+  /**
+   * TODO: handle profiles without creatded did?
+   */
+  async fetchDidDocument() {
+    this.runtime = this.getRuntime();
+
+    console.log(this.runtime.nameResolver.config);
+
+    const didInstance = new Did(this.runtime as DidOptions);
+
+    console.log('didInstance', didInstance);
+    const did = await didInstance.convertIdentityToDid(this.runtime.activeIdentity);
+
+    console.log('did', did);
+    this.didDocument = await didInstance.getDidDocument(did);
+    // this.didDocument = await this.runtime.did.getDidDocument(did);
+
+    console.log('didDocument', this.didDocument);
+  }
+
+  async created(): Promise<void> {
+    this.fetchDidDocument();
+    /* // TODO: switch after complete identity switch to: runtime.did.getDidDocument();
+       const identity = await this.runtime.verifications.getIdentityForAccount(this.runtime.activeAccount, true);
+       const did = await this.runtime.did.convertIdentityToDid(identity);
+       const document = await this.runtime.did.getDidDocumentTemplate();
+       await this.runtime.did.setDidDocument(did, document);
+       const retrieved = await this.runtime.did.getDidDocument(did); */
+  }
+}

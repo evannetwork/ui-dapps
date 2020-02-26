@@ -8,6 +8,7 @@
     },
     "breadcrumbs": {
       "detail": "Identity",
+      "did": "Decentralized ID",
       "logout": "Logout",
       "settings": "Settings",
       "sharings": "Sharings",
