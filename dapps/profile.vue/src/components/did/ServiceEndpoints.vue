@@ -61,9 +61,7 @@
         />
       </template>
 
-      <template
-        v-slot:cell(action)="data"
-      >
+      <template v-slot:cell(action)="data">
         <evan-button
           v-show="isEditMode"
           type="icon-secondary"

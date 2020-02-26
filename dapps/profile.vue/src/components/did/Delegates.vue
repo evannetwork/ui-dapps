@@ -19,9 +19,100 @@
 
 <template>
   <div class="content-card">
-    <h2 class="card-heading mb-3">
-      {{ '_profile.did.delegates-title' | translate }}
-    </h2>
+    <div class="card-heading mb-3 d-flex flex-row justify-content-between align-items-center">
+      <h2>
+        {{ '_profile.did.delegates-title' | translate }}
+      </h2>
+      <evan-button
+        v-if="!isEditMode"
+        @click="onEditStart"
+      >
+        {{ '_evan.edit' | translate }}
+      </evan-button>
+    </div>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem nemo possimus corrupti voluptates. Doloribus ab harum exercitationem a! Fuga ipsum molestias nisi ad unde exercitationem velit quia porro eius ullam!</p>
+
+    <evan-table
+      class="simple"
+      :fields="columns"
+      :items="delegates"
+    >
+      <template v-slot:empty>
+        {{ '_profile.did.empty-delegates' }}
+      </template>
+
+      <template
+        v-if="isEditMode"
+        v-slot:cell(label)="data"
+      >
+        <evan-form-control-input
+          class="clean-input"
+          :value="data.item.label"
+        />
+      </template>
+
+      <template
+        v-if="isEditMode"
+        v-slot:cell(url)="data"
+      >
+        <evan-form-control-input
+          class="clean-input"
+          :value="data.item.url"
+        />
+      </template>
+
+      <template v-slot:cell(action)="data">
+        <evan-button
+          v-show="isEditMode"
+          type="icon-secondary"
+          icon="mdi mdi-trash-can-outline"
+          @click="deleteDelegate(data.index)"
+        />
+      </template>
+
+      <template
+        v-if="isEditMode"
+        v-slot:bottom-row
+      >
+        <b-td colspan="2">
+          <evan-form-control-v-select
+            v-model="newDelegate"
+            class="clean-input"
+            :options="contacts"
+          />
+        </b-td>
+        <b-td>
+          <evan-button
+            type="icon-secondary"
+            icon="mdi mdi-plus"
+            :disabled="!newDelegate"
+            @click="addDelegateRow"
+          />
+        </b-td>
+      </template>
+    </evan-table>
+
+    <div
+      v-if="isEditMode"
+      class="d-flex mt-3 align-items-center justify-content-between"
+    >
+      <div class="d-flex align-items-center">
+        <i class="mdi mdi-information-outline mr-2" />
+        <span>{{ '_evan.transaction_costs_hint' | translate }}</span>
+      </div>
+      <div>
+        <evan-button @click="onEditCancel">
+          {{ '_evan.cancel' | translate }}
+        </evan-button>
+        <evan-button
+          class="ml-1"
+          type="primary"
+          @click="saveDelegates"
+        >
+          {{ '_evan.save' | translate }}
+        </evan-button>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -42,5 +133,9 @@ export default Component;
     font-size: 18px;
     font-weight: bold;
   }
+}
+
+.clean-input {
+  margin: 0 !important;
 }
 </style>

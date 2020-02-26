@@ -18,7 +18,72 @@
 */
 
 import Component, { mixins } from 'vue-class-component';
-import { EvanComponent } from '@evan.network/ui-vue-core';
+import { EvanComponent, EvanTableColumn } from '@evan.network/ui-vue-core';
+import { bccUtils } from '@evan.network/ui';
 
 @Component
-export default class DelegatesComponent extends mixins(EvanComponent) {}
+export default class DelegatesComponent extends mixins(EvanComponent) {
+  isEditMode = false;
+
+  contacts = [];
+
+  columns: EvanTableColumn[] = [
+    {
+      key: 'did',
+      label: this.$t('_profile.did.did'),
+    },
+    {
+      key: 'note',
+      label: this.$t('_profile.did.note'),
+    },
+    {
+      key: 'action',
+      label: '',
+      thClass: 'th-icon',
+    },
+  ]
+
+  delegates = [];
+
+  previousData = [];
+
+  async mounted(): Promise<void> {
+    // Mock it till you shock it
+    this.delegates = [
+      {
+        did: '0x000000000000',
+        note: 'asdasdsaasdsa',
+      },
+      {
+        did: '0x111111111111',
+        note: 'wqewqeqwewq',
+      },
+    ];
+
+    this.contacts = await bccUtils.getContacts(this.getRuntime());
+  }
+
+  /**
+   * Removes the selected delegate temporarily
+   * @param index row index of the item to be removed
+   */
+  deleteDelegate(index: number): void {
+    this.delegates = this.delegates.filter((_, i) => i !== index);
+  }
+
+  /**
+   * Enable edit mode and save current data
+   */
+  onEditStart(): void {
+    this.previousData = this.delegates;
+    this.isEditMode = true;
+  }
+
+  /**
+   * Disable edit mode and recover previous data
+   */
+  onEditCancel(): void {
+    this.delegates = this.previousData;
+    this.isEditMode = false;
+  }
+}
