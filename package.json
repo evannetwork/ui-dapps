@@ -93,7 +93,7 @@
   "scripts": {
     "browserify": "gulp --gulpfile scripts/gulp/browserify.js broawserify --dapp ",
     "build": "npm run dapps-build",
-    "clear-build": "npm run link-core && rm -r ./node_modules/@evan.network/ui-dapp-browser/runtime/external/*",
+    "clear-build": "npm run link-core && rm -r ./node_modules/@evan.network/ui-dapp-browser/dist/dapps/*",
     "dapp-build": "npm run link-core && gulp --gulpfile scripts/dapps.js dapps-build --folder ",
     "dapps-build": "npm run link-core && gulp --gulpfile scripts/dapps.js dapps-build",
     "dapps-serve": "npm run link-core && gulp --gulpfile scripts/dapps.js dapps-serve",
