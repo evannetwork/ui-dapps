@@ -19,9 +19,18 @@
 
 <template>
   <div class="content-card">
-    <h2 class="card-heading mb-3">
-      {{ '_profile.did.service-endpoint-title' | translate }}
-    </h2>
+    <div class="card-heading mb-3 d-flex flex-row justify-content-between align-items-center">
+      <h2>
+        {{ '_profile.did.service-endpoint-title' | translate }}
+      </h2>
+      <evan-button>TODO Edit</evan-button>
+    </div>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem nemo possimus corrupti voluptates. Doloribus ab harum exercitationem a! Fuga ipsum molestias nisi ad unde exercitationem velit quia porro eius ullam!</p>
+
+    <evan-table
+      class="simple"
+      :items="endpoints"
+    />
   </div>
 </template>
 
@@ -38,7 +47,7 @@ export default Component;
   width: 560px;
   padding: 24px 24px;
 
-  .card-heading {
+  .card-heading h2 {
     font-size: 18px;
     font-weight: bold;
   }

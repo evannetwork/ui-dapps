@@ -21,4 +21,15 @@ import Component, { mixins } from 'vue-class-component';
 import { EvanComponent } from '@evan.network/ui-vue-core';
 
 @Component
-export default class ServiceEndpointsComponent extends mixins(EvanComponent) {}
+export default class ServiceEndpointsComponent extends mixins(EvanComponent) {
+  endpoints = [
+    {
+      label: 'asd',
+      url: 'asdasdsaasdsa',
+    },
+    {
+      label: 'wqewewq',
+      url: 'wqewqeqwewq',
+    },
+  ]
+}
