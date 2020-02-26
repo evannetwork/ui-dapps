@@ -64,7 +64,7 @@
           v-show="isEditMode"
           type="icon-secondary"
           icon="mdi mdi-trash-can-outline"
-          @click="deleteEndpoint(data.item)"
+          @click="deleteEndpoint(data.index)"
         />
       </template>
 

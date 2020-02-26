@@ -44,18 +44,23 @@ export default class ServiceEndpointsComponent extends mixins(EvanComponent) {
     },
   ]
 
-  endpoints = [
-    {
-      label: 'asd',
-      url: 'asdasdsaasdsa',
-    },
-    {
-      label: 'wqewewq',
-      url: 'wqewqeqwewq',
-    },
-  ]
+  endpoints = [];
 
-  previousData;
+  previousData = [];
+
+  mounted(): void {
+    // Mock it till you shock it
+    this.endpoints = [
+      {
+        label: 'asd',
+        url: 'asdasdsaasdsa',
+      },
+      {
+        label: 'wqewewq',
+        url: 'wqewqeqwewq',
+      },
+    ];
+  }
 
   /**
    * Temporarily add new entry to row  and add new empty row
@@ -87,6 +92,14 @@ export default class ServiceEndpointsComponent extends mixins(EvanComponent) {
   onEditCancel(): void {
     this.endpoints = this.previousData;
     this.isEditMode = false;
+  }
+
+  /**
+   * Removes the selected endpoint temporarily
+   * @param index row index of the item to be removed
+   */
+  deleteEndpoint(index: number): void {
+    this.endpoints = this.endpoints.filter((_, i) => i !== index);
   }
 
   saveEndpoints(): void {
