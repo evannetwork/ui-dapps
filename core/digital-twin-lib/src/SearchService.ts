@@ -45,7 +45,7 @@ export class SearchService {
       offset: 0,
       reverse: true,
       sortBy: 'updated',
-      searchTerm: '*',
+      searchTerm: '',
       page: null,
     };
     const params = { ...defaultOptions, ...options };
@@ -55,11 +55,6 @@ export class SearchService {
       params.offset = params.page * params.count;
       delete params.page;
     }
-
-    // wrap with wildcards if defined
-    params.searchTerm = !params.searchTerm || params.searchTerm === '*'
-      ? '*'
-      : `*${params.searchTerm}*`;
 
     const { data } = await axios.get<DigitalTwinResponse>(
       `${this.requestUrl}/${type}`,
