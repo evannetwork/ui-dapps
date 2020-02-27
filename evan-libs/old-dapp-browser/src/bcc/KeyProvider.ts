@@ -21,11 +21,7 @@ import { lightwallet } from '@evan.network/ui-session';
 import * as core from '../core';
 import { config } from '../config';
 import { getWeb3Instance } from '../web3';
-
-/**
- * is inserted when the application was bundled, used to prevent window usage
- */
-declare let evanGlobals: any;
+import evanGlobals from '../evanGlobals';
 
 let latestKeyProvider;
 

@@ -18,11 +18,7 @@
 */
 
 import * as utils from './utils';
-
-/**
- * is inserted when the application was bundled, used to prevent window usage
- */
-declare let evanGlobals: any;
+import evanGlobals from './evanGlobals';
 
 /**
  * values to handle one single Websocket connection

@@ -18,11 +18,7 @@
 */
 
 import { lightwallet } from '@evan.network/ui-session';
-
-/**
- * is inserted when the application was bundled, used to prevent window usage
- */
-declare let evanGlobals: any;
+import evanGlobals from '../evanGlobals';
 
 import * as core from '../core';
 

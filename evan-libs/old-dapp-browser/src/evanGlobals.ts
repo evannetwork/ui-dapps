@@ -17,6 +17,6 @@
   the following URL: https://evan.network/license/
 */
 
-import { routing } from '@evan.network/ui-dapp-browser';
+const evanGlobals: any = { };
 
-export default routing;
+export default evanGlobals;

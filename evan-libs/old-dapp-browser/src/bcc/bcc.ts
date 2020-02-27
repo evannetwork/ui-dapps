@@ -26,11 +26,7 @@ import { Solc } from '../solc';
 import * as core from '../core';
 import { AccountStore } from './AccountStore';
 import { KeyProvider, getLatestKeyProvider } from './KeyProvider';
-
-/**
- * is inserted when the application was bundled, used to prevent window usage
- */
-declare let evanGlobals: any;
+import evanGlobals from '../evanGlobals';
 
 let internalWeb3;
 const coreRuntimes = { };

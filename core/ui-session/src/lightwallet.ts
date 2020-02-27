@@ -321,7 +321,7 @@ export default class EvanLightWallet {
          overwriteVaultEncryptionKey for old or custom logic accounts) */
       primaryAccount = EvanLightWallet.getPrimaryAccount(vault);
       if (!customEncryptionKeys[primaryAccount]) {
-        throw new Error(`No encryption key is set for ${primaryAccount}!`
+        console.warn(`No encryption key is set for ${primaryAccount}!`
           + 'Please use overwriteVaultEncryptionKey function or run bccHelper.setEncryptionKeyForAccount before.');
         vault.encryptionKey = EvanLightWallet.getEncryptionKeyFromPassword(
           EvanLightWallet.getPrimaryAccount(vault),

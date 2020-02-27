@@ -19,10 +19,7 @@
 
 import { loading } from '@evan.network/ui-dapp-browser';
 
-/**
- * is inserted when the application was bundled, used to prevent window usage
- */
-declare let evanGlobals: any;
+import evanGlobals from './evanGlobals';
 
 /**
  * global available array that includes dev mode available dapps, when devMode is

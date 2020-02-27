@@ -23,12 +23,7 @@ import * as core from './core';
 import * as utils from './utils';
 import { config } from './config';
 import { watchForEveLow } from './watchers';
-
-
-/**
- * is inserted when the application was bundled, used to prevent window usage
- */
-declare let evanGlobals: any;
+import evanGlobals from './evanGlobals';
 
 /**
  * Set defaults for preloaded applications.

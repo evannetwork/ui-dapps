@@ -36,11 +36,8 @@ import { KeyProvider, getLatestKeyProvider } from './bcc/KeyProvider';
 import { Solc } from './solc';
 import { startWatchers } from './watchers';
 import { updateCoreRuntime, getCoreOptions } from './bcc/bcc';
-
-/**
- * is inserted when the application was bundled, used to prevent window usage
- */
-declare let evanGlobals: any;
+import evanGlobals from './evanGlobals';
+import './core-js.client.shim.js';
 
 /**
  * add page load performance tracking
@@ -61,8 +58,6 @@ let web3;
 let CoreRuntime;
 let definition;
 let nameResolver;
-
-delete window['System'];
 
 // prefill bcc for systemjs plugin usage
 evanGlobals.core = core;
