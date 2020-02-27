@@ -63,6 +63,7 @@ export default Component;
   margin-left: auto;
   margin-right: auto;
   padding-top: 56px;
+  padding-bottom: 56px;
   width: 560px;
 }
 .content-card {

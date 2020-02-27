@@ -72,20 +72,16 @@
         v-if="isEditMode"
         v-slot:bottom-row
       >
-        <b-td colspan="2">
-          <evan-form-control-v-select
-            v-model="newDelegate"
-            class="clean-input"
+        <b-td colspan="3">
+          <!-- $props and $attr binding with evan-form-control-v-select isn't ideal.
+          Using "native" v-select instead -->
+          <evan-v-select
+            class="m-0"
+            :value="null"
             :options="contacts"
-            @select="onSelectContact"
-          />
-        </b-td>
-        <b-td>
-          <evan-button
-            type="icon-secondary"
-            icon="mdi mdi-plus"
-            :disabled="!newDelegate"
-            @click="addDelegateRow"
+            :placeholder="'_profile.did.choose-contact' | translate"
+            :clear-search-on-select="true"
+            @input="onSelectContact"
           />
         </b-td>
       </template>
@@ -132,9 +128,5 @@ export default Component;
     font-size: 18px;
     font-weight: bold;
   }
-}
-
-.clean-input {
-  margin: 0 !important;
 }
 </style>

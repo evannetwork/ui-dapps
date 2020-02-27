@@ -44,7 +44,7 @@
         v-slot:cell(label)="data"
       >
         <evan-form-control-input
-          class="clean-input"
+          class="m-0"
           :value="data.item.label"
         />
       </template>
@@ -54,7 +54,7 @@
         v-slot:cell(url)="data"
       >
         <evan-form-control-input
-          class="clean-input"
+          class="m-0"
           :value="data.item.url"
         />
       </template>
@@ -75,13 +75,13 @@
         <b-td>
           <evan-form-control-input
             v-model="newLabel"
-            class="clean-input"
+            class="m-0"
           />
         </b-td>
         <b-td>
           <evan-form-control-input
             v-model="newUrl"
-            class="clean-input"
+            class="m-0"
           />
         </b-td>
         <b-td>
@@ -136,9 +136,5 @@ export default Component;
     font-size: 18px;
     font-weight: bold;
   }
-}
-
-.clean-input {
-  margin: 0 !important;
 }
 </style>

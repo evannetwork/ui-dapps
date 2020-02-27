@@ -18,16 +18,18 @@
 */
 
 import Component, { mixins } from 'vue-class-component';
-import { EvanComponent, EvanTableColumn } from '@evan.network/ui-vue-core';
+import { EvanComponent, EvanTableColumn, ContactInterface } from '@evan.network/ui-vue-core';
 import { bccUtils } from '@evan.network/ui';
-import { getUserAlias } from '@evan.network/ui/dist/utils/profileUtils';
-import { getDisplayName } from '@evan.network/ui/src/utils/profileUtils';
 
+interface Delegate {
+  did: string;
+  note: string;
+}
 @Component
 export default class DelegatesComponent extends mixins(EvanComponent) {
   isEditMode = false;
 
-  contacts = [];
+  contacts: ContactInterface[] = [];
 
   columns: EvanTableColumn[] = [
     {
@@ -36,7 +38,7 @@ export default class DelegatesComponent extends mixins(EvanComponent) {
     },
     {
       key: 'note',
-      label: this.$t('_profile.did.note'),
+      label: this.$t('_profile.did.name-or-note'),
     },
     {
       key: 'action',
@@ -45,9 +47,9 @@ export default class DelegatesComponent extends mixins(EvanComponent) {
     },
   ]
 
-  delegates = [];
+  delegates: Delegate[] = [];
 
-  previousData = [];
+  previousData: Delegate[] = [];
 
   async mounted(): Promise<void> {
     // Mock it till you shock it
@@ -65,11 +67,10 @@ export default class DelegatesComponent extends mixins(EvanComponent) {
     this.contacts = await bccUtils.getContacts(this.getRuntime());
   }
 
-  async onSelectContact(did: string): Promise<void> {
-    const note = await getDisplayName(this.getRuntime(), did);
+  async onSelectContact(contact: ContactInterface): Promise<void> {
     this.delegates = [...this.delegates, {
-      did,
-      note,
+      did: contact.value,
+      note: contact.label,
     }];
   }
 

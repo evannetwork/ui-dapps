@@ -88,7 +88,6 @@ export default class ServiceEndpointsComponent extends mixins(EvanComponent) {
 
   saveEndpoints(): void {
     this.addEndpointRow();
-    console.log('this.endpoints', this.endpoints);
     this.isEditMode = false;
   }
 
