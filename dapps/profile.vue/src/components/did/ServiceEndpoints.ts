@@ -19,6 +19,7 @@
 
 import Component, { mixins } from 'vue-class-component';
 import { EvanComponent, EvanTableColumn } from '@evan.network/ui-vue-core';
+import { isEqual } from 'lodash';
 
 @Component
 export default class ServiceEndpointsComponent extends mixins(EvanComponent) {
@@ -88,6 +89,7 @@ export default class ServiceEndpointsComponent extends mixins(EvanComponent) {
 
   saveEndpoints(): void {
     this.addEndpointRow();
+    // TODO: Save to DID Doc
     this.isEditMode = false;
   }
 
@@ -105,5 +107,17 @@ export default class ServiceEndpointsComponent extends mixins(EvanComponent) {
   onEditCancel(): void {
     this.endpoints = this.previousData;
     this.isEditMode = false;
+  }
+
+  /**
+   * Checks for any real change made
+   */
+  get hasChanges(): boolean {
+    // check for filled new row
+    if (this.newLabel && this.newUrl) {
+      return true;
+    }
+    // otherwise deep object comparison
+    return !isEqual(this.previousData, this.endpoints);
   }
 }

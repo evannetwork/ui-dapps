@@ -20,6 +20,7 @@
 import Component, { mixins } from 'vue-class-component';
 import { EvanComponent, EvanTableColumn, ContactInterface } from '@evan.network/ui-vue-core';
 import { bccUtils } from '@evan.network/ui';
+import { isEqual } from 'lodash';
 
 interface Delegate {
   did: string;
@@ -67,11 +68,20 @@ export default class DelegatesComponent extends mixins(EvanComponent) {
     this.contacts = await bccUtils.getContacts(this.getRuntime());
   }
 
+  /**
+   * Temporarily add contact to delegates
+   * @param contact selected contact
+   */
   async onSelectContact(contact: ContactInterface): Promise<void> {
     this.delegates = [...this.delegates, {
       did: contact.value,
       note: contact.label,
     }];
+  }
+
+  saveDelegates(): void {
+    // TODO: Save to DID Doc
+    this.isEditMode = false;
   }
 
   /**
@@ -96,5 +106,13 @@ export default class DelegatesComponent extends mixins(EvanComponent) {
   onEditCancel(): void {
     this.delegates = this.previousData;
     this.isEditMode = false;
+  }
+
+  /**
+   * Checks for any real change made
+   */
+  get hasChanges(): boolean {
+    // deep object comparison
+    return !isEqual(this.previousData, this.delegates);
   }
 }

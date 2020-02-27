@@ -110,6 +110,7 @@
         <evan-button
           class="ml-1"
           type="primary"
+          :disabled="!hasChanges"
           @click="saveEndpoints"
         >
           {{ '_evan.save' | translate }}

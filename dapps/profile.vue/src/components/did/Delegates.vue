@@ -102,6 +102,7 @@
         <evan-button
           class="ml-1"
           type="primary"
+          :disabled="!hasChanges"
           @click="saveDelegates"
         >
           {{ '_evan.save' | translate }}
