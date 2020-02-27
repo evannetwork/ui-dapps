@@ -327,7 +327,7 @@ gulp.task('dapps-build', async (cb) => {
     });
   });
 
-  await Throttle.all(buildDappPromises, { maxInProgress: 4 });
+  await Throttle.all(buildDappPromises, { maxInProgress: 10 });
   clearInterval(logLoop);
   return cb();
 });
