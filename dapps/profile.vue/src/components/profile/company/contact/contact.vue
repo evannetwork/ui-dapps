@@ -22,21 +22,22 @@
     <evan-form
       ref="form"
       :editable="onlyForm || $store.state.profileDApp.permissions.readWrite.indexOf('contact') !== -1"
-      :enableCancel="onlyEdit ? false : true"
+      :enable-cancel="onlyEdit ? false : true"
       :form="form"
-      :handleShare="() => $store.commit('toggleSidePanel', 'sharing')"
-      :i18nScope="'_profile.company.contact'"
-      :isLoading="!onlyForm && $store.state.dispatcher.curr.running.updateProfileDispatcher"
-      :onlyForm="onlyForm"
-      :shareable="$store.state.runtime && $route.params.address === $store.state.runtime.activeIdentity"
+      :handle-share="() => $store.commit('toggleSidePanel', 'sharing')"
+      :i18n-scope="'_profile.company.contact'"
+      :is-loading="!onlyForm && $store.state.dispatcher.curr.running.updateProfileDispatcher"
+      :only-form="onlyForm"
+      :shareable="$store.state.runtime && $route.params.address === $store.state.runtime.activeAccount"
       :stacked="stacked"
       :title="'_profile.company.contact.title' | translate"
-      @save="changeProfileData()">
-    </evan-form>
+      @save="changeProfileData()"
+    />
   </div>
 </template>
 
 <script lang="ts">
-  import Component from './contact';
-  export default Component;
+import Component from './contact';
+
+export default Component;
 </script>

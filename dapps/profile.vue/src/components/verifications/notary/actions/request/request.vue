@@ -21,9 +21,10 @@
   <div>
     <evan-modal
       ref="requestModal"
-      :hideFooterButton="status === -1 || status === 3"
-      :maxWidth="'800px'"
-      @close="modalClosed()">
+      :hide-footer-button="status === -1 || status === 3"
+      :max-width="'800px'"
+      @close="modalClosed()"
+    >
       <template v-slot:header>
         <h5 class="modal-title">
           {{ '_profile.verifications.notary.request.header' | translate }}
@@ -35,20 +36,24 @@
           <evan-steps
             v-if="status >= 0 && status < 3"
             :steps="steps"
-            :activeStep="status"
-            @stepChange="status = $event; setupSummary()" />
+            :active-step="status"
+            @stepChange="status = $event; setupSummary()"
+          />
 
           <!-- Verification start info -->
           <div v-if="status === -1">
             <notary-info-content
               :address="identity"
-              :enoughFunds="enoughFunds"
-              :readableFunds="readableFunds">
-            </notary-info-content>
+              :enough-funds="enoughFunds"
+              :readable-funds="readableFunds"
+            />
           </div>
 
           <!-- request verification form -->
-          <div class="container" v-else-if="status === 0">
+          <div
+            v-else-if="status === 0"
+            class="container"
+          >
             <p class="mt-0 mb-3">
               {{ '_profile.verifications.notary.request.requesting-account' | translate }}
             </p>
@@ -60,8 +65,10 @@
             />
 
             <template v-if="companyData.contact.country !== 'DE' || missingCompanyFields.registration.length !== 0 || missingCompanyFields.contact.length !== 0">
-              <b class="d-block border p-3 mt-3"
-                v-if="companyData.contact.country && companyData.contact.country !== 'DE'">
+              <b
+                v-if="companyData.contact.country && companyData.contact.country !== 'DE'"
+                class="d-block border p-3 mt-3"
+              >
                 {{ '_profile.verifications.notary.request.only-de' | translate }}
               </b>
               <template v-else>
@@ -72,119 +79,164 @@
                 <profile-company-registration
                   v-if="missingCompanyFields.registration.length !== 0"
                   :address="address"
-                  :onlyEdit="true"
-                  :required="requiredCompanyFields.registration">
-                </profile-company-registration>
+                  :only-edit="true"
+                  :required="requiredCompanyFields.registration"
+                />
                 <profile-company-contact
                   v-if="missingCompanyFields.contact.length !== 0"
                   :address="address"
-                  :onlyEdit="true"
+                  :only-edit="true"
                   :required="requiredCompanyFields.contact"
-                  :restrictCountries="['DE']">
-                </profile-company-contact>
+                  :restrict-countries="['DE']"
+                />
               </template>
             </template>
 
-            <evan-form class="mb-0 mt-5"
+            <evan-form
               v-else
+              class="mb-0 mt-5"
               :form="requestForm"
-              :i18nScope="'_profile.verifications.notary.request'"
-              onlyForm="true"
-              stacked="true">
-            </evan-form>
+              :i18n-scope="'_profile.verifications.notary.request'"
+              only-form="true"
+              stacked="true"
+            />
           </div>
 
           <!-- approval screen -->
-          <div v-else-if="status === 1" class="container mt-5">
+          <div
+            v-else-if="status === 1"
+            class="container mt-5"
+          >
             <p>{{ '_profile.verifications.notary.request.proof.title' | translate }}</p>
             <labeled-list :entries="approveData" />
             <p>{{ '_profile.verifications.notary.request.proof.description' | translate }}</p>
-            <labeled-list :entries="approveAddress" hideLabel hideEmpty/>
+            <labeled-list
+              :entries="approveAddress"
+              hide-label
+              hide-empty
+            />
           </div>
 
           <!-- approve costs screen -->
-          <div v-else-if="status === 2 && !sending" class="mt-5">
+          <div
+            v-else-if="status === 2 && !sending"
+            class="mt-5"
+          >
             <p>{{ '_profile.verifications.notary.request.costs.hint' | translate }}</p>
             <div class="d-flex p-3 align-items-center justify-content-center">
               <evan-form-control-checkbox
-                class="mr-3 mb-0" style="min-width: 0; width: auto;"
                 id="approvedCosts"
                 v-model="approvedCosts"
+                class="mr-3 mb-0"
+                style="min-width: 0; width: auto;"
                 required
               />
-              <label for="approvedCosts" class="form-check-label">
+              <label
+                for="approvedCosts"
+                class="form-check-label"
+              >
                 <h4 class="mb-0">{{ '_profile.verifications.notary.request.costs.approve' | translate }}</h4>
               </label>
             </div>
           </div>
         </template>
 
-         <!-- loader-->
-        <div class="text-center"
-          v-if="sending">
-          <evan-loading></evan-loading>
+        <!-- loader-->
+        <div
+          v-if="sending"
+          class="text-center"
+        >
+          <evan-loading />
           <h4>{{ '_profile.verifications.notary.request.requesting' | translate }}</h4>
         </div>
 
         <!-- success screen -->
-        <div class="text-center"
-          v-else-if="status === 3">
-          <evan-success></evan-success>
+        <div
+          v-else-if="status === 3"
+          class="text-center"
+        >
+          <evan-success />
           <div class="p-5 mt-3 text-center">
             <p>{{ '_profile.verifications.notary.request.requested1' | translate }}</p>
-            <p class="mt-3">{{ '_profile.verifications.notary.request.requested2' | translate }}</p>
-            <p class="mt-3"><b>{{ '_profile.verifications.notary.request.requested3' | translate }}</b></p>
+            <p class="mt-3">
+              {{ '_profile.verifications.notary.request.requested2' | translate }}
+            </p>
+            <p class="mt-3">
+              <b>{{ '_profile.verifications.notary.request.requested3' | translate }}</b>
+            </p>
           </div>
         </div>
       </template>
 
       <template v-slot:footer>
-        <span class="mx-auto" v-if="status !== -1"></span>
+        <span
+          v-if="status !== -1"
+          class="mx-auto"
+        />
         <!-- back btn -->
         <template v-if="status >= 0 && status <= 2 && !sending">
           <button
-            type="button" class="btn btn-outline-primary"
-            @click="status -= 1">
-            <i class="mdi mdi-arrow-left label mr-3"></i>
+            type="button"
+            class="btn btn-outline-primary"
+            @click="status -= 1"
+          >
+            <i class="mdi mdi-arrow-left label mr-3" />
             {{ `_profile.verifications.back` | translate }}
           </button>
         </template>
 
         <!-- start button -->
-         <template v-if="status === -1">
-          <button type="button" class="btn btn-primary mx-auto"
+        <template v-if="status === -1">
+          <button
+            type="button"
+            class="btn btn-primary mx-auto"
             :disabled="!enoughFunds || (status === 1 && !requestForm.isValid) || sending"
-            @click="nextStatus()">
+            @click="nextStatus()"
+          >
             {{ `_profile.verifications.notary.request.request-verification` | translate }}
           </button>
         </template>
 
         <!-- next btn -->
         <template v-if="status < 2 && status !== -1">
-          <button type="button" class="btn btn-primary"
+          <button
+            type="button"
+            class="btn btn-primary"
             :disabled="(status === 0 && !requestForm.isValid) || sending"
-            @click="nextStatus()">
+            @click="nextStatus()"
+          >
             {{ `_profile.verifications.next` | translate }}
-            <i class="mdi mdi-arrow-right label ml-3"></i>
+            <i class="mdi mdi-arrow-right label ml-3" />
           </button>
         </template>
 
         <!-- request ident btn -->
         <template v-if="status === 2">
-          <button type="button" class="btn btn-primary"
-            @click="requestIdentification()"
+          <button
+            type="button"
+            class="btn btn-primary"
             :disabled="!approvedCosts || sending"
+            @click="requestIdentification()"
           >
             {{ `_profile.verifications.notary.request.request-ident` | translate }}
-            <div class="spinner-border spinner-border-sm text-light ml-3" v-if="sending"></div>
-            <i class="mdi mdi-arrow-right label ml-3" v-else></i>
+            <div
+              v-if="sending"
+              class="spinner-border spinner-border-sm text-light ml-3"
+            />
+            <i
+              v-else
+              class="mdi mdi-arrow-right label ml-3"
+            />
           </button>
         </template>
 
         <!-- final close button -->
         <template v-if="status === 3">
-          <button type="button" class="btn btn-primary"
-            @click="$refs.requestModal.hide()">
+          <button
+            type="button"
+            class="btn btn-primary"
+            @click="$refs.requestModal.hide()"
+          >
             {{ `_profile.verifications.done` | translate }}
           </button>
         </template>
@@ -194,8 +246,9 @@
 </template>
 
 <script lang="ts">
-  import Component from './request';
-  export default Component;
+import Component from './request';
+
+export default Component;
 </script>
 
 <style lang="scss" scoped>

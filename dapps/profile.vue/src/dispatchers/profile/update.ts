@@ -24,10 +24,10 @@ import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-c
 import ProfileMigrationLibrary from '../../lib/profileMigration';
 
 const dispatcher = new Dispatcher(
-  `profile.vue.${ dappBrowser.getDomainName() }`,
+  `profile.vue.${dappBrowser.getDomainName()}`,
   'updateProfileDispatcher',
   60000,
-  '_profile.dispatchers.profile-update'
+  '_profile.dispatchers.profile-update',
 );
 
 dispatcher
@@ -55,7 +55,7 @@ dispatcher
     }
 
     await profile.setProfileProperties({
-      [ data.type ]: data.formData,
+      [data.type]: data.formData,
     });
   });
 

@@ -28,7 +28,7 @@ import IssueComponent from '../notary/actions/issue/issue.vue';
 @Component({
   components: {
     'notary-action-issue': IssueComponent,
-  }
+  },
 })
 export default class VerificationsOverviewComponent extends mixins(EvanComponent) {
   /**
@@ -57,7 +57,7 @@ export default class VerificationsOverviewComponent extends mixins(EvanComponent
   type = '';
 
   async created() {
-    const runtime = (<any>this).getRuntime();
+    const runtime = (<any> this).getRuntime();
 
     // use url address or use runtime activeAccount as default
     this.address = (this as any).$route.params.address || runtime.activeIdentity;

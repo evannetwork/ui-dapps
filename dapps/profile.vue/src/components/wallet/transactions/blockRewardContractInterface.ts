@@ -19,37 +19,37 @@
 
 export default [
   {
-    "anonymous": false,
-    "inputs": [
+    anonymous: false,
+    inputs: [
       {
-        "indexed": false,
-        "name": "amount",
-        "type": "uint256"
+        indexed: false,
+        name: 'amount',
+        type: 'uint256',
       },
       {
-        "indexed": true,
-        "name": "receiver",
-        "type": "address"
-      }
+        indexed: true,
+        name: 'receiver',
+        type: 'address',
+      },
     ],
-    "name": "AddedReceiver",
-    "type": "event"
+    name: 'AddedReceiver',
+    type: 'event',
   },
   {
-    "anonymous": false,
-    "inputs": [
+    anonymous: false,
+    inputs: [
       {
-        "indexed": false,
-        "name": "receivers",
-        "type": "address[]"
+        indexed: false,
+        name: 'receivers',
+        type: 'address[]',
       },
       {
-        "indexed": false,
-        "name": "rewards",
-        "type": "uint256[]"
-      }
+        indexed: false,
+        name: 'rewards',
+        type: 'uint256[]',
+      },
     ],
-    "name": "Rewarded",
-    "type": "event"
-  }
+    name: 'Rewarded',
+    type: 'event',
+  },
 ];

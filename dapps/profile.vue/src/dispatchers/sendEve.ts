@@ -22,15 +22,15 @@ import { Dispatcher, DispatcherInstance } from '@evan.network/ui';
 
 
 const dispatcher = new Dispatcher(
-  `profile.vue.${ dappBrowser.getDomainName() }`,
+  `profile.vue.${dappBrowser.getDomainName()}`,
   'sendEveDispatcher',
   40 * 1000,
-  '_profile.dispatchers.send-eve'
+  '_profile.dispatchers.send-eve',
 );
 
 dispatcher
   .step(async (instance: DispatcherInstance, data: any) => {
-    const runtime = instance.runtime;
+    const { runtime } = instance;
 
     await runtime.executor.executeSend({
       from: runtime.activeIdentity,

@@ -21,7 +21,8 @@
   <div>
     <evan-modal
       ref="pinModal"
-      :maxWidth="'600px'">
+      :max-width="'600px'"
+    >
       <template v-slot:header>
         <h5 class="modal-title">
           {{ '_profile.verifications.notary.pin.header' | translate }}
@@ -30,41 +31,58 @@
 
       <template v-slot:body>
         <evan-steps
-          :activeStep="status"
+          :active-step="status"
           :steps="steps"
-          @stepChange="status = $event" />
+          @stepChange="status = $event"
+        />
         <!-- pin enter screen -->
-        <div v-if="status === 0" class="m-5">
-          <p class="text-justify">{{ '_profile.verifications.notary.pin.desc' | translate }}</p>
+        <div
+          v-if="status === 0"
+          class="m-5"
+        >
+          <p class="text-justify">
+            {{ '_profile.verifications.notary.pin.desc' | translate }}
+          </p>
           <div class="form-group my-6 col-md-8 offset-md-2">
             <label for="pin-input">
               {{ `_profile.verifications.notary.pin.pin.title` | translate }} *
             </label>
             <input
-              class="form-control pin-input"
-              type="text" pattern="^\d{6}$"  maxlength="6" size="6" autocomplete="off" required
               ref="pin-input"
-              placeholder="000000"
               v-model="pinForm.pin.value"
+              class="form-control pin-input"
+              type="text"
+              pattern="^\d{6}$"
+              maxlength="6"
+              size="6"
+              autocomplete="off"
+              required
+              placeholder="000000"
               :class="{ 'is-invalid' : pinForm.pin.error }"
-              @blur="pinForm.pin.setDirty()"
               autofocus
+              @blur="pinForm.pin.setDirty()"
             >
             <div class="invalid-feedback col-xs-12">
               {{ `_profile.verifications.notary.pin.pin.${ pinForm.pin.error }` | translate }}
             </div>
           </div>
           <p class="text-center text-muted">
-            {{`_profile.verifications.notary.pin.pin.desc` | translate}}
+            {{ `_profile.verifications.notary.pin.pin.desc` | translate }}
           </p>
         </div>
         <!-- print screen -->
         <div v-if="status === 1">
           <div class="m-5 px-3">
             <p>{{ '_profile.verifications.notary.pin.confirmation-code' | translate }}</p>
-            <p class="mt-3 mb-0">{{ '_profile.verifications.notary.pin.confirmation-code-desc' | translate }}</p>
+            <p class="mt-3 mb-0">
+              {{ '_profile.verifications.notary.pin.confirmation-code-desc' | translate }}
+            </p>
             <p>
-              <a :href="pdfUrl" target="_blank" rel="noopener norefferer">{{ '_profile.verifications.notary.pin.download' | translate }}</a>
+              <a
+                :href="pdfUrl"
+                target="_blank"
+                rel="noopener norefferer"
+              >{{ '_profile.verifications.notary.pin.download' | translate }}</a>
             </p>
           </div>
         </div>
@@ -73,37 +91,55 @@
           <div class="m-5 px-3">
             <p>{{ '_profile.verifications.notary.pin.did-printed' | translate }}</p>
             <p>
-              <a :href="pdfUrl" target="_blank" rel="noopener norefferer">{{ '_profile.verifications.notary.pin.download' | translate }}</a>
+              <a
+                :href="pdfUrl"
+                target="_blank"
+                rel="noopener norefferer"
+              >{{ '_profile.verifications.notary.pin.download' | translate }}</a>
             </p>
-            <p class="mt-3"><b>{{ '_profile.verifications.notary.pin.do-not-forget' | translate }}</b></p>
-            <p class="mt-3">{{ '_profile.verifications.notary.pin.next-step' | translate }}</p>
+            <p class="mt-3">
+              <b>{{ '_profile.verifications.notary.pin.do-not-forget' | translate }}</b>
+            </p>
+            <p class="mt-3">
+              {{ '_profile.verifications.notary.pin.next-step' | translate }}
+            </p>
             <p>{{ '_profile.verifications.notary.pin.next-step2' | translate }}</p>
           </div>
         </div>
       </template>
 
       <template v-slot:footer>
-        <span class="mx-auto"></span>
+        <span class="mx-auto" />
         <div v-if="status === 0">
-          <button type="button" class="btn btn-primary "
+          <button
+            type="button"
+            class="btn btn-primary "
             :disabled="!pinForm.isValid || checkingPin"
-            @click="generateAnswer()">
+            @click="generateAnswer()"
+          >
             {{ `_profile.verifications.notary.pin.generate-answer` | translate }}
-            <div class="spinner-border spinner-border-sm text-light ml-3" v-if="checkingPin"></div>
+            <div
+              v-if="checkingPin"
+              class="spinner-border spinner-border-sm text-light ml-3"
+            />
           </button>
         </div>
         <div v-if="status === 1">
-          <button class="btn btn-primary "
-            @click="printPdfOrNext()">
+          <button
+            class="btn btn-primary "
+            @click="printPdfOrNext()"
+          >
             <span v-if="printStatus === 'initial'">{{ `_profile.verifications.notary.print` | translate }}</span>
             <span v-if="printStatus !== 'initial'">{{ `_profile.verifications.next` | translate }}</span>
-            <i class="mdi mdi-arrow-right label ml-3"></i>
+            <i class="mdi mdi-arrow-right label ml-3" />
           </button>
         </div>
         <div v-if="status === 2">
-          <button class="btn btn-primary "
+          <button
+            class="btn btn-primary "
             target="_blank"
-            @click="$refs.pinModal.hide(); triggerRequestReload();">
+            @click="$refs.pinModal.hide(); triggerRequestReload();"
+          >
             {{ `_profile.verifications.done` | translate }}
           </button>
         </div>
@@ -113,8 +149,9 @@
 </template>
 
 <script lang="ts">
-  import Component from './pin';
-  export default Component;
+import Component from './pin';
+
+export default Component;
 </script>
 
 <style lang="scss" scoped>

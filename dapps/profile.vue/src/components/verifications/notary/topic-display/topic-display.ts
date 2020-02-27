@@ -23,7 +23,7 @@ import { Prop } from 'vue-property-decorator';
 
 // evan.network imports
 import { EvanComponent } from '@evan.network/ui-vue-core';
-import { FileHandler, profileUtils, } from '@evan.network/ui';
+import { FileHandler, profileUtils } from '@evan.network/ui';
 import * as bcc from '@evan.network/api-blockchain-core';
 
 import * as dispatchers from '../../../../dispatchers/registry';
@@ -50,6 +50,7 @@ export default class TopicDisplayComponent extends mixins(EvanComponent) {
    * ui status flags
    */
   loading = true;
+
   accepting = false;
 
   /**
@@ -80,17 +81,18 @@ export default class TopicDisplayComponent extends mixins(EvanComponent) {
   /**
    * All files that are available for the verifications (e.g.: notary certified documents)
    */
-  files: Array<any> = [ ];
+  files: Array<any> = [];
 
   /**
    * listen for dispatcher updates
    */
-  listeners: Array<Function> = [ ];
+  listeners: Array<Function> = [];
 
   /**
    * Name of the issuer, so it will be more understandable for the user
    */
   issuerName = '';
+
   issuer = '';
 
   /**
@@ -116,14 +118,14 @@ export default class TopicDisplayComponent extends mixins(EvanComponent) {
    * Clear listeners...
    */
   beforeDestroy() {
-    this.listeners.forEach(listener => listener());
+    this.listeners.forEach((listener) => listener());
   }
 
   /**
    * check if currently a verification gets accepted.
    */
   async checkLoading() {
-    const runtime: bcc.Runtime = (<any>this).getRuntime();
+    const runtime: bcc.Runtime = (<any> this).getRuntime();
     const instances = await dispatchers.verificationAcceptDispatcher.getInstances(runtime);
 
     this.accepting = instances.length !== 0;
@@ -134,17 +136,17 @@ export default class TopicDisplayComponent extends mixins(EvanComponent) {
    * root owner.
    */
   async loadVerification() {
-    const runtime: bcc.Runtime = (<any>this).getRuntime();
+    const runtime: bcc.Runtime = (<any> this).getRuntime();
 
     // reset loaded files
     this.files = [];
-    // load the verification details
-    // allow only ens root owner and notary smart agent
+    /* load the verification details
+       allow only ens root owner and notary smart agent */
     const allowedVerificationAccounts = [
       // ens root owner
       '0x4a6723fC5a926FA150bAeAf04bfD673B056Ba83D',
       // notary smart agent
-      notarySmartAgentAccountId
+      notarySmartAgentAccountId,
     ];
     const verificationQuery = JSON.parse(JSON.stringify(runtime.verifications.defaultQueryOptions));
     verificationQuery.validationOptions.issued = bcc.VerificationsStatusV2.Yellow;
@@ -152,8 +154,8 @@ export default class TopicDisplayComponent extends mixins(EvanComponent) {
     verificationQuery.validationOptions.parentUntrusted = bcc.VerificationsStatusV2.Green;
     verificationQuery.validationOptions.selfIssued = bcc.VerificationsStatusV2.Green;
     verificationQuery.validationOptions.notEnsRootOwner = (verification, pr) => {
-      // trust root verifications issued by root account
-      // subject does not need to be root account as well
+      /* trust root verifications issued by root account
+         subject does not need to be root account as well */
       if (allowedVerificationAccounts.indexOf(verification.details.issuer) !== -1) {
         return bcc.VerificationsStatusV2.Green;
       }
@@ -169,13 +171,13 @@ export default class TopicDisplayComponent extends mixins(EvanComponent) {
 
     await Promise.all(this.verification.verifications.map(async (subVerification) => {
       try {
-        const contentKey = await (<any>this).$store.state.profileDApp.profile.getBcContract(
+        const contentKey = await (<any> this).$store.state.profileDApp.profile.getBcContract(
           'contracts',
-          runtime.web3.utils.soliditySha3(`verifications,${subVerification.details.id},contentKey`)
+          runtime.web3.utils.soliditySha3(`verifications,${subVerification.details.id},contentKey`),
         );
-        const hashKey = await (<any>this).$store.state.profileDApp.profile.getBcContract(
+        const hashKey = await (<any> this).$store.state.profileDApp.profile.getBcContract(
           'contracts',
-          runtime.web3.utils.soliditySha3(`verifications,${subVerification.details.id},hashKey`)
+          runtime.web3.utils.soliditySha3(`verifications,${subVerification.details.id},hashKey`),
         );
         const fileHash = JSON.parse(subVerification.details.data);
 
@@ -183,7 +185,7 @@ export default class TopicDisplayComponent extends mixins(EvanComponent) {
           if (subVerification.details.topic === '/evan/company') {
             const hashFiles = await (<any>runtime.dfs).get(fileHash);
             const foundFiles = JSON.parse(hashFiles);
-            for (let file of foundFiles) {
+            for (const file of foundFiles) {
               file.file = await (<any>runtime.dfs).get(file.file, true);
               file.size = file.file.length;
               this.files.push(await FileHandler.fileToContainerFile(file));
@@ -195,9 +197,10 @@ export default class TopicDisplayComponent extends mixins(EvanComponent) {
             const encodingUnencryptedHash = 'hex';
             const hashCryptor = runtime.cryptoProvider.getCryptorByCryptoAlgo('aesEcb');
             const dencryptedHashBuffer = await hashCryptor.decrypt(
-              Buffer.from(fileHash.substr(2), encodingUnencryptedHash), { key: hashKey });
+              Buffer.from(fileHash.substr(2), encodingUnencryptedHash), { key: hashKey },
+            );
 
-            const retrieved = await (<any>runtime.dfs).get('0x' + dencryptedHashBuffer.toString('hex'), true);
+            const retrieved = await (<any>runtime.dfs).get(`0x${dencryptedHashBuffer.toString('hex')}`, true);
             const cryptor = runtime.cryptoProvider.getCryptorByCryptoAlgo(cryptoAlgorithFiles);
             const decrypted = await cryptor.decrypt(retrieved, { key: contentKey });
 
@@ -206,7 +209,7 @@ export default class TopicDisplayComponent extends mixins(EvanComponent) {
             }
 
             if (decrypted) {
-              for (let file of decrypted) {
+              for (const file of decrypted) {
                 file.size = file.file.length;
                 this.files.push(await FileHandler.fileToContainerFile(file));
               }
@@ -214,7 +217,7 @@ export default class TopicDisplayComponent extends mixins(EvanComponent) {
           }
         }
       } catch (ex) {
-        runtime.logger.log(`Could not decrypt verification files: ${ ex.message }`, 'error');
+        runtime.logger.log(`Could not decrypt verification files: ${ex.message}`, 'error');
       }
     }));
 
@@ -226,20 +229,20 @@ export default class TopicDisplayComponent extends mixins(EvanComponent) {
     this.isExpired = !!this.verification.verifications[0].statusFlags && this.verification.verifications[0].statusFlags.includes('expired');
     if (this.isExpired) {
       this.expiredTranslationString = this.expirationDate
-        ? (<any>this).$t('_profile.verifications.notary.verification.expired-on')
-        : (<any>this).$t('_profile.verifications.notary.verification.expired');
+        ? (<any> this).$t('_profile.verifications.notary.verification.expired-on')
+        : (<any> this).$t('_profile.verifications.notary.verification.expired');
     } else {
       this.expiredTranslationString = this.expirationDate
-        ? (<any>this).$t('_profile.verifications.notary.verification.valid-until')
-        : (<any>this).$t('_profile.verifications.notary.verification.valid-indefinitely');
+        ? (<any> this).$t('_profile.verifications.notary.verification.valid-until')
+        : (<any> this).$t('_profile.verifications.notary.verification.valid-indefinitely');
     }
 
     // check for predefined instances
     if (this.issuer === notarySmartAgentAccountId) {
-      this.issuerName = (<any>this).$t('_profile.verifications.notary.notary');
+      this.issuerName = (<any> this).$t('_profile.verifications.notary.notary');
     } else {
       // load from addressbook
-      const addressbook = await (<any>this).$store.state.profileDApp.profile.getAddressBook();
+      const addressbook = await (<any> this).$store.state.profileDApp.profile.getAddressBook();
       if (addressbook[this.issuer] && addressbook[this.issuer].alias) {
         this.issuerName = addressbook[this.issuer];
       } else {
@@ -256,12 +259,12 @@ export default class TopicDisplayComponent extends mixins(EvanComponent) {
 
     // just accept the first verification
     dispatchers.verificationAcceptDispatcher.start(
-      (<any>this).getRuntime(),
+      (<any> this).getRuntime(),
       {
         address: this.address,
         id: this.verification.verifications[0].details.id,
         topic: this.topic,
-      }
+      },
     );
   }
 
@@ -271,8 +274,8 @@ export default class TopicDisplayComponent extends mixins(EvanComponent) {
   async showDetail() {
     // try to load company name from profile registration container
     if (!this.companyName) {
-      const runtime: bcc.Runtime = (<any>this).getRuntime();
-      const profileDApp = (this as any).$store.state.profileDApp;
+      const runtime: bcc.Runtime = (<any> this).getRuntime();
+      const { profileDApp } = (this as any).$store.state;
       this.companyName = (await profileUtils.getUserAlias(runtime, profileDApp.address,
         profileDApp.accountDetails)) || runtime.activeIdentity;
     }

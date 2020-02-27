@@ -22,21 +22,22 @@
     <evan-form
       ref="form"
       :editable="onlyForm || $store.state.profileDApp.permissions.readWrite.indexOf('registration') !== -1"
-      :enableCancel="onlyEdit ? false : true"
+      :enable-cancel="onlyEdit ? false : true"
       :form="form"
-      :handleShare="() => $store.commit('toggleSidePanel', 'sharing')"
-      :i18nScope="'_profile.company.registration'"
-      :isLoading="!onlyForm && $store.state.dispatcher.curr.running.updateProfileDispatcher"
-      :onlyForm="onlyForm"
-      :shareable="$store.state.runtime && $route.params.address === $store.state.runtime.activeIdentity"
+      :handle-share="() => $store.commit('toggleSidePanel', 'sharing')"
+      :i18n-scope="'_profile.company.registration'"
+      :is-loading="!onlyForm && $store.state.dispatcher.curr.running.updateProfileDispatcher"
+      :only-form="onlyForm"
+      :shareable="$store.state.runtime && $route.params.address === $store.state.runtime.activeAccount"
       :stacked="stacked"
       :title="'_profile.company.registration.title' | translate"
-      @save="changeProfileData()">
-    </evan-form>
+      @save="changeProfileData()"
+    />
   </div>
 </template>
 
 <script lang="ts">
-  import Component from './registration';
-  export default Component;
+import Component from './registration';
+
+export default Component;
 </script>

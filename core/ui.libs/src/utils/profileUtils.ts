@@ -143,9 +143,9 @@ export function getProfileTypeIcon(type: string): string {
     case ProfileType.IOT_DEVICE:
       return 'mdi mdi-radio-tower';
     case ProfileType.UNSHARED:
-      return 'mdi mdi-help-circle-outline';
+      return 'mdi mdi-cube-outline';
     default:
-      return 'mdi mdi-help-circle-outline';
+      return 'mdi mdi-cube-outline';
   }
 }
 
