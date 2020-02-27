@@ -73,6 +73,7 @@
       }
     },
     "dispatcher-not-found": "Synchronisations Job nicht gefunden",
+    "edit": "Editieren",
     "file-input": {
       "description": "Ziehen Sie Ihre Datei(en) hierher oder klicken Sie zum Durchsuchen",
       "empty": "Es wurden noch keine Dateien hochgeladen",

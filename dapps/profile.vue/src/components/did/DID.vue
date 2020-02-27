@@ -30,11 +30,7 @@
             {{ '_profile.did.export-document' | translate }}
           </evan-button>
         </div>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-          Rerum fuga officia dolorum maiores minima nisi soluta?
-          Rem hic deserunt dolore debitis, rerum praesentium quos necessitatibus non eum eos ad tempora.
-        </p>
+        <p>{{ '_profile.did.description' | translate }}</p>
       </div>
 
       <div class="content-card mb-3">

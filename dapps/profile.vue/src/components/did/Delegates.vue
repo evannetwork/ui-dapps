@@ -28,7 +28,7 @@
         {{ '_evan.edit' | translate }}
       </evan-button>
     </div>
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem nemo possimus corrupti voluptates. Doloribus ab harum exercitationem a! Fuga ipsum molestias nisi ad unde exercitationem velit quia porro eius ullam!</p>
+    <p>{{ '_profile.did.delegates-desc' | translate }}</p>
 
     <evan-table
       class="simple"

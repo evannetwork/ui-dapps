@@ -149,6 +149,17 @@
         }
       }
     },
+    "did": {
+      "delegates-desc": "Below you can specify the delegates, who may act on behalf of this identity. This may empower them to edit information, manage sharings or perform transactions.",
+      "delegates-title": "Delegates",
+      "description": "With Decentralized Identity (DID) you can identify yourself uniquely, globally and independently of the network or platform. You may also define, who is allowed to make changes to this identity (controller) and who receives authorization to act on behalf of it (delegates). Exporting this document enables you to share all the information with others offline.",
+      "did-title": "Decentralized ID",
+      "did": "DID",
+      "export-document": "Export Document",
+      "note": "Note",
+      "service-endpoint-title": "Service Endpoints",
+      "service-endpoints-desc": "Below you can specify service endpoints, to which you want to associate your DID."
+    },
     "dispatchers": {
       "profile-share": "Share Identity information",
       "profile-type": "Changing Identity type",

@@ -149,6 +149,17 @@
         }
       }
     },
+    "did": {
+      "delegates-desc": "Im Folgenden können Delegates ausgewählt werden, die im Namen der Identität agieren dürfen. Diese sind beispielsweise befugt Informationen editieren, Daten freigeben oder Transaktionen durchführen.",
+      "delegates-title": "Delegates",
+      "description": "Mit Decentralized Identities (DIDs) ist es möglich sich eindeutig, global und unabhängig vom Netzwerk zu identifizeren. Weiterhin ist es möglich festzulegen, wer Änderungen durchführen darf (Controller) und wer im Namen dieser Identität handeln darf (Delegates). Durch den Export dieses Dokumentes, können die Daten auch offline für andere freigeben werden.",
+      "did-title": "Decentralized ID",
+      "did": "DID",
+      "export-document": "Dokument exportieren",
+      "note": "Notiz",
+      "service-endpoint-title": "Service Endpoints",
+      "service-endpoints-desc": "Im Folgenden können Service Endpoints festgelegt werden, die mit dieser DID assoziert werden sollen."
+    },
     "dispatchers": {
       "profile-share": "Identitätsinformationen teilen",
       "profile-type": "Identitätstyp wird geändert",

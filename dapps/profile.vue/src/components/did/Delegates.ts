@@ -39,7 +39,7 @@ export default class DelegatesComponent extends mixins(EvanComponent) {
     },
     {
       key: 'note',
-      label: this.$t('_profile.did.name-or-note'),
+      label: this.$t('_profile.did.note'),
     },
     {
       key: 'action',

@@ -73,6 +73,7 @@
       }
     },
     "dispatcher-not-found": "Synchronization job not found",
+    "edit": "Edit",
     "file-input": {
       "description": "Drag your file(s) here to begin or click to browse",
       "empty": "No files are available",
