@@ -69,9 +69,9 @@ When('I set Input field with id {string} to {string}',
     client.useCss();
 
     await client.expect.element(`#${id}`).to.be.visible;
-    await betterClearValue(`#${id}`);
 
     if (content && typeof content === 'string' && content.length > 0) {
+      await client.clearValue(`#${id}`);
       await client.setValue(`#${id}`, parseEnvVar(content));
     }
   });
