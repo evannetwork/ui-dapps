@@ -100,6 +100,9 @@ export default class ContactsComponent extends mixins(EvanComponent) {
    * @param contact Clicked contact
    */
   handleRowClicked(contact: Contact): void {
+    if (contact.isPending) {
+      return;
+    }
     window.location.hash = `/${this.dapp.rootEns}/profile.vue.${this.dapp.domainName}/${contact.address}/detail`;
   }
 
