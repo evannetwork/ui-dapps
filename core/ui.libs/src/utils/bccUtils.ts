@@ -44,8 +44,14 @@ export async function getContacts(
   return contacts.filter((entry) => entry.value !== runtime.activeAccount && !/@/.test(entry.value));
 }
 
-export function getDidFromAddress(runtime: Runtime, identity: string): string {
+export function getDidFromIdentity(runtime: Runtime, identity: string): string {
   const infix = runtime.environment === 'testcore' ? 'testcore:' : '';
 
   return `did:evan:${infix}${identity.toLowerCase()}`;
+}
+
+export async function getDidFromAddress(runtime: Runtime, accountId: string): Promise<string> {
+  const identity = await runtime.verifications.getIdentityForAccount(accountId, true);
+
+  return getDidFromIdentity(runtime, identity);
 }

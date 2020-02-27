@@ -37,14 +37,17 @@ export default class NotaryVerificationComponent extends mixins(EvanComponent) {
    * ui status flags
    */
   error = false;
+
   loading = true;
+
   reloading = false;
+
   rerender = false;
 
   /**
    * all my assigned organizations
    */
-  requests: Array<string> = [ ];
+  requests: Array<string> = [];
 
   /**
    * Load request function to be able to listent on reload event
@@ -64,7 +67,7 @@ export default class NotaryVerificationComponent extends mixins(EvanComponent) {
 
   async created() {
     // load the organizations
-    const runtime = (<any>this).getRuntime();
+    const runtime = (<any> this).getRuntime();
 
     // set load requests function so we can use it within the event listener
     this.loadRequests = (async (rerender: boolean) => {
@@ -85,15 +88,15 @@ export default class NotaryVerificationComponent extends mixins(EvanComponent) {
       }
 
       this.rerender = false;
-    }).bind(this);
+    });
 
     // load initial data
     await this.loadRequests();
 
     // bind reload eventr listener
     window.addEventListener(
-      `notary-verification-reload-${ this.address }`,
-      ($event) => <any>this.checkNewRequests($event)
+      `notary-verification-reload-${this.address}`,
+      ($event) => <any> this.checkNewRequests($event),
     );
 
     this.loading = false;
@@ -104,8 +107,8 @@ export default class NotaryVerificationComponent extends mixins(EvanComponent) {
    */
   beforeDestroy() {
     window.removeEventListener(
-      `notary-verification-reload-${ this.address }`,
-      <any>this.loadRequests
+      `notary-verification-reload-${this.address}`,
+      <any> this.loadRequests,
     );
   }
 
@@ -128,8 +131,8 @@ export default class NotaryVerificationComponent extends mixins(EvanComponent) {
 
     // allow only 20 reloads (60 seconds)
     let reloads = 0;
-    const detail = $event.detail;
-    const runtime = (<any>this).getRuntime();
+    const { detail } = $event;
+    const runtime = (<any> this).getRuntime();
     const check = async () => {
       await this.loadRequests();
 
@@ -144,28 +147,25 @@ export default class NotaryVerificationComponent extends mixins(EvanComponent) {
             this.requests.length !== 0 && finishedReloading();
             break;
           }
-          case 'confirming' : {
+          case 'confirming': {
             // load request detail for the provided request id
             const requests = await Promise.all(this.requests
-              .filter(requestId => requestId === detail.requestId)
-              .map(async (requestId: string) => {
-                return await notaryIdentification.getIdentificationDetails(
-                  runtime,
-                  this.address,
-                  requestId,
-                );
-              })
-            );
+              .filter((requestId) => requestId === detail.requestId)
+              .map(async (requestId: string) => await notaryIdentification.getIdentificationDetails(
+                runtime,
+                this.address,
+                requestId,
+              )));
 
             // check if the request status has been updated
-            const hasUpdated = requests.filter(req => req.status === 'confirming');
+            const hasUpdated = requests.filter((req) => req.status === 'confirming');
             hasUpdated.length !== 0 && finishedReloading();
 
             break;
           }
           case 'finished': {
-            this.requests.indexOf(detail.requestId) === -1 && this.verifications.length > 0 &&
-              finishedReloading();
+            this.requests.indexOf(detail.requestId) === -1 && this.verifications.length > 0
+              && finishedReloading();
 
             break;
           }
