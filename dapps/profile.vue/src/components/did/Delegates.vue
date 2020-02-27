@@ -23,6 +23,7 @@
       <h2>{{ '_profile.did.delegates-title' | translate }}</h2>
       <evan-button
         v-if="!isEditMode"
+        class="btn-sm"
         @click="onEditStart"
       >
         {{ '_evan.edit' | translate }}

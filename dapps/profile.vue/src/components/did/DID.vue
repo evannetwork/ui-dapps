@@ -26,7 +26,7 @@
             <h1>{{ '_profile.did.did-title' | translate }} (DID)</h1>
             <p>TODO created at 04-21-2020 updated at 04-29-2020</p>
           </div>
-          <evan-button>
+          <evan-button class="btn-sm">
             {{ '_profile.did.export-document' | translate }}
           </evan-button>
         </div>
