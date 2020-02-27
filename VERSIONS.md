@@ -3,7 +3,13 @@
 
 ## Next Version
 ### Features
+- use new `@evan.network/ui-dapp-browser`
+- use activeIdentity
+- be able to use `@evan.network/api-blockchain-core`  with identities
+- automatic useIdentity detection
 - dapps
+  - add `ui-session` for handling logged in users
+  - add `olddappbrowser.evan` dapp, to enable backwards compatibility
   - `digital-twin-detail`
     - add UI for twins where current user has no or only partial permissions
 
