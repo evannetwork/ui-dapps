@@ -424,6 +424,10 @@ export default class SignUp extends mixins(EvanComponent) {
 
     // set encrypted mnemonic for temporary usage
     this.persistMnemonic(runtime, vault);
+
+    // force correct account and identity
+    session.activeAccount = accountId;
+    session.activeIdentity = await bccHelper.getIdentityForAccount(accountId);
   }
 
   /**

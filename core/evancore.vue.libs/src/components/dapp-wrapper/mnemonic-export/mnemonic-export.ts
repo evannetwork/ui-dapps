@@ -51,7 +51,7 @@ export default class MnemonicExport extends mixins(EvanComponent) {
   async created() {
     const runtime = this.getRuntime();
 
-    this.address = runtime.activeIdentity;
+    this.address = runtime.activeAccount;
     this.mnemonic = await this.getMnemonic();
     this.now = new Date();
     this.alias = window.localStorage.getItem('evan-alias');
