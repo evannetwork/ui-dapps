@@ -48,7 +48,6 @@ export default class DIDComponent extends mixins(EvanComponent) {
     },
   ]
 
-
   async created(): Promise<void> {
     this.didDocument = await DidService.fetchDidDocument();
     this.delegates = await DidService.getDelegates(this.didDocument);

@@ -23,11 +23,8 @@ import { bccUtils } from '@evan.network/ui';
 import { isEqual } from 'lodash';
 import { Prop } from 'vue-property-decorator';
 import { DidService } from './DidService';
+import { Delegate } from './DidInterfaces';
 
-interface Delegate {
-  did: string;
-  note: string;
-}
 @Component
 export default class DelegatesComponent extends mixins(EvanComponent) {
   @Prop() delegates: Delegate[];
