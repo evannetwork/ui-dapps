@@ -30,7 +30,7 @@
       v-if="!onlyForm"
       class="d-flex justify-content-between align-items-center pb-1"
     >
-      <h5 class="my-0 py-0 font-weight-bold">
+      <h5 class="my-0 py-0 d-flex align-items-baseline font-weight-bold">
         <i
           class="mdi mr-2"
           :class="[ {'mdi-lock': !isPublic}, {'mdi-web': isPublic} ]"
