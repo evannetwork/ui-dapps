@@ -24,11 +24,14 @@
         class="d-flex flex-row justify-content-between align-items-center"
         style="max-height: 33px"
       >
-        <div>
-          <h1 class="heading">
-            {{ '_assets.contacts.contacts-title' | translate }}
-          </h1>
-        </div>
+        <evan-searchbox
+          id="contactSearchbox"
+          :debounce-time="250"
+          @keyup="filterBySearchTerm($event.target.value)"
+        >
+          <span>{{ '_assets.contacts.contacts-title' | translate }}</span>
+        </evan-searchbox>
+
         <div>
           <evan-button
             class="ml-3"
@@ -80,7 +83,7 @@
           :show-empty="!isLoading"
           :show-scrollbar="true"
           :sticky-header="'calc(100vh - 85px)'"
-          :tbody-transition-props="{ name: 'list' }"
+          :tbody-transition-props="{ name: 'list', mode: 'out-in' }"
           @row-clicked="handleRowClicked"
         >
           <template v-slot:cell(alias)="contacts">
@@ -95,13 +98,11 @@
             />
           </template>
           <template v-slot:cell(createdAt)="contacts">
-            <template v-if="contacts.item.createdAt">
+            <template v-if="contacts.item.createdAt && !contacts.item.isPending">
               {{ contacts.item.createdAt | moment('L') }}
             </template>
-          </template>
-          <template v-slot:cell(updatedAt)="contacts">
-            <template v-if="contacts.item.updatedAt">
-              {{ contacts.item.updatedAt | moment('L') }}
+            <template v-else-if="contacts.item.isPending">
+              {{ '_assets.contacts.pending' | translate }}
             </template>
           </template>
           <template v-slot:cell(actions)="contact">

@@ -17,12 +17,12 @@ Fifth Floor, Boston, MA, 02110-1301 USA, or download the license from
 the following URL: https://evan.network/license/
 */
 
-import * as dispatchers from '../../dispatchers/registry';
-import * as PermissionTypes from './permission-types';
-import { profileUtils, } from '@evan.network/ui';
+import { profileUtils } from '@evan.network/ui';
 import { ContactInterface } from '@evan.network/ui-vue-core/src/interfaces';
 import { Container } from '@evan.network/api-blockchain-core';
 import { getDomainName } from '@evan.network/ui-dapp-browser';
+import * as PermissionTypes from './permission-types';
+import * as dispatchers from '../../dispatchers/registry';
 
 /**
  * return generell types of permissions
@@ -34,22 +34,22 @@ export const getPermissionsType = (permissions, propertiesKeys) => {
   // check write permissions
   if (permissions.readWrite) {
     // check full access
-    if (propertiesKeys.every(item => permissions.readWrite.includes(item))) {
+    if (propertiesKeys.every((item) => permissions.readWrite.includes(item))) {
       return PermissionTypes.FULL_ACCESS;
     }
     // check read and write permissions
-    if (propertiesKeys.some(read => permissions.readWrite.includes(read))) {
+    if (propertiesKeys.some((read) => permissions.readWrite.includes(read))) {
       return PermissionTypes.READ_WRITE;
     }
   }
 
   if (permissions.read) {
     // check full read
-    if (propertiesKeys.every(item => permissions.read.includes(item))) {
+    if (propertiesKeys.every((item) => permissions.read.includes(item))) {
       return PermissionTypes.FULL_READ;
     }
     // check read permissions
-    if (propertiesKeys.some(read => permissions.read.includes(read))) {
+    if (propertiesKeys.some((read) => permissions.read.includes(read))) {
       return PermissionTypes.READ;
     }
   }
@@ -63,15 +63,13 @@ export const getPermissionsType = (permissions, propertiesKeys) => {
  * @param containerAddress
  * @param accountId
  */
-export const getContainer = (runtime, containerAddress, accountId) => {
-  return new Container(
-    runtime,
-    {
-      accountId,
-      address: containerAddress,
-    },
-  );
-};
+export const getContainer = (runtime, containerAddress, accountId) => new Container(
+  runtime,
+  {
+    accountId,
+    address: containerAddress,
+  },
+);
 
 /**
  * get all properties from container
@@ -89,14 +87,12 @@ export const getContainerProperties = async (container: Container) => {
  */
 export const getContacts = async (runtime): Promise<ContactInterface[]> => {
   delete runtime.profile.trees[runtime.profile.treeLabels.addressBook]; // why?
-  let addressBook = (await runtime.profile.getAddressBook()).profile;
+  const addressBook = (await runtime.profile.getAddressBook()).profile;
 
-  return Object.keys(addressBook).map(key => {
-    return {
-      'label': addressBook[key].alias,
-      'value': key
-    };
-  });
+  return Object.keys(addressBook).map((key) => ({
+    label: addressBook[key].alias,
+    value: key,
+  }));
 };
 
 
@@ -111,10 +107,10 @@ export const getPermissions = async (vueInstance, containerAddress,
   const container = getContainer(vueInstance.getRuntime(), containerAddress, accountId);
   const shareConfigs = await container.getContainerShareConfigs();
 
-  let configs = shareConfigs.map(config => {
+  const configs = shareConfigs.map((config) => {
     // the own account should not take into consideration
     if (config.accountId === accountId) {
-       return null;
+      return null;
     }
 
     return {
@@ -125,19 +121,17 @@ export const getPermissions = async (vueInstance, containerAddress,
   });
 
   // return cleared array
-  return configs.filter(config => config !== null);
+  return configs.filter((config) => config !== null);
 };
 
 /**
  * get permissions from own profile
  * @param vueInstance
  */
-export const getProfilePermissions = async (vueInstance) => {
-  return getPermissions(
-    vueInstance,
-    vueInstance.$store.state.profileDApp.profile.profileContract.options.address
-  );
-};
+export const getProfilePermissions = async (vueInstance) => getPermissions(
+  vueInstance,
+  vueInstance.$store.state.profileDApp.profile.profileContract.options.address,
+);
 
 /**
  * Return bmail object for sharing profile container sets with others.
@@ -159,8 +153,8 @@ export const getProfileShareBMail = async (vueInstance) => {
       attachments: [
         {
           fullPath: [
-            `/${ vueInstance.dapp.rootEns }`,
-            `profile.vue.${ getDomainName() }`,
+            `/${vueInstance.dapp.rootEns}`,
+            `profile.vue.${getDomainName()}`,
             vueInstance.getRuntime().activeAccount,
           ].join('/'),
           type: 'url',
@@ -168,11 +162,11 @@ export const getProfileShareBMail = async (vueInstance) => {
         {
           containerAddress: profile.profileContainer.config.address,
           type: 'container',
-        }
+        },
       ],
     },
   };
-}
+};
 
 /**
  * remove all permissions of share configs containers.
@@ -201,12 +195,10 @@ export const removeAllPermissions = async (vueInstance, shareConfigs) => {
   await dispatchers.shareProfileDispatcher.start(runtime, [dataSharing]);
 };
 
-export const findAllByKey = (obj, keyToFind) => {
-  return Object.entries(obj)
-    .reduce((acc, [key, value]) => (key === keyToFind)
-      ? acc.concat(value)
-      : (typeof value === 'object')
+export const findAllByKey = (obj, keyToFind) => Object.entries(obj)
+  .reduce((acc, [key, value]) => ((key === keyToFind)
+    ? acc.concat(value)
+    : (typeof value === 'object')
       ? acc.concat(findAllByKey(value, keyToFind))
-      : acc
-    , []);
-};
+      : acc),
+  []);

@@ -17,40 +17,44 @@
   the following URL: https://evan.network/license/
 */
 
-// vue imports
-import Vue from 'vue';
 import Component, { mixins } from 'vue-class-component';
 import { Prop } from 'vue-property-decorator';
+import { debounce } from 'lodash';
+import EvanComponent from '../../component';
 
-// evan.network imports
-import { EvanComponent } from '@evan.network/ui-vue-core';
-import * as bcc from '@evan.network/api-blockchain-core';
-import * as dappBrowser from '@evan.network/ui-dapp-browser';
-
-import InfoContentComponent from '../info-content/info-content.vue';
-
-@Component({
-  components: {
-    'notary-info-content': InfoContentComponent,
-  },
-})
-export default class InfoModalComponent extends mixins(EvanComponent) {
-  /**
-   * Account of the current user.
-   */
-  @Prop() address: string;
+/**
+ * Search input with a placeholder label, that can be used as a normal text
+ * element such as heading.
+ */
+@Component
+export default class SearchBoxComponent extends mixins(EvanComponent) {
+  @Prop() id: string;
 
   /**
-   * Show the info modal.
+   * No debounce by default, value in ms
    */
-  show() {
-    (<any> this.$refs).infoModal.show();
+  @Prop({ default: 0 }) debounceTime: number;
+
+  isActiveSearch = false;
+
+  searchTerm = '';
+
+  onKeyUp = debounce(this.emitKeyEvent, this.debounceTime)
+
+  onBlur(): void {
+    if (this.searchTerm.length === 0) {
+      this.isActiveSearch = false;
+    }
   }
 
-  /**
-   * Hide the info modal.
-   */
-  hide() {
-    (<any> this.$refs).infoModal.hide();
+  async focusInput(): Promise<void> {
+    this.isActiveSearch = true;
+    this.searchTerm = '';
+    await this.$nextTick();
+    (this.$refs.searchInput as HTMLInputElement).focus();
+  }
+
+  private emitKeyEvent(ev: KeyboardEvent): void {
+    this.$emit('keyup', ev);
   }
 }

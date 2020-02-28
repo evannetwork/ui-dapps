@@ -52,6 +52,7 @@ export default class NotaryVerificationCardComponent extends mixins(EvanComponen
    * ui status flags
    */
   loading = true;
+
   error = false;
 
   /**
@@ -62,15 +63,15 @@ export default class NotaryVerificationCardComponent extends mixins(EvanComponen
   /**
    * states for that actions are available
    */
-  statusActions = [ 'unknown', 'requested', 'confirming', 'issued', ];
+  statusActions = ['unknown', 'requested', 'confirming', 'issued'];
 
   /**
    * Dispatcher instance for watching mailbox attachment updates.
    */
   attachmentDispatcher = new Dispatcher(
-    `mailbox.vue.${ dappBrowser.getDomainName() }`,
+    `mailbox.vue.${dappBrowser.getDomainName()}`,
     'attachmentDispatcher',
-    0
+    0,
   );
 
   /**
@@ -81,7 +82,7 @@ export default class NotaryVerificationCardComponent extends mixins(EvanComponen
   /**
    * watch for queue updates
    */
-  listeners = [ ];
+  listeners = [];
 
   /**
    * Load current status
@@ -98,14 +99,14 @@ export default class NotaryVerificationCardComponent extends mixins(EvanComponen
    * Load the details for the opened request / identification verifications.
    */
   async loadDetails() {
-    const runtime = (<any>this).getRuntime();
+    const runtime = (<any> this).getRuntime();
 
     this.loading = true;
     try {
       if (this.verifications) {
         this.details = {
           status: 'finished',
-          verifications: this.verifications
+          verifications: this.verifications,
         };
       } else {
         this.details = await notaryLib.getIdentificationDetails(
@@ -127,19 +128,18 @@ export default class NotaryVerificationCardComponent extends mixins(EvanComponen
    */
   async checkAccepting() {
     if (this.details.status === 'issued') {
-      const runtime = (<any>this).getRuntime();
+      const runtime = (<any> this).getRuntime();
       const instances = (await this.attachmentDispatcher.getInstances(runtime))
-        .filter(instance =>
-          instance.data.attachment.type === 'verifications' &&
-          this.details.issuedMail &&
-          this.details.issuedMailAddress === instance.data.mailAddress
-        );
+        .filter((instance) => instance.data.attachment.type === 'verifications'
+          && this.details.issuedMail
+          && this.details.issuedMailAddress === instance.data.mailAddress);
 
       // reload when synchronisation have finished and previous instance has runned
       if (instances.length === 0 && this.accepting) {
         await notaryLib.closeRequest(runtime, this.requestId);
         await this.$store.state.profileDApp.profile.loadForAccount(
-          this.$store.state.profileDApp.profile.treeLabels.contracts);
+          this.$store.state.profileDApp.profile.treeLabels.contracts,
+        );
         await notaryLib.triggerRequestReload(this.address, {
           requestId: this.requestId,
           status: 'finished',
@@ -158,15 +158,15 @@ export default class NotaryVerificationCardComponent extends mixins(EvanComponen
       case 'unknown':
       case 'requested':
       case 'confirming': {
-        (<any>this.$refs.identAction).show();
+        (<any> this.$refs.identAction).show();
         break;
       }
       case 'issued': {
         // change attachment type to vericications, so we can use the attachment dispatcher
         const attachment = this.details.issuedMail.attachments[0];
         attachment.type = 'verifications';
-        this.attachmentDispatcher.start((<any>this).getRuntime(), {
-          attachment: attachment,
+        this.attachmentDispatcher.start((<any> this).getRuntime(), {
+          attachment,
           mail: this.details.issuedMail,
           mailAddress: this.details.issuedMailAddress,
         });

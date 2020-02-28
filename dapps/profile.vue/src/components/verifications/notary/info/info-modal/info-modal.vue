@@ -19,8 +19,10 @@
 
 <template>
   <div>
-    <evan-modal ref="infoModal"
-      :maxWidth="'800px'">
+    <evan-modal
+      ref="infoModal"
+      :max-width="'800px'"
+    >
       <template v-slot:header>
         <h5 class="modal-title">
           {{ `_profile.verifications.notary.title` | translate }}
@@ -28,7 +30,7 @@
       </template>
       <template v-slot:body>
         <div class="modal-content">
-          <notary-info-content :address="address"></notary-info-content>
+          <notary-info-content :address="address" />
         </div>
       </template>
     </evan-modal>
@@ -36,6 +38,7 @@
 </template>
 
 <script lang="ts">
-  import Component from './info-modal';
-  export default Component;
+import Component from './info-modal';
+
+export default Component;
 </script>

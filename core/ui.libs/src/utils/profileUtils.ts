@@ -18,7 +18,9 @@
 */
 
 
-import { Profile, lodash, Runtime } from '@evan.network/api-blockchain-core';
+import {
+  Profile, lodash, Runtime, ProfileOptions,
+} from '@evan.network/api-blockchain-core';
 import { cloneDeep } from './utils';
 
 export enum ProfileType {
@@ -83,6 +85,27 @@ export async function getUserAlias(
 }
 
 /**
+ * Display the shared profile name if possible. If not, display the hash address.
+ * @param runtime Runtime
+ * @param address hash address of the profile
+ */
+export async function getDisplayName(runtime: Runtime, address: string): Promise<string> {
+  const otherProfile = new Profile({
+    ...(runtime as ProfileOptions),
+    profileOwner: address,
+    accountId: runtime.activeAccount,
+  });
+  let details;
+  try {
+    details = await otherProfile.getProfileProperty('accountDetails');
+  } catch (ex) {
+    // no permissions
+  }
+
+  return details?.accountName || address;
+}
+
+/**
  * Try to get profile type if it's shared
  *
  * @param      {Runtime}  runtime    bcc runtime
@@ -120,8 +143,8 @@ export function getProfileTypeIcon(type: string): string {
     case ProfileType.IOT_DEVICE:
       return 'mdi mdi-radio-tower';
     case ProfileType.UNSHARED:
-      return 'mdi mdi-help-circle-outline';
+      return 'mdi mdi-cube-outline';
     default:
-      return 'mdi mdi-help-circle-outline';
+      return 'mdi mdi-cube-outline';
   }
 }
