@@ -150,7 +150,7 @@
       }
     },
     "did": {
-      "choose-contact": "Chose a contact",
+      "choose-contact": "Choose a contact",
       "created-at": "created at",
       "delegates-desc": "Below you can specify the delegates, who may act on behalf of this identity. This may empower them to edit information, manage sharings or perform transactions.",
       "delegates-title": "Delegates",
@@ -161,7 +161,7 @@
       "label": "Label",
       "note": "Note",
       "service-endpoint-title": "Service Endpoints",
-      "service-endpoints-desc": "Below you can specify service endpoints, to which you want to associate your DID.",
+      "service-endpoints-desc": "Below you can specify service endpoints, to which you want to associate your DID with.",
       "updated-at": "updated at"
     },
     "dispatchers": {
