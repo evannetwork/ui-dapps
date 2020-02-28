@@ -109,6 +109,9 @@
   &.default {
     @include masks(68px);
   }
+  &.md {
+    @include masks(96px);
+  }
   &.sm {
     @include masks(30px);
   }

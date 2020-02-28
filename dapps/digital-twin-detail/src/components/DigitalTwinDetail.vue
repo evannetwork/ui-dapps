@@ -112,6 +112,7 @@
                 <evan-profile-picture
                   class="mt-3 twin-avatar"
                   type="device"
+                  size="md"
                   :is-editable="$store.state.twin.isOwner"
                   :src="$store.state.twin.description.imgSquare"
                 />
