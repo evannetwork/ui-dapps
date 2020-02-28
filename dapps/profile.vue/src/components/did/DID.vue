@@ -27,7 +27,7 @@
       <div class="mb-3">
         <div class="mb-1 d-flex flex-row justify-content-between">
           <div>
-            <h1>{{ '_profile.did.did-title' | translate }} (DID)</h1>
+            <h1>{{ '_profile.did.did-title' | translate }} ({{ '_profile.did.did' | translate }})</h1>
             <p>
               {{ '_profile.did.created-at' | translate }} {{ didDocument.created | moment('L') }}
               {{ '_profile.did.updated-at' | translate }} {{ didDocument.updated | moment('L') }}
@@ -42,6 +42,7 @@
 
       <div class="content-card mb-3">
         <h2 class="card-heading">
+          <i class="mr-1 mdi mdi-earth" />
           {{ '_profile.did.did-title' | translate }}
         </h2>
 
