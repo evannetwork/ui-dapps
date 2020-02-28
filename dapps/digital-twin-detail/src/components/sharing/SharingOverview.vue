@@ -94,7 +94,6 @@
           </template>
 
           <template v-slot:cell(containers)="data">
-            <!--TODO:  :title="data.item[containerName].fields.join(', ')" -->
             <span
               v-for="(containerName, idx) in data.item.containerNames"
               :key="containerName"
