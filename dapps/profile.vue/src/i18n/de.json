@@ -150,6 +150,7 @@
       }
     },
     "did": {
+      "created-at": "erstellt am",
       "choose-contact": "Kontakt auswählen",
       "delegates-desc": "Im Folgenden können Delegates ausgewählt werden, die im Namen der Identität agieren dürfen. Diese sind beispielsweise befugt Informationen editieren, Daten freigeben oder Transaktionen durchführen.",
       "delegates-title": "Delegates",
@@ -157,9 +158,11 @@
       "did-title": "Decentralized ID",
       "did": "DID",
       "export-document": "Dokument exportieren",
+      "label": "Label",
       "note": "Notiz",
       "service-endpoint-title": "Service Endpoints",
-      "service-endpoints-desc": "Im Folgenden können Service Endpoints festgelegt werden, die mit dieser DID assoziert werden sollen."
+      "service-endpoints-desc": "Im Folgenden können Service Endpoints festgelegt werden, die mit dieser DID assoziert werden sollen.",
+      "updated-at": "aktualisiert am"
     },
     "dispatchers": {
       "profile-share": "Identitätsinformationen teilen",

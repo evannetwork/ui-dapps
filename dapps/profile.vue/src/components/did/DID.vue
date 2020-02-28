@@ -19,12 +19,19 @@
 
 <template>
   <div class="d-flex">
-    <div class="content">
+    <evan-loading v-if="!didDocument" />
+    <div
+      v-else
+      class="content"
+    >
       <div class="mb-3">
         <div class="mb-1 d-flex flex-row justify-content-between">
           <div>
             <h1>{{ '_profile.did.did-title' | translate }} (DID)</h1>
-            <p>TODO created at 04-21-2020 updated at 04-29-2020</p>
+            <p>
+              {{ '_profile.did.created-at' | translate }} {{ didDocument.created | moment('L') }}
+              {{ '_profile.did.updated-at' | translate }} {{ didDocument.updated | moment('L') }}
+            </p>
           </div>
           <evan-button class="btn-sm">
             {{ '_profile.did.export-document' | translate }}
@@ -37,6 +44,25 @@
         <h2 class="card-heading">
           {{ '_profile.did.did-title' | translate }}
         </h2>
+
+        <table class="mt-2 w-100">
+          <tbody>
+            <tr>
+              <td style="width: 60px">
+                {{ '_profile.did.did' | translate }}
+              </td>
+              <td>{{ didDocument.id }}</td>
+              <td class="action">
+                <evan-button
+                  icon="mdi mdi-mdi mdi-content-copy"
+                  type="icon-secondary"
+                  size="sm"
+                  @click="copyToClipboard(didDocument.id)"
+                />
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
 
       <service-endpoints
@@ -72,5 +98,9 @@ export default Component;
     font-size: 18px;
     font-weight: bold;
   }
+}
+.action {
+  width: 48px;
+  text-align: right;
 }
 </style>

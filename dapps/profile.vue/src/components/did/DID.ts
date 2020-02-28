@@ -23,26 +23,33 @@ import { Runtime, DidDocumentTemplate } from '@evan.network/api-blockchain-core'
 
 const TEST_DID_DOC: DidDocumentTemplate = {
   '@context': 'https://w3id.org/did/v1',
-  id: 'did:evan:testcore:0x126E901F6F408f5E260d95c62E7c73D9B60fd734',
+  id: 'did:evan:testcore:0x96da854df34f5dcd25793b75e170b3d8c63a95ad',
   publicKey: [
     {
-      id: 'did:evan:testcore:0x126E901F6F408f5E260d95c62E7c73D9B60fd734#key-1',
-      type: 'Secp256k1SignatureVerificationKey2018',
-      publicKeyHex: '045adfd502c0bc55f4fcb90eea36368d7e19c5b3045aa6f51dfa3699046e9751251d21bc6bdd06c1ff0014fcbbf9f1d83c714434f2b33d713aaf46760f2d53f10d',
+      id: 'did:evan:testcore:0x96da854df34f5dcd25793b75e170b3d8c63a95ad#key-1',
+      type: 'Secp256k1VerificationKey2018',
+      controller: 'did:evan:testcore:0x96da854df34f5dcd25793b75e170b3d8c63a95ad',
+      ethereumAddress: '0x001de828935e8c7e4cb56fe610495cae63fb2612',
     },
   ],
   // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
   // @ts-ignore
   authentication: [
-    'did:evan:testcore:0x126E901F6F408f5E260d95c62E7c73D9B60fd734#key-1',
+    'did:evan:testcore:0x96da854df34f5dcd25793b75e170b3d8c63a95ad#key-1',
   ],
-  service: [
-    {
-      id: 'did:evan:testcore:0x126E901F6F408f5E260d95c62E7c73D9B60fd734#randomService',
-      type: 'randomService-770853367',
-      serviceEndpoint: 'https://openid.example.com/770853367',
-    },
-  ],
+  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+  // @ts-ignore
+  created: '2020-02-17T09:14:25.915Z',
+  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+  // @ts-ignore
+  updated: '2020-02-17T09:14:25.915Z',
+  proof: {
+    type: 'EcdsaPublicKeySecp256k1',
+    created: '2020-02-17T09:14:25.933Z',
+    proofPurpose: 'assertionMethod',
+    verificationMethod: 'did:evan:testcore:0x96da854df34f5dcd25793b75e170b3d8c63a95ad#key-1',
+    jws: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NkstUiJ9.eyJpYXQiOjE1ODE5MzA4NjUsImRpZERvY3VtZW50Ijp7IkBjb250ZXh0IjoiaHR0cHM6Ly93M2lkLm9yZy9kaWQvdjEiLCJpZCI6ImRpZDpldmFuOnRlc3Rjb3JlOjB4OTZkYTg1NGRmMzRmNWRjZDI1NzkzYjc1ZTE3MGIzZDhjNjNhOTVhZCIsInB1YmxpY0tleSI6W3siaWQiOiJkaWQ6ZXZhbjp0ZXN0Y29yZToweDk2ZGE4NTRkZjM0ZjVkY2QyNTc5M2I3NWUxNzBiM2Q4YzYzYTk1YWQja2V5LTEiLCJ0eXBlIjoiU2VjcDI1NmsxVmVyaWZpY2F0aW9uS2V5MjAxOCIsIm93bmVyIjoiZGlkOmV2YW46dGVzdGNvcmU6MHg5NmRhODU0ZGYzNGY1ZGNkMjU3OTNiNzVlMTcwYjNkOGM2M2E5NWFkIiwiZXRoZXJldW1BZGRyZXNzIjoiMHgwMDFkZTgyODkzNWU4YzdlNGNiNTZmZTYxMDQ5NWNhZTYzZmIyNjEyIn1dLCJhdXRoZW50aWNhdGlvbiI6WyJkaWQ6ZXZhbjp0ZXN0Y29yZToweDk2ZGE4NTRkZjM0ZjVkY2QyNTc5M2I3NWUxNzBiM2Q4YzYzYTk1YWQja2V5LTEiXSwiY3JlYXRlZCI6IjIwMjAtMDItMTdUMDk6MTQ6MjUuOTE1WiIsInVwZGF0ZWQiOiIyMDIwLTAyLTE3VDA5OjE0OjI1LjkxNVoifSwiaXNzIjoiZGlkOmV2YW46dGVzdGNvcmU6MHg5NmRhODU0ZGYzNGY1ZGNkMjU3OTNiNzVlMTcwYjNkOGM2M2E5NWFkIn0.yBMpk9cQikhHv3MEEXr4w3po9AZWLRtqhbW7iQ0L0e0Ylxkg5R4z9niOXuVpwueVjNP-tCNOa5HBCIJqnDts6wA',
+  },
 };
 
 @Component
@@ -51,12 +58,10 @@ export default class DIDComponent extends mixins(EvanComponent) {
 
   runtime: Runtime = null;
 
-  // TODO: remove mock
-  testDidDoc = TEST_DID_DOC;
-
   /**
    * TODO: handle profiles without creatded did?
    */
+  // eslint-disable-next-line class-methods-use-this
   async fetchDidDocument(): Promise<DidDocumentTemplate> {
     // this.runtime = this.getRuntime();
 
@@ -73,16 +78,36 @@ export default class DIDComponent extends mixins(EvanComponent) {
 
     // console.log('didDocument', this.didDocument);
 
-    return this.testDidDoc;
+    return TEST_DID_DOC;
   }
 
   async created(): Promise<void> {
-    this.fetchDidDocument();
+    this.didDocument = await this.fetchDidDocument();
+    console.log('this.didDocument', this.didDocument);
     /* // TODO: switch after complete identity switch to: runtime.did.getDidDocument();
        const identity = await this.runtime.verifications.getIdentityForAccount(this.runtime.activeAccount, true);
        const did = await this.runtime.did.convertIdentityToDid(identity);
        const document = await this.runtime.did.getDidDocumentTemplate();
        await this.runtime.did.setDidDocument(did, document);
        const retrieved = await this.runtime.did.getDidDocument(did); */
+  }
+
+  copyToClipboard(text: string): void {
+    const textArea = document.createElement('textarea');
+
+    textArea.value = text;
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textArea);
+
+    this.$toasted.show(
+      this.$t('_evan.did.copied'),
+      {
+        duration: 3000,
+        type: 'success',
+      },
+    );
   }
 }
