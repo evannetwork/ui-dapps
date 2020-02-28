@@ -91,8 +91,6 @@ export default class ContactsComponent extends mixins(EvanComponent) {
 
     this.contacts = await this.fetchContacts();
     this.isLoading = false;
-
-    console.log('this.contacts', this.contacts);
   }
 
   /**
