@@ -103,6 +103,9 @@ export async function initializeEvanNetworkStructure(enableRouting = true): Prom
       utils.getBrowserName(),
       utils.getIsPrivateMode(),
     ]);
+    
+    // ensure, that agent executor was loaded, before anything else was done
+    await core.getAgentExecutor();
 
     // load smart-contracts and blockchain-core minimal setup for accessing ens from ipfs
     try {
