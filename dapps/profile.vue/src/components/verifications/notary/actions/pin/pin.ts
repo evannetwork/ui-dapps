@@ -45,6 +45,7 @@ export default class IdentNotaryPinComponent extends mixins(EvanComponent) {
    * Request id for that the detail should be displayed
    */
   @Prop() requestId;
+
   /**
    * ui status flags
    */
@@ -77,27 +78,27 @@ export default class IdentNotaryPinComponent extends mixins(EvanComponent) {
 
   steps = [
     {
-      title: (<any>this).$i18n.translate('_profile.verifications.notary.pin.step.pin'),
-      disabled: false
+      title: (<any> this).$i18n.translate('_profile.verifications.notary.pin.step.pin'),
+      disabled: false,
     },
     {
-      title: (<any>this).$i18n.translate('_profile.verifications.notary.pin.step.print'),
-      disabled: true
+      title: (<any> this).$i18n.translate('_profile.verifications.notary.pin.step.print'),
+      disabled: true,
     },
     {
-      title: (<any>this).$i18n.translate('_profile.verifications.notary.pin.step.send'),
-      disabled: true
+      title: (<any> this).$i18n.translate('_profile.verifications.notary.pin.step.send'),
+      disabled: true,
     },
   ];
 
   async created() {
-    this.pinForm = (<PinFormInterface>new EvanForm(this, {
+    this.pinForm = (<PinFormInterface> new EvanForm(this, {
       pin: {
         value: '',
-        validate: function(vueInstance: IdentNotaryPinComponent, form: PinFormInterface) {
+        validate(vueInstance: IdentNotaryPinComponent, form: PinFormInterface) {
           return /^\d{6}$/.test(this.value) ? true : 'error';
-        }
-      }
+        },
+      },
     }));
   }
 
@@ -105,14 +106,14 @@ export default class IdentNotaryPinComponent extends mixins(EvanComponent) {
    * Show the info modal.
    */
   show() {
-    (<any>this.$refs).pinModal.show();
+    (<any> this.$refs).pinModal.show();
   }
 
   /**
    * Hide the info modal.
    */
   hide() {
-    (<any>this.$refs).pinModal.hide();
+    (<any> this.$refs).pinModal.hide();
   }
 
   /**
@@ -121,7 +122,7 @@ export default class IdentNotaryPinComponent extends mixins(EvanComponent) {
   async generateAnswer() {
     this.checkingPin = true;
 
-    const runtime: bcc.Runtime = (<any>this).getRuntime();
+    const runtime: bcc.Runtime = (<any> this).getRuntime();
     try {
       const answerResponse = await notaryLib.getAnswer(runtime, this.pinForm.pin.value.trim(), this.requestId);
       const url = window.URL.createObjectURL(answerResponse);
@@ -156,20 +157,18 @@ export default class IdentNotaryPinComponent extends mixins(EvanComponent) {
 
       document.body.appendChild(this._printIframe);
 
-      const print = (): Promise<any> => {
-        return new Promise((resolve, reject) => {
-          setTimeout(() => {
-            try {
-              this._printIframe.focus();
-              this._printIframe.contentWindow.print();
+      const print = (): Promise<any> => new Promise((resolve, reject) => {
+        setTimeout(() => {
+          try {
+            this._printIframe.focus();
+            this._printIframe.contentWindow.print();
 
-              resolve('success');
-            } catch (ex) {
-              reject('failed');
-            }
-          }, 1);
-        });
-      };
+            resolve('success');
+          } catch (ex) {
+            reject('failed');
+          }
+        }, 1);
+      });
 
       this._printIframe.onload = async () => {
         this.printStatus = await print().catch(() => {
@@ -191,7 +190,7 @@ export default class IdentNotaryPinComponent extends mixins(EvanComponent) {
   triggerRequestReload() {
     notaryLib.triggerRequestReload(this.address, {
       status: 'confirming',
-      requestId: this.requestId
+      requestId: this.requestId,
     });
   }
 }

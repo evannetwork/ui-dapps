@@ -50,6 +50,7 @@ export default class IssueComponent extends mixins(EvanComponent) {
    * Is currently something in issuing process?
    */
   issuing = false;
+
   status = '';
 
   async created() {
@@ -60,32 +61,32 @@ export default class IssueComponent extends mixins(EvanComponent) {
    * Creates the issue form for gathering issue information.
    */
   setupIssueForm() {
-    this.issueForm = (<IssueFormInterface>new EvanForm(this, {
+    this.issueForm = (<IssueFormInterface> new EvanForm(this, {
       accountId: {
         value: '',
-        validate: function(vueInstance: IssueComponent, form: IssueFormInterface) {
+        validate(vueInstance: IssueComponent, form: IssueFormInterface) {
           return EvanForm.validEthAddress(this.value);
-        }
+        },
       },
       requestId: {
         value: '',
-        validate: function(vueInstance: IssueComponent, form: IssueFormInterface) {
+        validate(vueInstance: IssueComponent, form: IssueFormInterface) {
           return !!this.value;
-        }
+        },
       },
       publicFiles: {
-        value: [ ],
-        validate: function(vueInstance: IssueComponent, form: IssueFormInterface) {
+        value: [],
+        validate(vueInstance: IssueComponent, form: IssueFormInterface) {
           return true;
           // return this.value.length === 0 ? '_profile.verifications.notary.issue.files.error' : true;
-        }
+        },
       },
       privateFiles: {
-        value: [ ],
-        validate: function(vueInstance: IssueComponent, form: IssueFormInterface) {
+        value: [],
+        validate(vueInstance: IssueComponent, form: IssueFormInterface) {
           return true;
           // return this.value.length === 0 ? '_profile.verifications.notary.issue.files.error' : true;
-        }
+        },
       },
     }));
   }
@@ -94,24 +95,24 @@ export default class IssueComponent extends mixins(EvanComponent) {
    * Show the info modal.
    */
   show() {
-    (<any>this.$refs).issueModal.show();
+    (<any> this.$refs).issueModal.show();
   }
 
   /**
    * Hide the info modal.
    */
   hide() {
-    (<any>this.$refs).issueModal.hide();
+    (<any> this.$refs).issueModal.hide();
   }
 
   /**
    * Hide the info and the status modal.
    */
   hideBoth() {
-    (<any>this.$refs).statusModal.hide();
+    (<any> this.$refs).statusModal.hide();
 
     if (this.status === 'success') {
-      (<any>this.$refs).issueModal.hide();
+      (<any> this.$refs).issueModal.hide();
     }
   }
 
@@ -121,15 +122,15 @@ export default class IssueComponent extends mixins(EvanComponent) {
   async issueIdentification() {
     this.issuing = true;
 
-    const runtime = (<any>this).getRuntime();
+    const runtime = (<any> this).getRuntime();
     try {
       await notaryLib.issueVerification(
         runtime,
         this.issueForm.requestId.value,
         {
           private: this.issueForm.privateFiles.value,
-          public: this.issueForm.publicFiles.value
-        }
+          public: this.issueForm.publicFiles.value,
+        },
       );
 
       // reset form and show success modal
@@ -141,7 +142,7 @@ export default class IssueComponent extends mixins(EvanComponent) {
     }
 
     // show success modal
-    (<any>this.$refs.statusModal).show();
+    (<any> this.$refs.statusModal).show();
     this.issuing = false;
   }
 }

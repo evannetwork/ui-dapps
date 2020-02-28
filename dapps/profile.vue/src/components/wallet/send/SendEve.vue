@@ -20,14 +20,14 @@
 <template>
   <div>
     <evan-swipe-panel
-      :hideCloseButton="windowWidth >= 1200"
-      :isOpen="true"
-      :mountId="windowWidth < 1200 ? null : 'dapp-wrapper-sidebar-right'"
-      :showBackdrop="windowWidth < 1200"
+      :hide-close-button="windowWidth >= 1200"
+      :is-open="true"
+      :mount-id="windowWidth < 1200 ? null : 'dapp-wrapper-sidebar-right'"
+      :show-backdrop="windowWidth < 1200"
       :title="'_profile.wallet.send-eve.title' | translate"
-      @hide="$store.state.uiState.swipePanel = ''"
       alignment="right"
       class="light"
+      @hide="$store.state.uiState.swipePanel = ''"
     >
       <evan-loading v-if="loading" />
       <!-- start content -->
@@ -35,13 +35,15 @@
         <evan-form
           :disabled="sending"
           :form="form"
-          :i18nScope="'_profile.wallet.send-eve.form'"
-          :onlyForm="true"
+          :i18n-scope="'_profile.wallet.send-eve.form'"
+          :only-form="true"
           :stacked="true"
-        >
-        </evan-form>
+        />
 
-        <evan-modal ref="acceptModal" :maxWidth="'600px'">
+        <evan-modal
+          ref="acceptModal"
+          :max-width="'600px'"
+        >
           <template v-slot:header>
             <h5 class="modal-title">
               {{ `_profile.wallet.send-eve.accept.title` | translate }}
@@ -59,12 +61,12 @@
           </template>
           <template v-slot:footer>
             <evan-button
+              id="evan-eve-send-submit"
+              type="primary"
               @click="
                 sendEve();
                 $refs.acceptModal.hide();
               "
-              id="evan-eve-send-submit"
-              type="primary"
             >
               {{ '_profile.wallet.send-eve.accept.send' | translate }}
             </evan-button>
@@ -73,17 +75,19 @@
       </template>
       <!-- content -->
 
-      <template slot="footer" v-if="!loading">
+      <template
+        v-if="!loading"
+        slot="footer"
+      >
         <evan-button
-          :disabled="!form.isValid || sending"
-          :isLoading="sending"
-          :label="'_profile.wallet.send-eve.send' | translate"
-          @click="showModal"
           id="evan-eve-send"
+          :disabled="!form.isValid || sending"
+          :is-loading="sending"
+          :label="'_profile.wallet.send-eve.send' | translate"
           class="w-100"
           type="primary"
-        >
-        </evan-button>
+          @click="showModal"
+        />
       </template>
     </evan-swipe-panel>
   </div>
@@ -91,6 +95,7 @@
 
 <script lang="ts">
 import Component from './SendEve';
+
 export default Component;
 </script>
 

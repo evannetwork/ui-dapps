@@ -28,11 +28,11 @@ export const STRIPE_ELEMENT_CONFIG = {
     fontSmoothing: 'antialiased',
     fontSize: '16px',
     '::placeholder': {
-      color: '#aab7c4'
-    }
+      color: '#aab7c4',
+    },
   },
   invalid: {
     color: '#fa755a',
-    iconColor: '#fa755a'
-  }
+    iconColor: '#fa755a',
+  },
 };

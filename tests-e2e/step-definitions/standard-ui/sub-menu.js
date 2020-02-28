@@ -2,7 +2,7 @@ import { client } from 'nightwatch-api';
 import { When } from 'cucumber';
 import { WAIT_TIME_FOR_ELEMENT } from '../../conf/constants';
 
-const subMenuSelector = (entry) => `//div[contains(@class, 'dapp-wrapper-sidebar-2')]//a[normalize-space(text()) = "${entry}"]`;
+const subMenuSelector = (entry) => `//div[contains(@class, 'dapp-wrapper-sidebar-2')]//button[normalize-space(text()) = "${entry}"]`;
 
 /**
  * Click on an entry within the sidepanel

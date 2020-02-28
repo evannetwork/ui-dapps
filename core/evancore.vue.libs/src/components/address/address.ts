@@ -41,13 +41,15 @@ export default class AddressComponent extends mixins(EvanComponent) {
    */
   @Prop() class;
 
+  did = '';
+
   /**
    * Should the interactions are shown?
    */
   hover = false;
 
-  get did(): string {
-    return bccUtils.getDidFromAddress(this.getRuntime(), this.address);
+  async created(): Promise<void> {
+    this.did = await bccUtils.getDidFromAddress(this.getRuntime(), this.address);
   }
 
   /**
