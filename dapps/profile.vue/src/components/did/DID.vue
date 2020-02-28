@@ -27,7 +27,6 @@
       <evan-onpage-navigation
         :entries="onPageEntries"
         scroll-container-selector=".dapp-wrapper-content"
-        offset="56"
       />
 
       <div class="mb-3">
