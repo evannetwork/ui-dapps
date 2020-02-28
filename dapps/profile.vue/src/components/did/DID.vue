@@ -24,6 +24,12 @@
       v-else
       class="content"
     >
+      <evan-onpage-navigation
+        :entries="onPageEntries"
+        scroll-container-selector=".dapp-wrapper-content"
+        offset="56"
+      />
+
       <div class="mb-3">
         <div class="mb-1 d-flex flex-row justify-content-between">
           <div>
@@ -40,13 +46,16 @@
         <p>{{ '_profile.did.description' | translate }}</p>
       </div>
 
-      <div class="content-card mb-3">
+      <div
+        id="did"
+        class="content-card mb-3"
+      >
         <h2 class="card-heading">
           <i class="mr-1 mdi mdi-earth" />
           {{ '_profile.did.did-title' | translate }}
         </h2>
 
-        <table class="mt-2 w-100">
+        <table class="mt-3 w-100">
           <tbody>
             <tr>
               <td style="width: 60px">
@@ -67,11 +76,15 @@
       </div>
 
       <service-endpoints
+        id="service-endpoints"
         :endpoints="endpoints"
         class="mb-3"
       />
 
-      <delegates :delegates="delegates" />
+      <delegates
+        id="delegates"
+        :delegates="delegates"
+      />
     </div>
   </div>
 </template>

@@ -20,7 +20,6 @@
 import Component, { mixins } from 'vue-class-component';
 import { EvanComponent } from '@evan.network/ui-vue-core';
 import { Runtime } from '@evan.network/api-blockchain-core';
-import { profileUtils } from '@evan.network/ui';
 import { Delegate, DidDocumentTemplate, ServiceEndpoint } from './DidInterfaces';
 import { DidService } from './DidService';
 
@@ -33,6 +32,21 @@ export default class DIDComponent extends mixins(EvanComponent) {
   endpoints: ServiceEndpoint[] = null;
 
   runtime: Runtime = null;
+
+  onPageEntries = [
+    {
+      id: 'did',
+      label: this.$t('_profile.did.did-title'),
+    },
+    {
+      id: 'service-endpoints',
+      label: this.$t('_profile.did.service-endpoint-title'),
+    },
+    {
+      id: 'delegates',
+      label: this.$t('_profile.did.delegates-title'),
+    },
+  ]
 
 
   async created(): Promise<void> {

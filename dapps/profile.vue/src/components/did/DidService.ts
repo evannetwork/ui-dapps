@@ -1,5 +1,6 @@
 import { ServiceEndpoint, DidDocumentTemplate, Delegate } from './DidInterfaces';
 
+// TODO remove this
 const TEST_DID_DOC: DidDocumentTemplate = {
   '@context': 'https://w3id.org/did/v1',
   id: 'did:evan:testcore:0x96da854df34f5dcd25793b75e170b3d8c63a95ad',
@@ -55,7 +56,7 @@ export class DidService {
 
     // console.log('didDocument', this.didDocument);
 
-    return TEST_DID_DOC;
+    return Promise.resolve(TEST_DID_DOC);
   }
 
   static async getDelegates(didDocument: DidDocumentTemplate): Promise<Delegate[]> {
