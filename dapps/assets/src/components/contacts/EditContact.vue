@@ -48,7 +48,7 @@
         <p>{{ '_assets.contacts.remove-contact-desc' | translate }}</p>
 
         <evan-button
-          type="danger"
+          type="danger-outline"
           class="btn-block"
           @click="$refs.deleteModal.show"
         >
