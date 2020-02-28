@@ -41,7 +41,7 @@
       },
       "sharing": {
         "cancel": "Abbrechen",
-        "description": "Um Ihren Digitalen Zwilling freizugeben, passen Sie die folgenden Freigabeeinstellungen an und klicken Sie auf ”Zwilling freigeben”",
+        "description": "Um Ihren Digitalen Zwilling freizugeben, passen Sie die folgenden Freigabeeinstellungen an und klicken Sie auf ”Zwilling freigeben”.",
         "sharing-title": "Digitalen Zwilling freigeben",
         "update-sharing": "Zwilling freigeben"
       },
@@ -86,7 +86,7 @@
         "user": "Nutzer"
       },
       "no-sharings": "Dieser Digitale Zwilling wurde mit keinem Nutzer geteilt.",
-      "no-sharings-filter": "Dieser Digitale Zwilling wurde mit keinem Nutzer mit diesem Filter gefunden. (Suche: {searchTerm} und Filter: {filter})",
+      "no-sharings-filter": "Dieser Digitale Zwilling wurde mit keinem Nutzer geteilt der zu \"{searchTerm}\" und Typ: \"{filter}\" passt.",
       "sharings-title": "Freigaben",
       "table": {
         "containers": "Geteilte Datenbereiche",

@@ -20,11 +20,17 @@
 <template>
   <dl class="row labeled-list">
     <template v-for="(entry, idx) in entries">
-      <dt :key="`dt-${idx}`" class="col-md-4" v-show="!hideLabel">{{ entry.label }}</dt>
+      <dt
+        v-show="!hideLabel"
+        :key="`dt-${idx}`"
+        class="col-md-4"
+      >
+        {{ entry.label }}
+      </dt>
       <dd
+        v-if="!hideEmpty || entry.value"
         :key="`dd-${idx}`"
         :class="{'col-md-8': true, 'offset-md-4': hideLabel}"
-        v-if="!hideEmpty || entry.value"
       >
         {{ entry.value || emptyValue }}
       </dd>
@@ -33,11 +39,11 @@
 </template>
 
 <script lang="ts">
-  import Component from './labeled-list';
-  export default Component;
+import Component from './labeled-list';
+
+export default Component;
 </script>
 
 <style lang="scss" scoped>
   @import './labeled-list.scss'
 </style>
-

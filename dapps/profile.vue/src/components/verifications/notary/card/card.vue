@@ -19,7 +19,7 @@
 
 <template>
   <div style="display: contents;">
-    <evan-loading v-if="loading"></evan-loading>
+    <evan-loading v-if="loading" />
     <template v-else-if="details.status === 'finished'">
       <notary-topic-display
         v-for="(topic, index) in details.verifications"
@@ -28,41 +28,59 @@
           topic.endsWith('company') ?
             '_profile.verifications.notary.verification.organization' :
             '_profile.verifications.notary.verification.organization-random'
-          ) | translate"
-        :topic="topic">
-      </notary-topic-display>
+        ) | translate"
+        :topic="topic"
+      />
     </template>
     <template v-else>
       <div class="position-absolute">
-        <notary-info-dialog ref="orgInfo" :address="address"></notary-info-dialog>
-        <notary-action-request
-          ref="identAction"
-          v-if="details.status === 'unknown'"
-          :address="address">
-        </notary-action-request>
-        <notary-action-pin
-          ref="identAction"
-          v-if="details.status === 'requested' || details.status === 'confirming'"
+        <notary-info-dialog
+          ref="orgInfo"
           :address="address"
-          :requestId="requestId">
-        </notary-action-pin>
+        />
+        <notary-action-request
+          v-if="details.status === 'unknown'"
+          ref="identAction"
+          :address="address"
+        />
+        <notary-action-pin
+          v-if="details.status === 'requested' || details.status === 'confirming'"
+          ref="identAction"
+          :address="address"
+          :request-id="requestId"
+        />
       </div>
-      <evan-card class="mt-3" type="outline"
+      <evan-card
+        class="mt-3"
+        type="outline"
         icon="mdi mdi-alert-circle-outline"
         highlight="true"
         :title="(error ? '_profile.verifications.notary.request-error' : '_profile.verifications.notary.title') | translate"
-        :description="error ? ('_profile.verifications.notary.request-error-desc' | translate) : ''">
-        <template v-slot:actions v-if="!error">
-          <button class="btn btn-primary" target="_blank"
+        :description="error ? ('_profile.verifications.notary.request-error-desc' | translate) : ''"
+      >
+        <template
+          v-if="!error"
+          v-slot:actions
+        >
+          <button
             v-if="statusActions.indexOf(details.status) !== -1"
+            class="btn btn-primary"
+            target="_blank"
             :disabled="details.status === 'issued' && accepting"
-            @click="runStatusAction()">
+            @click="runStatusAction()"
+          >
             {{ `_profile.verifications.notary.status-actions.${ details.status }` | translate }}
-            <div class="spinner-border spinner-border-sm text-light ml-3" v-if="details.status === 'issued' && accepting"></div>
+            <div
+              v-if="details.status === 'issued' && accepting"
+              class="spinner-border spinner-border-sm text-light ml-3"
+            />
           </button>
-          <evan-button type="link" size="sm"
+          <evan-button
+            type="link"
+            size="sm"
             class="d-block mt-1 text-muted"
-            @click="$refs.orgInfo.show();">
+            @click="$refs.orgInfo.show();"
+          >
             {{ '_profile.verifications.notary.learn-more' | translate }}
           </evan-button>
         </template>
@@ -72,6 +90,7 @@
 </template>
 
 <script lang="ts">
-  import Component from './card';
-  export default Component;
+import Component from './card';
+
+export default Component;
 </script>

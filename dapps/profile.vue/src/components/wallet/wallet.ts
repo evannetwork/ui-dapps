@@ -49,7 +49,7 @@ export default class WalletComponent extends mixins(EvanComponent) {
    * Unbind window resize watcher
    */
   beforeDestroy() {
-    this.listeners.forEach(listener => listener());
+    this.listeners.forEach((listener) => listener());
   }
 
   /**

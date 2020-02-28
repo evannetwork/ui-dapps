@@ -23,7 +23,9 @@ export interface Contact {
   address: string;
   alias: string;
   createdAt: string;
+  displayName: string;
   isFavorite: string;
+  isPending: boolean;
   icon: string;
   type: profileUtils.ProfileType;
   updatedAt: string;

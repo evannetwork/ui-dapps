@@ -41,9 +41,9 @@ if (coreRuntime.environment === 'testcore') {
 async function closeRequest(runtime: bcc.Runtime, requestId: string) {
   const allRequests = await axios({
     method: 'POST',
-    url: `${ agentUrl }/api/smart-agents/smart-agent-2fi/request/close`,
-    headers: { 'Authorization': await bcc.utils.getSmartAgentAuthHeaders(runtime), },
-    data: { requestId }
+    url: `${agentUrl}/api/smart-agents/smart-agent-2fi/request/close`,
+    headers: { Authorization: await bcc.utils.getSmartAgentAuthHeaders(runtime) },
+    data: { requestId },
   });
 }
 
@@ -54,8 +54,8 @@ async function closeRequest(runtime: bcc.Runtime, requestId: string) {
  * @param      {string}  type        data that should be sent
  */
 function triggerRequestReload(orgAddress: string, detail: any) {
-  window.dispatchEvent(new CustomEvent(`notary-verification-reload-${ orgAddress }`, {
-    detail
+  window.dispatchEvent(new CustomEvent(`notary-verification-reload-${orgAddress}`, {
+    detail,
   }));
 }
 
@@ -65,8 +65,8 @@ function triggerRequestReload(orgAddress: string, detail: any) {
 async function getRequests(runtime: bcc.Runtime, address: string) {
   const allRequests = await axios({
     method: 'POST',
-    url: `${ agentUrl }/api/smart-agents/smart-agent-2fi/status/getAll`,
-    headers: { 'Authorization': await bcc.utils.getSmartAgentAuthHeaders(runtime), },
+    url: `${agentUrl}/api/smart-agents/smart-agent-2fi/status/getAll`,
+    headers: { Authorization: await bcc.utils.getSmartAgentAuthHeaders(runtime) },
   });
   return (<any>allRequests).data.result;
 }
@@ -81,17 +81,17 @@ async function getRequests(runtime: bcc.Runtime, address: string) {
  *   - erteilt / issued
  */
 async function getIdentificationDetails(runtime: bcc.Runtime, address: string, requestId: string) {
-  let status = 'unknown';
+  const status = 'unknown';
 
   try {
     const ret: any = { };
     const requestedStatus: any = (await axios({
       method: 'POST',
-      url: `${ agentUrl }/api/smart-agents/smart-agent-2fi/status/get`,
-      headers: { 'Authorization': await bcc.utils.getSmartAgentAuthHeaders(runtime), },
+      url: `${agentUrl}/api/smart-agents/smart-agent-2fi/status/get`,
+      headers: { Authorization: await bcc.utils.getSmartAgentAuthHeaders(runtime) },
       data: {
-        question: requestId
-      }
+        question: requestId,
+      },
     })).data.result;
 
     ret.status = requestedStatus.status;
@@ -120,9 +120,8 @@ async function getIssuedVerifications(vueInstance) {
   if (verifications) {
     bcc.Ipld.purgeCryptoInfo(verifications);
     return verifications;
-  } else {
-    return [ ];
   }
+  return [];
 }
 
 /**
@@ -134,12 +133,12 @@ async function getIssuedVerifications(vueInstance) {
  * @param      {any}          files      object space seperated (private, public) that contains
  *                                       files that should be attached (HTML 5 file selection)
  */
-async function issueVerification(runtime, requestId, files = { private: [ ], public: [ ] }) {
+async function issueVerification(runtime, requestId, files = { private: [], public: [] }) {
   const formData = new FormData();
 
   // add files to the specific assets objects
-  Object.keys(files).forEach(key => {
-    for (let file of files[key]) {
+  Object.keys(files).forEach((key) => {
+    for (const file of files[key]) {
       formData.append(key === 'private' ? 'assets' : 'publicAssets', file.blob, file.name);
     }
   });
@@ -148,23 +147,23 @@ async function issueVerification(runtime, requestId, files = { private: [ ], pub
 
   await axios({
     method: 'POST',
-    url: `${ agentUrl }/api/smart-agents/smart-agent-2fi/question/finalize`,
+    url: `${agentUrl}/api/smart-agents/smart-agent-2fi/question/finalize`,
     headers: {
-      'Authorization': await bcc.utils.getSmartAgentAuthHeaders(runtime),
-      'content-type': 'multipart/form-data'
+      Authorization: await bcc.utils.getSmartAgentAuthHeaders(runtime),
+      'content-type': 'multipart/form-data',
     },
-    data: formData
+    data: formData,
   });
 }
 
 async function getAnswer(runtime, question, requestId) {
   const answerResponse = await axios({
     method: 'POST',
-    url: `${ agentUrl }/api/smart-agents/smart-agent-2fi/question/solve`,
-    headers: { 'Authorization': await bcc.utils.getSmartAgentAuthHeaders(runtime), },
+    url: `${agentUrl}/api/smart-agents/smart-agent-2fi/question/solve`,
+    headers: { Authorization: await bcc.utils.getSmartAgentAuthHeaders(runtime) },
     data: {
       question,
-      requestId
+      requestId,
     },
     responseType: 'blob', // important
   });
@@ -180,5 +179,5 @@ export {
   issueVerification,
   notarySmartAgentAccountId,
   triggerRequestReload,
-  verificationCost
+  verificationCost,
 };

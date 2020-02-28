@@ -24,15 +24,15 @@ import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-c
 
 
 const dispatcher = new Dispatcher(
-  `profile.vue.${ dappBrowser.getDomainName() }`,
+  `profile.vue.${dappBrowser.getDomainName()}`,
   'verificationAcceptDispatcher',
   40 * 1000,
-  '_profile.dispatchers.verification-accept'
+  '_profile.dispatchers.verification-accept',
 );
 
 dispatcher
   .step(async (instance: DispatcherInstance, data: any) => {
-    const runtime = instance.runtime;
+    const { runtime } = instance;
 
     await runtime.verifications.confirmVerification(
       runtime.activeAccount,
