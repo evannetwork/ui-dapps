@@ -72,6 +72,9 @@
         "placeholder": "Aussagekräftiger Name"
       }
     },
+    "did": {
+      "copied": "DID kopiert"
+    },
     "dispatcher-not-found": "Synchronisations Job nicht gefunden",
     "edit": "Editieren",
     "file-input": {
