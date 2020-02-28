@@ -19,7 +19,7 @@
 
 <template>
   <div class="content-card">
-    <div class="card-heading mb-3 d-flex flex-row justify-content-between align-items-center">
+    <div class="mb-3 d-flex flex-row justify-content-between align-items-center">
       <h2>
         <i class="mr-1 mdi mdi-earth" />
         {{ '_profile.did.service-endpoint-title' | translate }}
@@ -136,10 +136,5 @@ export default Component;
   border-radius: 4px;
   width: 560px;
   padding: 24px 24px;
-
-  .card-heading h2 {
-    font-size: 18px;
-    font-weight: bold;
-  }
 }
 </style>
