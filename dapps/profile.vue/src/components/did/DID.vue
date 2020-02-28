@@ -67,6 +67,7 @@
       </div>
 
       <service-endpoints
+        :endpoints="endpoints"
         class="mb-3"
       />
 

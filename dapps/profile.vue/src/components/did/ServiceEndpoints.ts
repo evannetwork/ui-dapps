@@ -21,6 +21,7 @@ import Component, { mixins } from 'vue-class-component';
 import { EvanComponent, EvanTableColumn } from '@evan.network/ui-vue-core';
 import { isEqual } from 'lodash';
 import { Prop } from 'vue-property-decorator';
+import { DidService } from './DidService';
 
 @Component
 export default class ServiceEndpointsComponent extends mixins(EvanComponent) {
@@ -50,20 +51,6 @@ export default class ServiceEndpointsComponent extends mixins(EvanComponent) {
 
   previousData = [];
 
-  mounted(): void {
-    // Mock it till you shock it
-    this.endpoints = [
-      {
-        label: 'asd',
-        url: 'asdasdsaasdsa',
-      },
-      {
-        label: 'wqewewq',
-        url: 'wqewqeqwewq',
-      },
-    ];
-  }
-
   /**
    * Temporarily add new entry to row  and add new empty row
    */
@@ -90,7 +77,9 @@ export default class ServiceEndpointsComponent extends mixins(EvanComponent) {
 
   saveEndpoints(): void {
     this.addEndpointRow();
-    // TODO: Save to DID Doc
+
+    DidService.saveServiceEndpoints(this.endpoints);
+
     this.isEditMode = false;
   }
 
