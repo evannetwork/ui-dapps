@@ -21,6 +21,7 @@ import Component, { mixins } from 'vue-class-component';
 import { EvanComponent, EvanTableColumn, ContactInterface } from '@evan.network/ui-vue-core';
 import { bccUtils } from '@evan.network/ui';
 import { isEqual } from 'lodash';
+import { Prop } from 'vue-property-decorator';
 
 interface Delegate {
   did: string;
@@ -28,6 +29,8 @@ interface Delegate {
 }
 @Component
 export default class DelegatesComponent extends mixins(EvanComponent) {
+  @Prop() delegates: Delegate[];
+
   isEditMode = false;
 
   contacts: ContactInterface[] = [];
@@ -48,23 +51,10 @@ export default class DelegatesComponent extends mixins(EvanComponent) {
     },
   ]
 
-  delegates: Delegate[] = [];
 
   previousData: Delegate[] = [];
 
   async mounted(): Promise<void> {
-    // Mock it till you shock it
-    this.delegates = [
-      {
-        did: '0x000000000000',
-        note: 'asdasdsaasdsa',
-      },
-      {
-        did: '0x111111111111',
-        note: 'wqewqeqwewq',
-      },
-    ];
-
     this.contacts = await bccUtils.getContacts(this.getRuntime());
   }
 

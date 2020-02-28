@@ -70,7 +70,7 @@
         class="mb-3"
       />
 
-      <delegates />
+      <delegates :delegates="delegates" />
     </div>
   </div>
 </template>

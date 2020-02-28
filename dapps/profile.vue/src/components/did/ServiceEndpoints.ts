@@ -20,9 +20,12 @@
 import Component, { mixins } from 'vue-class-component';
 import { EvanComponent, EvanTableColumn } from '@evan.network/ui-vue-core';
 import { isEqual } from 'lodash';
+import { Prop } from 'vue-property-decorator';
 
 @Component
 export default class ServiceEndpointsComponent extends mixins(EvanComponent) {
+  @Prop() endpoints: { label: string; url: string }[];
+
   isEditMode = false;
 
   newUrl = '';
@@ -44,8 +47,6 @@ export default class ServiceEndpointsComponent extends mixins(EvanComponent) {
       thClass: 'th-icon',
     },
   ]
-
-  endpoints = [];
 
   previousData = [];
 

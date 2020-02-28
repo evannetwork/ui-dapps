@@ -19,7 +19,9 @@
 
 import Component, { mixins } from 'vue-class-component';
 import { EvanComponent } from '@evan.network/ui-vue-core';
-import { Runtime, DidDocumentTemplate } from '@evan.network/api-blockchain-core';
+import { Runtime } from '@evan.network/api-blockchain-core';
+import { profileUtils } from '@evan.network/ui';
+import { Delegate, DidDocumentTemplate } from './DidInterfaces';
 
 const TEST_DID_DOC: DidDocumentTemplate = {
   '@context': 'https://w3id.org/did/v1',
@@ -32,16 +34,12 @@ const TEST_DID_DOC: DidDocumentTemplate = {
       ethereumAddress: '0x001de828935e8c7e4cb56fe610495cae63fb2612',
     },
   ],
-  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-  // @ts-ignore
   authentication: [
     'did:evan:testcore:0x96da854df34f5dcd25793b75e170b3d8c63a95ad#key-1',
+    // mock delegate
+    'did:evan:testcore:0x96da854df34f5dcd25793b75e170b3d8c63a95ae#key-2',
   ],
-  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-  // @ts-ignore
   created: '2020-02-17T09:14:25.915Z',
-  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-  // @ts-ignore
   updated: '2020-02-17T09:14:25.915Z',
   proof: {
     type: 'EcdsaPublicKeySecp256k1',
@@ -54,7 +52,9 @@ const TEST_DID_DOC: DidDocumentTemplate = {
 
 @Component
 export default class DIDComponent extends mixins(EvanComponent) {
-  didDocument = null;
+  didDocument: DidDocumentTemplate = null;
+
+  delegates: Delegate[] = null;
 
   runtime: Runtime = null;
 
@@ -83,13 +83,31 @@ export default class DIDComponent extends mixins(EvanComponent) {
 
   async created(): Promise<void> {
     this.didDocument = await this.fetchDidDocument();
+    this.delegates = await this.getDelegates(this.didDocument);
     console.log('this.didDocument', this.didDocument);
+    console.log('this.delegates', this.delegates);
     /* // TODO: switch after complete identity switch to: runtime.did.getDidDocument();
        const identity = await this.runtime.verifications.getIdentityForAccount(this.runtime.activeAccount, true);
        const did = await this.runtime.did.convertIdentityToDid(identity);
        const document = await this.runtime.did.getDidDocumentTemplate();
        await this.runtime.did.setDidDocument(did, document);
        const retrieved = await this.runtime.did.getDidDocument(did); */
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  async getDelegates(didDocument: DidDocumentTemplate): Promise<Delegate[]> {
+    // regex to remove #key suffixes
+    const regex = /([#])(key-)(\d)+/;
+
+    return Promise.all(didDocument.authentication
+      .map((item) => item.replace(regex, ''))
+      .filter((item) => item !== didDocument.id)
+      .map(async (delegateId) => ({
+        did: delegateId,
+        /* TODO getUserAlias doesn't handle DIDs yet
+           note: await profileUtils.getUserAlias(this.getRuntime(), delegateId), */
+        note: await Promise.resolve('MOCK NOTE'),
+      })));
   }
 
   copyToClipboard(text: string): void {
