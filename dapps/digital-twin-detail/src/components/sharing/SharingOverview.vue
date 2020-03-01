@@ -99,7 +99,7 @@
               :key="containerName"
               :title="data.item.containerFields[data.item.containers[idx]]"
             >
-              {{ (containerName !='' && idx != 0) ? ', ' : '' }}
+              {{ (containerName != '' && idx !== 0) ? ', ' : '' }}
               {{ containerName }}
             </span>
           </template>
