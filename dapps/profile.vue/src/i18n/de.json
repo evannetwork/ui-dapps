@@ -161,7 +161,7 @@
       "label": "Label",
       "note": "Notiz",
       "service-endpoint-title": "Service Endpoints",
-      "service-endpoints-desc": "Im Folgenden können Service Endpoints festgelegt werden, die mit dieser DID assoziert werden sollen.",
+      "service-endpoints-desc": "Im Folgenden können Service Endpoints festgelegt werden, die mit dieser DID assoziiert werden sollen.",
       "updated-at": "aktualisiert am"
     },
     "dispatchers": {
