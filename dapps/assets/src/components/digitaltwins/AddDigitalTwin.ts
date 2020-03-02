@@ -76,7 +76,9 @@ class AddDigitalTwinComponent extends mixins(EvanComponent) {
   loading = false;
 
   async created(): Promise<void> {
-    this.runtime = await this.getRuntime();
+    this.runtime = this.getRuntime();
+    /* TODO: maybe refactor it the "vue way"? ($emit and listen)
+       Currently this is VERY convoluted with going into the dapp-wrapper even */
     this.clearTwinCreateWatcher = dispatchers.twinCreateDispatcher
       .watch(({ detail: { status } }: CustomEvent) => {
         if (status === 'starting') {

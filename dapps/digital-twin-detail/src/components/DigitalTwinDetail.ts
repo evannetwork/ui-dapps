@@ -81,7 +81,7 @@ export default class DigitalTwinDetailComponent extends mixins(EvanComponent) {
         }
 
         // initialize a new twin, but keep old reference until twin is loaded
-        const newTwin = new DAppTwin(this, this.getRuntime(), this.$route.params.twin);
+        const newTwin = new DAppTwin(this, this.getRuntime(), this.$route.params.twin.toLowerCase());
 
         // if container view should be loaded initially, just load it directly
         if (this.$route.params.container) {
@@ -112,6 +112,8 @@ export default class DigitalTwinDetailComponent extends mixins(EvanComponent) {
     window.addEventListener('hashchange', this.hashChangeWatcher);
 
     this.navItems = this.getNavItems();
+
+    console.log('this.$store.state.twin', this.$store.state.twin);
   }
 
   async deleteTwin(): Promise<void> {
