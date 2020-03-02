@@ -205,8 +205,14 @@ export default class PermissionUtils {
       }
     });
 
-    // push the new share config into the share configs array
-    shareConfigs.push(shareConfig);
+    // only push the new share config into the share configs array when there is anything to share
+    if (
+      shareConfig.read.length > 0
+      || shareConfig.readWrite.length > 0
+      || shareConfig.removeListEntries.length > 0
+    ) {
+      shareConfigs.push(shareConfig);
+    }
 
     return shareConfigs;
   }
@@ -249,8 +255,14 @@ export default class PermissionUtils {
       }
     });
 
-    // push the new share config into the share configs array
-    unshareConfigs.push(unshareConfig);
+    // only push the new share config into the share configs array when there is anything to unshare
+    if (
+      unshareConfig.write.length > 0
+      || unshareConfig.readWrite.length > 0
+      || unshareConfig.removeListEntries.length > 0
+    ) {
+      unshareConfigs.push(unshareConfig);
+    }
 
     return unshareConfigs;
   }
@@ -305,6 +317,7 @@ export default class PermissionUtils {
 
       containerConfigs.push(dataSharing);
     });
+
     await containerShareDispatcher.start(runtime, containerConfigs);
   }
 }

@@ -110,6 +110,7 @@
     },
     "need-an-account": "Noch kein Account? <a href=\"#/dashboard.vue.evan/onboarding.vue.evan/sign-up\">Account erstellen</a>",
     "no": "Nein",
+    "no-permission": "Sie sind nicht berechtigt den Inhalt einzusehen.",
     "not-your-account": "Nicht Ihr Account?",
     "optional": "optional",
     "password": "Passwort",
