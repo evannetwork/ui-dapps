@@ -8,6 +8,9 @@
     - add UI for twins where current user has no or only partial permissions
 
 ### Fixes
+- dapps
+  - `onboarding.vue`
+    - allow contact accept after sign-up / sign-in / already logged in account
 
 ### Deprecations
 - core
