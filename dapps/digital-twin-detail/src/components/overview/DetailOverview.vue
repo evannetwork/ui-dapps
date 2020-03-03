@@ -25,7 +25,7 @@
         v-if="twin"
         class="mb-3"
         :did="did"
-        :is-owner="isOwner"
+        :is-owner="$store.state.twin.isOwner"
         :owner-name="twin.ownerName"
         :owner-address="twin.ownerAddress"
         :created-at="twin.createdAt"

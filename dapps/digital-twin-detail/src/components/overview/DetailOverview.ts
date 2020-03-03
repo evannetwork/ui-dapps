@@ -38,10 +38,6 @@ export default class DetailOverviewComponent extends mixins(EvanComponent) {
 
   did = '';
 
-  get isOwner(): boolean {
-    return this.runtime.activeAccount === this.twin.ownerAddress;
-  }
-
   async created(): Promise<void> {
     this.search = new SearchService(this.runtime);
 
