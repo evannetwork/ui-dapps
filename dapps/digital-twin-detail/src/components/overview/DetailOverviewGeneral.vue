@@ -41,7 +41,7 @@
             />
           </td>
         </tr>
-        <tr>
+        <tr v-if="isOwner">
           <td class="property">
             {{ '_twin-detail.overview.created-at' | translate }}
           </td>
