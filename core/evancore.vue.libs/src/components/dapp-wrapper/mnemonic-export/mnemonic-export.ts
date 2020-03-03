@@ -21,6 +21,7 @@
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 import * as bcc from '@evan.network/api-blockchain-core';
 import Component, { mixins } from 'vue-class-component';
+import { profileUtils } from '@evan.network/ui';
 import EvanComponent from '../../../component';
 
 /**
@@ -53,7 +54,7 @@ export default class MnemonicExport extends mixins(EvanComponent) {
     this.address = runtime.activeAccount;
     this.mnemonic = await this.getMnemonic();
     this.now = new Date();
-    this.alias = window.localStorage.getItem('evan-alias');
+    this.alias = await profileUtils.getUserAlias(runtime);
     this.identityAddress = await runtime.verifications.getIdentityForAccount(this.address, true);
 
     // Show the mnemonic export directly and do not allow closing.
