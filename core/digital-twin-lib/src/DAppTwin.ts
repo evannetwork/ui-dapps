@@ -178,10 +178,12 @@ class DAppTwin extends DigitalTwin {
    */
   public async initialize(): Promise<void> {
     await this.loadBaseInfo();
-    this.favorite = await this.isFavorite();
     this.ownerName = await profileUtils.getUserAlias(this.runtime, this.ownerAddress);
-    this.ensureContainers();
-    this.ensureDispatcherStates();
+    this.favorite = await this.isFavorite();
+    await Promise.all([
+      this.ensureContainers(),
+      this.ensureDispatcherStates(),
+    ]);
   }
 
   /**
