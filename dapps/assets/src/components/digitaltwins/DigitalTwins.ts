@@ -105,6 +105,9 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
   })
   search: Function;
 
+  @Prop()
+  error: boolean;
+
   // contains list of favorites and their state
   favoriteList: Favorite[] = [];
 

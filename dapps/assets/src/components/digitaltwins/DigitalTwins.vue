@@ -117,7 +117,18 @@
 
           <!-- Empty slots -->
           <template v-slot:empty>
-            <span>{{ '_assets.digitaltwins.digitaltwins-empty' | translate }}</span>
+            <span v-if="!error">
+              {{ '_assets.digitaltwins.digitaltwins-empty' | translate }}
+            </span>
+            <div
+              v-else
+              class="p-5 text-center"
+            >
+              <h3 class="mb-5">
+                {{ '_assets.search.error' | translate }}
+              </h3>
+              <evan-failed />
+            </div>
           </template>
         </evan-table>
       </div>
