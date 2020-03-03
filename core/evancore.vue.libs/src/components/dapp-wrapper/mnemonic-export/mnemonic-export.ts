@@ -21,6 +21,7 @@
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 import * as bcc from '@evan.network/api-blockchain-core';
 import Component, { mixins } from 'vue-class-component';
+import { profileUtils } from '@evan.network/ui';
 import EvanComponent from '../../../component';
 
 /**
@@ -33,9 +34,13 @@ import EvanComponent from '../../../component';
 @Component({})
 export default class MnemonicExport extends mixins(EvanComponent) {
   mnemonic = null;
+
   address = '';
+
   alias = '';
+
   understood = false;
+
   now = null;
 
   /**
@@ -43,24 +48,26 @@ export default class MnemonicExport extends mixins(EvanComponent) {
    */
   identityAddress: string = null;
 
-  async created() {
+  async created(): Promise<void> {
     const runtime = this.getRuntime();
 
     this.address = runtime.activeAccount;
     this.mnemonic = await this.getMnemonic();
     this.now = new Date();
-    this.alias = window.localStorage.getItem('evan-alias');
+    this.alias = await profileUtils.getUserAlias(runtime);
     this.identityAddress = await runtime.verifications.getIdentityForAccount(this.address, true);
 
     // Show the mnemonic export directly and do not allow closing.
-    this.mnemonic && this.$nextTick(() => this.showModal());
+    if (this.mnemonic) {
+      this.$nextTick(() => this.showModal());
+    }
   }
 
-  private showModal() {
+  private showModal(): void {
     (this.$refs.modal as any).show();
   }
 
-  private goSecure () {
+  private goSecure(): void {
     this.mnemonic = null;
     window.localStorage.removeItem('evan-mnemonic');
     (this.$refs.modal as any).hide();
@@ -76,16 +83,18 @@ export default class MnemonicExport extends mixins(EvanComponent) {
       const encrypted = localStorage['evan-mnemonic'];
       const vault = await dappBrowser.lightwallet.loadUnlockedVault();
       const cryptor = runtime.sharing.options.cryptoProvider.getCryptorByCryptoAlgo(
-        runtime.sharing.options.defaultCryptoAlgo
+        runtime.sharing.options.defaultCryptoAlgo,
       );
 
       return (await cryptor.decrypt(bcc.buffer.from(encrypted, 'hex'), {
-        key: vault.encryptionKey
+        key: vault.encryptionKey,
       })).split(' ');
     }
+
+    return [];
   }
 
-  private downloadMnemonics() {
+  private downloadMnemonics(): void {
     const fileName = `recovery-key-${this.alias}.txt`;
     const text = [];
 
@@ -95,7 +104,7 @@ export default class MnemonicExport extends mixins(EvanComponent) {
     text.push(`\n${this.$t('_evan.mnemonic-export.recovery-key')}:`);
     text.push(`\n${this.mnemonic.join(' ')}`);
 
-    this.downloadTextfile(fileName, text.join('\n'));
+    MnemonicExport.downloadTextfile(fileName, text.join('\n'));
   }
 
   /**
@@ -104,12 +113,12 @@ export default class MnemonicExport extends mixins(EvanComponent) {
    * @param filename Name for the file with .txt suffix
    * @param text Content of the text tile
    */
-  private downloadTextfile(filename: string, text: string) {
+  private static downloadTextfile(filename: string, text: string): void {
     const element = document.createElement('a');
 
     element.setAttribute(
       'href',
-      'data:text/plain;charset=utf-8,' + encodeURIComponent(text)
+      `data:text/plain;charset=utf-8,${encodeURIComponent(text)}`,
     );
     element.setAttribute('download', filename);
     element.style.display = 'none';
@@ -123,7 +132,7 @@ export default class MnemonicExport extends mixins(EvanComponent) {
    *
    * @param text Text to copy
    */
-  private copyToClipboard(text: string) {
+  copyToClipboard(text: string): void {
     const textArea = document.createElement('textarea');
 
     textArea.value = text;
@@ -134,25 +143,26 @@ export default class MnemonicExport extends mixins(EvanComponent) {
     document.body.removeChild(textArea);
 
     this.$toasted.show(
-      this.$t(`_evan.mnemonic-export.copied`),
+      this.$t('_evan.mnemonic-export.copied'),
       {
         duration: 3000,
-        type: 'success'
-      }
+        type: 'success',
+      },
     );
   }
 
   /**
    * Open browser print dialogue.
    */
-  private print() {
+  // eslint-disable-next-line class-methods-use-this
+  print(): void {
     window.print();
   }
 
   /**
    * Prevent dialog to be closed, when user did not has exported the mnemonic.
    */
-  onModalClose($event) {
+  onModalClose(): void {
     if (!this.understood) {
       (this.$refs.understoodModal as any).show();
     }
