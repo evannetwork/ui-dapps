@@ -32,9 +32,6 @@ import LabeledList from './utils/labeled-list/labeled-list.vue';
 // verification specific components
 import NotaryVerificationComponent from './verifications/notary/notary.vue';
 import VerificationsOverviewComponent from './verifications/overview/overview.vue';
-
-/* verification components
-   single notary verification detail (takes a request or company verifications) */
 import NotaryCardComponent from './verifications/notary/card/card.vue';
 
 // info content of the notary verification
@@ -51,6 +48,8 @@ import BuyEveComponent from './wallet/buy/BuyEve.vue';
 import NotaryTopicDisplayComponent from './verifications/notary/topic-display/topic-display.vue';
 import SendEveComponent from './wallet/send/SendEve.vue';
 import TransactionsComponent from './wallet/transactions/transactions.vue';
+import ServiceEndpointsComponent from './did/ServiceEndpoints.vue';
+import DelegatesComponent from './did/Delegates.vue';
 
 // map them to element names, so they can be used within templates
 const componentRegistration: Array<ComponentRegistrationInterface> = [
@@ -76,6 +75,9 @@ const componentRegistration: Array<ComponentRegistrationInterface> = [
   { name: 'profile-buy-eve', component: BuyEveComponent },
   { name: 'profile-send-eve', component: SendEveComponent },
   { name: 'profile-transactions', component: TransactionsComponent },
+  // DID
+  { name: 'service-endpoints', component: ServiceEndpointsComponent },
+  { name: 'delegates', component: DelegatesComponent },
 ];
 
 export default componentRegistration;

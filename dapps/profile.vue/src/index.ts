@@ -21,6 +21,7 @@ import Vue from 'vue';
 import { initializeVue, getDomainName } from '@evan.network/ui-vue-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
+import { TablePlugin } from 'bootstrap-vue';
 import Main from './components/root/root.vue';
 import translations from './i18n/translations';
 import routes from './routes';
@@ -53,6 +54,7 @@ export async function startDApp(container: any, dbcpName: any, dappEnsOrContract
     profileDbcp,
     `${profileDbcp.name}.${getDomainName()}`,
   );
+  Vue.use(TablePlugin);
 
   await initializeVue({
     components,

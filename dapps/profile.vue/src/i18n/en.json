@@ -8,6 +8,7 @@
     },
     "breadcrumbs": {
       "detail": "Identity",
+      "did": "Decentralized ID",
       "logout": "Logout",
       "settings": "Settings",
       "sharings": "Sharings",
@@ -147,6 +148,21 @@
           "placeholder": "Type in the device type."
         }
       }
+    },
+    "did": {
+      "choose-contact": "Choose a contact",
+      "created-at": "created at",
+      "delegates-desc": "Below you can specify the delegates, who may act on behalf of this identity. This may empower them to edit information, manage sharings or perform transactions.",
+      "delegates-title": "Delegates",
+      "description": "With Decentralized Identities (DID) you can identify yourself uniquely, globally and independently of the network or platform. You may also define, who is allowed to make changes to this identity (controller) and who receives authorization to act on behalf of it (delegates). Exporting this document enables you to share all the information with others offline.",
+      "did-title": "Decentralized ID",
+      "did": "DID",
+      "export-document": "Export Document",
+      "label": "Label",
+      "note": "Note",
+      "service-endpoint-title": "Service Endpoints",
+      "service-endpoints-desc": "Below you can specify service endpoints, to which you want to associate your DID with.",
+      "updated-at": "updated at"
     },
     "dispatchers": {
       "profile-share": "Share Identity information",
