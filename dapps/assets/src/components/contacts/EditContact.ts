@@ -31,7 +31,7 @@ export default class EditContactComponent extends mixins(EvanComponent) {
 
   canSubmit = false;
 
-  note: string;
+  note: string = null;
 
   @Watch('contact', { deep: true })
   onContactChange(): void {
