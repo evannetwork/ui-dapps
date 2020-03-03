@@ -22,6 +22,7 @@ import { lightwallet, bccHelper } from '@evan.network/ui-session';
 import * as bcc from '@evan.network/api-blockchain-core';
 
 import Component, { mixins } from 'vue-class-component';
+import { profileUtils } from '@evan.network/ui';
 import EvanComponent from '../../../component';
 
 /**
@@ -48,24 +49,26 @@ export default class MnemonicExport extends mixins(EvanComponent) {
    */
   identityAddress: string = null;
 
-  async created() {
+  async created(): Promise<void> {
     const runtime = this.getRuntime();
 
     this.address = runtime.activeAccount;
     this.mnemonic = await this.getMnemonic();
     this.now = new Date();
-    this.alias = window.localStorage.getItem('evan-alias');
+    this.alias = await profileUtils.getUserAlias(runtime);
     this.identityAddress = await bccHelper.getIdentityForAccount(this.address);
 
     // Show the mnemonic export directly and do not allow closing.
-    this.mnemonic && this.$nextTick(() => this.showModal());
+    if (this.mnemonic) {
+      this.$nextTick(() => this.showModal());
+    }
   }
 
-  private showModal() {
+  private showModal(): void {
     (this.$refs.modal as any).show();
   }
 
-  private goSecure() {
+  private goSecure(): void {
     this.mnemonic = null;
     window.localStorage.removeItem('evan-mnemonic');
     (this.$refs.modal as any).hide();
@@ -88,9 +91,11 @@ export default class MnemonicExport extends mixins(EvanComponent) {
         key: vault.encryptionKey,
       })).split(' ');
     }
+
+    return [];
   }
 
-  private downloadMnemonics() {
+  private downloadMnemonics(): void {
     const fileName = `recovery-key-${this.alias}.txt`;
     const text = [];
 
@@ -100,7 +105,7 @@ export default class MnemonicExport extends mixins(EvanComponent) {
     text.push(`\n${this.$t('_evan.mnemonic-export.recovery-key')}:`);
     text.push(`\n${this.mnemonic.join(' ')}`);
 
-    this.downloadTextfile(fileName, text.join('\n'));
+    MnemonicExport.downloadTextfile(fileName, text.join('\n'));
   }
 
   /**
@@ -109,7 +114,7 @@ export default class MnemonicExport extends mixins(EvanComponent) {
    * @param filename Name for the file with .txt suffix
    * @param text Content of the text tile
    */
-  private downloadTextfile(filename: string, text: string) {
+  private static downloadTextfile(filename: string, text: string): void {
     const element = document.createElement('a');
 
     element.setAttribute(
@@ -128,7 +133,7 @@ export default class MnemonicExport extends mixins(EvanComponent) {
    *
    * @param text Text to copy
    */
-  private copyToClipboard(text: string) {
+  copyToClipboard(text: string): void {
     const textArea = document.createElement('textarea');
 
     textArea.value = text;
@@ -150,14 +155,15 @@ export default class MnemonicExport extends mixins(EvanComponent) {
   /**
    * Open browser print dialogue.
    */
-  private print() {
+  // eslint-disable-next-line class-methods-use-this
+  print(): void {
     window.print();
   }
 
   /**
    * Prevent dialog to be closed, when user did not has exported the mnemonic.
    */
-  onModalClose($event) {
+  onModalClose(): void {
     if (!this.understood) {
       (this.$refs.understoodModal as any).show();
     }

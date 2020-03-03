@@ -72,7 +72,11 @@
         "placeholder": "Aussagekräftiger Name"
       }
     },
+    "did": {
+      "copied": "DID kopiert"
+    },
     "dispatcher-not-found": "Synchronisations Job nicht gefunden",
+    "edit": "Editieren",
     "file-input": {
       "description": "Ziehen Sie Ihre Datei(en) hierher oder klicken Sie zum Durchsuchen",
       "empty": "Es wurden noch keine Dateien hochgeladen",
@@ -110,6 +114,7 @@
     },
     "need-an-account": "Noch kein Account? <a href=\"#/dashboard.vue.evan/onboarding.vue.evan/sign-up\">Account erstellen</a>",
     "no": "Nein",
+    "no-permission": "Sie sind nicht berechtigt den Inhalt einzusehen.",
     "not-your-account": "Nicht Ihr Account?",
     "optional": "optional",
     "password": "Passwort",

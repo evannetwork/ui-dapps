@@ -145,7 +145,7 @@ export class PaymentService {
       source = stripeSourceResult.source;
       error = stripeSourceResult.error;
     } catch (ex) {
-      error = this.getErrorCode(ex.message);
+      error = PaymentService.getErrorCode(ex.message);
       console.error(ex.message);
     }
 
@@ -160,7 +160,7 @@ export class PaymentService {
       try {
         return await this.executePayment(source.id, eveAmount, customer);
       } catch (ex) {
-        error = this.getErrorCode(ex.message);
+        error = PaymentService.getErrorCode(ex.message);
         console.error(ex.message);
       }
     }
@@ -169,7 +169,7 @@ export class PaymentService {
     if (error) {
       return {
         status: 'error',
-        code: this.getErrorCode(error.message),
+        code: PaymentService.getErrorCode(error.message),
       };
     }
   }
@@ -249,10 +249,12 @@ export class PaymentService {
             break;
           case 'transferring':
             this.writeTransactionIntoLocalStorage(response);
-          // tslint:disable-next-line: no-switch-case-fall-through
+          // eslint-disable-next-line no-fallthrough
           case 'success':
             clearInterval(this.intervalTimer);
             resolve(response);
+            break;
+          default:
             break;
         }
       }, PaymentService.PAYMENT_RETRY);
@@ -344,8 +346,13 @@ export class PaymentService {
   private async checkTransferringTransactions(
     transactions: TransferringTransactionInterface[],
   ): Promise<TransferringTransactionInterface[]> {
-    return transactions.length <= 0 ? [] : Promise.all(
-      transactions.map(async (element) => {
+    if (transactions.length === 0) {
+      return [];
+    }
+
+    return Promise.all(
+      transactions.map(async (transaction) => {
+        const element = transaction;
         /* delete transaction from local storage
            if type is failedTransaction and timestamp is older than 1 week */
         if (element.type === 'failedTransaction') {
@@ -408,12 +415,15 @@ export class PaymentService {
    *
    * @param customer
    */
-  getCustomer(customer: CustomerParams): CustomerInterface {
+  static getCustomer(customer: CustomerParams): CustomerInterface {
     const {
       name, email, company, street, city, zip, country, vat,
     } = customer;
+    // TODO: Is this required from backend?
+    // eslint-disable-next-line @typescript-eslint/camelcase
     const tax_info = vat
       ? {
+        // eslint-disable-next-line @typescript-eslint/camelcase
         tax_id: vat,
         type: 'vat',
       }
@@ -428,9 +438,11 @@ export class PaymentService {
           country,
           line1: company || name,
           line2: street,
+          // eslint-disable-next-line @typescript-eslint/camelcase
           postal_code: zip,
         },
       },
+      // eslint-disable-next-line @typescript-eslint/camelcase
       tax_info,
     };
   }
@@ -439,7 +451,7 @@ export class PaymentService {
     return this.stripe.elements({ locale });
   }
 
-  private getErrorCode(code: string) {
+  static getErrorCode(code: string): string {
     const translatedCodes = [
       'unknown_state',
       'transaction_failed',

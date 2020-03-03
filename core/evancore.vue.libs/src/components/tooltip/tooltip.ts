@@ -50,7 +50,7 @@ export default class EvanTooltip extends mixins(EvanComponent) {
   /**
    * Is it displayed?
    */
-  showTooltip = true;
+  showTooltip = false;
 
   /**
    * tooltip toggle functions

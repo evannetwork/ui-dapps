@@ -18,23 +18,33 @@
 */
 
 <template>
-  <div class="notification-bar" v-if="mnemonic">
-    <div @click="showModal" role="button" class="hint-banner bg-primary bg-text-primary col-md-8 offset-md-2 p-2 text-center">
+  <div
+    v-if="mnemonic"
+    class="notification-bar"
+  >
+    <div
+      role="button"
+      class="hint-banner bg-primary bg-text-primary col-md-8 offset-md-2 p-2 text-center"
+      @click="showModal"
+    >
       <i class="mdi mdi-shield-alert-outline" />
       <span>{{ '_evan.mnemonic-export.notification' | translate }}</span>
       <i class="mdi mdi-arrow-expand" />
     </div>
 
     <evan-modal
-      :closeAction="onModalClose"
-      :hideFooterButton="true"
-      :maxWidth="'1000px'"
-      :hideCloseButton="true"
+      ref="modal"
+      :close-action="onModalClose"
+      :hide-footer-button="true"
+      :max-width="'1000px'"
+      :hide-close-button="true"
       class="mnemonic-modal"
-      disableBackdrop="true"
-      ref="modal">
+      disable-backdrop="true"
+    >
       <template v-slot:header>
-        <h5 class="modal-title inverted">{{ '_evan.mnemonic-export.title' | translate }}</h5>
+        <h5 class="modal-title inverted">
+          {{ '_evan.mnemonic-export.title' | translate }}
+        </h5>
       </template>
       <template v-slot:body>
         <div class="print-view">
@@ -42,28 +52,38 @@
             <!-- dark left info box -->
             <div class="col-md-6 info-box inverted pr-7">
               <i class="mdi mdi-shield-alert-outline header-icon" />
-              <img class="evan-logo print-only" :src="`${ $store.state.uiBaseUrl }/assets/evan-logo-dark-half.svg`">
-              <h3 class="print-only mt-5">{{ '_evan.mnemonic-export.recovery-key' | translate }}</h3>
-              <p class="hyphen-auto pre-wrap text-justify">{{ '_evan.mnemonic-export.description' | translate }}</p>
-              <p class="hyphen-auto pre-wrap text-justify bold no-print">{{ '_evan.mnemonic-export.print-or-store' | translate }}</p>
+              <img
+                class="evan-logo print-only"
+                :src="`${ $store.state.uiBaseUrl }/assets/evan-logo-dark-half.svg`"
+              >
+              <h3 class="print-only mt-5">
+                {{ '_evan.mnemonic-export.recovery-key' | translate }}
+              </h3>
+              <p class="hyphen-auto pre-wrap text-justify">
+                {{ '_evan.mnemonic-export.description' | translate }}
+              </p>
+              <p class="hyphen-auto pre-wrap text-justify bold no-print">
+                {{ '_evan.mnemonic-export.print-or-store' | translate }}
+              </p>
               <p
                 class="mt-5 d-flex no-print align-items-center justify-content-between"
-                style="min-height: 40px;">
+                style="min-height: 40px;"
+              >
                 <label class="mb-0">
                   <evan-checkbox
-                    class="understood-checkbox"
                     id="understood-checkbox-backup-1"
                     v-model="understood"
+                    class="understood-checkbox"
                   />
                   <span>{{ '_evan.mnemonic-export.understood' | translate }}</span>
                 </label>
 
                 <evan-button
                   :label="$t('_evan.mnemonic-export.go-secure')"
-                  @click="goSecure"
                   icon="mdi mdi-account-key"
                   type="danger"
                   :disabled="!understood"
+                  @click="goSecure"
                 />
               </p>
             </div>
@@ -71,7 +91,10 @@
             <div class="col-md-6 mnemonic-box">
               <div class="row mb-2 pl-5">
                 <div class="col-md-4">
-                  <span class="bold" style="white-space: nowrap;">
+                  <span
+                    class="bold"
+                    style="white-space: nowrap;"
+                  >
                     {{ '_evan.mnemonic-export.account-id' | translate }}
                   </span>
                 </div>
@@ -81,7 +104,10 @@
               </div>
               <div class="row mb-2 pl-5">
                 <div class="col-md-4">
-                  <span class="bold" style="white-space: nowrap;">
+                  <span
+                    class="bold"
+                    style="white-space: nowrap;"
+                  >
                     {{ '_evan.mnemonic-export.evan-id' | translate }}
                   </span>
                 </div>
@@ -108,7 +134,8 @@
               <div class="no-print row mb-2 mt-4 pl-5">
                 <div class="col-12">
                   <span class="bold">{{ '_evan.mnemonic-export.recovery-key' | translate }}</span>
-                  <evan-button class="copy-btn"
+                  <evan-button
+                    class="copy-btn"
                     icon="mdi mdi-mdi mdi-content-copy"
                     type="icon-secondary"
                     @click="() => copyToClipboard(mnemonic.join(' '))"
@@ -116,11 +143,13 @@
                 </div>
               </div>
               <div class="row mnemonics pl-5">
-                <div class="col-md-6 col-lg-4"
+                <div
                   v-for="(word, index) of mnemonic"
-                  :key="word" >
+                  :key="word"
+                  class="col-md-6 col-lg-4"
+                >
                   <div class="word">
-                    <span class="order">{{index + 1}}:</span>
+                    <span class="order">{{ index + 1 }}:</span>
                     <span>{{ word }}</span>
                   </div>
                 </div>
@@ -129,23 +158,26 @@
           </div>
         </div>
       </template>
-       <template v-slot:footer>
+      <template v-slot:footer>
         <evan-button
           type="text"
-          @click="downloadMnemonics">
-          {{ '_evan.mnemonic-export.download' | translate}}
+          @click="downloadMnemonics"
+        >
+          {{ '_evan.mnemonic-export.download' | translate }}
         </evan-button>
         <evan-button
           type="primary"
-          @click="print">
+          @click="print"
+        >
           {{ '_evan.mnemonic-export.print' | translate }}
         </evan-button>
       </template>
     </evan-modal>
     <evan-modal
+      ref="understoodModal"
       class="understood-modal"
-      :maxWidth="'600px'"
-      ref="understoodModal">
+      :max-width="'600px'"
+    >
       <template v-slot:header>
         <h5 class="modal-title">
           {{ '_evan.mnemonic-export.cancel.title' | translate }}
@@ -159,8 +191,9 @@
 </template>
 
 <script lang="ts">
-  import Component from "./mnemonic-export";
-  export default Component;
+import Component from './mnemonic-export';
+
+export default Component;
 </script>
 
 <style lang="scss" scoped>

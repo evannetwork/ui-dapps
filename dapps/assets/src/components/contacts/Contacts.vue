@@ -49,7 +49,7 @@
             icon-position="left"
             :class="{ active: filter === 'users' }"
             :label="$t('_assets.contacts.users')"
-            @click="filterByType('users')"
+            @click="filterByType('user')"
           />
           <evan-button
             class="ml-3"

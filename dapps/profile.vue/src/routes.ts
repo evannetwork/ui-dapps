@@ -31,6 +31,7 @@ import ProfileSettingsComponent from './components/settings/settings.vue';
 import VerificationsComponent from './components/verifications/overview/overview.vue';
 import ProfileSharingsComponent from './components/sharings/sharings.vue';
 import ProfileWalletComponent from './components/wallet/wallet.vue';
+import DIDComponent from './components/did/DID.vue';
 
 /**
  * Routes the user to the default user detail page.
@@ -60,6 +61,7 @@ const routeRegistration: Array<RouteRegistrationInterface> = [
       { name: 'sharings', path: 'sharings', component: ProfileSharingsComponent },
       { name: 'wallet', path: 'wallet', component: ProfileWalletComponent },
       { name: 'verifications', path: 'verifications', component: VerificationsComponent },
+      { name: 'did', path: 'did', component: DIDComponent },
       { name: 'addressbook.vue', component: DAppLoaderComponent, path: `addressbook.vue.${dappBrowser.getDomainName()}` },
     ],
   },

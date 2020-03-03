@@ -94,7 +94,14 @@
           </template>
 
           <template v-slot:cell(containers)="data">
-            {{ data.item.containerNames.join(', ') }}
+            <span
+              v-for="(containerName, idx) in data.item.containerNames"
+              :key="containerName"
+              :title="data.item.containerFields[data.item.containers[idx]]"
+            >
+              {{ (containerName != '' && idx !== 0) ? ', ' : '' }}
+              {{ containerName }}
+            </span>
           </template>
           <template v-slot:empty>
             <span

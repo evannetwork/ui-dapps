@@ -204,10 +204,16 @@ export default class ProfileRootComponent extends mixins(EvanComponent) {
       {
         key: 'detail',
         icon: 'mdi mdi-account-outline',
-      }, {
+      },
+      {
+        key: 'did',
+        icon: 'mdi mdi-identifier',
+      },
+      {
         key: 'wallet',
         icon: 'mdi mdi-wallet-outline',
-      }, {
+      },
+      {
         key: 'verifications',
         icon: 'mdi mdi-check-decagram',
       },
