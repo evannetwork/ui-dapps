@@ -50,11 +50,11 @@ export async function getUserAlias(
   const cacheID = `${runtime.activeAccount}.${accountId}`;
 
   if (!aliasCache[cacheID]) {
-    aliasCache[cacheID] = (async () => {
+    aliasCache[cacheID] = (async (): Promise<void> => {
       const otherProfile = new Profile({
-        ...(runtime as any),
+        ...(runtime as ProfileOptions),
         profileOwner: accountId,
-        accountId: runtime.activeAccount,
+        accountId,
       });
       let details = { ...accountDetails };
 
