@@ -10,7 +10,8 @@
 ### Fixes
 - dapps
   - `onboarding.vue`
-    - allow contact accept after sign-up / sign-in / already logged in account
+    - allow contact accept after `sign-up` / `sign-in` / already logged in account
+    - fix `sign-up` password repeat checks
 
 ### Deprecations
 - core

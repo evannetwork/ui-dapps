@@ -208,6 +208,9 @@ export default class SignUp extends mixins(EvanComponent) {
       password0: {
         value: '',
         validate(vueInstance: SignUp, form: ProfileFormInterface) {
+          if (form.password1 && form.password1.value) {
+            form.password1.validate();
+          }
           return vueInstance.getPasswordError(0, this.form) || true;
         },
         uiSpecs: { attr: { hint: true, required: true, type: 'password' } },
