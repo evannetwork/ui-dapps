@@ -75,7 +75,7 @@
     "my-assets": "My Assets",
     "optional": "optional",
     "search": {
-      "error": "Their was an error during search, please try again.",
+      "error": "There was an error during search, please try again.",
       "my-own": "My own",
       "name": "Name",
       "no-results": "Sorry, we can't find any results for your query",
