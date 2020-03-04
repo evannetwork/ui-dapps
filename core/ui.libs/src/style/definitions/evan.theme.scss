@@ -29,7 +29,7 @@ $themeEvan: (
   gray-200: #e9ecef,
   gray-300: #dee2e6,
   gray-400: #ced4da,
-  gray-500: #adb5bd,
+  gray-500: #a1aeba,
   gray-600: #6c757d,
   gray-700: #495057,
   gray-800: #343a40,
@@ -127,7 +127,7 @@ $theme-colors: (
   info: cssVar('blue'),
   light: cssVar('gray-200'),
   primary: cssVar('cyan'),
-  disabled: '#CED4DA',
+  disabled: cssVar('gray-600'),
   secondary: cssVar('pink'),
   success: cssVar('green'),
   warning: cssVar('yellow'),
@@ -239,15 +239,14 @@ $themeEvan: map-merge(
  */
 $themeEvan: map-merge(
   (
-    h1-font-size:    2.250em,   // 36px / 2.250em / 2.250rem
-    h2-font-size:    1.750em,   // 28px / 1.750em / 1.750rem
-    h3-font-size:    21px   ,   // 21px / 1.313em / 1.313rem
-    h4-font-size:    18px   ,   // 18px / 1.125em / 1.125rem
-    h5-font-size:    16px   ,   // 16px / 1em     / 1rem
-    h6-font-size:    15px   ,   // 15px / 0.938em / 0.938rem
-    // text-font-size:  14px   ,   // 14px / 0.875em
-    text-font-size:  12px   ,   // 14px / 0.875em
-    small-font-size: 10px   ,
+    h1-font-size:    1.5rem, // 18px for all
+    h2-font-size:    1.5rem,
+    h3-font-size:    1.5rem,
+    h4-font-size:    1.5rem,
+    h5-font-size:    1.5rem,
+    h6-font-size:    1.5rem,
+    text-font-size:  12px,
+    small-font-size: 9px,
   ),
   $themeEvan
 );

@@ -31,6 +31,8 @@ export default class DetailOverviewGeneralComponent extends mixins(EvanComponent
 
   @Prop() createdAt: string;
 
+  @Prop() isOwner: boolean;
+
   routeToOwner(): void {
     window.location.hash = `/${this.dapp.rootEns}/profile.vue.${this.dapp.domainName}/${this.ownerAddress}/detail`;
   }

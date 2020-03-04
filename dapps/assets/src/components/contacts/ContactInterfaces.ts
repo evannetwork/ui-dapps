@@ -23,7 +23,9 @@ export interface Contact {
   address: string;
   alias: string;
   createdAt: string;
+  displayName: string;
   isFavorite: string;
+  isPending: boolean;
   icon: string;
   type: profileUtils.ProfileType;
   updatedAt: string;
@@ -41,20 +43,4 @@ export interface ContactFormData {
   msgBody: string;
   msgTitle: string;
   updatedAt: string;
-}
-
-export interface ContactTableItem {
-  item: Contact;
-  index: number;
-  field: Field;
-  unformatted: string;
-  value: string;
-  detailsShowing: boolean;
-  rowSelected: boolean;
-}
-
-export interface Field {
-  key: string;
-  label: string;
-  sortable: boolean;
 }

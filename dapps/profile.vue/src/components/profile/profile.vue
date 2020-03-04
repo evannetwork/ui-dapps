@@ -38,6 +38,7 @@
               <div class="mx-auto" />
               <evan-button
                 v-if="$store.state.runtime && $route.params.address === $store.state.runtime.activeAccount"
+                class="d-flex"
                 type="secondary"
                 size="sm"
                 @click="() => $store.commit('toggleSidePanel', 'sharing')"
@@ -47,7 +48,7 @@
             </div>
           </profile-permission-wrapper>
         </div>
-        <div class="col right-col d-flex justify-content-end">
+        <div class="col right-col d-flex justify-content-center">
           <evan-wallet-card
             :account-details="userInfo"
             :address="$route.params.address"

@@ -32,7 +32,7 @@ import InfoContentComponent from '../info-content/info-content.vue';
 @Component({
   components: {
     'notary-info-content': InfoContentComponent,
-  }
+  },
 })
 export default class InfoModalComponent extends mixins(EvanComponent) {
   /**
@@ -44,13 +44,13 @@ export default class InfoModalComponent extends mixins(EvanComponent) {
    * Show the info modal.
    */
   show() {
-    (<any>this.$refs).infoModal.show();
+    (<any> this.$refs).infoModal.show();
   }
 
   /**
    * Hide the info modal.
    */
   hide() {
-    (<any>this.$refs).infoModal.hide();
+    (<any> this.$refs).infoModal.hide();
   }
 }

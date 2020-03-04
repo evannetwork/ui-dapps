@@ -17,24 +17,22 @@
   the following URL: https://evan.network/license/
 */
 
-import * as bcc from '@evan.network/api-blockchain-core';
-import * as dappBrowser from '@evan.network/ui-dapp-browser';
+import { Profile, Runtime, ProfileOptions } from '@evan.network/api-blockchain-core';
+import { getDomainName } from '@evan.network/ui-dapp-browser';
 import { Dispatcher, DispatcherInstance } from '@evan.network/ui';
 
 export const dispatcher = new Dispatcher(
-  `assets.${dappBrowser.getDomainName()}`,
+  `assets.${getDomainName()}`,
   'inviteDispatcher',
   40 * 1000,
   '_assets.contacts.invite-dispatcher',
 );
 
 /**
- * Return a new bcc.Profile instance for a given accountId.
- *
- * @return     {bcc.Runtime}  profile for account
+ * Return a new bcc.Profile instance for a given accountId
  */
-const getProfileForAccount = (runtime: bcc.Runtime, accountId: string) => new bcc.Profile({
-  ...(runtime as any), // TODO: Fix runtime interface
+const getProfileForAccount = (runtime: Runtime, accountId: string): Profile => new Profile({
+  ...(runtime as ProfileOptions),
   profileOwner: accountId,
   accountId,
 });

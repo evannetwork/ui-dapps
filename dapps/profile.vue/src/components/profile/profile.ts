@@ -26,7 +26,6 @@ import { bccUtils } from '@evan.network/ui';
 import { EvanComponent, ContactInterface } from '@evan.network/ui-vue-core';
 import { PermissionUtils } from '@evan.network/digital-twin-lib';
 import { Profile, ProfileOptions } from '@evan.network/api-blockchain-core';
-
 import * as dispatchers from '../../dispatchers/registry';
 
 
@@ -85,14 +84,14 @@ export default class ProfileDetailComponent extends mixins(EvanComponent) {
   /**
    * Load the mail details
    */
-  async created() {
+  async created(): Promise<void> {
     // fill empty address with current logged in user
-    this.address = (this as any).$store.state.profileDApp.address;
-    this.userInfo = (this as any).$store.state.profileDApp.data.accountDetails;
+    this.address = this.$store.state.profileDApp.address;
+    this.userInfo = this.$store.state.profileDApp.data.accountDetails;
     // load balance and parse it to 3 decimal places
     const amount = parseFloat((await dappBrowser.core.getBalance(this.address)).toFixed(3));
     this.balance = {
-      amount: amount.toLocaleString((this as any).$i18n.locale()),
+      amount: amount.toLocaleString(this.$i18n.locale()),
       timestamp: Date.now(),
     };
     /* set the update permission and always pass the current vue context into it, so it can use the
@@ -100,7 +99,7 @@ export default class ProfileDetailComponent extends mixins(EvanComponent) {
     this.updatePermissions = PermissionUtils.updatePermissions.bind(null, this);
 
     // load contacts from addressbook
-    this.contacts = await bccUtils.getContacts((this as any).getRuntime());
+    this.contacts = await bccUtils.getContacts(this.getRuntime());
 
     this.loading = false;
   }
@@ -108,7 +107,7 @@ export default class ProfileDetailComponent extends mixins(EvanComponent) {
   /**
    * Return the current verification / request status count.
    */
-  setVerificationCount() {
+  setVerificationCount(): void {
     this.verificationCount = 0;
 
     if (this.$refs.notaryVerifications) {
@@ -120,8 +119,8 @@ export default class ProfileDetailComponent extends mixins(EvanComponent) {
   /**
    * Return the update dispatcher running state.
    */
-  isLoading() {
-    return (this as any).$store.state.dispatcher.curr.running.updateProfileDispatcher;
+  isLoading(): boolean {
+    return this.$store.state.dispatcher.curr.running.updateProfileDispatcher;
   }
 
   /**
@@ -129,23 +128,23 @@ export default class ProfileDetailComponent extends mixins(EvanComponent) {
    * selected shared contacts from vuex store
    */
   get selectedSharedContacts() {
-    return (this as any).$store.state.uiState.profile.selectedSharedContacts;
+    return this.$store.state.uiState.profile.selectedSharedContacts;
   }
 
   set selectedSharedContacts(contacts) {
-    (this as any).$store.commit('setSelectedSharedContacts', contacts);
+    this.$store.commit('setSelectedSharedContacts', contacts);
   }
 
   /**
    * Save changed user information
    *
-   * @param      {any}  userInfo  latest user informatione
+   * @param      {any}  userInfo  latest user information
    */
-  saveUserInfo(userInfo: any) {
+  async saveUserInfo(userInfo: any): Promise<void> {
     this.userInfo = userInfo;
 
-    dispatchers.updateProfileDispatcher.start((this as any).getRuntime(), {
-      address: (this as any).$store.state.profileDApp.address,
+    await dispatchers.updateProfileDispatcher.start(this.getRuntime(), {
+      address: this.$store.state.profileDApp.address,
       formData: userInfo,
       type: 'accountDetails',
     });
@@ -157,7 +156,7 @@ export default class ProfileDetailComponent extends mixins(EvanComponent) {
    *
    * @param user: string - the user id.
    */
-  async loadPermissions(accountId: string) {
+  async loadPermissions(accountId: string): Promise<{ [address: string]: any }> {
     const runtime = this.getRuntime();
     let profileAddress = runtime.profile.profileContract.options.address;
 
@@ -188,7 +187,7 @@ export default class ProfileDetailComponent extends mixins(EvanComponent) {
    * Callback if user select a contact from Sharing-Side-Panel
    * @param {string} contact selected contact id
    */
-  handleOnSelect(contact) {
+  handleOnSelect(contact): void {
     this.selectedSharedContacts = contact;
   }
 
@@ -197,9 +196,9 @@ export default class ProfileDetailComponent extends mixins(EvanComponent) {
    *
    * @param      {string}  type    The type
    */
-  changeType(type: string) {
+  changeType(): void {
     if (this.newType !== 'user') {
-      dispatchers.updateProfileDispatcher.start((this as any).getRuntime(), {
+      dispatchers.updateProfileDispatcher.start(this.getRuntime(), {
         formData: {
           profileType: this.newType,
         },

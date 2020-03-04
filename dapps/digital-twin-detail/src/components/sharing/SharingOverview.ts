@@ -21,9 +21,10 @@
 import Component, { mixins } from 'vue-class-component';
 
 // evan.network imports
-import { EvanComponent } from '@evan.network/ui-vue-core';
+import { EvanComponent, EvanTableColumn } from '@evan.network/ui-vue-core';
 import { DAppContainer, dispatchers } from '@evan.network/digital-twin-lib';
 import { profileUtils } from '@evan.network/ui';
+import { Container, ContainerOptions } from '@evan.network/api-blockchain-core';
 
 import ShareContainerComponent from '../container/ShareContainer';
 
@@ -43,22 +44,17 @@ interface SharedUserInterface {
   address: string; // account address
   containerNames: Array<string>; // list of containers, mapped to its names
   containers: Array<string>; // list of containers, for that the user is permitted;
+  containerFields: {
+    [address: string]: Array<string>;
+  };
   icon: string; // account type material icon
   name: string; // users name, alias or account address
   type: string; // account type
 }
 
-interface ColumnInterface {
-  key: string;
-  label: string;
-  sortable?: boolean;
-  tdClass?: string;
-  thClass?: string;
-}
-
 @Component
 export default class SharingOverview extends mixins(EvanComponent) {
-  columns: ColumnInterface[] = [];
+  columns: EvanTableColumn[] = [];
 
   data: SharedUserInterface[] = [];
 
@@ -131,6 +127,8 @@ export default class SharingOverview extends mixins(EvanComponent) {
     const runtime = this.getRuntime();
     const { containerAddresses } = this.$store.state.twin;
     const permittedUsers: { [address: string]: LoadingSharedUserInterface } = { };
+    const containerFields = {};
+
     // reset previous data
     this.data = [];
     // iterate through all containers and resolve the permissions
@@ -140,21 +138,36 @@ export default class SharingOverview extends mixins(EvanComponent) {
        * users anything was shared. */
       const contract = runtime.contractLoader.loadContract('DataContract', containerAddress);
       const roleMap = await runtime.rightsAndRoles.getMembers(contract);
-      const unique = new Set([].concat(...Object.values(roleMap)));
+
+      const containerInstance = new Container(
+        runtime as ContainerOptions,
+        {
+          accountId: runtime.activeAccount,
+          address: containerAddress,
+        },
+      );
+
+      const containerDescription = await containerInstance.getDescription();
+
+      containerFields[containerAddress] = Object.keys(
+        containerDescription?.dataSchema || {},
+      ).join(', ');
+
+      const unique = new Set([].concat(...Object.values(roleMap)).filter(
+        (addr) => addr !== runtime.activeAccount,
+      ));
 
       // iterate through all permitted users and apply them to the permitted users mapping
-      unique.forEach((address: string): void => {
-        if (address !== runtime.activeAccount) {
-          if (!permittedUsers[address]) {
-            permittedUsers[address] = {
-              type: profileUtils.getProfileType(runtime, address),
-              name: profileUtils.getUserAlias(runtime, address),
-              containers: [],
-            };
-          }
-
-          permittedUsers[address].containers.push(containerAddress);
+      unique.forEach(async (permittedUserAddress: string): Promise<void> => {
+        if (!permittedUsers[permittedUserAddress]) {
+          permittedUsers[permittedUserAddress] = {
+            type: profileUtils.getProfileType(runtime, permittedUserAddress),
+            name: profileUtils.getUserAlias(runtime, permittedUserAddress),
+            containers: [],
+          };
         }
+
+        permittedUsers[permittedUserAddress].containers.push(containerAddress);
       });
     }));
 
@@ -164,6 +177,7 @@ export default class SharingOverview extends mixins(EvanComponent) {
         address,
         containerNames: this.getContainerNames(permittedUsers[address].containers),
         containers: permittedUsers[address].containers,
+        containerFields,
         icon: profileUtils.getProfileTypeIcon(await permittedUsers[address].type),
         name: await permittedUsers[address].name,
         type: await permittedUsers[address].type,
@@ -181,6 +195,7 @@ export default class SharingOverview extends mixins(EvanComponent) {
   getContainerNames(containers: string[]): string[] {
     return containers.map((address: string) => {
       const container: DAppContainer = this.$store.state.twin.containerContracts[address];
+
       return container?.description?.name || container.name;
     });
   }

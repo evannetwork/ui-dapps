@@ -1,5 +1,3 @@
-// TODO: This should be part of the evan-table component but definition files don't ship properly
-
 export interface EvanTableItem<T> {
   item: T;
   index: number;
@@ -8,6 +6,14 @@ export interface EvanTableItem<T> {
   value: string;
   detailsShowing: boolean;
   rowSelected: boolean;
+}
+
+export interface EvanTableColumn {
+  key: string;
+  label: string;
+  sortable?: boolean;
+  tdClass?: string;
+  thClass?: string;
 }
 
 export interface Field {
