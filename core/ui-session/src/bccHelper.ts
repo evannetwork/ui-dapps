@@ -35,7 +35,7 @@ import EvanlightWallet from './lightwallet';
  */
 let contextlessRuntime: Runtime;
 
-const accountIdentityCache = { };
+const accountIdentityCache = {};
 const nullAddress = '0x0000000000000000000000000000000000000000';
 
 export default class BccHelper {
@@ -104,8 +104,8 @@ export default class BccHelper {
       ...(inputConfig || JSON.parse(JSON.stringify(config))),
       useIdentity,
     };
-    runtimeConfig.keyConfig = { };
-    runtimeConfig.accountMap = { };
+    runtimeConfig.keyConfig = {};
+    runtimeConfig.accountMap = {};
 
     // set key config for the user accountId
     runtimeConfig.keyConfig[accountHash] = encryptionKey;

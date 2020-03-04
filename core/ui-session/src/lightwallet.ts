@@ -155,7 +155,7 @@ export default class EvanLightWallet {
    * @param      {any}  vault   vault to get accounts from
    * @return     {string}  The account.
    */
-  static getPrimaryAccount(vault: any) {
+  static getPrimaryAccount(vault: any): string {
     return EvanLightWallet.getAccounts(vault, 1)[0];
   }
 
@@ -203,7 +203,7 @@ export default class EvanLightWallet {
     const vault = await EvanLightWallet.createVault(mnemonic, password);
 
     vault.pwDerivedKey = await EvanLightWallet.keyFromPassword(vault, password);
- 
+
     // TODO: shall we use identity here?
     const primaryAccount = EvanLightWallet.getPrimaryAccount(vault);
     vault.encryptionKey = customEncryptionKeys[primaryAccount]
@@ -272,7 +272,7 @@ export default class EvanLightWallet {
    *
    * @param      {Function}  newPasswordFunction  The new password function
    */
-  static setPasswordFunction(newPasswordFunction: Function) {
+  static setPasswordFunction(newPasswordFunction: Function): void {
     passwordFunction = newPasswordFunction;
   }
 
@@ -345,14 +345,14 @@ export default class EvanLightWallet {
    *
    * @param      {string}  encryptionKey  the encryption key that should be used
    */
-  static async overwriteVaultEncryptionKey(accountId: string, encryptionKey: string) {
+  static async overwriteVaultEncryptionKey(accountId: string, encryptionKey: string): void {
     customEncryptionKeys[accountId] = encryptionKey;
   }
 
   /**
    * Remove current active vault from browser.
    */
-  static deleteActiveVault() {
+  static deleteActiveVault(): void {
     cachedVault = '';
 
     delete window.localStorage['evan-vault'];
@@ -364,7 +364,7 @@ export default class EvanLightWallet {
    * @param      {string}   mnemonic  The mnemonic
    * @return     {boolean}  True if valid mnemonic, False otherwise.
    */
-  static isValidMnemonic(mnemonic: string) {
+  static isValidMnemonic(mnemonic: string): boolean {
     try {
       return keystore.isSeedValid(mnemonic);
     } catch (ex) {
@@ -378,7 +378,7 @@ export default class EvanLightWallet {
    * @param      {string}   word    word to check
    * @return     {boolean}  True if valid mnemonic word, False otherwise.
    */
-  static isValidMnemonicWord(word: string) {
+  static isValidMnemonicWord(word: string): boolean {
     return Mnemonic.Words.ENGLISH.indexOf(word) !== -1;
   }
 }
