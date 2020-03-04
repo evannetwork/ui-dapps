@@ -25,12 +25,9 @@ import * as web3Helper from './web3Helper';
 
 System.map['@evan.network/ui-session'] = `uisession.libs.${getDomainName()}!dapp-content`;
 
-const lightwallet = EvanLightwallet;
-const session = EvanSession;
-
 export {
   bccHelper,
-  lightwallet,
-  session,
+  EvanLightwallet as lightwallet,
+  EvanSession as session,
   web3Helper,
 };
