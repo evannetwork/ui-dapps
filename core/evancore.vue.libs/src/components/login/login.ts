@@ -101,8 +101,8 @@ export default class LoginComponent extends mixins(EvanComponent) {
         this.form.password.value = false;
       }
 
-      /* if the password is correct, create the correct active vault in dapp-browser, so other
-         applications can access it */
+      // if the password is correct, create the correct active vault in dapp-browser, so other
+      // applications can access it
       if (this.form.password.valid) {
         this.$emit('logged-in', this.form.password.value);
         // mnemonic available during onboarding
