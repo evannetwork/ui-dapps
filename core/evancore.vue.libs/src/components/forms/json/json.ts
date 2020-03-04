@@ -51,7 +51,7 @@ export default class FormControlJSONComponent extends mixins(EvanControlComponen
   isInvalidJSON = false;
 
   created(): void {
-    this.stringValue = JSON.stringify(this.value, null, 2);
+    this.stringValue = this.value ? JSON.stringify(this.value, null, 2) : '{}';
   }
 
   /**
