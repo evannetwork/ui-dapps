@@ -117,7 +117,7 @@
 
           <!-- Empty slots -->
           <template v-slot:empty>
-            <span v-if="!error">
+            <span v-if="!hasError">
               {{ '_assets.digitaltwins.digitaltwins-empty' | translate }}
             </span>
             <div

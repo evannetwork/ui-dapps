@@ -33,7 +33,7 @@ export default class DataContainerComponent extends mixins(EvanComponent) {
 
   data = [];
 
-  error = false;
+  hasError = false;
 
   isLoading = true;
 
@@ -77,7 +77,7 @@ export default class DataContainerComponent extends mixins(EvanComponent) {
     this.isLoading = true;
     this.page = 0;
     this.data = [];
-    this.error = false;
+    this.hasError = false;
     this.searchTerm = searchTerm;
 
     try {
@@ -91,7 +91,7 @@ export default class DataContainerComponent extends mixins(EvanComponent) {
       this.data = result;
     } catch (ex) {
       this.getRuntime().logger.log(ex.message, 'error');
-      this.error = true;
+      this.hasError = true;
       this.data = [];
     }
 
@@ -110,7 +110,7 @@ export default class DataContainerComponent extends mixins(EvanComponent) {
       return;
     }
     this.isLoading = true;
-    this.error = false;
+    this.hasError = false;
     this.page += 1;
 
     const options = {
@@ -126,7 +126,7 @@ export default class DataContainerComponent extends mixins(EvanComponent) {
       this.data = [...this.data, ...result];
     } catch (ex) {
       this.getRuntime().logger.log(ex.message, 'error');
-      this.error = true;
+      this.hasError = true;
       this.data = [];
     }
 
