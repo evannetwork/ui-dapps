@@ -226,14 +226,6 @@ export default class SignUp extends mixins(EvanComponent) {
 
     this.termsAccepted = new EvanFormControl('termsAccepted', false, this);
 
-    /* if the user was inivted, show the welcome page
-       if (this.$route.query.inviteeAlias) {
-         this.steps.push({
-           title: '_onboarding.sign-up.welcome',
-           disabled: () => this.activeStep !== 3,
-         });
-       } */
-
     // set initial mnemonic from query params or use an generated one
     this.mnemonic = this.mnemonic || this.$route.query.mnemonic
       || dappBrowser.lightwallet.generateMnemonic();
