@@ -147,7 +147,7 @@ export default class EvanSession {
           let timedOut = false;
 
           // break loading after 10 seconds
-          const agentTimeout: any = setTimeout(() => {
+          const agentTimeout = window.setTimeout(() => {
             agentExecutor = false;
             timedOut = true;
 
@@ -183,8 +183,6 @@ export default class EvanSession {
 
   /**
    * Logout the current user. Removes the active account, provider and terms of use acceptance.
-   *
-   * @param      {boolean}  disabledReload  disable window reload
    */
   static logout(reload = true): void {
     // reset account and providers
@@ -210,7 +208,7 @@ export default class EvanSession {
   /**
    * Watches for account changes and reload the page if nessecary
    */
-  static onAccountChange(callback: Function): Function {
+  static onAccountChange(callback: Function): () => void {
     const storage = window.localStorage;
     const watcher = (event: StorageEvent): void => {
       if (event.key === 'evan-account' && lastAccount !== storage['evan-account']) {
@@ -227,7 +225,7 @@ export default class EvanSession {
   /**
    * Watches for account changes and reload the page if nessecary
    */
-  static onIdentityChange(callback: Function): Function {
+  static onIdentityChange(callback: Function): () => void {
     const storage = window.localStorage;
     const watcher = (event: StorageEvent): void => {
       if (event.key === 'evan-identity' && lastIdentity !== storage['evan-identity']) {

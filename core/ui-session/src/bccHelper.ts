@@ -91,7 +91,7 @@ export default class BccHelper {
     const options = inputOptions;
     const useIdentity = await BccHelper.checkUseIdentity(accountId, identity);
 
-    /*
+    /**
      * TODO: Use identity encryption key here! Keep in mind: When onboarding a new account, identity
      * is created within the blockchain-core/onboarding createOfflineProfile function. If we want to
      * use the identity for encryption key generation salting, we need to split these functions or
@@ -146,13 +146,13 @@ export default class BccHelper {
       // runtime.executor.signer.accountStore = runtime.accountStore;
     }
 
-    // // initialize empy profile, when no profile could be load
-    // if (!runtime.profile) {
-    //   runtime.profile = new Profile({
-    //     accountId,
-    //     ...runtime as any,
-    //   });
-    // }
+    /* // initialize empy profile, when no profile could be load
+       if (!runtime.profile) {
+         runtime.profile = new Profile({
+           accountId,
+           ...runtime as any,
+         });
+       } */
 
     return runtime;
   }
@@ -249,19 +249,19 @@ export default class BccHelper {
       const encryptionKey = EvanlightWallet.getEncryptionKeyFromPassword(encryptionSalt, password);
       const runtime = await BccHelper.createRuntime(accountId, accountIdentity, encryptionKey);
 
-      // let targetPrivateKey;
-      // try {
-      //   targetPrivateKey = await runtime.profile.getContactKey(
-      //     accountId,
-      //     'dataKey',
-      //   );
-      // } catch (ex) {
-      //   // password incorrect
-      //   console.log(ex)
-      // }
+      /* let targetPrivateKey;
+         try {
+           targetPrivateKey = await runtime.profile.getContactKey(
+             accountId,
+             'dataKey',
+           );
+         } catch (ex) {
+           // password incorrect
+           console.log(ex)
+         } */
 
-      // if the private key for this account could be loaded, the password is valid
-      // const isCorrect = !!targetPrivateKey;
+      /* if the private key for this account could be loaded, the password is valid
+         const isCorrect = !!targetPrivateKey; */
       if (runtime.profile) {
         // directly overwrite the latest encryption key for this account
         await EvanlightWallet.overwriteVaultEncryptionKey(
@@ -275,8 +275,8 @@ export default class BccHelper {
 
     let checks: Function[];
     if (useIdentity) {
-      // 1. Check for new identity logic
-      // TODO: use account identity salting! (passwordCheck(accountIdentity))
+      /* 1. Check for new identity logic
+         TODO: use account identity salting! (passwordCheck(accountIdentity)) */
       checks = [(): Promise<boolean> => passwordCheck(accountId)];
     } else {
       checks = [
