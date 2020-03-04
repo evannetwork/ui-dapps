@@ -18,7 +18,7 @@
 */
 // map the original System.path to @evan.network/api-blockchain-core
 try {
-  // eslint-disable-next-line
+  // eslint-disable-next-line @typescript-eslint/no-var-requires, global-require
   const { getDomainName, System } = require('@evan.network/ui-dapp-browser');
   System.map['@evan.network/api-blockchain-core'] = `bcc.${getDomainName()}!dapp-content`;
   System.map['@evan.network/dbcp'] = `bcc.${getDomainName()}!dapp-content`;
