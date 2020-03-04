@@ -23,7 +23,7 @@
       v-bind="$props"
       :error="isInvalidJSON ? $t('_evan.invalid-json') : error"
       :value="stringValue"
-      @blur="$emit('blur')"
+      @blur="onBlur"
       @focus="$parent.$emit('setFocus')"
       @input="onValueChanged($event);"
     />
