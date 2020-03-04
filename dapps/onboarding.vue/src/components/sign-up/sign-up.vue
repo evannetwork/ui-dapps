@@ -64,7 +64,7 @@
               {{ '_onboarding.sign-up.steps.company.registration.desc' | translate }}
             </p>
             <p
-              v-if="activeStep === 2 && activeStep !== (steps.length - 1)"
+              v-if="activeStep === 2"
               class="text-center mt-3 mb-0"
             >
               {{ '_onboarding.sign-up.steps.company.contact.desc' | translate }}
