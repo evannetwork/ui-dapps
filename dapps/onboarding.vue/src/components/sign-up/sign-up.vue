@@ -70,7 +70,7 @@
               {{ '_onboarding.sign-up.steps.company.contact.desc' | translate }}
             </p>
 
-            <!-- don't hide them, so formular validity checks will be done correctly -->
+            <!-- only hide them, so formular validity checks will be done correctly -->
             <profile-company-contact
               ref="companyContact"
               class="mt-3 mb-2"
