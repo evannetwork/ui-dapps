@@ -91,7 +91,7 @@ export default class MnemonicExport extends mixins(EvanComponent) {
       })).split(' ');
     }
 
-    return [];
+    return null;
   }
 
   private downloadMnemonics(): void {

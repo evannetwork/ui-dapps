@@ -21,7 +21,7 @@ module.exports = {
     'import/no-unresolved': 'off', // disabled to avoid collision with TS
     'import/prefer-default-export': 'off', // too restrictive
     'max-len': ['warn', { code: 120 }],
-    'multiline-comment-style': ['warn', 'bare-block'], // fix formatting license
+    'multiline-comment-style': 'off', // fix formatting license and allow multine comments with // notation
     "no-param-reassign": [
       "error",
       {

@@ -187,7 +187,7 @@ export default class AcceptContact extends mixins(EvanComponent) {
       }, 2000);
     } catch (ex) {
       dappBrowser.utils.log(ex.message, 'error');
-      (<any> this.$refs.acceptingError).show();
+      (this.$refs.acceptingError as any).show();
     }
 
     // show loading
