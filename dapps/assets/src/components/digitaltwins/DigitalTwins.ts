@@ -114,6 +114,11 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
   delayedLoadingTimeout: number;
 
   /**
+   * Watch for delete dispatcher updates, so the search result can be refreshed
+   */
+  clearTwinDeleteWatcher: Function;
+
+  /**
    * Flag to disable other favorite buttons.
    * This can be removed once the backend can
    * handle multiple calls at the same time
@@ -166,6 +171,13 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
         isLoading: false,
       });
     });
+
+    this.clearTwinDeleteWatcher = dispatchers.twinDeleteDispatcher
+      .watch(({ detail: { status } }: CustomEvent) => {
+        if (status === 'finished') {
+          this.delayedSearch();
+        }
+      });
   }
 
   delayedSearch(): void {
@@ -176,6 +188,7 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
 
   destroyed(): void {
     window.removeEventListener('keydown', this.handleSearchShortcut);
+    this.clearTwinDeleteWatcher();
   }
 
   /**
