@@ -18,57 +18,88 @@
 */
 
 <template>
-  <div class="row h-100" style="display: grid">
+  <div
+    class="row h-100"
+    style="display: grid"
+  >
     <evan-onboarding-layout-wrapper
       type="sign-in"
       :step="activeStep"
-      :images="[ '10.svg', '13.svg' ]">
+      :images="[ '10.svg', '13.svg' ]"
+    >
       <div class="evan-steps">
-        <div class="step" v-if="activeStep === 0">
+        <div
+          v-if="activeStep === 0"
+          class="step"
+        >
           <h4
             class="text-center text-uppercase font-weight-bold"
-          >{{ '_onboarding.sign-in.title' | translate }}</h4>
-          <p class="text-center mb-0" v-html="$t(`_onboarding.sign-in.get-mnemonic-desc`)"></p>
+          >
+            {{ '_onboarding.sign-in.title' | translate }}
+          </h4>
+          <p
+            class="text-center mb-0"
+            v-html="$t(`_onboarding.sign-in.get-mnemonic-desc`)"
+          />
 
           <h5
             class="text-center text-uppercase font-weight-bold mt-5"
-          >{{ '_onboarding.sign-in.recovery-key' | translate }}</h5>
+          >
+            {{ '_onboarding.sign-in.recovery-key' | translate }}
+          </h5>
 
           <evan-onboarding-mnemonic
             class="my-3"
             :mnemonic.sync="mnemonic"
             :valid.sync="validMnemonic"
-            v-on:submit="setMnemonic()"
-          ></evan-onboarding-mnemonic>
+            @submit="setMnemonic()"
+          />
 
           <small
-            class="text-danger"
             v-if="!profileExists"
+            class="text-danger"
           >{{ '_onboarding.sign-in.no-profile-desc' | translate }}</small>
 
           <div class="text-center">
             <button
+              v-if="!checking"
+              id="sign-in"
               type="button"
               class="btn btn-block btn-primary"
-              id="sign-in"
-              v-if="!checking"
               :disabled="!validMnemonic"
               @click="setMnemonic()"
-            >{{ '_onboarding.sign-in.next' | translate }}</button>
-            <evan-loading v-if="checking"></evan-loading>
+            >
+              {{ '_onboarding.sign-in.next' | translate }}
+            </button>
+            <evan-loading v-if="checking" />
           </div>
 
-          <p class="text-center mt-5" v-html="$t(`_onboarding.sign-in.not-signed-up`)"></p>
+          <p
+            class="text-center mt-5"
+            v-html="$t(`_onboarding.sign-in.not-signed-up`)"
+          />
         </div>
 
-        <div class="step" v-if="activeStep === 1">
-          <evan-login :accountId="accountId" :mnemonic="mnemonic" :showSignup="true"></evan-login>
+        <div
+          v-if="activeStep === 1"
+          class="step"
+        >
+          <evan-login
+            :account-id="accountId"
+            :mnemonic="mnemonic"
+            :show-signup="true"
+          />
         </div>
 
-        <div class="step" v-if="activeStep === 2">
-          <h5 class="text-center">{{ '_onboarding.sign-in.welcome-desc' | translate }}</h5>
+        <div
+          v-if="activeStep === 2"
+          class="step"
+        >
+          <h5 class="text-center">
+            {{ '_onboarding.sign-in.welcome-desc' | translate }}
+          </h5>
 
-          <evan-onboarding-accept-contact :loadAlias="true"></evan-onboarding-accept-contact>
+          <evan-onboarding-accept-contact :load-alias="true" />
         </div>
       </div>
     </evan-onboarding-layout-wrapper>
@@ -77,6 +108,7 @@
 
 
 <script lang="ts">
-import SignIn from "./sign-in";
+import SignIn from './sign-in';
+
 export default SignIn;
 </script>

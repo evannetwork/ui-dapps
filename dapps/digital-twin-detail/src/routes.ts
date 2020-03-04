@@ -34,7 +34,7 @@ const routeRegistration: Array<RouteConfig> = [
     children: [
       {
         path: '',
-        redirect: 'data',
+        redirect: 'overview',
       },
       {
         name: 'overview',

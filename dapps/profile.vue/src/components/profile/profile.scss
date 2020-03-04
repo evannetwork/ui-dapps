@@ -28,18 +28,24 @@
 
     .left-col {
       flex-grow: 1;
-
-      min-width: 500px;
     }
 
-    @media(min-width: 992px) {
+    .col {
+      overflow: hidden;
+      flex-basis: auto;
+      min-width: auto;
+      flex-basis: auto;
+    }
+
+    @media(min-width: 1200px) {
       .left-col, .right-col {
         box-sizing: content-box;
+        flex-basis: 0;
       }
       // match wallet card width
       .right-col {
-        min-width: 85.6mm;
-        max-width: 85.6mm !important;
+        min-width: 323px !important;
+        max-width: 323px !important;
       }
     }
   }

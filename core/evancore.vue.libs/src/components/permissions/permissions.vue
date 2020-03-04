@@ -33,11 +33,8 @@
           <template v-if="permissions[property]">
             <td class="caption">
               <span>{{ getTranslation(`${property}.name`, property) }}</span>
-              <span>
-                {{ permissions[property].fields
-                  ? permissions[property].fields.map(field =>
-                    getTranslation(`${property}.properties.${field}.label`, `${property}.properties.${field}`, field)).join(', ') : property
-                }}
+              <span :title="getPropertyFieldDescription(permissions, property)">
+                {{ getPropertyFieldDescription(permissions, property) }}
               </span>
             </td>
             <td>

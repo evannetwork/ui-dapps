@@ -38,7 +38,7 @@
             size="lg"
             type="device"
             :account-name="name"
-            :is-editable="true"
+            :is-editable="editable"
             :src="image || description.imgSquare || null"
             @changed="image = $event; $refs.form.setEditMode(true)"
           />

@@ -22,9 +22,9 @@ import Component, { mixins } from 'vue-class-component';
 import { Prop } from 'vue-property-decorator';
 
 // evan.network imports
-import EvanComponent from '../../component';
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
+import EvanComponent from '../../component';
 import { getDomainName } from '../../utils';
 
 /**
@@ -44,7 +44,9 @@ export default class LoginComponent extends mixins(EvanComponent) {
    */
   // accountId = dappBrowser.core.activeAccount();
   @Prop() accountId: string;
+
   @Prop({ required: false }) mnemonic: string;
+
   @Prop({ default: false }) showSignup: boolean;
 
   alias: string | null;
@@ -62,8 +64,8 @@ export default class LoginComponent extends mixins(EvanComponent) {
       value: window.localStorage['evan-test-password'] || '',
       valid: false,
       dirty: false,
-      ref: null
-    }
+      ref: null,
+    },
   };
 
   created() {
@@ -72,7 +74,7 @@ export default class LoginComponent extends mixins(EvanComponent) {
 
   mounted() {
     // Focus the password input.
-    this.form.password.ref = this.$refs['password'];
+    this.form.password.ref = this.$refs.password;
     this.form.password.ref.focus();
 
     // automatically login when user has specified a dev password
@@ -93,7 +95,7 @@ export default class LoginComponent extends mixins(EvanComponent) {
         this.form.password.valid = await dappBrowser.bccHelper.isAccountPasswordValid(
           bcc,
           this.accountId,
-          this.form.password.value
+          this.form.password.value,
         );
       } catch (ex) {
         this.form.password.value = false;
@@ -107,19 +109,19 @@ export default class LoginComponent extends mixins(EvanComponent) {
         if (this.mnemonic) {
           await dappBrowser.lightwallet.createVaultAndSetActive(
             this.mnemonic,
-            this.form.password.value
+            this.form.password.value,
           );
         }
 
-        if (this.dapp.baseHash.endsWith(`onboarding.vue.${ getDomainName() }`)) {
+        if (this.dapp.baseHash.endsWith(`onboarding.vue.${getDomainName()}`)
+          && !this.$route.query.inviteeAddress) {
           dappBrowser.core.setCurrentProvider('internal');
-          window.location.hash = `/${this.$route.query.origin ||
-            `dashboard.vue.${ getDomainName() }`}`;
+          window.location.hash = `/${this.$route.query.origin
+            || `dashboard.vue.${getDomainName()}`}`;
         }
-      } else {
-        // only enable button when password is invalid
-        this.checkingPassword = false;
       }
+      // only enable button when password is invalid
+      this.checkingPassword = false;
       this.form.password.dirty = true;
     }
   }

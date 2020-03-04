@@ -81,3 +81,7 @@ import Component from './nav-list';
 
 export default Component;
 </script>
+
+<style lang="scss" scoped>
+  @import './nav-list.scss';
+</style>

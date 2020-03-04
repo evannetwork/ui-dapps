@@ -24,6 +24,13 @@
     color: cssVar('text-color');
   }
 
+  h1, h2, h3, h4, h5 {
+    font-weight: bold !important;
+    i.mdi {
+      font-size: inherit;
+    }
+  }
+
   span, p, a, th, td, li {
     font-size: cssVar('text-font-size');
     font-weight: 400;

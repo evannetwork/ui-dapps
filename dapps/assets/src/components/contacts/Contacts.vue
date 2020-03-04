@@ -20,17 +20,18 @@
 <template>
   <div>
     <div class="content pt-5">
-      <evan-loading v-if="isLoading" />
       <div
-        v-else
         class="d-flex flex-row justify-content-between align-items-center"
         style="max-height: 33px"
       >
-        <div>
-          <h1 class="heading">
-            {{ '_assets.contacts.contacts-title' | translate }}
-          </h1>
-        </div>
+        <evan-searchbox
+          id="contactSearchbox"
+          :debounce-time="250"
+          @keyup="filterBySearchTerm($event.target.value)"
+        >
+          <span>{{ '_assets.contacts.contacts-title' | translate }}</span>
+        </evan-searchbox>
+
         <div>
           <evan-button
             class="ml-3"
@@ -48,7 +49,7 @@
             icon-position="left"
             :class="{ active: filter === 'users' }"
             :label="$t('_assets.contacts.users')"
-            @click="filterByType('users')"
+            @click="filterByType('user')"
           />
           <evan-button
             class="ml-3"
@@ -74,6 +75,7 @@
       <div class="d-flex flex-row mt-3">
         <evan-table
           class="clickable-rows"
+          primary-key="address"
           :items="contacts"
           :fields="columns"
           :filter="filter"
@@ -81,11 +83,12 @@
           :show-empty="!isLoading"
           :show-scrollbar="true"
           :sticky-header="'calc(100vh - 85px)'"
+          :tbody-transition-props="{ name: 'list', mode: 'out-in' }"
           @row-clicked="handleRowClicked"
         >
           <template v-slot:cell(alias)="contacts">
             {{
-              contacts.item.alias ? contacts.item.alias : contacts.item.address
+              contacts.item.alias || contacts.item.address
             }}
           </template>
           <template v-slot:cell(icon)="contacts">
@@ -95,29 +98,27 @@
             />
           </template>
           <template v-slot:cell(createdAt)="contacts">
-            <template v-if="contacts.item.createdAt">
-              {{ contacts.item.createdAt | moment('DD.MM.YYYY') }}
+            <template v-if="contacts.item.createdAt && !contacts.item.isPending">
+              {{ contacts.item.createdAt | moment('L') }}
+            </template>
+            <template v-else-if="contacts.item.isPending">
+              {{ '_assets.contacts.pending' | translate }}
             </template>
           </template>
-          <template v-slot:cell(updatedAt)="contacts">
-            <template v-if="contacts.item.updatedAt">
-              {{ contacts.item.updatedAt | moment('DD.MM.YYYY') }}
-            </template>
-          </template>
-          <template v-slot:cell(isFavorite)="contacts">
+          <template v-slot:cell(actions)="contact">
             <evan-loading
               v-if="
                 isFavoriteLoading.loading &&
-                  isFavoriteLoading.id === contacts.item.address
+                  isFavoriteLoading.id === contact.item.address
               "
               classes=""
             />
             <evan-button
-              v-else-if="contacts.item.isFavorite === 'true'"
+              v-else-if="contact.item.isFavorite === 'true'"
               type="icon-secondary"
               icon="mdi mdi-star"
               :disabled="isFavoriteLoading.loading"
-              @click="removeFavorite(contacts)"
+              @click="removeFavorite(contact)"
             />
             <evan-button
               v-else
@@ -125,7 +126,14 @@
               type="icon-secondary"
               icon="mdi mdi-star-outline"
               :disabled="isFavoriteLoading.loading"
-              @click="addFavorite(contacts)"
+              @click="addFavorite(contact)"
+            />
+            <evan-button
+              type="icon-secondary"
+              class="visible-on-row-hover ml-1"
+              icon="mdi mdi-pencil-outline"
+              :disabled="isFavoriteLoading.loading"
+              @click="editContact(contact)"
             />
           </template>
           <template v-slot:table-caption>
@@ -143,6 +151,8 @@
       </div>
     </div>
 
+    <evan-loading v-if="isLoading" />
+
     <evan-button
       :type="'icon-primary'"
       size="lg"
@@ -154,6 +164,13 @@
     <add-contact
       ref="addContact"
       @contact-added="handleContactAdded"
+    />
+
+    <edit-contact
+      ref="editContact"
+      :contact="selectedContact"
+      @delete-contact="onDeleteContact"
+      @update-contact="onUpdateContact"
     />
   </div>
 </template>

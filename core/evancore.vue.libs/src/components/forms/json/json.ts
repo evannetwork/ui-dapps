@@ -51,7 +51,7 @@ export default class FormControlJSONComponent extends mixins(EvanControlComponen
   isInvalidJSON = false;
 
   created(): void {
-    this.stringValue = JSON.stringify(this.value);
+    this.stringValue = this.value ? JSON.stringify(this.value, null, 2) : '{}';
   }
 
   /**
@@ -65,5 +65,13 @@ export default class FormControlJSONComponent extends mixins(EvanControlComponen
     } catch (ex) {
       this.isInvalidJSON = true;
     }
+  }
+
+  onBlur(): void {
+    if (!this.isInvalidJSON) {
+      this.stringValue = this.value ? JSON.stringify(this.value, null, 2) : '{}';
+    }
+
+    this.$emit('blur');
   }
 }

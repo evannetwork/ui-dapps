@@ -416,7 +416,7 @@ export default class BuyEveComponent extends mixins(EvanComponent) {
   async buyEve(): Promise<void> {
     this.$nextTick(() => { this.buying = true; });
 
-    const customer = this.paymentService.getCustomer({
+    const customer = PaymentService.getCustomer({
       name: this.contactForm.name.value,
       email: this.contactForm.email.value,
       company: this.contactForm.company.value,
@@ -466,7 +466,7 @@ export default class BuyEveComponent extends mixins(EvanComponent) {
     // request server
     if (vat) {
       return new Promise((resolve) => {
-        this.vatCalcTimeout = setTimeout(async () => {
+        this.vatCalcTimeout = window.setTimeout(async () => {
           try {
             const { data: { result: { error, reverseCharge, tax } } } = await axios({
               method: 'GET',

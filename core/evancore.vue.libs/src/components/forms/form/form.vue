@@ -30,7 +30,7 @@
       v-if="!onlyForm"
       class="d-flex justify-content-between align-items-center pb-1"
     >
-      <h5 class="my-0 py-0 font-weight-bold">
+      <h5 class="my-0 py-0 d-flex align-items-baseline font-weight-bold">
         <i
           class="mdi mr-2"
           :class="[ {'mdi-lock': !isPublic}, {'mdi-web': isPublic} ]"
@@ -50,7 +50,7 @@
       class="px-0"
       :class="{
         'container': stacked,
-        'pt-4': !onlyForm,
+        'pt-3': !onlyForm,
       }"
     >
       <form
@@ -68,13 +68,14 @@
                 :is="getControlComponentName(controlName)"
                 :id="form[controlName].uiSpecs && form[controlName].uiSpecs.attr ? form[controlName].uiSpecs.attr.id : null"
                 v-model="form[controlName].value"
-                :disabled="!editable || isLoading || form[controlName].uiSpecs.prohibited === true"
+                :disabled="!editable || isLoading || (form[controlName].uiSpecs && form[controlName].uiSpecs.prohibited === true)"
                 :error="(onlyForm || editMode && !onlyForm) ? getTranslation(form[controlName], 'error') : false"
                 :hint="getTranslation(form[controlName], 'hint')"
                 :label="getTranslation(form[controlName], 'label')"
                 :placeholder="getTranslation(form[controlName], 'placeholder')"
                 :stacked="stacked"
-                :prohibited="form[controlName].uiSpecs.prohibited"
+                :prohibited="form[controlName].uiSpecs && form[controlName].uiSpecs.prohibited"
+                :required="form[controlName].uiSpecs && form[controlName].uiSpecs.attr ? form[controlName].uiSpecs.attr.required : false"
                 v-bind="form[controlName].uiSpecs && form[controlName].uiSpecs.attr ? form[controlName].uiSpecs.attr : { }"
                 @blur="form[controlName].setDirty()"
                 @input="form[controlName].uiSpecs && form[controlName].uiSpecs.input ? form[controlName].uiSpecs.input($event) : null"
@@ -119,6 +120,13 @@
     </template>
   </div>
 </template>
+
+<style lang="scss" scoped>
+  .evan i.mdi {
+    font-size: inherit;
+    vertical-align: baseline;
+  }
+</style>
 
 <script lang="ts">
 import FormDataWrapper from './form';

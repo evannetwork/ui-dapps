@@ -19,7 +19,7 @@
 
 <template>
   <div
-    class="evan-profile-preview d-flex align-items-center text-decoration-none overflow-hidden"
+    class="profile-preview d-flex align-items-center text-decoration-none"
     :class="size"
   >
     <div
@@ -38,7 +38,7 @@
       />
       <div
         v-if="size === 'default' || size === 'sm'"
-        class="d-flex flex-column justify-content-center ml-3"
+        class="d-flex flex-column justify-content-center ml-3 info"
       >
         <a
           class="force-oneline account-name"
@@ -52,9 +52,10 @@
           {{ `_evan.profile.types.${ userInfo.profileType }` | translate }}
         </small>
       </div>
+
       <div
         v-else-if="size === 'lg'"
-        class="d-flex flex-column justify-content-between p-3 w-100"
+        class="d-flex flex-column justify-content-between p-3 w-100 info"
       >
         <template v-if="!isEditMode">
           <a
@@ -69,7 +70,6 @@
 
           <evan-address
             v-if="address"
-            class="force-oneline"
             :address="address"
           />
           <b class="profile-type">{{ `_evan.profile.types.${ userInfo.profileType }` | translate }}</b>

@@ -27,10 +27,8 @@ import {
   dispatchers,
   DigitalTwin,
 } from '@evan.network/digital-twin-lib';
-import { EvanComponent } from '@evan.network/ui-vue-core';
+import { EvanComponent, EvanTableItem } from '@evan.network/ui-vue-core';
 import { Prop, Watch } from 'vue-property-decorator';
-
-import { EvanTableItem } from '../../shared/EvanTable';
 
 interface SortFilter {
   filter?: any;
@@ -85,8 +83,6 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
     { key: 'isFavorite', label: '', thClass: 'th-icon' },
   ];
 
-  isActiveSearch = false;
-
   searchTerm = '';
 
   @Prop({
@@ -109,6 +105,9 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
   })
   search: Function;
 
+  @Prop()
+  hasError: boolean;
+
   // contains list of favorites and their state
   favoriteList: Favorite[] = [];
 
@@ -116,6 +115,11 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
    * Used to cancel delayed search, when user already navigated to different page
    */
   delayedLoadingTimeout: number;
+
+  /**
+   * Watch for delete dispatcher updates, so the search result can be refreshed
+   */
+  clearTwinDeleteWatcher: Function;
 
   /**
    * Flag to disable other favorite buttons.
@@ -126,10 +130,10 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
     return this.favoriteList.some((fav) => fav.isLoading === true);
   }
 
-  @Watch('searchTerm') onSearchTermChanged(searchTerm: string, oldSearchTerm: string): void {
-    if (searchTerm !== oldSearchTerm) {
-      this.isActiveSearch = this.isActiveSearch || searchTerm.length > 0;
-      this.searchHandlerDebounced();
+  onSearchChange(searchTerm: string): void {
+    if (this.searchTerm !== searchTerm) {
+      this.searchTerm = searchTerm;
+      this.performSearch();
     }
   }
 
@@ -144,7 +148,7 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
         return;
       }
 
-      this.searchHandlerDebounced();
+      this.performSearch();
     }
   }
 
@@ -158,7 +162,6 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
   async mounted(): Promise<void> {
     this.searchTerm = this.$route.params.query || '';
     this.search(this.searchTerm);
-    this.isActiveSearch = this.searchTerm.length > 0;
 
     window.addEventListener('keydown', this.handleSearchShortcut);
 
@@ -171,6 +174,13 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
         isLoading: false,
       });
     });
+
+    this.clearTwinDeleteWatcher = dispatchers.twinDeleteDispatcher
+      .watch(({ detail: { status } }: CustomEvent) => {
+        if (status === 'finished') {
+          this.delayedSearch();
+        }
+      });
   }
 
   delayedSearch(): void {
@@ -181,6 +191,7 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
 
   destroyed(): void {
     window.removeEventListener('keydown', this.handleSearchShortcut);
+    this.clearTwinDeleteWatcher();
   }
 
   /**
@@ -189,9 +200,7 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
   handleSearchShortcut(e: KeyboardEvent): void {
     if ((e.ctrlKey || e.metaKey) && e.keyCode === 70) {
       e.preventDefault();
-      this.isActiveSearch = true;
-      this.searchTerm = '';
-      this.$nextTick(() => (this.$refs.searchInput as HTMLInputElement).focus());
+      this.$nextTick(() => (this.$refs.searchbox as any).focusInput());
     }
   }
 
@@ -215,9 +224,6 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
     { trailing: true },
   );
 
-  /**
-   * Helper method to keep class this-context for debounced search.
-   */
   performSearch(): void {
     if (typeof this.search === 'function') {
       this.search(this.searchTerm, {
@@ -241,20 +247,6 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
     }
   }
 
-  /**
-   * Debounce the search.
-   */
-  searchHandlerDebounced = debounce(this.performSearch, 250, {
-    trailing: true,
-    leading: false,
-  });
-
-  handleSearchBlur(): void {
-    if (this.searchTerm.length === 0) {
-      this.isActiveSearch = false;
-    }
-  }
-
   handleRowClicked(twin: DigitalTwin): void {
     window.location.hash = `/${this.dapp.rootEns}/detail.digital-twin.${this.dapp.domainName}/${twin.address}`;
   }
@@ -264,7 +256,7 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
 
     this.sortBy = sortBy;
     this.reverse = reverse;
-    this.searchHandlerDebounced();
+    this.performSearch();
   }
 
   async addFavorite(twin: EvanTableItem<DigitalTwin>): Promise<void> {
@@ -297,7 +289,7 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
     );
   }
 
-  private isFavorite(twin: EvanTableItem<DigitalTwin>): boolean {
+  isFavorite(twin: EvanTableItem<DigitalTwin>): boolean {
     return this.favoriteList.some((fav) => twin.item.address === fav.id);
   }
 
@@ -305,7 +297,7 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
    * Check if specific twin is loading favorite
    * @param twin Digital Twin
    */
-  private isFavoriteLoading(twin: EvanTableItem<DigitalTwin>): boolean {
+  isFavoriteLoading(twin: EvanTableItem<DigitalTwin>): boolean {
     const fav = this.favoriteList.find((item) => twin.item.address === item.id);
     return fav ? fav.isLoading : false;
   }

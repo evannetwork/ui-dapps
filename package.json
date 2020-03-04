@@ -10,6 +10,7 @@
     "@evan.network/ui-dapp-browser": "^2.8.0",
     "@fortawesome/fontawesome-free": "^5.7.2",
     "@mdi/font": "^4.5.0",
+    "@types/lodash": "^4.14.149",
     "ajv-i18n": "^3.5.0",
     "axios": "^0.18.0",
     "babel-core": "^6.26.3",
@@ -115,7 +116,7 @@
       "git add"
     ]
   },
-  "version": "4.0.0",
+  "version": "4.0.1",
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^2.16.0",
     "@typescript-eslint/parser": "^2.16.0",

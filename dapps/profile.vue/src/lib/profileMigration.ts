@@ -27,7 +27,7 @@ export default class ProfileMigrationLibrary {
     try {
       // try to load the description, if this errors, create a new profile
       description = await runtime.description.getDescription(
-        runtime.profile.profileContract.options.address
+        runtime.profile.profileContract.options.address,
       );
     } catch (e) {
       // when the description errors, create a new profile
@@ -43,14 +43,14 @@ export default class ProfileMigrationLibrary {
    */
   static async loadProfileData(vueInstance, type) {
     const runtime = vueInstance.getRuntime();
-    const profile = vueInstance.$store.state.profileDApp.profile;
+    const { profile } = vueInstance.$store.state.profileDApp;
 
     const instances = await dispatchers.updateProfileDispatcher.getInstances(runtime, true);
     let scopeData;
 
     // if dispatcher is running, use this data
     if (instances && instances.length !== 0) {
-      const filtered = instances.filter(instance => instance.data.type === type);
+      const filtered = instances.filter((instance) => instance.data.type === type);
       if (filtered.length !== 0) {
         scopeData = filtered[filtered.length - 1].data.formData;
       }
@@ -74,13 +74,13 @@ export default class ProfileMigrationLibrary {
     const currentAccount = runtime.activeAccount;
 
     const oldDataFields = ['addressBook', 'bookmarkedDapps', 'contracts', 'contacts', 'profileOptions', 'publicKey', 'templates'];
-    const newDataFields = [ 'accountDetails', 'contact', 'deviceDetails', 'registration', ];
+    const newDataFields = ['accountDetails', 'contact', 'deviceDetails', 'registration'];
 
     // get the profile factory
     const factoryAddress = await runtime.nameResolver.getAddress('profile.factory.evan');
     const factory = runtime.contractLoader.loadContract(
       'ProfileDataContractFactoryInterface',
-      factoryAddress
+      factoryAddress,
     );
 
     const description = {
@@ -92,22 +92,23 @@ export default class ProfileMigrationLibrary {
         },
         dbcpVersion: 2,
         name: 'Profile Container',
-        description: 'Container contract for storing and sharing profile related information ' +
-          '(account type, company information, device detail, ...)',
+        description: 'Container contract for storing and sharing profile related information '
+          + '(account type, company information, device detail, ...)',
         version: '0.1.0',
       },
     };
 
     // format data schema to remove properties
     Object.keys(description.public.dataSchema)
-      .forEach(property => description.public.dataSchema[property] = description.public.dataSchema[property].dataSchema);
+      .forEach((property) => description.public.dataSchema[property] = description.public.dataSchema[property].dataSchema);
 
     // calculate correct dbcp description and setup empty profile data properties
-    const profileTypeObject = { accountDetails: { profileType: type }};
+    const profileTypeObject = { accountDetails: { profileType: type } };
     Object.keys(runtime.profile.accountTypes[type].template.properties)
-      .forEach(key => profileTypeObject[key] = { });
+      .forEach((key) => profileTypeObject[key] = { });
     const descriptionHash = await runtime.dfs.add(
-      'description', Buffer.from(JSON.stringify(description), 'binary'));
+      'description', Buffer.from(JSON.stringify(description), 'binary'),
+    );
 
     // create a new profile contract from the factory
     const contractId = await runtime.executor.executeContractTransaction(
@@ -116,18 +117,18 @@ export default class ProfileMigrationLibrary {
       {
         from: currentAccount,
         autoGas: 1.1,
-        event: { target: 'BaseContractFactoryInterface', eventName: 'ContractCreated', },
+        event: { target: 'BaseContractFactoryInterface', eventName: 'ContractCreated' },
         getEventResult: (event, args) => args.newAddress,
       },
       '0x0000000000000000000000000000000000000000',
       currentAccount,
       descriptionHash,
       runtime.nameResolver.config.ensAddress,
-      [ ]
+      []
         .concat(newDataFields)
         .concat(oldDataFields)
-        .map(entry => runtime.nameResolver.soliditySha3(entry)),
-      [ ],
+        .map((entry) => runtime.nameResolver.soliditySha3(entry)),
+      [],
     );
 
     // migrate the old fields from the profile
@@ -143,23 +144,26 @@ export default class ProfileMigrationLibrary {
     const sharedNew = runtime.contractLoader.loadContract('Shared', contractId);
     const sharingHash = await runtime.executor.executeContractCall(shared, 'sharing');
     await runtime.executor.executeContractTransaction(
-      sharedNew, 'setSharing', { from: currentAccount, autoGas: 1.1, }, sharingHash);
+      sharedNew, 'setSharing', { from: currentAccount, autoGas: 1.1 }, sharingHash,
+    );
 
     // register profile for user
     const profileIndexDomain = runtime.nameResolver.getDomainName(
-      runtime.nameResolver.config.domains.profile);
+      runtime.nameResolver.config.domains.profile,
+    );
     const profileIndexAddress = await runtime.nameResolver.getAddress(profileIndexDomain);
     const profileIndexContract = runtime.contractLoader.loadContract(
-      'ProfileIndexInterface', profileIndexAddress);
+      'ProfileIndexInterface', profileIndexAddress,
+    );
     await runtime.executor.executeContractTransaction(
       profileIndexContract,
       'setMyProfile',
-      { from: currentAccount, autoGas: 1.1, },
-      contractId
+      { from: currentAccount, autoGas: 1.1 },
+      contractId,
     );
 
-    // reset previous loaded profile contract to be sure to load corrcet profile data after
-    // migration
+    /* reset previous loaded profile contract to be sure to load corrcet profile data after
+       migration */
     delete runtime.profile.profileContract;
     await runtime.profile.loadForAccount();
     runtime.profile.profileContract.options.address = contractId;

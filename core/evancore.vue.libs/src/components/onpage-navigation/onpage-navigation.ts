@@ -24,6 +24,7 @@ import { throttle } from 'lodash';
 import EvanComponent from '../../component';
 
 interface Entry {
+  // css selector id
   id: string;
   label: string;
   offsetTop?: number;
