@@ -40,7 +40,7 @@ const nullAddress = '0x0000000000000000000000000000000000000000';
 
 export default class BccHelper {
   /**
-   * Check if a account id and it's corresponding identity is an old profile.
+   * Check if an account id and its corresponding identity is an old profile.
    *
    * @param      {string}  accountId  account address to checkout
    * @param      {string}  identity   identity to check
@@ -98,7 +98,7 @@ export default class BccHelper {
      * the blockchain-core must force this specific key generation.
      */
 
-    // get accounthash for easy acces within keyConfig
+    // get account hash for easy access within keyConfig
     const accountHash = soliditySha3(accountId);
     const runtimeConfig = {
       ...(inputConfig || JSON.parse(JSON.stringify(config))),
@@ -195,7 +195,7 @@ export default class BccHelper {
   }
 
   /**
-   * Returns the identity address for a account
+   * Returns the identity address for an account
    *
    * @param      {string}  address   account id, for that the default identity should be resolved
    * @param      {string}  identity  optional identity, that should be checked (if null address or
@@ -310,10 +310,10 @@ export default class BccHelper {
 
     try {
       if (useIdentity) {
-        const checkidentity = !identity || identity === nullAddress
+        const checkIdentity = !identity || identity === nullAddress
           ? await BccHelper.getIdentityForAccount(address, identity)
           : identity;
-        profileAddress = await BccHelper.getProfileAddressFromIndex(checkidentity);
+        profileAddress = await BccHelper.getProfileAddressFromIndex(checkIdentity);
       } else {
         profileAddress = await BccHelper.getProfileAddressFromIndex(address);
       }
