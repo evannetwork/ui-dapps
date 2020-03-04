@@ -3,6 +3,16 @@
 
 ## Next Version
 ### Features
+
+### Fixes
+
+### Deprecations
+
+
+## Version 4.0.1
+- general bug fixes and small improvements
+
+### Features
 - dapps
   - `digital-twin-detail`
     - add UI for twins where current user has no or only partial permissions
