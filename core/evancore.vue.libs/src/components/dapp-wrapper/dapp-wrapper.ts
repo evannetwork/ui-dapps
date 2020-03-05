@@ -460,7 +460,7 @@ export default class DAppWrapperComponent extends mixins(EvanComponent) {
         }
         case 'runtimeUpdate': {
           this.loading = true;
-          this.$store.state.runtime = session.identityRuntime;
+          this.$store.state.runtime = session.identityRuntime; // TODO: remove runtime from $store, check old dapps
 
           /* create and register a vue dispatcher handler, so applications can easily access dispatcher data
              from vuex store */
