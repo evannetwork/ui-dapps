@@ -88,11 +88,6 @@ export default class DAppWrapperComponent extends mixins(EvanComponent) {
         },
         {
           icon: 'mdi mdi-cube-outline',
-          path: `digitaltwins.${domainName}`,
-          title: `${i18nPref}.digitaltwins`,
-        },
-        {
-          icon: 'mdi mdi-cube-outline',
           path: `assets.${domainName}`,
           title: `${i18nPref}.assets`,
         },

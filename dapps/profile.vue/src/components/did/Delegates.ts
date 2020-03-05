@@ -19,7 +19,7 @@
 
 import Component, { mixins } from 'vue-class-component';
 import { EvanComponent, EvanTableColumn, ContactInterface } from '@evan.network/ui-vue-core';
-import { bccUtils } from '@evan.network/ui';
+import { profileUtils } from '@evan.network/ui';
 import { isEqual } from 'lodash';
 import { Prop } from 'vue-property-decorator';
 import { DidService } from './DidService';
@@ -53,7 +53,7 @@ export default class DelegatesComponent extends mixins(EvanComponent) {
   previousData: Delegate[] = [];
 
   async mounted(): Promise<void> {
-    this.contacts = await bccUtils.getContacts(this.getRuntime());
+    this.contacts = await profileUtils.getContacts(this.getRuntime());
   }
 
   /**

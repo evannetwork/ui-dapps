@@ -32,16 +32,19 @@ const routeRegistration: Array<RouteRegistrationInterface> = [
         redirect: { path: 'github' }
       },
       {
+        name: 'github',
         path: 'github',
         component: IframeComponent,
         props: { src: 'https://evannetwork.github.io' }
       },
       {
+        name: 'bccdocs',
         path: `bccdocs`,
         component: IframeComponent,
         props: { src: '//api-blockchain-core.readthedocs.io/en/latest/' }
       },
       {
+        name: 'uidocs',
         path: `uidocs`,
         component: IframeComponent,
         props: { src: '//ui-docs.readthedocs.io/en/latest/' }
