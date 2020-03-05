@@ -345,7 +345,7 @@ export default class EvanLightWallet {
    *
    * @param      {string}  encryptionKey  the encryption key that should be used
    */
-  static async overwriteVaultEncryptionKey(accountId: string, encryptionKey: string): void {
+  static overwriteVaultEncryptionKey(accountId: string, encryptionKey: string): void {
     customEncryptionKeys[accountId] = encryptionKey;
   }
 
