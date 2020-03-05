@@ -82,14 +82,7 @@ export default class SignIn extends mixins(EvanComponent) {
    * Checks if the user was invited, so enable the 3 tab
    */
   created() {
-    this.form = (<ProfileFormPasswordInterface> new EvanForm(this, {
-      password: {
-        value: window.localStorage['evan-test-password'] || '',
-      },
-    }));
-
-
-    if (this.$route.query.inviteeAlias) {
+    if (this.$route.query.inviteeAddress) {
       this.steps.push('_onboarding.sign-in.welcome');
     }
   }
@@ -116,46 +109,14 @@ export default class SignIn extends mixins(EvanComponent) {
 
       // set autofocus on password input
       this.$nextTick(() => (this.$refs.password as any).focus());
-
-      if (this.form.password.value) {
-        await this.checkPassword();
-      }
     }
 
     this.checking = false;
   }
 
-  /**
-   * Check the current password input.
-   */
-  async checkPassword() {
-    const { password } = this.form;
-    password.dirty = true;
-    if (password.value.length > 7) {
-      this.checking = true;
-
-      // get the current account id
-      try {
-        password._error = !(await bccHelper.setEncryptionKeyForAccount(this.accountId, password.value));
-      } catch (ex) {
-        password._error = true;
-      }
-
-      /* if the password is correct, create the correct active vault in dapp-browser, so other
-         applications can access it */
-      if (!password._error) {
-        await lightwallet.createVaultAndSetActive(this.mnemonic, password.value);
-        session.provider = 'internal';
-
-        if (!this.$route.query.inviteeAlias) {
-          this.navigateToEvan();
-        } else {
-          this.activeStep = 2;
-          this.activeSteps.push(2);
-        }
-      }
-
-      this.checking = false;
+  loggedIn() {
+    if (this.$route.query.inviteeAddress) {
+      this.activeStep = 2;
     }
   }
 

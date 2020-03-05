@@ -21,8 +21,9 @@
   <div>
     <router-view
       :data="data"
-      :is-loading="isLoading"
+      :error="error"
       :fetch-more="fetchMore"
+      :is-loading="isLoading"
       :search="initialQuery"
     />
   </div>

@@ -105,6 +105,9 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
   })
   search: Function;
 
+  @Prop()
+  hasError: boolean;
+
   // contains list of favorites and their state
   favoriteList: Favorite[] = [];
 
@@ -112,6 +115,11 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
    * Used to cancel delayed search, when user already navigated to different page
    */
   delayedLoadingTimeout: number;
+
+  /**
+   * Watch for delete dispatcher updates, so the search result can be refreshed
+   */
+  clearTwinDeleteWatcher: Function;
 
   /**
    * Flag to disable other favorite buttons.
@@ -166,6 +174,13 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
         isLoading: false,
       });
     });
+
+    this.clearTwinDeleteWatcher = dispatchers.twinDeleteDispatcher
+      .watch(({ detail: { status } }: CustomEvent) => {
+        if (status === 'finished') {
+          this.delayedSearch();
+        }
+      });
   }
 
   delayedSearch(): void {
@@ -176,6 +191,7 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
 
   destroyed(): void {
     window.removeEventListener('keydown', this.handleSearchShortcut);
+    this.clearTwinDeleteWatcher();
   }
 
   /**

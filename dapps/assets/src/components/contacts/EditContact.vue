@@ -42,6 +42,7 @@
           class="btn-block"
           :label="'_assets.contacts.note' | translate"
           :placeholder="$t('_assets.contacts.note-placeholder')"
+          :required="true"
           @input="onNoteChange"
         />
 
@@ -67,7 +68,7 @@
             type="primary"
             native-type="submit"
             class="ml-3 flex-grow-1"
-            :disabled="!canSubmit"
+            :disabled="!canSubmit || !note"
             :label="'_assets.contacts.edit-contact-btn' | translate"
           />
         </div>

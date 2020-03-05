@@ -7,6 +7,16 @@
 - use activeIdentity
 - be able to use `@evan.network/api-blockchain-core`  with identities
 - automatic useIdentity detection
+
+### Fixes
+
+### Deprecations
+
+
+## Version 4.0.1
+- general bug fixes and small improvements
+
+### Features
 - dapps
   - add `ui-session` for handling logged in users
   - add `olddappbrowser.evan` dapp, to enable backwards compatibility
@@ -14,6 +24,10 @@
     - add UI for twins where current user has no or only partial permissions
 
 ### Fixes
+- dapps
+  - `onboarding.vue`
+    - allow contact accept after `sign-up` / `sign-in` / already logged in account
+    - fix `sign-up` password repeat checks
 
 ### Deprecations
 - core

@@ -29,17 +29,19 @@ import { SearchService, DigitalTwin } from '@evan.network/digital-twin-lib';
 
 @Component
 export default class DataContainerComponent extends mixins(EvanComponent) {
-  searchTerm = '';
-
-  search = new SearchService(this.getRuntime());
+  count = 20;
 
   data = [];
+
+  hasError = false;
 
   isLoading = true;
 
   page = 0;
 
-  count = 20;
+  search = new SearchService(this.getRuntime());
+
+  searchTerm = '';
 
   total = null;
 
@@ -75,16 +77,23 @@ export default class DataContainerComponent extends mixins(EvanComponent) {
     this.isLoading = true;
     this.page = 0;
     this.data = [];
+    this.hasError = false;
     this.searchTerm = searchTerm;
 
-    const { result, total } = await this.search.query(this.type, {
-      searchTerm,
-      ...sorting,
-    });
-    await this.ensureOwnerNames(result);
+    try {
+      const { result, total } = await this.search.query(this.type, {
+        searchTerm,
+        ...sorting,
+      });
+      await this.ensureOwnerNames(result);
 
-    this.total = total;
-    this.data = result;
+      this.total = total;
+      this.data = result;
+    } catch (ex) {
+      this.getRuntime().logger.log(ex.message, 'error');
+      this.hasError = true;
+      this.data = [];
+    }
 
     this.isLoading = false;
 
@@ -101,6 +110,7 @@ export default class DataContainerComponent extends mixins(EvanComponent) {
       return;
     }
     this.isLoading = true;
+    this.hasError = false;
     this.page += 1;
 
     const options = {
@@ -110,10 +120,16 @@ export default class DataContainerComponent extends mixins(EvanComponent) {
       ...sorting,
     };
 
-    const { result } = await this.search.query(this.type, options);
-    await this.ensureOwnerNames(result);
+    try {
+      const { result } = await this.search.query(this.type, options);
+      await this.ensureOwnerNames(result);
+      this.data = [...this.data, ...result];
+    } catch (ex) {
+      this.getRuntime().logger.log(ex.message, 'error');
+      this.hasError = true;
+      this.data = [];
+    }
 
-    this.data = [...this.data, ...result];
     this.isLoading = false;
   }
 }

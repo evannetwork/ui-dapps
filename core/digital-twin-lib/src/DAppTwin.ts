@@ -177,8 +177,8 @@ class DAppTwin extends DigitalTwin {
    * Load basic twin information and setup dispatcher watchers for loading states.
    */
   public async initialize(): Promise<void> {
+    await this.loadBaseInfo();
     await Promise.all([
-      this.loadBaseInfo(),
       (async (): Promise<void> => {
         this.favorite = await this.isFavorite();
       })(),
