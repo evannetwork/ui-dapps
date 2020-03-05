@@ -161,7 +161,7 @@ export async function getContacts(
   unfiltered = false,
 ): Promise<{label: string; value: string}[]> {
   // load the contacts for the current user, so we can display correct contact alias
-  const addressBook = (await runtime.profile.getAddressBook()).profile;
+  const { profile: addressBook } = await runtime.profile.getAddressBook();
 
   const contacts = Object.keys(addressBook).map((key) => ({
     label: addressBook[key].alias,

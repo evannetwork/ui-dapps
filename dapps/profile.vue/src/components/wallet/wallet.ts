@@ -62,15 +62,15 @@ export default class WalletComponent extends mixins(EvanComponent) {
     this.listeners.push(sendEveDispatcher.watch(async ($event: any) => {
       // if dispatcher was finished, reload data and reset form
       if ($event.detail.status === 'finished' || $event.detail.status === 'deleted') {
-        // force ui rerender
+        // force ui to re-render
         this.loading = true;
         this.$nextTick(() => { this.loading = false; });
       }
     }));
   }
 
-  async loadBalance() {
-    const balance = await bccHelper.getBalance((this as any).getRuntime().activeAccount);
+  async loadBalance(): Promise<void> {
+    const balance = await bccHelper.getBalance(this.getRuntime().activeAccount);
     this.balance = parseFloat(balance.toString());
   }
 }
