@@ -83,7 +83,6 @@ $sidebar-small-width: 64px;
             color: cssVar('body-color');
 
             span, p {
-              font-size: 15px;
               font-weight: 600;
             }
 
@@ -130,7 +129,6 @@ $sidebar-small-width: 64px;
 
       & > * {
         overflow-y: auto;
-        
         min-width: 240px;
         height: 100%;
 
