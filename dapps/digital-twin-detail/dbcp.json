@@ -4,9 +4,9 @@
     "dapp": {
       "dependencies": {
         "bootstrap.vue.libs": "^2.1.0",
-        "evancore.vue.libs": "^1.10.0",
+        "evancore.vue.libs": "^2.0.0",
         "i18n.ajv": "^3.5.0",
-        "lib.digital-twin": "^2.0.0"
+        "lib.digital-twin": "^3.0.0"
       },
       "entrypoint": "detail.digital-twin.js",
       "files": [
@@ -36,7 +36,7 @@
       "dapp",
       "evan"
     ],
-    "version": "1.0.0",
+    "version": "2.0.0",
     "versions": {
       "1.0.0": "QmRUVk2UGztMtSX7Hzpkd3sGfVFCCexapeYzu41xMJntqi"
     }

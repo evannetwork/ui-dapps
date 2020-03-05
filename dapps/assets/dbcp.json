@@ -4,8 +4,8 @@
     "dapp": {
       "dependencies": {
         "bootstrap.vue.libs": "^2.1.0",
-        "evancore.vue.libs": "^1.10.0",
-        "lib.digital-twin": "^2.0.0",
+        "evancore.vue.libs": "^2.0.0",
+        "lib.digital-twin": "^3.0.0",
         "lodash.libs": "4.17.15"
       },
       "entrypoint": "assets.js",
@@ -36,7 +36,7 @@
       "dapp",
       "evan"
     ],
-    "version": "1.1.0",
+    "version": "2.0.0",
     "versions": {
       "1.0.0": "QmUvPvZX2sSJUDCDUc16sL2SbaHvLpC8vvr8h2FowP7VQd",
       "1.1.0": "QmUFpXturPS9sE3LVR31DuN3yyBJVkg57BhnHoEyQ1DecS"

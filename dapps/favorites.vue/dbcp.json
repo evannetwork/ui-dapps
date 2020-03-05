@@ -3,7 +3,7 @@
     "author": "evan GmbH",
     "dapp": {
       "dependencies": {
-        "evancore.vue.libs": "^1.10.0"
+        "evancore.vue.libs": "^2.0.0"
       },
       "entrypoint": "favorites.vue.js",
       "files": [
@@ -33,7 +33,7 @@
       "evan",
       "library"
     ],
-    "version": "3.1.0",
+    "version": "4.0.0",
     "versions": {
       "0.1.0": "QmdTjbhWMfP7YptyEgqZDkX2yXwnzk6KCwHaY32mi9CbyR",
       "0.9.0": "QmRJ3mFKaeUgiYapr3uVGFkeE1n3L71kVDW4W3ZkCrhEKS",
