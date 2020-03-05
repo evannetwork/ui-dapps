@@ -18,40 +18,52 @@
 */
 
 <template>
-  <div class="col-12 d-flex justify-content-center align-items-center"
-    v-if="activeStep">
-    <div class="text-center" style="max-width: 390px">
+  <div
+    v-if="activeStep"
+    class="col-12 d-flex justify-content-center align-items-center"
+  >
+    <div
+      class="text-center"
+      style="max-width: 390px"
+    >
       <template v-if="activeStep !== maximumSteps">
         <div>
-          <img class="img-fluid"
+          <img
+            class="img-fluid"
             style="max-width: 390px"
             :src="customSteps[activeStep] ?
               customSteps[activeStep].picture :
               `${ $store.state.onboardingBaseUrl }/assets/creating_${ activeStep }.png`
-            ">
+            "
+          >
         </div>
-        <div style="height: 10px; min-width: 390px;" class="mx-auto progress my-3 bg-white">
+        <div
+          style="height: 10px; min-width: 390px;"
+          class="mx-auto progress my-3 bg-white"
+        >
           <div
             class="progress-bar"
             role="progressbar"
             :style="{width: `${(activeStep * (100 / maximumSteps))}%`}"
-          ></div>
+          />
         </div>
-        <h5 class="font-weight-bold mt-5 text-center">
+        <span class="mt-5 text-center">
           {{ (customSteps[activeStep] ? customSteps[activeStep].text :
-              `_onboarding.sign-up.create-profile.${ type ? `${ type }.` : '' }status-${ activeStep}`) | translate }}
-        </h5>
+            `_onboarding.sign-up.create-profile.${ type ? `${ type }.` : '' }status-${ activeStep}`) | translate }}
+        </span>
       </template>
-      <div v-if="activeStep === maximumSteps" class="h-100 d-flex align-items-center justify-content-center">
-        <evan-success></evan-success>
+      <div
+        v-if="activeStep === maximumSteps"
+        class="h-100 d-flex align-items-center justify-content-center"
+      >
+        <evan-success />
       </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-  import Component from './creating';
-  export default Component;
+import Component from './creating';
+
+export default Component;
 </script>
-
-
