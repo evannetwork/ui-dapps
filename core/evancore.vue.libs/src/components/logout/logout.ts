@@ -18,14 +18,12 @@
 */
 
 // vue imports
-import Vue from 'vue';
 import Component, { mixins } from 'vue-class-component';
 import { Prop } from 'vue-property-decorator';
 
 // evan.network imports
+import { session } from '@evan.network/ui-session';
 import EvanComponent from '../../component';
-import * as bcc from '@evan.network/api-blockchain-core';
-import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
 /**
  * Handles user logout. Directly provides a button, that triggers a logout accept modal. Logs out
@@ -46,13 +44,13 @@ export default class EvanLogout extends mixins(EvanComponent) {
    * Show the logout modal
    */
   logout() {
-    (<any>this.$refs.logoutModal).show();
+    (<any> this.$refs.logoutModal).show();
   }
 
   /**
    * Logout the user.
    */
   runLogout() {
-    dappBrowser.core.logout();
+    session.logout();
   }
 }

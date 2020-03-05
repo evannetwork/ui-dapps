@@ -36,7 +36,7 @@
                     class="p-4"
                     size="sm"
                     :account-details="$store.state.profileDApp.data.accountDetails"
-                    :address="$store.state.runtime.activeAccount"
+                    :address="$store.state.runtime.activeIdentity"
                   />
                 </template>
               </evan-nav-list>

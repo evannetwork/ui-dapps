@@ -44,17 +44,17 @@ export const aliasCache = { };
  */
 export async function getUserAlias(
   runtime: Runtime,
-  accountId: string = runtime.activeAccount,
+  identity: string = runtime.activeIdentity,
   accountDetails?: any,
 ): Promise<string> {
-  const cacheID = `${runtime.activeAccount}.${accountId}`;
+  const cacheID = `${runtime.activeAccount}.${identity}`;
 
   if (!aliasCache[cacheID]) {
     aliasCache[cacheID] = (async (): Promise<void> => {
       const otherProfile = new Profile({
         ...(runtime as ProfileOptions),
-        profileOwner: accountId,
-        accountId,
+        profileOwner: identity,
+        accountId: runtime.activeIdentity,
       });
       let details = { ...accountDetails };
 
@@ -70,9 +70,9 @@ export async function getUserAlias(
       }
 
       const addressBook = await runtime.profile.getAddressBook();
-      const contact = addressBook.profile[accountId];
+      const contact = addressBook.profile[identity];
 
-      return contact ? contact.alias : accountId;
+      return contact ? contact.alias : identity;
     })();
 
     // reset alias cache after 10 seconds
@@ -116,7 +116,7 @@ export async function getProfileType(runtime: Runtime, accountId: string): Promi
     const otherProfile = new Profile({
       ...(runtime as any),
       profileOwner: accountId,
-      accountId: runtime.activeAccount,
+      accountId: runtime.activeIdentity,
     });
 
     const { profileType } = await otherProfile.getProfileProperty(
@@ -147,4 +147,30 @@ export function getProfileTypeIcon(type: string): string {
     default:
       return 'mdi mdi-cube-outline';
   }
+}
+
+/**
+ * Returns all contacts from current user addressbook
+ *
+ * @param      {any}      runtime     The runtime
+ * @param      {boolean}  unfiltered  default "false", if true response containing own contact and
+ *                                    test entries, as well.
+ */
+export async function getContacts(
+  runtime: any,
+  unfiltered = false,
+): Promise<{label: string; value: string}[]> {
+  // load the contacts for the current user, so we can display correct contact alias
+  const { profile: addressBook } = await runtime.profile.getAddressBook();
+
+  const contacts = Object.keys(addressBook).map((key) => ({
+    label: addressBook[key].alias,
+    value: key,
+  }));
+
+  if (unfiltered) {
+    return contacts;
+  }
+
+  return contacts.filter((entry) => entry.value !== runtime.activeIdentity && !/@/.test(entry.value));
 }

@@ -135,12 +135,12 @@ export default class PermissionUtils {
   static async getContainerPermissionsForUser(
     runtime: Runtime,
     { containerAddress, i18nScope }: { containerAddress: string; i18nScope?: string },
-    accountId = runtime.activeAccount,
+    accountId = runtime.activeIdentity,
   ): Promise<any> {
     const container = PermissionUtils.getContainer(
       runtime,
       containerAddress,
-      runtime.activeAccount,
+      runtime.activeIdentity,
     );
     const properties = await PermissionUtils.getContainerProperties(container);
     const containerPermObj = {

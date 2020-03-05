@@ -89,7 +89,7 @@ export default class ContactAddComponent extends mixins(EvanComponent) {
     const runtime = (<any>this).getRuntime();
     const [ addressBook, balance ] = await Promise.all([
       runtime.profile.getAddressBook(),
-      dappBrowser.core.getBalance(runtime.activeAccount),
+      dappBrowser.core.getBalance(runtime.activeIdentity),
     ]);
 
     this.steps = [
@@ -104,7 +104,7 @@ export default class ContactAddComponent extends mixins(EvanComponent) {
     ];
 
     // apply loaded values to the scope
-    this.myAlias = addressBook.profile[runtime.activeAccount].alias;
+    this.myAlias = addressBook.profile[runtime.activeIdentity].alias;
     this.balance = balance;
 
     // specify contact form

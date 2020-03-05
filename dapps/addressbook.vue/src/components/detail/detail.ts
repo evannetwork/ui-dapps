@@ -74,7 +74,7 @@ export default class ContactDetailComponent extends mixins(EvanComponent) {
     // set runtime params
     this.accountId = accountId;
     this.contact = addressBook.profile[accountId];
-    this.isMyAccount = accountId === runtime.activeAccount;
+    this.isMyAccount = accountId === runtime.activeIdentity;
 
     // parse tags to have the correct format (move string as one entry to an new array, default
     // is an array)

@@ -57,7 +57,7 @@ gulp.task('browserify', async function(callback) {
   const buildFolder = `${ dappRelativePath }/dist/build`;
   const indexFile = `${ buildFolder }/index.js`;
   const distFolder = `${ dappRelativePath }/dist`;
-  const runtimeFolder = `${ rootFolder }/node_modules/@evan.network/ui-dapp-browser/runtime/external/${ dbcp.public.name }`;
+  const runtimeFolder = `${ rootFolder }/node_modules/@evan.network/ui-dapp-browser/dist/dapps/${ dbcp.public.name }`;
 
   // ensure dist folder exists
   checkFolder(distFolder);
@@ -119,7 +119,7 @@ gulp.task('browserify', async function(callback) {
       .pipe(sourcemaps.init({loadMaps: true}))
       .pipe(sourcemaps.write('./', {
         sourceMappingURL: function(file) {
-          return `http://localhost:3000/external/${ dbcp.public.name }/${ file.relative }.map`;
+          return `http://localhost:3000/dapps/${ dbcp.public.name }/${ file.relative }.map`;
         }
       }))
       .pipe(gulp.dest(`${ distFolder }`))

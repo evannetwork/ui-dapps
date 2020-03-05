@@ -257,7 +257,7 @@ const startStaticServer = async () => {
   expressApp = express();
   const dappBrowserPath = path.resolve('../node_modules/@evan.network/ui-dapp-browser');
 
-  expressApp.use(serveStatic(`${dappBrowserPath}/runtime`));
+  expressApp.use(serveStatic(`${dappBrowserPath}/dist`));
   expressApp.use(serveStatic('.'));
   expressApp.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
@@ -266,9 +266,9 @@ const startStaticServer = async () => {
   });
 
   expressApp.use('/dev-dapps', (req, res) => {
-    const data = { externals: [] };
+    const data = { dapps: [] };
     try {
-      data.externals = getDirectories(path.resolve(`${dappBrowserPath}/runtime/external`))
+      data.dapps = getDirectories(path.resolve(`${dappBrowserPath}/dist/dapps`))
         .map((external) => external.split(path.sep).pop());
     } catch (ex) {
       console.error('external folder does not exist');
@@ -327,7 +327,7 @@ gulp.task('dapps-build', async (cb) => {
     });
   });
 
-  await Throttle.all(buildDappPromises, { maxInProgress: 4 });
+  await Throttle.all(buildDappPromises, { maxInProgress: 10 });
   clearInterval(logLoop);
   return cb();
 });

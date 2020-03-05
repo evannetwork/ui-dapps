@@ -21,11 +21,12 @@
 import Component, { mixins } from 'vue-class-component';
 
 // evan.network imports
-import * as dappBrowser from '@evan.network/ui-dapp-browser';
-import { bccUtils } from '@evan.network/ui';
 import { EvanComponent, ContactInterface } from '@evan.network/ui-vue-core';
 import { PermissionUtils } from '@evan.network/digital-twin-lib';
 import { Profile, ProfileOptions } from '@evan.network/api-blockchain-core';
+import { profileUtils } from '@evan.network/ui';
+import { bccHelper } from '@evan.network/ui-session';
+
 import * as dispatchers from '../../dispatchers/registry';
 
 
@@ -89,7 +90,7 @@ export default class ProfileDetailComponent extends mixins(EvanComponent) {
     this.address = this.$store.state.profileDApp.address;
     this.userInfo = this.$store.state.profileDApp.data.accountDetails;
     // load balance and parse it to 3 decimal places
-    const amount = parseFloat((await dappBrowser.core.getBalance(this.address)).toFixed(3));
+    const amount = parseFloat((await bccHelper.getBalance(this.address)).toFixed(3));
     this.balance = {
       amount: amount.toLocaleString(this.$i18n.locale()),
       timestamp: Date.now(),
@@ -99,7 +100,7 @@ export default class ProfileDetailComponent extends mixins(EvanComponent) {
     this.updatePermissions = PermissionUtils.updatePermissions.bind(null, this);
 
     // load contacts from addressbook
-    this.contacts = await bccUtils.getContacts(this.getRuntime());
+    this.contacts = await profileUtils.getContacts((this as any).getRuntime());
 
     this.loading = false;
   }
@@ -160,9 +161,9 @@ export default class ProfileDetailComponent extends mixins(EvanComponent) {
     const runtime = this.getRuntime();
     let profileAddress = runtime.profile.profileContract.options.address;
 
-    if (runtime.activeAccount !== this.$route.params.address) {
+    if (runtime.activeIdentity !== this.$route.params.address) {
       const profile = new Profile({
-        accountId: runtime.activeAccount,
+        accountId: runtime.activeIdentity,
         profileOwner: this.$route.params.address,
         ...(runtime as ProfileOptions),
       });

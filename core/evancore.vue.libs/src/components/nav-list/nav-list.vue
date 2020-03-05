@@ -24,7 +24,7 @@
         v-if="showProfile"
         class="p-4"
         size="sm"
-        :address="$store.state.runtime.activeAccount"
+        :address="$store.state.runtime.activeIdentity"
       />
     </slot>
     <div class="nav-entries">

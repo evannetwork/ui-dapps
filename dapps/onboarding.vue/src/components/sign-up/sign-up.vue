@@ -138,11 +138,13 @@
                 {{ '_onboarding.continue' | translate }}
               </evan-button>
             </div>
+          </div>
 
-            <p
-              class="text-center mt-5"
-              v-html="$t(`_onboarding.sign-up.already-signed-up`)"
-            />
+          <div class="text-center mt-5">
+            <span>{{ '_onboarding.sign-up.already-signed-up' | translate }}</span>
+            <router-link :to="{ name: 'sign-in', query: $route.query}">
+              {{ '_onboarding.login' | translate }}
+            </router-link>
           </div>
         </div>
         <div v-else>

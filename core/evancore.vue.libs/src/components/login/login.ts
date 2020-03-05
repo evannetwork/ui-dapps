@@ -20,12 +20,11 @@
 // vue imports
 import Component, { mixins } from 'vue-class-component';
 import { Prop } from 'vue-property-decorator';
+import { utils } from '@evan.network/ui-dapp-browser';
+import { session, bccHelper, lightwallet } from '@evan.network/ui-session';
 
-// evan.network imports
-import * as bcc from '@evan.network/api-blockchain-core';
-import * as dappBrowser from '@evan.network/ui-dapp-browser';
-import EvanComponent from '../../component';
 import { getDomainName } from '../../utils';
+import EvanComponent from '../../component';
 
 /**
  * Handles the password input of a user and checks, if it's correct and it's profile can be
@@ -42,7 +41,6 @@ export default class LoginComponent extends mixins(EvanComponent) {
   /**
    * preload accountId
    */
-  // accountId = dappBrowser.core.activeAccount();
   @Prop() accountId: string;
 
   @Prop({ required: false }) mnemonic: string;
@@ -92,22 +90,22 @@ export default class LoginComponent extends mixins(EvanComponent) {
 
       // get the current account id
       try {
-        this.form.password.valid = await dappBrowser.bccHelper.isAccountPasswordValid(
-          bcc,
+        this.form.password.valid = await bccHelper.setEncryptionKeyForAccount(
           this.accountId,
           this.form.password.value,
         );
       } catch (ex) {
+        utils.log(ex, 'error');
         this.form.password.value = false;
       }
 
-      // if the password is correct, create the correct active vault in dapp-browser, so other
-      // applications can access it
+      /* if the password is correct, create the correct active vault in dapp-browser, so other
+         applications can access it */
       if (this.form.password.valid) {
         this.$emit('logged-in', this.form.password.value);
         // mnemonic available during onboarding
         if (this.mnemonic) {
-          await dappBrowser.lightwallet.createVaultAndSetActive(
+          await lightwallet.createVaultAndSetActive(
             this.mnemonic,
             this.form.password.value,
           );
@@ -115,7 +113,7 @@ export default class LoginComponent extends mixins(EvanComponent) {
 
         if (this.dapp.baseHash.endsWith(`onboarding.vue.${getDomainName()}`)
           && !this.$route.query.inviteeAddress) {
-          dappBrowser.core.setCurrentProvider('internal');
+          session.provider = 'internal';
           window.location.hash = `/${this.$route.query.origin
             || `dashboard.vue.${getDomainName()}`}`;
         }

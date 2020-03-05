@@ -23,18 +23,16 @@ import { Prop } from 'vue-property-decorator';
 
 // evan.network imports
 import { EvanComponent } from '@evan.network/ui-vue-core';
-import * as dappBrowser from '@evan.network/ui-dapp-browser';
+import { Mnemonic } from '@evan.network/api-blockchain-core';
 
 @Component({ })
-export default class Mnemonic extends mixins(EvanComponent) {
+export default class MnemonicComponent extends mixins(EvanComponent) {
   /**
    * incoming mnemonic, if empty, input will automatically enabled
    */
   @Prop({
     type: String,
-    default: function() {
-      return '';
-    }
+    default: '',
   }) mnemonic;
 
   /**
@@ -42,9 +40,7 @@ export default class Mnemonic extends mixins(EvanComponent) {
    */
   @Prop({
     type: Boolean,
-    default: function() {
-      return false;
-    }
+    default: false,
   }) disabled;
 
   /**
@@ -52,34 +48,32 @@ export default class Mnemonic extends mixins(EvanComponent) {
    */
   @Prop({
     type: String,
-    default: function() {
-      return 'words';
-    }
+    default: 'words',
   }) mode;
 
   // initial words
-  initial: Array<string> = [ ];
+  initial: Array<string> = [];
 
   // current mnemonic splitted
-  words: Array<string> = [ ];
+  words: Array<string> = [];
 
   /**
    * Which words were adjusted?
    */
-  dirtyWords: Array<boolean> = [ ];
+  dirtyWords: Array<boolean> = [];
 
-  // all words concadinated into a single string, so we can insert the mnemonic also using
-  // textarea
+  /* all words concatenated into a single string, so we can insert the mnemonic also using
+     textarea */
   mnemonicText = '';
 
   // all words that are available for our mnemonics
-  lightWalletWords = dappBrowser.lightwallet.getMnemonicLib().Words.ENGLISH;
+  lightWalletWords = Mnemonic.Words.ENGLISH;
 
   // current words that will be selectable by the autocompletion
-  mnemonicWords = [ ] as any;
+  mnemonicWords = [] as any;
 
   // which words are correcxt?
-  correctWords = [ ] as Array<boolean>;
+  correctWords = [] as Array<boolean>;
 
   // should the textarea used?
   useTextArea = false;
@@ -96,7 +90,7 @@ export default class Mnemonic extends mixins(EvanComponent) {
   // any mnemonic word has been modified
   anyWordDirty = false;
 
-  created () {
+  created() {
     // check the initial mode
     this.useTextArea = this.$props.mode === 'textarea';
 
@@ -105,15 +99,15 @@ export default class Mnemonic extends mixins(EvanComponent) {
       this.initial = this.$props.mnemonic.split(' ');
     } else {
       // fill empty words
-      this.initial = [ '', '', '', '', '', '', '', '', '', '', '', '' ];
+      this.initial = new Array(12).fill('');
     }
 
     // fill empty words
     this.fillEmptyWords(this.initial);
 
-    // set values for edition (copy reference)
-    this.words = ([ ] as Array<string>).concat(this.initial);
-    this.mnemonicText = this.words.join(' ').replace(/\s+$/, '');
+    // set values for edition (copy values)
+    this.words = [...this.initial];
+    this.mnemonicText = this.words.join(' ').trim();
 
     // if a riddle value is provided, start it!
     if (this.$props.riddle) {
@@ -149,14 +143,13 @@ export default class Mnemonic extends mixins(EvanComponent) {
 
   async getFilteredMnemonicWords(index) {
     if (!this.words[index] || this.words[index].length < 2) {
-      return [ ];
-    } else {
-      const lowerCase = this.words[index].toLowerCase();
-
-      return this.lightWalletWords
-        .filter(word => word.indexOf(lowerCase) === 0 && word !== lowerCase)
-        .slice(0, 10);
+      return [];
     }
+    const lowerCase = this.words[index].toLowerCase();
+
+    return this.lightWalletWords
+      .filter((word) => word.indexOf(lowerCase) === 0 && word !== lowerCase)
+      .slice(0, 10);
   }
 
   /**
@@ -168,9 +161,8 @@ export default class Mnemonic extends mixins(EvanComponent) {
   isCorrectWord(index) {
     if (this.lightWalletWords.indexOf(this.words[index]) !== -1) {
       return true;
-    } else {
-      return false;
     }
+    return false;
   }
 
   /**
@@ -178,19 +170,17 @@ export default class Mnemonic extends mixins(EvanComponent) {
    */
   updateParent() {
     // check if all words are correct Mnemonic words
-    this.allWordsCorrect = !this.words.filter((word, index) =>
-      !this.correctWords[index]).length;
+    this.allWordsCorrect = !this.words.filter((word, index) => !this.correctWords[index]).length;
 
     try {
       // set current mnemonic integrity, to show a warning within the ui
-      this.mnemonicIntegrity = dappBrowser.lightwallet.getMnemonicLib()
-        .isValid(this.mnemonicText, this.lightWalletWords);
+      this.mnemonicIntegrity = Mnemonic.isValid(this.mnemonicText, this.lightWalletWords);
     } catch (ex) {
       this.mnemonicIntegrity = false;
     }
 
-    // update parent to handle the latest mnemonic text and send event, the the mnemonic is
-    // valid or not
+    /* update parent to handle the latest mnemonic text and send event, the the mnemonic is
+       valid or not */
     this.$emit('update:mnemonic', this.mnemonicText);
     this.$emit('update:valid', this.allWordsCorrect && this.mnemonicIntegrity);
   }
@@ -213,8 +203,8 @@ export default class Mnemonic extends mixins(EvanComponent) {
    */
   wordInputChanged(index) {
     // check current words
-    this.checkCorrectWords([ index ]);
-    this.mnemonicText = this.words.join(' ').replace(/\s+$/, '');
+    this.checkCorrectWords([index]);
+    this.mnemonicText = this.words.join(' ').trim();
     this.anyWordDirty = true;
 
     // update the original value
@@ -227,15 +217,15 @@ export default class Mnemonic extends mixins(EvanComponent) {
    * @param      {Array<number>}  indexes  indexes to check
    */
   checkCorrectWords(indexes) {
-    indexes.forEach(index => {
+    indexes.forEach((index) => {
       // if the word has only 1 character, don't show the preview
       if (this.words[index] && this.words[index].length < 2) {
         this.correctWords[index] = false;
-      // if a riddle is started (a initial value is available) and the same word was entered,
-      // its correct if no riddle is start, check if the word exists within the lightwallet
-      // words array, its a correct word!
-      } else if ((this.initial[index] && this.initial[index] === this.words[index]) ||
-        (!this.initial[index] && this.isCorrectWord(index))) {
+      /* if a riddle is started (a initial value is available) and the same word was entered,
+         its correct if no riddle is start, check if the word exists within the lightwallet
+         words array, its a correct word! */
+      } else if ((this.initial[index] && this.initial[index] === this.words[index])
+        || (!this.initial[index] && this.isCorrectWord(index))) {
         this.correctWords[index] = true;
         this.dirtyWords[index] = true;
       // set new list of suggestions
@@ -254,12 +244,12 @@ export default class Mnemonic extends mixins(EvanComponent) {
   setInputFocus() {
     setTimeout(() => {
       if (this.useTextArea) {
-        (this.$refs['mnemonicInput0'] as any).focus();
+        (this.$refs.mnemonicInput0 as any).focus();
       } else {
         // select the first uncorrect word input
         for (let i = 0; i < 12; i++) {
-          if (!this.correctWords[i] && this.$refs[`mnemonicInput${ i }`][0]) {
-            return (this.$refs[`mnemonicInput${ i }`][0] as any).focus();
+          if (!this.correctWords[i] && this.$refs[`mnemonicInput${i}`][0]) {
+            return (this.$refs[`mnemonicInput${i}`][0] as any).focus();
           }
         }
       }
@@ -289,7 +279,7 @@ export default class Mnemonic extends mixins(EvanComponent) {
     }
 
     // calculate the new mnemonicText
-    this.mnemonicText = this.words.join(' ').replace(/\s+$/, '');
+    this.mnemonicText = this.words.join(' ').trim();
 
     // make all words dirty, so the form validation will triggered
     this.words.forEach((word, index) => this.setDirty(index));
@@ -322,10 +312,10 @@ export default class Mnemonic extends mixins(EvanComponent) {
       if (splitData.length <= 12) {
         // add empty strings for fields at the end of the array
         this.words = splitData.concat([...Array(12 - splitData.length)].map(() => ''));
-        this.mnemonicText = this.words.join(' ').replace(/\s+$/, '');
+        this.mnemonicText = this.words.join(' ').trim();
 
         // update the original value
-        this.checkCorrectWords([ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, ]);
+        this.checkCorrectWords([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]);
         this.updateParent();
       }
     }
@@ -341,7 +331,6 @@ export default class Mnemonic extends mixins(EvanComponent) {
   }
 
   setDirty(index) {
-    this.dirtyWords[index] = true
+    this.dirtyWords[index] = true;
   }
 }
-

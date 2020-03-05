@@ -33,7 +33,7 @@ export default class DocumentationComponent extends mixins(EvanComponent) {
   /**
    * Tabs for top navigation
    */
-  navEntries: Array<any> = [ ];
+  navEntries: Array<any> = null;
 
   created() {
     this.navEntries = [
@@ -42,10 +42,10 @@ export default class DocumentationComponent extends mixins(EvanComponent) {
       { key: 'uidocs', icon: 'mdi mdi-format-color-fill' },
     ]
     .map(entry => (entry ? {
-      id: `nav-entry-${ entry.key }`,
-      href: `${ (<any>this).dapp.fullUrl }/${ entry.key }`,
-      text: `_help.docs.${ entry.key }`,
+      id: `nav-entry-${entry.key}`,
+      text: `_help.docs.${entry.key}`,
       icon: entry.icon,
+      to: { name: entry.key },
     } : null));
   }
 }

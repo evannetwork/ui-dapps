@@ -21,7 +21,7 @@
 try {
   // tslint:disable-next-line
   const { getDomainName, System } = require('@evan.network/ui-dapp-browser');
-  System.map['@evan.network/smart-contracts-core'] = `smartcontracts.${ getDomainName() }!dapp-content`;
+  System.map['@evan.network/smart-contracts-core'] = `smartcontracts.${getDomainName()}!dapp-content`;
 } catch (ex) {
   // ignore this, when importing smart-contracts outside from the evan.network dapp-browser environment
 }

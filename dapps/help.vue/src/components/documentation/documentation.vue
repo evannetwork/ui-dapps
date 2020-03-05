@@ -18,17 +18,23 @@
 */
 
 <template>
-  <div id="documentation" class="h-100">
+  <div
+    id="documentation"
+    class="h-100"
+  >
     <evan-dapp-wrapper class="h-100">
       <template v-slot:content>
         <evan-dapp-wrapper-level-2>
           <div style="width: 300px;">
-            <evan-nav-list :entries="navEntries"></evan-nav-list>
+            <evan-nav-list :entries="navEntries" />
           </div>
         </evan-dapp-wrapper-level-2>
 
-        <transition name="fade" mode="out-in">
-          <router-view></router-view>
+        <transition
+          name="fade"
+          mode="out-in"
+        >
+          <router-view />
         </transition>
       </template>
     </evan-dapp-wrapper>
@@ -36,6 +42,7 @@
 </template>
 
 <script lang="ts">
-  import DocumentationComponent from './documentation';
-  export default DocumentationComponent;
+import DocumentationComponent from './documentation';
+
+export default DocumentationComponent;
 </script>

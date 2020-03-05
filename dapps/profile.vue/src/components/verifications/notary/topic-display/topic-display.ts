@@ -277,7 +277,7 @@ export default class TopicDisplayComponent extends mixins(EvanComponent) {
       const runtime: bcc.Runtime = (<any> this).getRuntime();
       const { profileDApp } = (this as any).$store.state;
       this.companyName = (await profileUtils.getUserAlias(runtime, profileDApp.address,
-        profileDApp.accountDetails)) || runtime.activeAccount;
+        profileDApp.accountDetails)) || runtime.activeIdentity;
     }
 
     (this as any).$store.commit('toggleSidePanel', this.topic);

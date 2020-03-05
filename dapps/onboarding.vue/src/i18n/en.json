@@ -67,6 +67,7 @@
     },
     "invalid-mnemonic-integrity": "The composition of the words in your recovery key is incorrect. Please check your input.",
     "invalid-mnemonic-words-incorrect": "One or more of the given words is not allowed in recovery keys. Please check your input.",
+    "login": "Login",
     "mail-invitation-accepted": {
       "body": "Hello, <br>the user with the email address {userEmail} accepted your invitation to the evan.network and is now available under that name: {userAlias}.<br><br> Your evan.network Team",
       "subject": "User has accepted your request",
@@ -93,7 +94,7 @@
       "next": "Next",
       "no-profile": "No identity found",
       "no-profile-desc": "There is no evan.network identity associated with this recovery key.",
-      "not-signed-up": "You don't have an account yet? <a href=\"#/dashboard.vue.evan/onboarding.vue.evan/sign-up\">Sign Up</a>",
+      "not-signed-up": "You don't have an account yet?",
       "recovery-key": "Recovery Key",
       "title": "Log in",
       "welcome": "Contact request",
@@ -116,7 +117,7 @@
         "placeholder": "John Doe | Sample Company Inc.",
         "user": "Account name"
       },
-      "already-signed-up": "You are already signed up? <a href=\"#/dashboard.vue.evan/onboarding.vue.evan/sign-in\">Login</a>",
+      "already-signed-up": "You are already signed up?",
       "cancel-riddle": "Cancel",
       "create-account": "Create your account",
       "create-profile": {

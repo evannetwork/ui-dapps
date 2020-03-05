@@ -80,7 +80,7 @@ dispatcher
     // create b-mail including an notaryVerificationRequest attachment
     await runtime.mailbox.sendMail({
       content: {
-        from: runtime.activeAccount,
+        from: runtime.activeIdentity,
         to: notarySmartAgentAccountId,
         title: data.mail.title,
         body: data.mail.body,
@@ -89,7 +89,7 @@ dispatcher
           ...data.requestData,
         }],
       },
-    }, runtime.activeAccount, notarySmartAgentAccountId, verificationCost);
+    }, runtime.activeIdentity, notarySmartAgentAccountId, verificationCost);
   });
 
 export default dispatcher;

@@ -30,6 +30,7 @@ module.exports = function getCustomExcludes(customExcludes) {
     '@evan.network/ui': '@evan.network/ui',
     '@evan.network/ui-countries': '@evan.network/ui-countries',
     '@evan.network/ui-dapp-browser': '@evan.network/ui-dapp-browser',
+    '@evan.network/ui-session': '@evan.network/ui-session',
     '@evan.network/ui-vue-core': '@evan.network/ui-vue-core',
     'ajv-i18n': 'ajv-i18n',
     'bootstrap-vue': 'bootstrap-vue',

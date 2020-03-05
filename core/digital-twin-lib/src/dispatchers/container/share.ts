@@ -34,7 +34,7 @@ const dispatcher = new Dispatcher(
  * @return     {Container}  The container.
  */
 const getContainer = (runtime, address): Container => new Container(runtime as ContainerOptions, {
-  accountId: runtime.activeAccount,
+  accountId: runtime.activeIdentity,
   address,
 });
 
@@ -86,7 +86,7 @@ dispatcher
         await Promise.all(sharingData.shareConfigs.map(async (shareConfig: ContainerShareConfig) => {
           await instance.runtime.mailbox.sendMail(
             sharingData.bMailContent || data.bMailContent,
-            instance.runtime.activeAccount,
+            instance.runtime.activeIdentity,
             shareConfig.accountId,
           );
         }));

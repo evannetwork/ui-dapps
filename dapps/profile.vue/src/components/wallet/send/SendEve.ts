@@ -21,9 +21,9 @@
 import Component, { mixins } from 'vue-class-component';
 
 // evan.network imports
-import * as dappBrowser from '@evan.network/ui-dapp-browser';
 import * as bcc from '@evan.network/api-blockchain-core';
-import { bccUtils, profileUtils } from '@evan.network/ui';
+import { profileUtils } from '@evan.network/ui';
+import { bccHelper } from '@evan.network/ui-session';
 import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
 import { ContactInterface } from '@evan.network/ui-vue-core/src/interfaces';
 
@@ -126,11 +126,11 @@ export default class SendEveComponent extends mixins(EvanComponent) {
     this.loading = true;
 
     // load user contacts
-    this.accountOptions = await bccUtils.getContacts(this.runtime);
+    this.accountOptions = await profileUtils.getContacts(this.runtime);
 
     // setup currents users balance and define the gas fee to send eve
     const gasFee = 0.001;
-    this.currBalance = await dappBrowser.core.getBalance(this.runtime.activeAccount);
+    this.currBalance = await bccHelper.getBalance(this.runtime.activeIdentity);
 
     // setup formular
     const { web3 } = this.runtime;

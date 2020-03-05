@@ -1,0 +1,32 @@
+{
+  "public": {
+    "author": "evan GmbH",
+    "dapp": {
+      "dependencies": {
+        "uisession.libs": "^1.0.0"
+      },
+      "entrypoint": "olddappbrowser.js",
+      "files": [
+        "olddappbrowser.js"
+      ],
+      "origin": "QmeVe2Wz8J9J82on8qsgn5sKmXZVJVkAwxfNuCoLihzumx",
+      "type": "cached-dapp"
+    },
+    "dbcpVersion": 2,
+    "description": "Browserified api-blockchain-core to interact with evan.network blockchain.",
+    "license": {
+      "file": "https://ipfs.test.evan.network/ipns/QmT1FwnYyURjLj7nKMwEuTPUBc5uJ6z1zAVsYnKfUL1X1q/AGPL-3.0-only.txt",
+      "type": "AGPL-3.0-only"
+    },
+    "name": "olddappbrowser",
+    "tags": [
+      "contractus",
+      "dapp",
+      "library"
+    ],
+    "version": "2.8.0",
+    "versions": {
+      "2.8.0": "Qmc2TaSco4aM8bUjPp7UyDZEswNC1Lak7x6d39QXKdjcvg"
+    }
+  }
+}

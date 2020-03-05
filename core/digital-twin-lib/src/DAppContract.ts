@@ -124,7 +124,7 @@ export class DAppContract {
     this.ownerAddress = ownerAddress;
 
     // load owner address and owner name
-    this.isOwner = this.ownerAddress === this.runtime.activeAccount;
+    this.isOwner = this.ownerAddress === this.runtime.activeIdentity;
     this.ensureI18N();
   }
 

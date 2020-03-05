@@ -37,7 +37,7 @@
               />
               <div class="mx-auto" />
               <evan-button
-                v-if="$store.state.runtime && $route.params.address === $store.state.runtime.activeAccount"
+                v-if="$store.state.runtime && $route.params.address === $store.state.runtime.activeIdentity"
                 class="d-flex"
                 type="secondary"
                 size="sm"

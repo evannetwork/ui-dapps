@@ -126,7 +126,7 @@ class DAppContainer extends Container {
    * Call super and initialize new container class.
    */
   constructor(vue: EvanComponent, runtime: Runtime, address: string, name?: string) {
-    super(runtime as DigitalTwinOptions, { accountId: runtime.activeAccount, address });
+    super(runtime as DigitalTwinOptions, { accountId: runtime.activeIdentity, address });
     this.name = name;
     this.baseConstructor(vue, runtime, address);
   }
@@ -140,7 +140,7 @@ class DAppContainer extends Container {
     this.listEntryCounts = {};
 
     this.permissions = await this.getPermissions();
-    this.isOwner = this.runtime.activeAccount === this.ownerAddress;
+    this.isOwner = this.runtime.activeIdentity === this.ownerAddress;
     await Promise.all([
       this.ensureDispatcherStates(),
       this.loadEntryValues(),
@@ -319,7 +319,7 @@ class DAppContainer extends Container {
       read = [],
       readWrite = [],
       removeListEntries = [],
-    } = await this.getContainerShareConfigForAccount(this.runtime.activeAccount);
+    } = await this.getContainerShareConfigForAccount(this.runtime.activeIdentity);
 
     const permissions = {
       type: {

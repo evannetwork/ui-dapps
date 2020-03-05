@@ -22,7 +22,7 @@ import Component, { mixins } from 'vue-class-component';
 
 /* evan.network imports
    internal */
-import { bccUtils } from '@evan.network/ui';
+import { profileUtils } from '@evan.network/ui';
 import { ContactInterface } from '@evan.network/ui-vue-core/src/interfaces';
 import { ContainerShareConfig, Profile, ProfileOptions } from '@evan.network/api-blockchain-core';
 import { EvanComponent } from '@evan.network/ui-vue-core';
@@ -144,7 +144,7 @@ class ProfileSharingsComponent extends mixins(EvanComponent) {
     this.handleWindowResize();
 
     // load contacts from addressbook
-    this.contacts = await bccUtils.getContacts(this.getRuntime());
+    this.contacts = await profileUtils.getContacts(this.getRuntime());
 
     // load shared contacts
     this.sharedContacts = await getProfilePermissions(this);
@@ -222,9 +222,9 @@ class ProfileSharingsComponent extends mixins(EvanComponent) {
     const runtime = this.getRuntime();
     let profileAddress = runtime.profile.profileContract.options.address;
 
-    if (runtime.activeAccount !== this.$route.params.address) {
+    if (runtime.activeIdentity !== this.$route.params.address) {
       const profile = new Profile({
-        accountId: runtime.activeAccount,
+        accountId: runtime.activeIdentity,
         profileOwner: this.$route.params.address,
         ...(runtime as ProfileOptions),
       });

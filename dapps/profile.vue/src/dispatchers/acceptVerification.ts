@@ -35,7 +35,7 @@ dispatcher
     const { runtime } = instance;
 
     await runtime.verifications.confirmVerification(
-      runtime.activeAccount,
+      runtime.activeIdentity,
       data.address,
       data.id,
     );

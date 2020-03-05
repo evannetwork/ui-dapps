@@ -18,15 +18,12 @@
 */
 
 // vue imports
-import Vue from 'vue';
 import Component, { mixins } from 'vue-class-component';
-import { Prop } from 'vue-property-decorator';
+import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
 // evan.network imports
 import EvanComponent from '../../component';
 import DAppWrapperUtils from '../dapp-wrapper/utils';
-import * as bcc from '@evan.network/api-blockchain-core';
-import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
 
 /**
@@ -62,12 +59,12 @@ export default class DAppWrapperLevel2Component extends mixins(EvanComponent) {
    * current element to this element.
    */
   mounted() {
-    let highestWrapper: any = DAppWrapperUtils.getActiveDAppWrapper(this.$el);
+    const highestWrapper: any = DAppWrapperUtils.getActiveDAppWrapper(this.$el);
 
     // if it's not the body, clear the latest wrapper-sidebar-2 element and
     if (highestWrapper) {
       this.highestSidebar = highestWrapper.querySelector('.dapp-wrapper-sidebar-2');
-      this.contentElement = (<any>this.$el).firstChild;
+      this.contentElement = (<any> this.$el).firstChild;
 
       // clear element
       this.highestSidebar.innerHTML = '';

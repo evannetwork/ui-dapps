@@ -46,7 +46,7 @@ dispatcher
     await instance.runtime.description.setDescription(
       address,
       { public: description },
-      instance.runtime.activeAccount
+      instance.runtime.activeIdentity
     );
   });
 

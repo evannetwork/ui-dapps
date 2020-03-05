@@ -94,17 +94,17 @@ export default class ProfileRootComponent extends mixins(EvanComponent) {
   async setupProfile(): Promise<void> {
     const { address } = this.$route.params;
     const runtime = this.getRuntime();
-    const { activeAccount } = runtime;
+    const { activeIdentity } = runtime;
     const profile = new bcc.Profile({
-      accountId: runtime.activeAccount,
+      accountId: runtime.activeIdentity,
       profileOwner: address,
       ...runtime,
     } as bcc.ProfileOptions);
     const profileDApp: any = {
-      activeAccount,
+      activeIdentity,
       address,
       data: { },
-      isMyProfile: address === activeAccount,
+      isMyProfile: address === activeIdentity,
       permissions: { read: [], readWrite: [] },
       profile,
     };
@@ -123,7 +123,7 @@ export default class ProfileRootComponent extends mixins(EvanComponent) {
     if (profile.profileContainer && profileDApp.description && profileDApp.description.dataSchema) {
       // load permissions
       const { readWrite, read } = await profile.profileContainer.getContainerShareConfigForAccount(
-        activeAccount,
+        activeIdentity,
       );
       profileDApp.permissions = {
         read: (read || []).concat(readWrite || []),

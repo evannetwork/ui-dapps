@@ -67,9 +67,6 @@ export default class AddComponent extends mixins(EvanComponent) {
         }
       },
     }));
-
-     // TODO: throws sometimes error: TypeError: Cannot read property 'focus' of undefined
-    this.$nextTick(() => (this.$refs['address'] as any).focus());
   }
 
   /**
@@ -97,7 +94,7 @@ export default class AddComponent extends mixins(EvanComponent) {
       // check if the description exists
       try {
         const description = await runtime.description.getDescription(
-          this.favoriteForm.address.value, runtime.activeAccount);
+          this.favoriteForm.address.value, runtime.activeIdentity);
 
         // if it is invalid, show the not found
         if (description && description.public) {

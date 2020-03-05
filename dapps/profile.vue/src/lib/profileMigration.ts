@@ -71,7 +71,7 @@ export default class ProfileMigrationLibrary {
    */
   static async migrateProfile(runtime, type: string) {
     const profileAddress = runtime.profile.profileContract.options.address;
-    const currentAccount = runtime.activeAccount;
+    const currentAccount = runtime.activeIdentity;
 
     const oldDataFields = ['addressBook', 'bookmarkedDapps', 'contracts', 'contacts', 'profileOptions', 'publicKey', 'templates'];
     const newDataFields = ['accountDetails', 'contact', 'deviceDetails', 'registration'];
