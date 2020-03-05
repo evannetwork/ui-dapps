@@ -45,7 +45,7 @@ export default class BccHelper {
    * @param      {string}  accountId  account address to checkout
    * @param      {string}  identity   identity to check
    */
-  static async checkUseIdentity(accountId: string, passedIdentity?: string): Promise<boolean> {
+  static async isIdentityUsed(accountId: string, passedIdentity?: string): Promise<boolean> {
     if (accountId !== nullAddress) {
       // resolve empty identity and load the identity for the account id as default
       const identity = await BccHelper.getIdentityForAccount(accountId, passedIdentity);
@@ -89,7 +89,7 @@ export default class BccHelper {
     const web3 = getWeb3Instance();
     const { soliditySha3 } = web3.utils;
     const options = inputOptions;
-    const useIdentity = await BccHelper.checkUseIdentity(accountId, identity);
+    const useIdentity = await BccHelper.isIdentityUsed(accountId, identity);
 
     /**
      * TODO: Use identity encryption key here! Keep in mind: When onboarding a new account, identity
@@ -244,7 +244,7 @@ export default class BccHelper {
    */
   static async setEncryptionKeyForAccount(accountId: string, password: string): Promise<boolean> {
     const accountIdentity = await BccHelper.getIdentityForAccount(accountId);
-    const useIdentity = await BccHelper.checkUseIdentity(accountId, accountIdentity);
+    const useIdentity = await BccHelper.isIdentityUsed(accountId, accountIdentity);
     const passwordCheck = async (encryptionSalt): Promise<boolean> => {
       const encryptionKey = EvanlightWallet.getEncryptionKeyFromPassword(encryptionSalt, password);
       const runtime = await BccHelper.createRuntime(accountId, accountIdentity, encryptionKey);
@@ -305,7 +305,7 @@ export default class BccHelper {
    * @return     {boolean}  True if account onboarded, False otherwise
    */
   static async isOnboarded(address: string, identity?: string): Promise<boolean> {
-    const useIdentity = await BccHelper.checkUseIdentity(address, identity);
+    const useIdentity = await BccHelper.isIdentityUsed(address, identity);
     let profileAddress = nullAddress;
 
     try {

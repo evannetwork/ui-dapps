@@ -179,8 +179,6 @@ export default class DispatcherInstance {
   async run(): Promise<void> {
     if (this.stepIndex < this.dispatcher.steps.length) {
       if (this.status === 'running') {
-        // create stack trace before, that we can get a correct stack trace
-        const runStackTrace = new Error('Error while running dispatcher!');
         try {
           // run the next step
           await this.dispatcher.steps[this.stepIndex](this, this.data);
@@ -192,9 +190,7 @@ export default class DispatcherInstance {
         } catch (ex) {
           this.error = `${ex.message} (${ex.stack})`;
           this.status = 'error';
-
-          runStackTrace.message = this.error;
-          this.runtime.logger.log(runStackTrace as any, 'error');
+          this.runtime.logger.log(ex as any, 'error');
         }
 
         // save the queue data

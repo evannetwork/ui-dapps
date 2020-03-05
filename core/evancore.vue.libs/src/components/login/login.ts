@@ -95,7 +95,7 @@ export default class LoginComponent extends mixins(EvanComponent) {
           this.form.password.value,
         );
       } catch (ex) {
-        utils.devLog(ex, 'error');
+        utils.log(ex, 'error');
         this.form.password.value = false;
       }
 
@@ -111,14 +111,9 @@ export default class LoginComponent extends mixins(EvanComponent) {
           );
         }
 
-<<<<<<< HEAD
-        if (this.dapp.baseHash.endsWith(`onboarding.vue.${getDomainName()}`)) {
-          session.provider = 'internal';
-=======
         if (this.dapp.baseHash.endsWith(`onboarding.vue.${getDomainName()}`)
           && !this.$route.query.inviteeAddress) {
-          dappBrowser.core.setCurrentProvider('internal');
->>>>>>> develop
+          session.provider = 'internal';
           window.location.hash = `/${this.$route.query.origin
             || `dashboard.vue.${getDomainName()}`}`;
         }

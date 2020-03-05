@@ -83,7 +83,7 @@ export default class AcceptContact extends mixins(EvanComponent) {
       const vault = await lightwallet.loadUnlockedVault();
       const activeAccount = lightwallet.getPrimaryAccount(vault);
 
-      // setup runtime and save it to the axios store
+      // setup runtime and save it to the vuex store
       this.$store.state.runtime = await bccHelper.createRuntime(
         activeAccount,
         null,
@@ -186,7 +186,7 @@ export default class AcceptContact extends mixins(EvanComponent) {
         ].join('/');
       }, 2000);
     } catch (ex) {
-      utils.devLog(ex.message, 'error');
+      utils.log(ex.message, 'error');
       (<any> this.$refs.acceptingError).show();
     }
 

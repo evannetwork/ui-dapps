@@ -356,43 +356,43 @@ export default class SignUp extends mixins(EvanComponent) {
       // start profile creation animation and status display
       this.nextCreationStatus();
 
-      // try {
-      const {
-        password, accountId, privateKey, runtime, vault,
-      } = await this.getProfileCreationData();
+      try {
+        const {
+          password, accountId, privateKey, runtime, vault,
+        } = await this.getProfileCreationData();
 
-      await bcc.Onboarding.createOfflineProfile(
-        runtime,
-        this.userData,
-        accountId,
-        privateKey,
-        this.recaptchaToken,
-        runtime.environment,
-      );
+        await bcc.Onboarding.createOfflineProfile(
+          runtime,
+          this.userData,
+          accountId,
+          privateKey,
+          this.recaptchaToken,
+          runtime.environment,
+        );
 
-      await this.finishOnboarding(runtime, vault, accountId, password);
+        await this.finishOnboarding(runtime, vault, accountId, password);
 
-      // show done animation and navigate to signed in page
-      this.creatingProfile = 5;
-      setTimeout(() => {
-        /* if the user were invited, show the sign in step, else navigate directly to the root
-           page. */
-        if (!this.$route.query.inviteeAlias) {
-          this.navigateToEvan();
-        } else {
-          this.creatingProfile = 0;
-          this.onboardedDialog = true;
-        }
-      }, 2000);
-      // } catch (ex) {
-      //   // reset all steps of proile creation
-      //   console.error(ex.message, 'error');
-      //   this.creatingProfile = 0;
-      //   this.creationTime = -1;
-      //   this.recaptchaToken = null;
-      //   (this.$refs.creatingProfileError as any).show();
-      //   window.clearTimeout(this.timeoutCreationStatus);
-      // }
+        // show done animation and navigate to signed in page
+        this.creatingProfile = 5;
+        setTimeout(() => {
+          /* if the user were invited, show the sign in step, else navigate directly to the root
+             page. */
+          if (!this.$route.query.inviteeAlias) {
+            this.navigateToEvan();
+          } else {
+            this.creatingProfile = 0;
+            this.onboardedDialog = true;
+          }
+        }, 2000);
+      } catch (ex) {
+        // reset all steps of proile creation
+        console.error(ex.message, 'error');
+        this.creatingProfile = 0;
+        this.creationTime = -1;
+        this.recaptchaToken = null;
+        (this.$refs.creatingProfileError as any).show();
+        window.clearTimeout(this.timeoutCreationStatus);
+      }
 
       // stop ui status updates
       window.clearTimeout(this.timeoutCreationStatus);

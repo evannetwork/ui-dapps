@@ -170,7 +170,7 @@ export default class BreadcrumbsComponent extends mixins(EvanComponent) {
         // append the current element
         this.dappWrapperBreadcrumb.appendChild(this.$el);
       } else {
-        dappBrowser.utils.devLog(`dapp-wrapper-sidebar-2 element not included within an evan
+        dappBrowser.utils.log(`dapp-wrapper-sidebar-2 element not included within an evan
           dapp wrapper...`, 'warning');
       }
     }

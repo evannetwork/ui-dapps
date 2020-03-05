@@ -66,7 +66,7 @@ export default class EvanLightWallet {
    *
    * @return     {string}  12 word mnemomnic
    */
-  static generateMnemonic() {
+  static generateMnemonic(): string {
     return keystore.generateRandomSeed();
   }
 
@@ -241,7 +241,7 @@ export default class EvanLightWallet {
    * @param      {string}  accountId  account to get the private key from
    * @return     {<type>}  The private key.
    */
-  static getPrivateKey(vault: any, accountId: string) {
+  static getPrivateKey(vault: any, accountId: string): string {
     return vault.exportPrivateKey(accountId.toLowerCase(), vault.pwDerivedKey);
   }
 

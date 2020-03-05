@@ -75,7 +75,7 @@ export default class DAppWrapperLevel2Component extends mixins(EvanComponent) {
       // enable sidebar level 2 handler on small devices for displaying menu button
       window.dispatchEvent(new CustomEvent('dapp-wrapper-sidebar-2-enable'));
     } else {
-      dappBrowser.utils.devLog(`dapp-wrapper-sidebar-2 element not included within an evan
+      dappBrowser.utils.log(`dapp-wrapper-sidebar-2 element not included within an evan
         dapp wrapper...`, 'warning');
     }
 

@@ -44,16 +44,16 @@ export const aliasCache = { };
  */
 export async function getUserAlias(
   runtime: Runtime,
-  accountId: string = runtime.activeIdentity,
+  identity: string = runtime.activeIdentity,
   accountDetails?: any,
 ): Promise<string> {
-  const cacheID = `${runtime.activeIdentity}.${accountId}`;
+  const cacheID = `${runtime.activeAccount}.${identity}`;
 
   if (!aliasCache[cacheID]) {
     aliasCache[cacheID] = (async (): Promise<void> => {
       const otherProfile = new Profile({
         ...(runtime as ProfileOptions),
-        profileOwner: accountId,
+        profileOwner: identity,
         accountId: runtime.activeIdentity,
       });
       let details = { ...accountDetails };
@@ -70,9 +70,9 @@ export async function getUserAlias(
       }
 
       const addressBook = await runtime.profile.getAddressBook();
-      const contact = addressBook.profile[accountId];
+      const contact = addressBook.profile[identity];
 
-      return contact ? contact.alias : accountId;
+      return contact ? contact.alias : identity;
     })();
 
     // reset alias cache after 10 seconds

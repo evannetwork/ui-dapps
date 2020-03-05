@@ -441,7 +441,7 @@ export default class TwinSignUp extends mixins(SignUp) {
       }, 2000);
     } catch (ex) {
       // reset all steps of proile creation
-      utils.devLog(ex.message, 'error');
+      utils.log(ex.message, 'error');
       this.creatingProfile = 0;
       this.creationTime = -1;
       this.recaptchaToken = null;

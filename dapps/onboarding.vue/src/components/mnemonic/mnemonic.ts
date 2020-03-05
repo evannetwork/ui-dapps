@@ -32,9 +32,7 @@ export default class MnemonicComponent extends mixins(EvanComponent) {
    */
   @Prop({
     type: String,
-    default() {
-      return '';
-    },
+    default: '',
   }) mnemonic;
 
   /**
@@ -42,9 +40,7 @@ export default class MnemonicComponent extends mixins(EvanComponent) {
    */
   @Prop({
     type: Boolean,
-    default() {
-      return false;
-    },
+    default: false,
   }) disabled;
 
   /**
@@ -52,9 +48,7 @@ export default class MnemonicComponent extends mixins(EvanComponent) {
    */
   @Prop({
     type: String,
-    default() {
-      return 'words';
-    },
+    default: 'words',
   }) mode;
 
   // initial words
@@ -68,7 +62,7 @@ export default class MnemonicComponent extends mixins(EvanComponent) {
    */
   dirtyWords: Array<boolean> = [];
 
-  /* all words concadinated into a single string, so we can insert the mnemonic also using
+  /* all words concatenated into a single string, so we can insert the mnemonic also using
      textarea */
   mnemonicText = '';
 
@@ -105,15 +99,15 @@ export default class MnemonicComponent extends mixins(EvanComponent) {
       this.initial = this.$props.mnemonic.split(' ');
     } else {
       // fill empty words
-      this.initial = ['', '', '', '', '', '', '', '', '', '', '', ''];
+      this.initial = new Array(12).fill('');
     }
 
     // fill empty words
     this.fillEmptyWords(this.initial);
 
-    // set values for edition (copy reference)
-    this.words = ([] as Array<string>).concat(this.initial);
-    this.mnemonicText = this.words.join(' ').replace(/\s+$/, '');
+    // set values for edition (copy values)
+    this.words = [...this.initial];
+    this.mnemonicText = this.words.join(' ').trim();
 
     // if a riddle value is provided, start it!
     if (this.$props.riddle) {
@@ -210,7 +204,7 @@ export default class MnemonicComponent extends mixins(EvanComponent) {
   wordInputChanged(index) {
     // check current words
     this.checkCorrectWords([index]);
-    this.mnemonicText = this.words.join(' ').replace(/\s+$/, '');
+    this.mnemonicText = this.words.join(' ').trim();
     this.anyWordDirty = true;
 
     // update the original value
@@ -285,7 +279,7 @@ export default class MnemonicComponent extends mixins(EvanComponent) {
     }
 
     // calculate the new mnemonicText
-    this.mnemonicText = this.words.join(' ').replace(/\s+$/, '');
+    this.mnemonicText = this.words.join(' ').trim();
 
     // make all words dirty, so the form validation will triggered
     this.words.forEach((word, index) => this.setDirty(index));
@@ -318,7 +312,7 @@ export default class MnemonicComponent extends mixins(EvanComponent) {
       if (splitData.length <= 12) {
         // add empty strings for fields at the end of the array
         this.words = splitData.concat([...Array(12 - splitData.length)].map(() => ''));
-        this.mnemonicText = this.words.join(' ').replace(/\s+$/, '');
+        this.mnemonicText = this.words.join(' ').trim();
 
         // update the original value
         this.checkCorrectWords([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]);

@@ -20,6 +20,7 @@
 import { config, routing } from '@evan.network/ui-dapp-browser';
 import {
   ExecutorAgent,
+  lodash,
   logLog,
   logLogLevel,
   Runtime,
@@ -29,13 +30,17 @@ import lightwallet from './lightwallet';
 import bccHelper from './bccHelper';
 
 // external executor variables
-let agentExecutor;
+let agentExecutor: {
+  accountId: string;
+  agentUrl: string;
+  identity?: string;
+  key: string;
+  token: string;
+};
 // save the current account for later usage
 let lastAccount = '';
 // save the current account for later usage
 let lastIdentity = '';
-// used to check for url overwritten account / identity parameters
-const queryParams = routing.getQueryParameters();
 // used to only start runtime resolve once
 const runtimeLoadCache = { };
 
@@ -70,6 +75,7 @@ export default class EvanSession {
       // internal
       default: {
         // if the url was opened using an specific accountId, use this one!
+        const queryParams = routing.getQueryParameters();
         if (queryParams.accountId) {
           return queryParams.accountId;
         }
@@ -92,6 +98,7 @@ export default class EvanSession {
       // internal
       default: {
         // if the url was opened using an specific identity, use this one!
+        const queryParams = routing.getQueryParameters();
         if (queryParams.identity) {
           return queryParams.identity;
         }
@@ -109,6 +116,7 @@ export default class EvanSession {
   }
 
   static get provider(): string {
+    const queryParams = routing.getQueryParameters();
     let provider = 'internal';
 
     if (agentExecutor) {
@@ -132,51 +140,55 @@ export default class EvanSession {
    */
   static async getAgentExecutor(): Promise<any> {
     // if the agentExecutor wasn't loaded before, check if the query parameter was specified
-    if (typeof agentExecutor === 'undefined') {
-      const token = queryParams['agent-executor'];
-      const agentUrl = queryParams['agent-executor-url']
-        || 'https://agents.test.evan.network';
-
-      /* if an token is specified, load the data from the edge-server
-         TODO: currently the parameters are specified via query parameters => load it via edge-server */
-      if (token) {
-        /* use a promise await to implement an timeout (this function will be called at the beginning
-           of the page load, so everything will stop working, when agent not responds) */
-        await (new Promise((resolve) => {
-          // dont resolve twice
-          let timedOut = false;
-
-          // break loading after 10 seconds
-          const agentTimeout = window.setTimeout(() => {
-            agentExecutor = false;
-            timedOut = true;
-
-            resolve();
-          }, 10 * 1000);
-
-          // load data from edge-server
-          const accountId = queryParams['agent-executor-account-id'];
-          const key = queryParams['agent-executor-key'];
-
-          // if all parameters are valid, set the executor agent
-          if (accountId && key) {
-            agentExecutor = {
-              accountId, agentUrl, key, token,
-            };
-          } else {
-            agentExecutor = false;
-          }
-
-          // if the timeout wasn't triggered => resolve it normally
-          if (!timedOut) {
-            window.clearTimeout(agentTimeout);
-            resolve();
-          }
-        }));
-      } else {
-        agentExecutor = false;
-      }
+    if (agentExecutor !== undefined) {
+      return agentExecutor;
     }
+
+    const queryParams = routing.getQueryParameters();
+    const token = queryParams['agent-executor'];
+    const agentUrl = queryParams['agent-executor-url']
+      || 'https://agents.test.evan.network';
+
+    /* if an token is specified, load the data from the edge-server
+       TODO: currently the parameters are specified via query parameters => load it via edge-server */
+    if (!token) {
+      agentExecutor = null;
+      return null;
+    }
+
+    /* use a promise await to implement an timeout (this function will be called at the beginning
+       of the page load, so everything will stop working, when agent not responds) */
+    await (new Promise((resolve) => {
+      // dont resolve twice
+      let timedOut = false;
+
+      // break loading after 10 seconds
+      const agentTimeout = window.setTimeout(() => {
+        agentExecutor = null;
+        timedOut = true;
+
+        resolve();
+      }, 10 * 1000);
+
+      // load data from edge-server
+      const accountId = queryParams['agent-executor-account-id'];
+      const key = queryParams['agent-executor-key'];
+
+      // if all parameters are valid, set the executor agent
+      if (accountId && key) {
+        agentExecutor = {
+          accountId, agentUrl, key, token,
+        };
+      } else {
+        agentExecutor = null;
+      }
+
+      // if the timeout wasn't triggered => resolve it normally
+      if (!timedOut) {
+        window.clearTimeout(agentTimeout);
+        resolve();
+      }
+    }));
 
     return agentExecutor;
   }
@@ -261,7 +273,7 @@ export default class EvanSession {
           isOnboarded = await bccHelper.isOnboarded(activeAccount, activeIdentity);
           // check for old profile
           if (isOnboarded) {
-            EvanSession.isOldProfile = await bccHelper.checkUseIdentity(activeAccount, activeIdentity);
+            EvanSession.isOldProfile = await bccHelper.isIdentityUsed(activeAccount, activeIdentity);
           }
         }
 
@@ -300,7 +312,7 @@ export default class EvanSession {
             EvanSession.accountIdentity,
             encryptionKey,
             privateKey,
-            JSON.parse(JSON.stringify(config)),
+            lodash.cloneDeep(config),
             null,
             { executor },
           );
@@ -309,7 +321,7 @@ export default class EvanSession {
             activeIdentity,
             encryptionKey,
             privateKey,
-            JSON.parse(JSON.stringify(config)),
+            lodash.cloneDeep(config),
             null,
             { executor },
           );
@@ -331,7 +343,7 @@ export default class EvanSession {
    */
   static async initialCheck(): Promise<void> {
     if (EvanSession.activeAccount) {
-      const useIdentity = await bccHelper.checkUseIdentity(
+      const useIdentity = await bccHelper.isIdentityUsed(
         EvanSession.activeAccount,
         EvanSession.accountIdentity,
       );
