@@ -33,6 +33,8 @@ export default class DIDComponent extends mixins(EvanComponent) {
 
   runtime: Runtime = null;
 
+  didService: DidService;
+
   onPageEntries = [
     {
       id: 'did',
@@ -49,19 +51,19 @@ export default class DIDComponent extends mixins(EvanComponent) {
   ]
 
   async created(): Promise<void> {
-    this.didDocument = await DidService.fetchDidDocument(this.getRuntime());
-    this.delegates = await DidService.getDelegates(this.didDocument);
+    console.log('this.getRuntime()', this.getRuntime());
+    this.didService = new DidService(this.getRuntime());
+    this.didDocument = await this.didService.fetchDidDocument();
+    this.delegates = await this.didService.getDelegates(this.didDocument);
     this.endpoints = await DidService.getServiceEndpoints(this.didDocument);
-    console.log('this.didDocument', this.didDocument);
-    console.log('this.delegates', this.delegates);
-    /* // TODO: switch after complete identity switch to: runtime.did.getDidDocument();
-       const identity = await this.runtime.verifications.getIdentityForAccount(this.runtime.activeAccount, true);
-       const did = await this.runtime.did.convertIdentityToDid(identity);
-       const document = await this.runtime.did.getDidDocumentTemplate();
-       await this.runtime.did.setDidDocument(did, document);
-       const retrieved = await this.runtime.did.getDidDocument(did); */
   }
 
+  async updateDelegates(delegates: Delegate[]): Promise<void> {
+    await this.didService.saveDelegates(delegates);
+    console.log('updated');
+  }
+
+  // TODO refactor to (renderless) vue component
   copyToClipboard(text: string): void {
     const textArea = document.createElement('textarea');
 

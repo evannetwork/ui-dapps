@@ -83,6 +83,7 @@
       <delegates
         id="delegates"
         :delegates="delegates"
+        @saveDelegates="updateDelegates"
       />
     </div>
   </div>

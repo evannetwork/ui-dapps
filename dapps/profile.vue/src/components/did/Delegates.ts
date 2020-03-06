@@ -22,7 +22,6 @@ import { EvanComponent, EvanTableColumn, ContactInterface } from '@evan.network/
 import { profileUtils } from '@evan.network/ui';
 import { isEqual } from 'lodash';
 import { Prop } from 'vue-property-decorator';
-import { DidService } from './DidService';
 import { Delegate } from './DidInterfaces';
 
 @Component
@@ -68,7 +67,7 @@ export default class DelegatesComponent extends mixins(EvanComponent) {
   }
 
   saveDelegates(): void {
-    DidService.saveDelegates(this.delegates);
+    this.$emit('saveDelegates', this.delegates);
     this.isEditMode = false;
   }
 
