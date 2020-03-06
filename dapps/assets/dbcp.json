@@ -13,7 +13,7 @@
         "assets.js",
         "assets.css"
       ],
-      "origin": "QmV7zp4uSDzJMQLdVHgLECQvmYKjJSDycV6UUU9eDVdvZx",
+      "origin": "QmQ3zum9CJWG84x1ed4H5ywCBr1jeMACcYiDbMUKdRXToh",
       "primaryColor": "#52964b",
       "secondaryColor": "#e9f9e7",
       "type": "cached-dapp"
@@ -39,7 +39,8 @@
     "version": "2.0.0",
     "versions": {
       "1.0.0": "QmUvPvZX2sSJUDCDUc16sL2SbaHvLpC8vvr8h2FowP7VQd",
-      "1.1.0": "QmUFpXturPS9sE3LVR31DuN3yyBJVkg57BhnHoEyQ1DecS"
+      "1.1.0": "QmUFpXturPS9sE3LVR31DuN3yyBJVkg57BhnHoEyQ1DecS",
+      "2.0.0": "QmSFEv3j6PbrnM3KQKBp2KQndEcZAs6981fDQiCJx9DMpE"
     }
   }
 }

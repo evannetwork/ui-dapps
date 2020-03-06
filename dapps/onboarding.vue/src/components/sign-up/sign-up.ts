@@ -422,7 +422,11 @@ export default class SignUp extends mixins(EvanComponent) {
 
     // force correct account and identity
     session.activeAccount = accountId;
-    session.activeIdentity = await bccHelper.getIdentityForAccount(accountId);
+    if (await bccHelper.isIdentityUsed(session.activeAccount)) {
+      session.activeIdentity = await bccHelper.getIdentityForAccount(accountId);
+    } else {
+      session.activeAccount = accountId;
+    }
   }
 
   /**

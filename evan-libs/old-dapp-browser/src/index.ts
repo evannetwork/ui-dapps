@@ -17,7 +17,9 @@
   the following URL: https://evan.network/license/
 */
 
-import { routing, System, ipfs, loading } from '@evan.network/ui-dapp-browser';
+import {
+  routing, System, ipfs, loading,
+} from '@evan.network/ui-dapp-browser';
 import * as CoreBundle from '@evan.network/api-blockchain-core';
 import * as SmartContracts from '@evan.network/smart-contracts-core';
 import { lightwallet } from '@evan.network/ui-session';
@@ -42,9 +44,9 @@ import './core-js.client.shim.js';
 /**
  * add page load performance tracking
  */
-window['evanloadTime'] = Date.now();
+window.evanloadTime = Date.now();
 
-/**************************************************************************************************/
+/** *********************************************************************************************** */
 /**
  * Keep orignal Promise from ZoneJS and restore it after bcc browserified was loaded, which
  * is overwriting the ZoneJS Promise
@@ -53,7 +55,7 @@ window['evanloadTime'] = Date.now();
  * `(window|global).Promise` has been overwritten.
  */
 // TODO: when bcc is loaded multiple times, zoneJS should also be saved
-const getDomainName = utils.getDomainName;
+const { getDomainName } = utils;
 let web3;
 let CoreRuntime;
 let definition;
@@ -67,14 +69,15 @@ evanGlobals.restIpfs = ipfs.restIpfs;
 evanGlobals.System = System;
 evanGlobals.queryParams = routing.getQueryParameters();
 
-evanGlobals.System.map['dapp-browser'] = `olddappbrowser.${ getDomainName() }!dapp-content`;
-evanGlobals.System.map['bcc'] = `bcc.${ getDomainName() }!dapp-content`;
-evanGlobals.System.map['bcc-profile'] = `bcc.${ getDomainName() }!dapp-content`;
-evanGlobals.System.map['bcc-bc'] = `bcc.${ getDomainName() }!dapp-content`;
-evanGlobals.System.map['@evan.network/api-blockchain-core'] = `bcc.${ getDomainName() }!dapp-content`;
-evanGlobals.System.map['@evan.network/dbcp'] = `bcc.${ getDomainName() }!dapp-content`;
-evanGlobals.System.map['smart-contracts'] = `smartcontracts.${ getDomainName() }!dapp-content`;
-evanGlobals.System.map['@evan.network/smart-contracts-core'] = `smartcontracts.${ getDomainName() }!dapp-content`;
+evanGlobals.System.map['dapp-browser'] = `olddappbrowser.${getDomainName()}!dapp-content`;
+evanGlobals.System.map['old-dapp-browser'] = `olddappbrowser.${getDomainName()}!dapp-content`;
+evanGlobals.System.map.bcc = `bcc.${getDomainName()}!dapp-content`;
+evanGlobals.System.map['bcc-profile'] = `bcc.${getDomainName()}!dapp-content`;
+evanGlobals.System.map['bcc-bc'] = `bcc.${getDomainName()}!dapp-content`;
+evanGlobals.System.map['@evan.network/api-blockchain-core'] = `bcc.${getDomainName()}!dapp-content`;
+evanGlobals.System.map['@evan.network/dbcp'] = `bcc.${getDomainName()}!dapp-content`;
+evanGlobals.System.map['smart-contracts'] = `smartcontracts.${getDomainName()}!dapp-content`;
+evanGlobals.System.map['@evan.network/smart-contracts-core'] = `smartcontracts.${getDomainName()}!dapp-content`;
 evanGlobals.System.map['@evan.network/ui-angular-libs'] = 'angularlibs.evan!dapp-content';
 evanGlobals.System.map['angular-libs'] = 'angularlibs.evan!dapp-content';
 evanGlobals.System.map['@evan.network/ui-angular-core'] = 'angularcore.evan!dapp-content';
@@ -103,7 +106,7 @@ export async function initializeEvanNetworkStructure(enableRouting = true): Prom
       utils.getBrowserName(),
       utils.getIsPrivateMode(),
     ]);
-    
+
     // ensure, that agent executor was loaded, before anything else was done
     await core.getAgentExecutor();
 
@@ -115,8 +118,8 @@ export async function initializeEvanNetworkStructure(enableRouting = true): Prom
         web3: {
           utils: {
             toChecksumAddress: (address: string) => address,
-          }
-        }
+          },
+        },
       };
 
       // use initial route to handle initially clicked notifications
@@ -166,7 +169,7 @@ export async function initializeEvanNetworkStructure(enableRouting = true): Prom
       }
 
       if (utils.devMode) {
-        window['evanGlobals'] = evanGlobals;
+        window.evanGlobals = evanGlobals;
       }
     } catch (ex) {
       console.error(ex);
@@ -205,4 +208,4 @@ export {
   utils,
   web3,
   web3Helper,
-}
+};
