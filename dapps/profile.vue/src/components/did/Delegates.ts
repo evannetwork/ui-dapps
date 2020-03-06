@@ -81,7 +81,7 @@ export default class DelegatesComponent extends mixins(EvanComponent) {
 
   async saveDelegates(): Promise<void> {
     this.isLoading = true;
-    await this.didService.saveDelegates(this.delegates);
+    await this.didService.saveDelegates(this.didDocument, this.delegates);
     this.isLoading = false;
     this.isEditMode = false;
   }

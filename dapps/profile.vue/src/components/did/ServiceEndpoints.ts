@@ -91,7 +91,7 @@ export default class ServiceEndpointsComponent extends mixins(EvanComponent) {
     }
 
     this.isLoading = true;
-    await this.didService.saveServiceEndpoints(this.endpoints);
+    await this.didService.saveServiceEndpoints(this.didDocument, this.endpoints);
     this.isLoading = false;
 
     this.isEditMode = false;

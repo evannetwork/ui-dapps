@@ -14,8 +14,6 @@ export class DidService {
 
   did: string;
 
-  didDoc: DidDocument;
-
   constructor(runtime) {
     if (this.instance) {
       return this.instance;
@@ -26,9 +24,9 @@ export class DidService {
 
   async fetchDidDocument(): Promise<DidDocument> {
     this.did = await this.runtime.did.convertIdentityToDid(this.runtime.activeIdentity);
-    this.didDoc = await this.runtime.did.getDidDocument(this.did);
+    const didDoc = await this.runtime.did.getDidDocument(this.did);
 
-    console.log('this.didDoc', this.didDoc);
+    console.log('didDoc', didDoc);
 
     // this.didDoc = {
     //   '@context': 'https://w3id.org/did/v1',
@@ -47,7 +45,7 @@ export class DidService {
     //   ],
     // };
 
-    return this.didDoc;
+    return didDoc;
   }
 
   async getDelegates(didDocument: DidDocument): Promise<Delegate[]> {
@@ -64,15 +62,16 @@ export class DidService {
       })));
   }
 
-  async saveDelegates(delegates: Delegate[]): Promise<void> {
+  async saveDelegates(didDoc: DidDocument, delegates: Delegate[]): Promise<void> {
     // Preserve the owner
-    const ownerEntry = DidService.getOwner(this.didDoc);
-    this.didDoc.authentication = [
+    const ownerEntry = DidService.getOwner(didDoc);
+    const newDoc = didDoc;
+    newDoc.authentication = [
       ownerEntry,
       ...delegates.map((delegate) => delegate.did),
     ];
 
-    return this.runtime.did.setDidDocument(this.did, this.didDoc);
+    return this.runtime.did.setDidDocument(this.did, newDoc);
   }
 
   // eslint-disable-next-line class-methods-use-this
@@ -86,14 +85,15 @@ export class DidService {
     }));
   }
 
-  async saveServiceEndpoints(endpoints: ServiceEndpoint[]): Promise<void> {
-    this.didDoc.service = endpoints.map((endpoint) => ({
+  async saveServiceEndpoints(didDoc: DidDocument, endpoints: ServiceEndpoint[]): Promise<void> {
+    const newDoc = didDoc;
+    newDoc.service = endpoints.map((endpoint) => ({
       id: endpoint.label,
       serviceEndpoint: endpoint.url,
       type: 'TODO',
     }));
 
-    return this.runtime.did.setDidDocument(this.did, this.didDoc);
+    return this.runtime.did.setDidDocument(this.did, newDoc);
   }
 
   static getOwner(didDoc: DidDocument): string {
