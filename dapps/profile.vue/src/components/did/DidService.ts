@@ -8,6 +8,8 @@ import { ServiceEndpoint, Delegate } from './DidInterfaces';
  * Handles logic for fetching and persisting DID documents
  */
 export class DidService {
+  instance;
+
   runtime: Runtime;
 
   did: string;
@@ -15,7 +17,11 @@ export class DidService {
   didDoc: DidDocument;
 
   constructor(runtime) {
+    if (this.instance) {
+      return this.instance;
+    }
     this.runtime = runtime;
+    this.instance = this;
   }
 
   async fetchDidDocument(): Promise<DidDocument> {
@@ -38,8 +44,6 @@ export class DidService {
     //     'did:evan:testcore:0xa658d10781d9e043276cb44dd1191042548d4b2f#key-2',
     //   ],
     // };
-
-    console.log('this.didDoc', this.didDoc);
 
     return this.didDoc;
   }

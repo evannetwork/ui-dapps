@@ -22,13 +22,21 @@ import { EvanComponent, EvanTableColumn, ContactInterface } from '@evan.network/
 import { profileUtils } from '@evan.network/ui';
 import { isEqual } from 'lodash';
 import { Prop } from 'vue-property-decorator';
+import { DidDocument } from '@evan.network/api-blockchain-core';
 import { Delegate } from './DidInterfaces';
+import { DidService } from './DidService';
 
 @Component
 export default class DelegatesComponent extends mixins(EvanComponent) {
   @Prop() delegates: Delegate[];
 
+  didService: DidService;
+
+  didDocument: DidDocument;
+
   isEditMode = false;
+
+  isLoading = true;
 
   contacts: ContactInterface[] = [];
 
@@ -51,7 +59,12 @@ export default class DelegatesComponent extends mixins(EvanComponent) {
 
   previousData: Delegate[] = [];
 
-  async mounted(): Promise<void> {
+  async created(): Promise<void> {
+    this.didService = new DidService(this.getRuntime());
+    this.didDocument = await this.didService.fetchDidDocument();
+    this.delegates = await this.didService.getDelegates(this.didDocument);
+    this.isLoading = false;
+
     this.contacts = await profileUtils.getContacts(this.getRuntime());
   }
 
@@ -66,8 +79,10 @@ export default class DelegatesComponent extends mixins(EvanComponent) {
     }];
   }
 
-  saveDelegates(): void {
-    this.$emit('saveDelegates', this.delegates);
+  async saveDelegates(): Promise<void> {
+    this.isLoading = true;
+    await this.didService.saveDelegates(this.delegates);
+    this.isLoading = false;
     this.isEditMode = false;
   }
 

@@ -34,7 +34,10 @@
     </div>
     <p>{{ '_profile.did.delegates-desc' | translate }}</p>
 
+    <evan-loading v-if="isLoading" />
+
     <evan-table
+      v-else
       class="simple"
       :fields="columns"
       :items="delegates"
@@ -92,7 +95,7 @@
     </evan-table>
 
     <div
-      v-if="isEditMode"
+      v-if="isEditMode && !isLoading"
       class="d-flex mt-3 align-items-center justify-content-between"
     >
       <div class="d-flex align-items-center">

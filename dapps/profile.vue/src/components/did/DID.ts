@@ -51,16 +51,8 @@ export default class DIDComponent extends mixins(EvanComponent) {
   ]
 
   async created(): Promise<void> {
-    console.log('this.getRuntime()', this.getRuntime());
     this.didService = new DidService(this.getRuntime());
     this.didDocument = await this.didService.fetchDidDocument();
-    this.delegates = await this.didService.getDelegates(this.didDocument);
-    this.endpoints = await DidService.getServiceEndpoints(this.didDocument);
-  }
-
-  async updateDelegates(delegates: Delegate[]): Promise<void> {
-    await this.didService.saveDelegates(delegates);
-    console.log('updated');
   }
 
   // TODO refactor to (renderless) vue component
