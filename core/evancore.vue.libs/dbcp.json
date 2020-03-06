@@ -12,7 +12,7 @@
         "router.vue.libs": "^2.5.0",
         "select.vue.libs": "^3.2.0",
         "toasted.vue.libs": "^1.1.27",
-        "ui.libs": "^1.10.0",
+        "ui.libs": "^2.0.0",
         "uisession.libs": "^1.0.0",
         "vue.libs": "^2.5.0",
         "vuex.libs": "3.1.0"
@@ -22,7 +22,7 @@
         "evancore.vue.libs.js",
         "evancore.vue.libs.css"
       ],
-      "origin": "QmVSP5xe5ob8RvfjPBwdfuSCeHzmSbVhJCCfnjFssXc7oA",
+      "origin": "QmRtN5riBVfwbF4Kf4UinHF2U7JK6BLLazyzGJAeeg4Xh2",
       "primaryColor": "",
       "secondaryColor": "#f9f9ff",
       "standalone": false,
@@ -45,7 +45,7 @@
       "evan",
       "library"
     ],
-    "version": "1.10.0",
+    "version": "2.0.0",
     "versions": {
       "1.0.0": "Qme8X3BUpiEpmsQkNR11C89HMeDnzbdVkSR3def4pSteUZ",
       "1.1.0": "QmU5gbcwomosnsbG826GgM1Y6qs8RQ2qh2HybzZKMg42oU",
@@ -61,7 +61,8 @@
       "1.7.0": "Qmc2UaDBLgZDAmXD5rguaufaL6w7kUuRRkx1c2NcwDZL6F",
       "1.8.0": "QmPvoqmRqGeFHwHGZfN8HWNwvByNzkMV6DFnY81wZipkcb",
       "1.9.0": "QmRDNQfFQhMDt4JjfF76o2cQrTD1sANnDSWpbMXWrsuPJt",
-      "1.10.0": "QmcdQvSv1K3C15SPbh5SSJ24goZFymMfW9D1N9uxFTMu3F"
+      "1.10.0": "QmcdQvSv1K3C15SPbh5SSJ24goZFymMfW9D1N9uxFTMu3F",
+      "2.0.0": "QmQkAjdX3BKPyUZNiGLoFveNaiqqKjaVgKGGqH15uQnuQ4"
     }
   }
 }

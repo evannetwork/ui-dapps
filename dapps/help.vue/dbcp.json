@@ -3,13 +3,13 @@
     "author": "evan GmbH",
     "dapp": {
       "dependencies": {
-        "evancore.vue.libs": "^1.10.0"
+        "evancore.vue.libs": "^2.0.0"
       },
       "entrypoint": "help.vue.js",
       "files": [
         "help.vue.js"
       ],
-      "origin": "QmTijuDLr7MeVDGivHtnAQSt1UjZ9JQ262DZcHCCUgzs7Y",
+      "origin": "QmRQieQgzzAegTVoV8FMUmvibqAyXrBTZEc1bHR6xkFF1g",
       "primaryColor": "#5170af",
       "secondaryColor": "#dfeaff",
       "type": "cached-dapp"
@@ -33,9 +33,10 @@
       "evan",
       "library"
     ],
-    "version": "0.0.1",
+    "version": "1.0.0",
     "versions": {
-      "0.0.1": "QmYahQVVYGd2xvLqZjssY7jsuFUpteMRegMZs58jPrsf9z"
+      "0.0.1": "QmYahQVVYGd2xvLqZjssY7jsuFUpteMRegMZs58jPrsf9z",
+      "1.0.0": "QmaaA9nox2RqE9HA3hTQrUitRYoMc5N3V9r4udp8X8qyzm"
     }
   }
 }

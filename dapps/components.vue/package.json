@@ -15,5 +15,5 @@
     "build": "gulp --gulpfile ../../scripts/dapp/gulpfile.js --dapp $(pwd)"
   },
   "typings": "dist/index.d.ts",
-  "version": "0.0.2"
+  "version": "1.0.0"
 }

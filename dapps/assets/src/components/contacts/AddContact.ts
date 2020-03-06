@@ -22,8 +22,9 @@ import Component, { mixins } from 'vue-class-component';
 
 // evan.network imports
 import { EvanComponent, EvanForm, SwipePanelComponentClass } from '@evan.network/ui-vue-core';
-import { ContactsService } from './ContactsService';
+import { profileUtils } from '@evan.network/ui';
 import { ContactFormData } from './ContactInterfaces';
+import { ContactsService } from './ContactsService';
 
 @Component
 export default class AddContactComponent extends mixins(EvanComponent) {
@@ -50,7 +51,7 @@ export default class AddContactComponent extends mixins(EvanComponent) {
   msgTitle = null;
 
   async created(): Promise<void> {
-    this.initState();
+    await this.initState();
     const runtime = this.getRuntime();
     this.contactService = new ContactsService(runtime);
     this.addressbook = await runtime.profile.getAddressBook();
@@ -59,7 +60,7 @@ export default class AddContactComponent extends mixins(EvanComponent) {
   /**
    * Init and reset component state
    */
-  private initState(): void {
+  private async initState(): Promise<void> {
     this.idOrEmailErrorMessage = '';
     this.idOrEmail = null;
 
@@ -67,7 +68,7 @@ export default class AddContactComponent extends mixins(EvanComponent) {
     this.alias = null;
     this.email = null;
     this.emailInvite = null;
-    this.fromAlias = window.localStorage.getItem('evan-alias');
+    this.fromAlias = await profileUtils.getUserAlias(this.getRuntime());
     this.msgBody = `${this.$t('_assets.contacts.message-prefill')}${
       this.fromAlias
     }`;
