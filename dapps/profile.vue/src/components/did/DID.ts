@@ -19,13 +19,13 @@
 
 import Component, { mixins } from 'vue-class-component';
 import { EvanComponent } from '@evan.network/ui-vue-core';
-import { Runtime } from '@evan.network/api-blockchain-core';
-import { Delegate, DidDocumentTemplate, ServiceEndpoint } from './DidInterfaces';
+import { Runtime, DidDocument } from '@evan.network/api-blockchain-core';
+import { Delegate, ServiceEndpoint } from './DidInterfaces';
 import { DidService } from './DidService';
 
 @Component
 export default class DIDComponent extends mixins(EvanComponent) {
-  didDocument: DidDocumentTemplate = null;
+  didDocument: DidDocument = null;
 
   delegates: Delegate[] = null;
 
@@ -49,7 +49,7 @@ export default class DIDComponent extends mixins(EvanComponent) {
   ]
 
   async created(): Promise<void> {
-    this.didDocument = await DidService.fetchDidDocument();
+    this.didDocument = await DidService.fetchDidDocument(this.getRuntime());
     this.delegates = await DidService.getDelegates(this.didDocument);
     this.endpoints = await DidService.getServiceEndpoints(this.didDocument);
     console.log('this.didDocument', this.didDocument);

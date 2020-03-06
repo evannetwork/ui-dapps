@@ -1,7 +1,8 @@
-import { ServiceEndpoint, DidDocumentTemplate, Delegate } from './DidInterfaces';
+import { Did, DidOptions, DidDocument } from '@evan.network/api-blockchain-core';
+import { ServiceEndpoint, Delegate } from './DidInterfaces';
 
 // TODO remove this
-const TEST_DID_DOC: DidDocumentTemplate = {
+const TEST_DID_DOC: DidDocument = {
   '@context': 'https://w3id.org/did/v1',
   id: 'did:evan:testcore:0x96da854df34f5dcd25793b75e170b3d8c63a95ad',
   publicKey: [
@@ -40,26 +41,24 @@ export class DidService {
   /**
    * TODO: handle profiles without created did?
    */
-  static async fetchDidDocument(): Promise<DidDocumentTemplate> {
-    // this.runtime = this.getRuntime();
+  static async fetchDidDocument(runtime): Promise<DidDocument> {
+    console.log(runtime.nameResolver.config);
 
-    // console.log(this.runtime.nameResolver.config);
+    const didInstance = new Did(runtime as DidOptions);
 
-    // const didInstance = new Did(this.runtime as DidOptions);
+    console.log('didInstance', didInstance);
+    const did = await didInstance.convertIdentityToDid(runtime.activeIdentity);
 
-    /* console.log('didInstance', didInstance);
-       const did = await didInstance.convertIdentityToDid(this.runtime.activeIdentity); */
+    console.log('did', did);
+    const didDocument = await didInstance.getDidDocument(did);
+    // const didDocument = await runtime.did.getDidDocument(did);
 
-    /* console.log('did', did);
-       this.didDocument = await didInstance.getDidDocument(did);
-       // this.didDocument = await this.runtime.did.getDidDocument(did); */
-
-    // console.log('didDocument', this.didDocument);
+    console.log('didDocument', didDocument);
 
     return Promise.resolve(TEST_DID_DOC);
   }
 
-  static async getDelegates(didDocument: DidDocumentTemplate): Promise<Delegate[]> {
+  static async getDelegates(didDocument: DidDocument): Promise<Delegate[]> {
     // regex to remove #key suffixes
     const regex = /([#])(key-)(\d)+/;
 
@@ -79,7 +78,7 @@ export class DidService {
     console.log('Updating delegates...', delegates);
   }
 
-  static async getServiceEndpoints(didDocument: DidDocumentTemplate): Promise<ServiceEndpoint[]> {
+  static async getServiceEndpoints(didDocument: DidDocument): Promise<ServiceEndpoint[]> {
     return didDocument.service.map((endpoint) => ({
       label: endpoint.id,
       url: endpoint.serviceEndpoint,
