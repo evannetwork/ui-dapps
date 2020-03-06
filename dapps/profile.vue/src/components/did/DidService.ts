@@ -28,6 +28,8 @@ export class DidService {
     this.did = await this.runtime.did.convertIdentityToDid(this.runtime.activeIdentity);
     this.didDoc = await this.runtime.did.getDidDocument(this.did);
 
+    console.log('this.didDoc', this.didDoc);
+
     // this.didDoc = {
     //   '@context': 'https://w3id.org/did/v1',
     //   id: 'did:evan:testcore:0xa658d10781d9e043276cb44dd1191042548d4b2f',
@@ -54,7 +56,7 @@ export class DidService {
 
     return Promise.all(didDocument.authentication
       // Filter out owner
-      .filter((auth) => auth !== DidService.getOwner(this.didDoc))
+      .filter((auth) => auth !== DidService.getOwner(didDocument))
       .map((auth) => auth.replace(regex, ''))
       .map(async (delegateId) => ({
         did: delegateId,
@@ -65,7 +67,6 @@ export class DidService {
   async saveDelegates(delegates: Delegate[]): Promise<void> {
     // Preserve the owner
     const ownerEntry = DidService.getOwner(this.didDoc);
-    console.log('ownerEntry', ownerEntry);
     this.didDoc.authentication = [
       ownerEntry,
       ...delegates.map((delegate) => delegate.did),
@@ -74,7 +75,8 @@ export class DidService {
     return this.runtime.did.setDidDocument(this.did, this.didDoc);
   }
 
-  static async getServiceEndpoints(didDocument: DidDocument): Promise<ServiceEndpoint[]> {
+  // eslint-disable-next-line class-methods-use-this
+  getServiceEndpoints(didDocument: DidDocument): ServiceEndpoint[] {
     if (!didDocument.service) {
       return [];
     }
@@ -84,9 +86,14 @@ export class DidService {
     }));
   }
 
-  static saveServiceEndpoints(endpoints: ServiceEndpoint[]): void {
-    // TODO logic
-    console.log('Updating endpoints...', endpoints);
+  async saveServiceEndpoints(endpoints: ServiceEndpoint[]): Promise<void> {
+    this.didDoc.service = endpoints.map((endpoint) => ({
+      id: endpoint.label,
+      serviceEndpoint: endpoint.url,
+      type: 'TODO',
+    }));
+
+    return this.runtime.did.setDidDocument(this.did, this.didDoc);
   }
 
   static getOwner(didDoc: DidDocument): string {

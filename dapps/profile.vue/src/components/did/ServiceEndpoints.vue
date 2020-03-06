@@ -34,7 +34,9 @@
     </div>
     <p>{{ '_profile.did.service-endpoints-desc' | translate }}</p>
 
+    <evan-loading v-if="isLoading" />
     <evan-table
+      v-else
       class="simple"
       :fields="columns"
       :items="endpoints"
@@ -100,7 +102,7 @@
     </evan-table>
 
     <div
-      v-if="isEditMode"
+      v-if="isEditMode && !isLoading"
       class="d-flex mt-3 align-items-center justify-content-between"
     >
       <div class="d-flex align-items-center">

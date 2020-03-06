@@ -20,12 +20,13 @@
 import Component, { mixins } from 'vue-class-component';
 import { EvanComponent, EvanTableColumn } from '@evan.network/ui-vue-core';
 import { isEqual } from 'lodash';
-import { Prop } from 'vue-property-decorator';
+import { DidDocument } from '@evan.network/api-blockchain-core';
 import { DidService } from './DidService';
+import { ServiceEndpoint } from './DidInterfaces';
 
 @Component
 export default class ServiceEndpointsComponent extends mixins(EvanComponent) {
-  @Prop() endpoints: { label: string; url: string }[];
+  endpoints: ServiceEndpoint[] = null;
 
   isEditMode = false;
 
@@ -51,14 +52,23 @@ export default class ServiceEndpointsComponent extends mixins(EvanComponent) {
 
   previousData = [];
 
+  didService: DidService;
+
+  didDocument: DidDocument;
+
+  isLoading: boolean;
+
+  async created(): Promise<void> {
+    this.didService = new DidService(this.getRuntime());
+    this.didDocument = await this.didService.fetchDidDocument();
+    this.endpoints = this.didService.getServiceEndpoints(this.didDocument);
+    this.isLoading = false;
+  }
+
   /**
    * Temporarily add new entry to row  and add new empty row
    */
   addEndpointRow(): void {
-    if (!this.newLabel || !this.newUrl) {
-      return;
-    }
-
     this.endpoints = [...this.endpoints, {
       label: this.newLabel,
       url: this.newUrl,
@@ -75,10 +85,14 @@ export default class ServiceEndpointsComponent extends mixins(EvanComponent) {
     this.endpoints = this.endpoints.filter((_, i) => i !== index);
   }
 
-  saveEndpoints(): void {
-    this.addEndpointRow();
+  async saveEndpoints(): Promise<void> {
+    if (this.newLabel && this.newUrl) {
+      this.addEndpointRow();
+    }
 
-    DidService.saveServiceEndpoints(this.endpoints);
+    this.isLoading = true;
+    await this.didService.saveServiceEndpoints(this.endpoints);
+    this.isLoading = false;
 
     this.isEditMode = false;
   }
