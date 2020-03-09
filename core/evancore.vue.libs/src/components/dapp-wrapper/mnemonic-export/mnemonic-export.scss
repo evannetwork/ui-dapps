@@ -24,27 +24,6 @@
   hyphens: auto;
 }
 
-.notification-bar {
-  .hint-banner {
-    line-height: 25px;
-
-    position: absolute;
-    bottom: 0;
-
-    cursor: pointer;
-
-    background: cssVar('primary-color');
-
-    & i:first-of-type {
-      float: left;
-    }
-
-    & i:last-of-type {
-      float: right;
-    }
-  }
-}
-
 .mnemonics {
   .word {
     margin: 8px -8px;
