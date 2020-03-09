@@ -22,7 +22,7 @@
     <div class="col col-lg-6 left-panel">
       <img
         class="evan-logo"
-        :src="$store.state.onboardingBaseUrl + `/assets/logo.png`"
+        :src="`${$store.state.onboardingBaseUrl}/assets/logo.png`"
       >
       <div class="h-100">
         <div class="w-100">
