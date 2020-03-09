@@ -59,12 +59,9 @@
 
     h3 {
       &,  /deep/ * {
-        font-size: 1.1rem;
         line-height: 2rem;
 
         text-align: justify;
-
-        color: cssVar('dark');
       }
 
        /deep/ ul {
