@@ -83,6 +83,16 @@ export class DidService {
   }
 
   /**
+   * TODO: Currently we don't implement controller logic. Return empty array
+   * @param didDoc
+   */
+  // eslint-disable-next-line class-methods-use-this
+  getControllers(didDoc: DidDocument): any[] {
+    // Might need manual adjustment of did interface. It's currently a string
+    return didDoc.controller || [];
+  }
+
+  /**
    * Return for owner for a specific DID Document
    * @param didDoc DID Document to get the owner for
    */

@@ -59,6 +59,18 @@ export default class DIDComponent extends mixins(EvanComponent) {
     },
   ]
 
+  get hasEditRights(): boolean {
+    // Check if owner
+    if (this.runtime.activeIdentity === this.didDocument.id) {
+      return true;
+    }
+    // Check if current user is controller
+    if (this.didService.getControllers(this.didDocument).indexOf(this.runtime.activeIdentity)) {
+      return true;
+    }
+    return false;
+  }
+
   async created(): Promise<void> {
     this.didService = new DidService(this.getRuntime());
     this.didDocument = await this.didService.fetchDidDocument();
@@ -96,6 +108,7 @@ export default class DIDComponent extends mixins(EvanComponent) {
 
     await this.didService.updateDidDocument(updatedDidDocument);
 
+    this.didDocument = updatedDidDocument;
     this.isLoading = false;
     this.isEditMode = false;
   }
