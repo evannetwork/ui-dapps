@@ -56,7 +56,7 @@
                 class="mt-5 d-flex no-print align-items-center justify-content-between"
                 style="min-height: 40px;"
               >
-                <label class="mb-0">
+                <label class="mb-0 d-flex align-items-center">
                   <evan-checkbox
                     id="understood-checkbox-backup-1"
                     v-model="understood"
