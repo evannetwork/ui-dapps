@@ -82,6 +82,7 @@
             v-model="userInfo.accountName"
             type="text"
             :placeholder="'_evan.profile.account-name' | translate"
+            :error="userInfo.accountName.length > 100 ? '_evan.profile.account-name-max-error' : false"
           />
           <div class="d-flex justify-content-end">
             <evan-button
@@ -92,7 +93,7 @@
             />
             <evan-button
               type="primary"
-              :disabled="userInfo.accountName.length === 0"
+              :disabled="userInfo.accountName.length === 0 || userInfo.accountName.length > 100"
               :label="'_evan.save' | translate"
               @click="saveEditMode"
             />

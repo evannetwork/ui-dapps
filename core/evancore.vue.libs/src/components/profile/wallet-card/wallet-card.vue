@@ -40,7 +40,7 @@
             {{ balance.timestamp | moment('LLL') }}
           </small>
           <div class="account-info">
-            <small>{{ alias === address ? $t('_evan.profile.no-alias') : alias }}</small>
+            <small class="force-oneline">{{ alias === address ? $t('_evan.profile.no-alias') : alias }}</small>
             <small>{{ address }}</small>
           </div>
         </template>

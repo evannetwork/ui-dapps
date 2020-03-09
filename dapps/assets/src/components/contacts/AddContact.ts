@@ -38,7 +38,7 @@ export default class AddContactComponent extends mixins(EvanComponent) {
 
   accountId = null;
 
-  alias = null;
+  alias = '';
 
   email = null;
 
@@ -65,7 +65,7 @@ export default class AddContactComponent extends mixins(EvanComponent) {
     this.idOrEmail = null;
 
     this.accountId = null;
-    this.alias = null;
+    this.alias = '';
     this.email = null;
     this.emailInvite = null;
     this.fromAlias = await profileUtils.getUserAlias(this.getRuntime());
@@ -135,8 +135,9 @@ export default class AddContactComponent extends mixins(EvanComponent) {
    */
   checkFormValid(): boolean {
     if (
-      document.querySelector('#contactForm :invalid')
+      document.querySelector('#contactForm :invalid, #contactForm .is-invalid')
       || this.idOrEmailErrorMessage
+      || this.alias.length > 100
     ) {
       return false;
     }

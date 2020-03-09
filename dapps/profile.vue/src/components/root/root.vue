@@ -34,6 +34,7 @@
                 <template slot="header">
                   <evan-profile-preview
                     class="p-4"
+                    style="width: 240px;"
                     size="sm"
                     :account-details="$store.state.profileDApp.data.accountDetails"
                     :address="$store.state.runtime.activeIdentity"

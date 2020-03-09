@@ -40,6 +40,7 @@
         <evan-form-control-input
           v-model="note"
           class="btn-block"
+          :error="note.length > 100 ? '_assets.contacts.alias-max-length' : false"
           :label="'_assets.contacts.note' | translate"
           :placeholder="$t('_assets.contacts.note-placeholder')"
           :required="true"
@@ -68,7 +69,7 @@
             type="primary"
             native-type="submit"
             class="ml-3 flex-grow-1"
-            :disabled="!canSubmit || !note"
+            :disabled="!canSubmit || !note || note.length > 100"
             :label="'_assets.contacts.edit-contact-btn' | translate"
           />
         </div>
