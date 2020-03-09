@@ -139,6 +139,13 @@ export default class DIDComponent extends mixins(EvanComponent) {
       || !isEqual(this.endpoints, this.previousEndpoints);
   }
 
+  /**
+   * Export DID Document as JSON and trigger its download
+   */
+  exportDidDoc(): void {
+    DidService.exportDocument(this.didDocument, this.didDocument.id);
+  }
+
   // TODO refactor to (renderless) vue component
   copyToClipboard(text: string): void {
     const textArea = document.createElement('textarea');

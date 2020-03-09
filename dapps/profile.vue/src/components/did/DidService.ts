@@ -90,4 +90,25 @@ export class DidService {
     return didDoc.authentication.find((item) => didDoc.publicKey
       .map((key) => key.id).includes(item));
   }
+
+  /**
+   * Trigger download of DID Document as JSON file.
+   *
+   * @param filename Name for the file
+   * @param text Content of the text tile
+   */
+  static exportDocument(didDoc: DidDocument, filename: string): void {
+    const element = document.createElement('a');
+    const text = JSON.stringify(didDoc, null, 2);
+
+    element.setAttribute(
+      'href',
+      `data:text/json;charset=utf-8,${encodeURIComponent(text)}`,
+    );
+    element.setAttribute('download', filename);
+    element.style.display = 'none';
+    document.body.appendChild(element);
+    element.click();
+    document.body.removeChild(element);
+  }
 }

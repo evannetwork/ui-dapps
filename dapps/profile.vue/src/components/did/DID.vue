@@ -70,6 +70,7 @@
             <evan-button
               v-if="!isEditMode"
               class="btn-sm"
+              @click="exportDidDoc"
             >
               {{ '_profile.did.export-document' | translate }}
             </evan-button>

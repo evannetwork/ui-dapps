@@ -31,7 +31,7 @@
     <evan-table
       v-else
       class="simple"
-      :show-empty="true"
+      :show-empty="!isEditMode"
       :fields="columns"
       :items="endpoints"
     >
