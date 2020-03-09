@@ -24,13 +24,6 @@
         <i class="mr-1 mdi mdi-earth" />
         {{ '_profile.did.service-endpoint-title' | translate }}
       </h2>
-      <evan-button
-        v-if="!isEditMode"
-        class="btn-sm"
-        @click="onEditStart"
-      >
-        {{ '_evan.edit' | translate }}
-      </evan-button>
     </div>
     <p>{{ '_profile.did.service-endpoints-desc' | translate }}</p>
 
@@ -100,29 +93,6 @@
         </b-td>
       </template>
     </evan-table>
-
-    <div
-      v-if="isEditMode && !isLoading"
-      class="d-flex mt-3 align-items-center justify-content-between"
-    >
-      <div class="d-flex align-items-center">
-        <i class="mdi mdi-information-outline mr-2" />
-        <span>{{ '_evan.transaction_costs_hint' | translate }}</span>
-      </div>
-      <div>
-        <evan-button @click="onEditCancel">
-          {{ '_evan.cancel' | translate }}
-        </evan-button>
-        <evan-button
-          class="ml-1"
-          type="primary"
-          :disabled="!hasChanges"
-          @click="saveEndpoints"
-        >
-          {{ '_evan.save' | translate }}
-        </evan-button>
-      </div>
-    </div>
   </div>
 </template>
 

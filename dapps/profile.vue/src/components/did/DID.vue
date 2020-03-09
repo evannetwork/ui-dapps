@@ -38,9 +38,42 @@
               {{ '_profile.did.updated-at' | translate }} {{ didDocument.updated | moment('L') }}
             </p>
           </div>
-          <evan-button class="btn-sm">
-            {{ '_profile.did.export-document' | translate }}
-          </evan-button>
+          <div class="text-right">
+            <evan-button
+              v-if="!isEditMode"
+              class="mr-1 btn-sm"
+              @click="onEditStart"
+            >
+              {{ '_evan.edit' | translate }}
+            </evan-button>
+            <template v-else>
+              <evan-button
+                class="btn-sm"
+                @click="onEditCancel"
+              >
+                {{ '_evan.cancel' | translate }}
+              </evan-button>
+              <evan-button
+                class="ml-1 btn-sm"
+                type="primary"
+                :disabled="!hasChanges"
+                @click="saveDidDocument"
+              >
+                {{ '_evan.save' | translate }}
+              </evan-button>
+              <div class="d-flex align-items-center">
+                <i class="mdi mdi-information-outline mr-2" />
+                <span>{{ '_evan.transaction_costs_hint' | translate }}</span>
+              </div>
+            </template>
+
+            <evan-button
+              v-if="!isEditMode"
+              class="btn-sm"
+            >
+              {{ '_profile.did.export-document' | translate }}
+            </evan-button>
+          </div>
         </div>
         <p>{{ '_profile.did.description' | translate }}</p>
       </div>
@@ -77,13 +110,20 @@
       <service-endpoints
         id="service-endpoints"
         :endpoints="endpoints"
+        :is-edit-mode="isEditMode"
+        :is-loading="isLoading"
         class="mb-3"
+        @addEndpoint="onAddEndpoint"
+        @deleteEndpoint="onDeleteEndpoint"
       />
 
       <delegates
         id="delegates"
         :delegates="delegates"
-        @saveDelegates="updateDelegates"
+        :is-edit-mode="isEditMode"
+        :is-loading="isLoading"
+        @addDelegate="onAddDelegate"
+        @deleteDelegate="onDeleteDelegate"
       />
     </div>
   </div>

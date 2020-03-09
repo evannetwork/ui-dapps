@@ -19,20 +19,20 @@
 
 import Component, { mixins } from 'vue-class-component';
 import { EvanComponent, EvanTableColumn } from '@evan.network/ui-vue-core';
-import { isEqual } from 'lodash';
-import { DidDocument } from '@evan.network/api-blockchain-core';
-import { DidService } from './DidService';
+import { Prop } from 'vue-property-decorator';
 import { ServiceEndpoint } from './DidInterfaces';
 
 @Component
 export default class ServiceEndpointsComponent extends mixins(EvanComponent) {
-  endpoints: ServiceEndpoint[] = null;
+  @Prop() isEditMode;
 
-  isEditMode = false;
+  @Prop() isLoading;
 
-  newUrl = '';
+  @Prop() endpoints: ServiceEndpoint[];
 
-  newLabel = '';
+  newUrl = null;
+
+  newLabel = null;
 
   columns: EvanTableColumn[] = [
     {
@@ -50,31 +50,19 @@ export default class ServiceEndpointsComponent extends mixins(EvanComponent) {
     },
   ]
 
-  previousData = [];
-
-  didService: DidService;
-
-  didDocument: DidDocument;
-
-  isLoading: boolean;
-
-  async created(): Promise<void> {
-    this.didService = new DidService(this.getRuntime());
-    this.didDocument = await this.didService.fetchDidDocument();
-    this.endpoints = this.didService.getServiceEndpoints(this.didDocument);
-    this.isLoading = false;
+  get hasChanges(): boolean {
+    return this.newLabel && this.newUrl;
   }
 
-  /**
-   * Temporarily add new entry to row  and add new empty row
-   */
   addEndpointRow(): void {
-    this.endpoints = [...this.endpoints, {
+    const newEndpoint = {
       label: this.newLabel,
       url: this.newUrl,
-    }];
+    };
     this.newLabel = '';
     this.newUrl = '';
+
+    this.$emit('addEndpoint', newEndpoint);
   }
 
   /**
@@ -82,46 +70,6 @@ export default class ServiceEndpointsComponent extends mixins(EvanComponent) {
    * @param index row index of the item to be removed
    */
   deleteEndpoint(index: number): void {
-    this.endpoints = this.endpoints.filter((_, i) => i !== index);
-  }
-
-  async saveEndpoints(): Promise<void> {
-    if (this.newLabel && this.newUrl) {
-      this.addEndpointRow();
-    }
-
-    this.isLoading = true;
-    await this.didService.saveServiceEndpoints(this.didDocument, this.endpoints);
-    this.isLoading = false;
-
-    this.isEditMode = false;
-  }
-
-  /**
-   * Enable edit mode and save current data
-   */
-  onEditStart(): void {
-    this.previousData = this.endpoints;
-    this.isEditMode = true;
-  }
-
-  /**
-   * Disable edit mode and recover previous data
-   */
-  onEditCancel(): void {
-    this.endpoints = this.previousData;
-    this.isEditMode = false;
-  }
-
-  /**
-   * Checks for any real change made
-   */
-  get hasChanges(): boolean {
-    // check for filled new row
-    if (this.newLabel && this.newUrl) {
-      return true;
-    }
-    // otherwise deep object comparison
-    return !isEqual(this.previousData, this.endpoints);
+    this.$emit('deleteEndpoint', index);
   }
 }

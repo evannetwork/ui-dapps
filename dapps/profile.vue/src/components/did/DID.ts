@@ -20,6 +20,7 @@
 import Component, { mixins } from 'vue-class-component';
 import { EvanComponent } from '@evan.network/ui-vue-core';
 import { Runtime, DidDocument } from '@evan.network/api-blockchain-core';
+import { isEqual } from 'lodash';
 import { Delegate, ServiceEndpoint } from './DidInterfaces';
 import { DidService } from './DidService';
 
@@ -30,6 +31,14 @@ export default class DIDComponent extends mixins(EvanComponent) {
   delegates: Delegate[] = null;
 
   endpoints: ServiceEndpoint[] = null;
+
+  isEditMode = false;
+
+  isLoading = false;
+
+  previousDelegates: Delegate[] = null;
+
+  previousEndpoints: ServiceEndpoint[] = null;
 
   runtime: Runtime = null;
 
@@ -53,6 +62,79 @@ export default class DIDComponent extends mixins(EvanComponent) {
   async created(): Promise<void> {
     this.didService = new DidService(this.getRuntime());
     this.didDocument = await this.didService.fetchDidDocument();
+    this.delegates = await this.didService.getDelegates(this.didDocument);
+    this.endpoints = this.didService.getServiceEndpoints(this.didDocument);
+  }
+
+  /**
+   * Enable edit mode and save current data
+   */
+  onEditStart(): void {
+    this.previousDelegates = this.delegates;
+    this.previousEndpoints = this.endpoints;
+    this.isEditMode = true;
+  }
+
+  /**
+   * Disable edit mode and recover previous data
+   */
+  async onEditCancel(): Promise<void> {
+    this.delegates = this.previousDelegates;
+    this.endpoints = this.previousEndpoints;
+    this.isEditMode = false;
+  }
+
+  /**
+   * Update delegates and endpoints and persist using the service
+   */
+  async saveDidDocument(): Promise<void> {
+    this.isLoading = true;
+    let updatedDidDocument = DidService.updateServiceEndpoints(this.didDocument, this.endpoints);
+    updatedDidDocument = DidService.updateDelegates(this.didDocument, this.delegates);
+
+    await this.didService.updateDidDocument(updatedDidDocument);
+
+    this.isLoading = false;
+    this.isEditMode = false;
+  }
+
+  /**
+   * Temporarily add new delegate
+   */
+  onAddDelegate(newDelegate: Delegate): void {
+    this.delegates = [...this.delegates, newDelegate];
+  }
+
+  /**
+   * Removes the selected delegate temporarily
+   * @param index row index of the item to be removed
+   */
+  onDeleteDelegate(index: number): void {
+    this.delegates = this.delegates.filter((_, i) => i !== index);
+  }
+
+  /**
+   * Temporarily add new endpoint and add new empty row
+   */
+  onAddEndpoint(newEndpoint: ServiceEndpoint): void {
+    this.endpoints = [...this.endpoints, newEndpoint];
+  }
+
+  /**
+   * Removes the selected endpoint temporarily
+   * @param index row index of the item to be removed
+   */
+  onDeleteEndpoint(index: number): void {
+    this.endpoints = this.endpoints.filter((_, i) => i !== index);
+  }
+
+  /**
+   * Checks for any real change made
+   */
+  get hasChanges(): boolean {
+    // deep object comparison
+    return !isEqual(this.delegates, this.previousDelegates)
+      || !isEqual(this.endpoints, this.previousEndpoints);
   }
 
   // TODO refactor to (renderless) vue component

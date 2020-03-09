@@ -1,5 +1,5 @@
 import {
-  Did, DidOptions, DidDocument, Runtime,
+  DidDocument, Runtime,
 } from '@evan.network/api-blockchain-core';
 import { profileUtils } from '@evan.network/ui';
 import { ServiceEndpoint, Delegate } from './DidInterfaces';
@@ -8,13 +8,12 @@ import { ServiceEndpoint, Delegate } from './DidInterfaces';
  * Handles logic for fetching and persisting DID documents
  */
 export class DidService {
-  instance;
+  instance: DidService;
 
   runtime: Runtime;
 
-  did: string;
-
-  constructor(runtime) {
+  constructor(runtime: Runtime) {
+    // Singleton Service
     if (this.instance) {
       return this.instance;
     }
@@ -23,31 +22,19 @@ export class DidService {
   }
 
   async fetchDidDocument(): Promise<DidDocument> {
-    this.did = await this.runtime.did.convertIdentityToDid(this.runtime.activeIdentity);
-    const didDoc = await this.runtime.did.getDidDocument(this.did);
+    const did = await this.runtime.did.convertIdentityToDid(this.runtime.activeIdentity);
 
-    console.log('didDoc', didDoc);
-
-    // this.didDoc = {
-    //   '@context': 'https://w3id.org/did/v1',
-    //   id: 'did:evan:testcore:0xa658d10781d9e043276cb44dd1191042548d4b2f',
-    //   publicKey: [
-    //     {
-    //       id: 'did:evan:testcore:0xa658d10781d9e043276cb44dd1191042548d4b2f#key-1',
-    //       type: 'Secp256k1VerificationKey2018',
-    //       controller: 'did:evan:testcore:0xa658d10781d9e043276cb44dd1191042548d4b2f',
-    //       ethereumAddress: '0x8E63039911ea0F0d562A8160fdb5b2aC48EA012F'.toLowerCase(),
-    //     },
-    //   ],
-    //   authentication: [
-    //     'did:evan:testcore:0xa658d10781d9e043276cb44dd1191042548d4b2f#key-1',
-    //     'did:evan:testcore:0xa658d10781d9e043276cb44dd1191042548d4b2f#key-2',
-    //   ],
-    // };
-
-    return didDoc;
+    return this.runtime.did.getDidDocument(did);
   }
 
+  async updateDidDocument(newDidDoc: DidDocument): Promise<void> {
+    return this.runtime.did.setDidDocument(newDidDoc.id, newDidDoc);
+  }
+
+  /**
+   * Returns the delegates excluding the owner entry
+   * @param didDocument specified did document
+   */
   async getDelegates(didDocument: DidDocument): Promise<Delegate[]> {
     // regex to remove #key suffixes
     const regex = /([#])(key-)(\d)+/;
@@ -62,7 +49,7 @@ export class DidService {
       })));
   }
 
-  async saveDelegates(didDoc: DidDocument, delegates: Delegate[]): Promise<void> {
+  static updateDelegates(didDoc: DidDocument, delegates: Delegate[]): DidDocument {
     // Preserve the owner
     const ownerEntry = DidService.getOwner(didDoc);
     const newDoc = didDoc;
@@ -70,8 +57,7 @@ export class DidService {
       ownerEntry,
       ...delegates.map((delegate) => delegate.did),
     ];
-
-    return this.runtime.did.setDidDocument(this.did, newDoc);
+    return newDoc;
   }
 
   // eslint-disable-next-line class-methods-use-this
@@ -85,17 +71,21 @@ export class DidService {
     }));
   }
 
-  async saveServiceEndpoints(didDoc: DidDocument, endpoints: ServiceEndpoint[]): Promise<void> {
-    const newDoc = didDoc;
-    newDoc.service = endpoints.map((endpoint) => ({
-      id: endpoint.label,
-      serviceEndpoint: endpoint.url,
-      type: 'TODO',
-    }));
-
-    return this.runtime.did.setDidDocument(this.did, newDoc);
+  static updateServiceEndpoints(didDoc: DidDocument, endpoints: ServiceEndpoint[]): DidDocument {
+    return {
+      ...didDoc,
+      service: endpoints.map((endpoint) => ({
+        id: endpoint.label,
+        serviceEndpoint: endpoint.url,
+        type: 'TODO', // TODO
+      })),
+    };
   }
 
+  /**
+   * Return for owner for a specific DID Document
+   * @param didDoc DID Document to get the owner for
+   */
   static getOwner(didDoc: DidDocument): string {
     return didDoc.authentication.find((item) => didDoc.publicKey
       .map((key) => key.id).includes(item));
