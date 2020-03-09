@@ -22,7 +22,7 @@
     <div class="mb-3 d-flex flex-row justify-content-between align-items-center">
       <h2>
         <i class="mr-1 mdi mdi-earth" />
-        {{ '_profile.did.service-endpoint-title' | translate }}
+        {{ '_profile.did.service-endpoints-title' | translate }}
       </h2>
     </div>
     <p>{{ '_profile.did.service-endpoints-desc' | translate }}</p>
@@ -31,6 +31,7 @@
     <evan-table
       v-else
       class="simple"
+      :show-empty="true"
       :fields="columns"
       :items="endpoints"
     >
@@ -91,6 +92,10 @@
             @click="addEndpointRow"
           />
         </b-td>
+      </template>
+
+      <template v-slot:empty>
+        <span>{{ '_profile.did.service-endpoints-empty' | translate }}</span>
       </template>
     </evan-table>
   </div>

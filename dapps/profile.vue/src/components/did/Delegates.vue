@@ -32,6 +32,7 @@
     <evan-table
       v-else
       class="simple"
+      :show-empty="true"
       :fields="columns"
       :items="delegates"
     >
@@ -84,6 +85,10 @@
             @input="onSelectContact"
           />
         </b-td>
+      </template>
+
+      <template v-slot:empty>
+        <span>{{ '_profile.did.delegates-empty' | translate }}</span>
       </template>
     </evan-table>
   </div>

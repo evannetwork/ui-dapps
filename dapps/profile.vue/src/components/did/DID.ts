@@ -51,7 +51,7 @@ export default class DIDComponent extends mixins(EvanComponent) {
     },
     {
       id: 'service-endpoints',
-      label: this.$t('_profile.did.service-endpoint-title'),
+      label: this.$t('_profile.did.service-endpoints-title'),
     },
     {
       id: 'delegates',
