@@ -195,6 +195,7 @@ h1.heading {
   max-width: 850px;
   margin-left: auto;
   margin-right: auto;
+  padding: 16px;
 }
 
 .add-contact-btn {
