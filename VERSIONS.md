@@ -7,11 +7,11 @@
 - use activeIdentity
 - be able to use `@evan.network/api-blockchain-core`  with identities
 - automatic useIdentity detection
+- add DID Document section to profile DApp
 
 ### Fixes
 
 ### Deprecations
-
 
 ## Version 4.0.1
 - general bug fixes and small improvements
