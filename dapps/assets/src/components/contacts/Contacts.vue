@@ -198,7 +198,7 @@ h1.heading {
 }
 
 .add-contact-btn {
-  position: fixed;
+  position: fixed !important;
   bottom: 40px;
   right: 60px;
 }
