@@ -66,7 +66,7 @@
             {{ '_twin-detail.data.list.add-list-item.title' | translate }}
             <i
               v-if="!isEditable"
-              class="mdi mdi-eye-off-outline text-right w-100"
+              class="mdi mdi-eye-off-outline text-right w-100 ml-2"
             />
           </b-dropdown-item>
         </b-dropdown>
