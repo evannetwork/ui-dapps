@@ -45,7 +45,10 @@
       >
         <evan-form-control-input
           class="m-0"
+          required
+          :placeholder="'_profile.did.label-placeholder' | translate"
           :value="data.item.label"
+          @input="editLabel($event, data)"
         />
       </template>
 
@@ -54,14 +57,19 @@
         v-slot:cell(url)="data"
       >
         <evan-form-control-input
-          class="m-0"
+          class="table-input m-0"
+          type="url"
+          required
+          :placeholder="'_profile.did.url-placeholder' | translate"
           :value="data.item.url"
+          @input="editUrl($event, data)"
         />
       </template>
 
       <template v-slot:cell(action)="data">
         <evan-button
           v-show="isEditMode"
+          class="btn-sm"
           type="icon-secondary"
           icon="mdi mdi-trash-can-outline"
           @click="deleteEndpoint(data.index)"
@@ -76,18 +84,24 @@
           <evan-form-control-input
             v-model="newLabel"
             class="m-0"
+            :placeholder="'_profile.did.label-placeholder' | translate"
           />
         </b-td>
         <b-td>
           <evan-form-control-input
             v-model="newUrl"
-            class="m-0"
+            class="table-input m-0"
+            type="url"
+            required
+            :placeholder="'_profile.did.url-placeholder' | translate"
+            @input="validateUrl"
           />
         </b-td>
         <b-td>
           <evan-button
             type="icon-secondary"
             icon="mdi mdi-plus"
+            class="btn-sm"
             :disabled="!newLabel || !newUrl"
             @click="addEndpointRow"
           />

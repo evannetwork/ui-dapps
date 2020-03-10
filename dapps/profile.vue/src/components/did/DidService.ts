@@ -27,6 +27,10 @@ export class DidService {
     return this.runtime.did.getDidDocument(did);
   }
 
+  /**
+   * Persist changes to DID Document
+   * @param newDidDoc updated DID Document
+   */
   async updateDidDocument(newDidDoc: DidDocument): Promise<void> {
     return this.runtime.did.setDidDocument(newDidDoc.id, newDidDoc);
   }
@@ -88,12 +92,11 @@ export class DidService {
    */
   // eslint-disable-next-line class-methods-use-this
   getControllers(didDoc: DidDocument): any[] {
-    // Might need manual adjustment of did interface. It's currently a string
-    return didDoc.controller || [];
+    return [];
   }
 
   /**
-   * Return for owner for a specific DID Document
+   * Return owner DID for a specific DID Document
    * @param didDoc DID Document to get the owner for
    */
   static getOwner(didDoc: DidDocument): string {

@@ -133,6 +133,15 @@ export default class DIDComponent extends mixins(EvanComponent) {
     this.endpoints = [...this.endpoints, newEndpoint];
   }
 
+  onUpdateEndpoint(index: number, endpoint: ServiceEndpoint): void {
+    this.endpoints = this.endpoints.map((item, idx) => {
+      if (idx === index) {
+        return endpoint;
+      }
+      return item;
+    });
+  }
+
   /**
    * Removes the selected endpoint temporarily
    * @param index row index of the item to be removed

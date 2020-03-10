@@ -117,6 +117,7 @@
         class="mb-3"
         @addEndpoint="onAddEndpoint"
         @deleteEndpoint="onDeleteEndpoint"
+        @updateEndpoint="onUpdateEndpoint"
       />
 
       <delegates

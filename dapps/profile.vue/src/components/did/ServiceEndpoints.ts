@@ -18,7 +18,7 @@
 */
 
 import Component, { mixins } from 'vue-class-component';
-import { EvanComponent, EvanTableColumn } from '@evan.network/ui-vue-core';
+import { EvanComponent, EvanTableColumn, EvanTableItem } from '@evan.network/ui-vue-core';
 import { Prop } from 'vue-property-decorator';
 import { ServiceEndpoint } from './DidInterfaces';
 
@@ -61,8 +61,8 @@ export default class ServiceEndpointsComponent extends mixins(EvanComponent) {
       label: this.newLabel,
       url: this.newUrl,
     };
-    this.newLabel = '';
-    this.newUrl = '';
+    this.newLabel = null;
+    this.newUrl = null;
 
     this.$emit('addEndpoint', newEndpoint);
   }
@@ -73,5 +73,13 @@ export default class ServiceEndpointsComponent extends mixins(EvanComponent) {
    */
   deleteEndpoint(index: number): void {
     this.$emit('deleteEndpoint', index);
+  }
+
+  editLabel(value: string, tableData: EvanTableItem<ServiceEndpoint>): void {
+    this.$emit('updateEndpoint', tableData.index, { label: value, url: tableData.item.url });
+  }
+
+  editUrl(value: string, tableData: EvanTableItem<ServiceEndpoint>): void {
+    this.$emit('updateEndpoint', tableData.index, { label: tableData.item.label, url: value });
   }
 }
