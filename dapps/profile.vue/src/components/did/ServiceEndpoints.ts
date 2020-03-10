@@ -38,10 +38,12 @@ export default class ServiceEndpointsComponent extends mixins(EvanComponent) {
     {
       key: 'label',
       label: this.$t('_profile.did.label'),
+      tdClass: 'truncate',
     },
     {
       key: 'url',
       label: 'URL',
+      tdClass: 'truncate',
     },
     {
       key: 'action',

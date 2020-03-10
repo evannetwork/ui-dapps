@@ -37,10 +37,12 @@ export default class DelegatesComponent extends mixins(EvanComponent) {
     {
       key: 'did',
       label: this.$t('_profile.did.did'),
+      tdClass: 'truncate',
     },
     {
       key: 'note',
       label: this.$t('_profile.did.note'),
+      tdClass: 'truncate',
     },
     {
       key: 'action',
