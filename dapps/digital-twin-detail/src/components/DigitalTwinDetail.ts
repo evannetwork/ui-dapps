@@ -96,6 +96,9 @@ export default class DigitalTwinDetailComponent extends mixins(EvanComponent) {
           // handle deleted and non-DT contracts
           .catch(() => {
             this.hasError = true;
+            // fill empty twin data, so the sidepanel can be displayed, even in error mode
+            newTwin.description = { name: '...', description: '', author: '' };
+            newTwin.dispatcherStates = { };
             return null;
           });
 
@@ -134,28 +137,31 @@ export default class DigitalTwinDetailComponent extends mixins(EvanComponent) {
         text: '_twin-detail.nav-items.overview',
         icon: 'mdi mdi-view-dashboard-outline',
         to: { name: 'overview' },
+        disabled: this.hasError,
       },
       {
         text: '_twin-detail.nav-items.data',
         icon: 'mdi mdi-file-document-box-outline',
         to: { name: 'data' },
+        disabled: this.hasError,
       },
       {
         text: '_twin-detail.nav-items.verifications',
         icon: 'mdi mdi-checkbox-marked-circle-outline',
         to: { name: 'verifications' },
-        disabled: !this.$store.state.twin?.isOwner,
+        disabled: !this.$store.state.twin?.isOwner || this.hasError,
       },
       ...(this.$store.state.twin.isOwner ? [{
         text: '_twin-detail.nav-items.sharings',
         icon: 'mdi mdi-share-variant',
         to: { name: 'sharings' },
-        disabled: !this.$store.state.twin?.isOwner,
+        disabled: !this.$store.state.twin?.isOwner || this.hasError,
       }] : []),
       {
         text: '_twin-detail.nav-items.did',
         icon: 'mdi mdi-identifier',
         to: { name: 'did' },
+        disabled: this.hasError,
       },
     ];
   }
