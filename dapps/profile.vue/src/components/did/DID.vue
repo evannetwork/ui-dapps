@@ -50,6 +50,7 @@
             <template v-else>
               <evan-button
                 class="btn-sm"
+                :disabled="isLoading"
                 @click="onEditCancel"
               >
                 {{ '_evan.cancel' | translate }}
@@ -57,7 +58,7 @@
               <evan-button
                 class="ml-1 btn-sm"
                 type="primary"
-                :disabled="!hasChanges"
+                :disabled="!hasChanges || isLoading"
                 @click="saveDidDocument"
               >
                 {{ '_evan.save' | translate }}

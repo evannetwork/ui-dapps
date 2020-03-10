@@ -167,6 +167,7 @@
       "updated-at": "aktualisiert am"
     },
     "dispatchers": {
+      "did-document-update": "DID Dokument speichern",
       "profile-share": "Identitätsinformationen teilen",
       "profile-type": "Identitätstyp wird geändert",
       "profile-update": "Identitätinformationen werden gespeichert",

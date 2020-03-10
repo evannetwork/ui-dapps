@@ -167,6 +167,7 @@
       "updated-at": "updated at"
     },
     "dispatchers": {
+      "did-document-update": "Update DID Document",
       "profile-share": "Share Identity information",
       "profile-type": "Changing Identity type",
       "profile-update": "Updating Identity information",
