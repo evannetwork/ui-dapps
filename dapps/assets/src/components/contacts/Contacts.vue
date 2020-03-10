@@ -47,7 +47,7 @@
             type="text-filter"
             icon="mdi mdi-account-outline"
             icon-position="left"
-            :class="{ active: filter === 'users' }"
+            :class="{ active: filter === 'user' }"
             :label="$t('_assets.contacts.users')"
             @click="filterByType('user')"
           />
