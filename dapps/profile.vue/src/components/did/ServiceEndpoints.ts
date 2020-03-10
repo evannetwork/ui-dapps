@@ -52,10 +52,6 @@ export default class ServiceEndpointsComponent extends mixins(EvanComponent) {
     },
   ]
 
-  get hasChanges(): boolean {
-    return this.newLabel && this.newUrl;
-  }
-
   addEndpointRow(): void {
     const newEndpoint = {
       label: this.newLabel,

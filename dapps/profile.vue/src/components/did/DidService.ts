@@ -1,7 +1,8 @@
 import {
   DidDocument, Runtime,
 } from '@evan.network/api-blockchain-core';
-import { profileUtils } from '@evan.network/ui';
+import { profileUtils, Dispatcher, DispatcherInstance } from '@evan.network/ui';
+import { getDomainName } from '@evan.network/ui-vue-core';
 import { ServiceEndpoint, Delegate } from './DidInterfaces';
 
 /**
@@ -31,8 +32,17 @@ export class DidService {
    * Persist changes to DID Document
    * @param newDidDoc updated DID Document
    */
-  async updateDidDocument(newDidDoc: DidDocument): Promise<void> {
-    return this.runtime.did.setDidDocument(newDidDoc.id, newDidDoc);
+  updateDidDocument(newDidDoc: DidDocument): Dispatcher {
+    const dispatcher = new Dispatcher(
+      `profile.vue.${getDomainName()}`,
+      'updateDidDocumentDispatcher',
+      60000,
+      '_profile.dispatchers.did-document-update',
+    );
+
+    return dispatcher.step(async (instance: DispatcherInstance, data: any) => {
+      await this.runtime.did.setDidDocument(newDidDoc.id, newDidDoc);
+    });
   }
 
   /**

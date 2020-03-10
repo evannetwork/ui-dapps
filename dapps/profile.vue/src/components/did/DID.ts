@@ -72,7 +72,8 @@ export default class DIDComponent extends mixins(EvanComponent) {
   }
 
   async created(): Promise<void> {
-    this.didService = new DidService(this.getRuntime());
+    this.runtime = this.getRuntime();
+    this.didService = new DidService(this.runtime);
     this.didDocument = await this.didService.fetchDidDocument();
     this.delegates = await this.didService.getDelegates(this.didDocument);
     this.endpoints = this.didService.getServiceEndpoints(this.didDocument);
@@ -104,7 +105,7 @@ export default class DIDComponent extends mixins(EvanComponent) {
     let updatedDidDocument = DidService.updateServiceEndpoints(this.didDocument, this.endpoints);
     updatedDidDocument = DidService.updateDelegates(updatedDidDocument, this.delegates);
 
-    await this.didService.updateDidDocument(updatedDidDocument);
+    await this.didService.updateDidDocument(updatedDidDocument).start(this.runtime, {});
 
     this.didDocument = updatedDidDocument;
     this.isLoading = false;
@@ -133,6 +134,11 @@ export default class DIDComponent extends mixins(EvanComponent) {
     this.endpoints = [...this.endpoints, newEndpoint];
   }
 
+  /**
+   * Replace Endpoint entry with updated one
+   * @param index index of endpoint in array list
+   * @param endpoint updated endpoint
+   */
   onUpdateEndpoint(index: number, endpoint: ServiceEndpoint): void {
     this.endpoints = this.endpoints.map((item, idx) => {
       if (idx === index) {

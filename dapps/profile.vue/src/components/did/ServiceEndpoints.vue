@@ -94,7 +94,6 @@
             type="url"
             required
             :placeholder="'_profile.did.url-placeholder' | translate"
-            @input="validateUrl"
           />
         </b-td>
         <b-td>
