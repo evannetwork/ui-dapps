@@ -18,20 +18,7 @@
 */
 
 <template>
-  <div
-    v-if="mnemonic"
-    class="notification-bar"
-  >
-    <div
-      role="button"
-      class="hint-banner bg-primary bg-text-primary col-md-8 offset-md-2 p-2 text-center"
-      @click="showModal"
-    >
-      <i class="mdi mdi-shield-alert-outline" />
-      <span>{{ '_evan.mnemonic-export.notification' | translate }}</span>
-      <i class="mdi mdi-arrow-expand" />
-    </div>
-
+  <div v-if="mnemonic">
     <evan-modal
       ref="modal"
       :close-action="onModalClose"
@@ -69,7 +56,7 @@
                 class="mt-5 d-flex no-print align-items-center justify-content-between"
                 style="min-height: 40px;"
               >
-                <label class="mb-0">
+                <label class="mb-0 d-flex align-items-center">
                   <evan-checkbox
                     id="understood-checkbox-backup-1"
                     v-model="understood"
