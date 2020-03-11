@@ -249,17 +249,6 @@ export default class BccHelper {
       const encryptionKey = EvanlightWallet.getEncryptionKeyFromPassword(encryptionSalt, password);
       const runtime = await BccHelper.createRuntime(accountId, accountIdentity, encryptionKey);
 
-      /* let targetPrivateKey;
-         try {
-           targetPrivateKey = await runtime.profile.getContactKey(
-             accountId,
-             'dataKey',
-           );
-         } catch (ex) {
-           // password incorrect
-           console.log(ex)
-         } */
-
       /* if the private key for this account could be loaded, the password is valid
          const isCorrect = !!targetPrivateKey; */
       if (runtime.profile) {
