@@ -36,6 +36,8 @@ export default class DIDComponent extends mixins(EvanComponent) {
 
   isLoading = false;
 
+  canSave = false;
+
   previousDelegates: Delegate[] = null;
 
   previousEndpoints: ServiceEndpoint[] = null;
@@ -140,12 +142,12 @@ export default class DIDComponent extends mixins(EvanComponent) {
    * @param endpoint updated endpoint
    */
   onUpdateEndpoint(index: number, endpoint: ServiceEndpoint): void {
-    this.endpoints = this.endpoints.map((item, idx) => {
-      if (idx === index) {
-        return endpoint;
-      }
-      return item;
-    });
+    this.endpoints = this.endpoints.map((item, idx) => (idx === index ? endpoint : item));
+    if (!endpoint.label || !endpoint.url) {
+      this.canSave = false;
+    } else {
+      this.canSave = true;
+    }
   }
 
   /**

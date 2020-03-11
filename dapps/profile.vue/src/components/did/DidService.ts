@@ -40,7 +40,7 @@ export class DidService {
       '_profile.dispatchers.did-document-update',
     );
 
-    return dispatcher.step(async (instance: DispatcherInstance, data: any) => {
+    return dispatcher.step(async (instance: DispatcherInstance, data) => {
       await this.runtime.did.setDidDocument(newDidDoc.id, newDidDoc);
     });
   }
