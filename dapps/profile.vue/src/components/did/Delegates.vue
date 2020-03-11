@@ -63,6 +63,7 @@
       <template v-slot:cell(action)="data">
         <evan-button
           v-show="isEditMode"
+          class="btn-sm"
           type="icon-secondary"
           icon="mdi mdi-trash-can-outline"
           @click="deleteDelegate(data.index)"

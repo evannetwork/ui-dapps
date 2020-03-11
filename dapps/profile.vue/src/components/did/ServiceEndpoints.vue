@@ -82,6 +82,7 @@
       >
         <b-td>
           <evan-form-control-input
+            id="labelInput"
             v-model="newLabel"
             class="m-0"
             :placeholder="'_profile.did.label-placeholder' | translate"
@@ -89,6 +90,7 @@
         </b-td>
         <b-td>
           <evan-form-control-input
+            id="urlInput"
             v-model="newUrl"
             class="table-input m-0"
             type="url"

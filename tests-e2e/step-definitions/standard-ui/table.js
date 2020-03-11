@@ -67,6 +67,14 @@ Then('I want to see a table having {string} {int} rows', async (operator, count)
   }
 });
 
+Then('I want to see a cell with the content {string}', async (content) => {
+  client.useXpath();
+
+  await client.waitForElementPresent(`//table//td[normalize-space(text()) = "${content}"]`, WAIT_TIME_FOR_ELEMENT);
+
+  client.useCss();
+});
+
 When('I scroll to last table row', async () => {
   await client.getLocationInView('tbody > tr:last-child');
 });
