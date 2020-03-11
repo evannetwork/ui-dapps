@@ -160,11 +160,13 @@
       "did": "DID",
       "export-document": "Dokument exportieren",
       "label": "Label",
+      "label-placeholder": "Aussagekräftiger Name",
       "note": "Notiz",
       "service-endpoints-empty": "Noch keine Service Endpoints hinzugefügt",
       "service-endpoints-title": "Service Endpoints",
       "service-endpoints-desc": "Im Folgenden können Service Endpoints festgelegt werden, die mit dieser DID assoziiert werden sollen.",
-      "updated-at": "aktualisiert am"
+      "updated-at": "aktualisiert am",
+      "url-placeholder": "https://"
     },
     "dispatchers": {
       "did-document-update": "DID Dokument speichern",
