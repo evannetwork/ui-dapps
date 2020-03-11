@@ -22,20 +22,16 @@
     <div class="mb-3 d-flex flex-row justify-content-between align-items-center">
       <h2>
         <i class="mr-1 mdi mdi-earth" />
-        {{ '_profile.did.service-endpoint-title' | translate }}
+        {{ '_profile.did.service-endpoints-title' | translate }}
       </h2>
-      <evan-button
-        v-if="!isEditMode"
-        class="btn-sm"
-        @click="onEditStart"
-      >
-        {{ '_evan.edit' | translate }}
-      </evan-button>
     </div>
     <p>{{ '_profile.did.service-endpoints-desc' | translate }}</p>
 
+    <evan-loading v-if="isLoading" />
     <evan-table
+      v-else
       class="simple"
+      :show-empty="!isEditMode"
       :fields="columns"
       :items="endpoints"
     >
@@ -49,7 +45,10 @@
       >
         <evan-form-control-input
           class="m-0"
+          required
+          :placeholder="'_profile.did.label-placeholder' | translate"
           :value="data.item.label"
+          @input="editLabel($event, data)"
         />
       </template>
 
@@ -58,14 +57,19 @@
         v-slot:cell(url)="data"
       >
         <evan-form-control-input
-          class="m-0"
+          class="table-input m-0"
+          type="url"
+          required
+          :placeholder="'_profile.did.url-placeholder' | translate"
           :value="data.item.url"
+          @input="editUrl($event, data)"
         />
       </template>
 
       <template v-slot:cell(action)="data">
         <evan-button
           v-show="isEditMode"
+          class="btn-sm"
           type="icon-secondary"
           icon="mdi mdi-trash-can-outline"
           @click="deleteEndpoint(data.index)"
@@ -80,47 +84,33 @@
           <evan-form-control-input
             v-model="newLabel"
             class="m-0"
+            :placeholder="'_profile.did.label-placeholder' | translate"
           />
         </b-td>
         <b-td>
           <evan-form-control-input
             v-model="newUrl"
-            class="m-0"
+            class="table-input m-0"
+            type="url"
+            required
+            :placeholder="'_profile.did.url-placeholder' | translate"
           />
         </b-td>
         <b-td>
           <evan-button
             type="icon-secondary"
             icon="mdi mdi-plus"
+            class="btn-sm"
             :disabled="!newLabel || !newUrl"
             @click="addEndpointRow"
           />
         </b-td>
       </template>
-    </evan-table>
 
-    <div
-      v-if="isEditMode"
-      class="d-flex mt-3 align-items-center justify-content-between"
-    >
-      <div class="d-flex align-items-center">
-        <i class="mdi mdi-information-outline mr-2" />
-        <span>{{ '_evan.transaction_costs_hint' | translate }}</span>
-      </div>
-      <div>
-        <evan-button @click="onEditCancel">
-          {{ '_evan.cancel' | translate }}
-        </evan-button>
-        <evan-button
-          class="ml-1"
-          type="primary"
-          :disabled="!hasChanges"
-          @click="saveEndpoints"
-        >
-          {{ '_evan.save' | translate }}
-        </evan-button>
-      </div>
-    </div>
+      <template v-slot:empty>
+        <span>{{ '_profile.did.service-endpoints-empty' | translate }}</span>
+      </template>
+    </evan-table>
   </div>
 </template>
 

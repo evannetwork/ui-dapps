@@ -18,29 +18,32 @@
 */
 
 import Component, { mixins } from 'vue-class-component';
-import { EvanComponent, EvanTableColumn } from '@evan.network/ui-vue-core';
-import { isEqual } from 'lodash';
+import { EvanComponent, EvanTableColumn, EvanTableItem } from '@evan.network/ui-vue-core';
 import { Prop } from 'vue-property-decorator';
-import { DidService } from './DidService';
+import { ServiceEndpoint } from './DidInterfaces';
 
 @Component
 export default class ServiceEndpointsComponent extends mixins(EvanComponent) {
-  @Prop() endpoints: { label: string; url: string }[];
+  @Prop() isEditMode;
 
-  isEditMode = false;
+  @Prop() isLoading;
 
-  newUrl = '';
+  @Prop() endpoints: ServiceEndpoint[];
 
-  newLabel = '';
+  newUrl = null;
+
+  newLabel = null;
 
   columns: EvanTableColumn[] = [
     {
       key: 'label',
       label: this.$t('_profile.did.label'),
+      tdClass: 'truncate',
     },
     {
       key: 'url',
       label: 'URL',
+      tdClass: 'truncate',
     },
     {
       key: 'action',
@@ -49,22 +52,15 @@ export default class ServiceEndpointsComponent extends mixins(EvanComponent) {
     },
   ]
 
-  previousData = [];
-
-  /**
-   * Temporarily add new entry to row  and add new empty row
-   */
   addEndpointRow(): void {
-    if (!this.newLabel || !this.newUrl) {
-      return;
-    }
-
-    this.endpoints = [...this.endpoints, {
+    const newEndpoint = {
       label: this.newLabel,
       url: this.newUrl,
-    }];
-    this.newLabel = '';
-    this.newUrl = '';
+    };
+    this.newLabel = null;
+    this.newUrl = null;
+
+    this.$emit('addEndpoint', newEndpoint);
   }
 
   /**
@@ -72,42 +68,14 @@ export default class ServiceEndpointsComponent extends mixins(EvanComponent) {
    * @param index row index of the item to be removed
    */
   deleteEndpoint(index: number): void {
-    this.endpoints = this.endpoints.filter((_, i) => i !== index);
+    this.$emit('deleteEndpoint', index);
   }
 
-  saveEndpoints(): void {
-    this.addEndpointRow();
-
-    DidService.saveServiceEndpoints(this.endpoints);
-
-    this.isEditMode = false;
+  editLabel(value: string, tableData: EvanTableItem<ServiceEndpoint>): void {
+    this.$emit('updateEndpoint', tableData.index, { label: value, url: tableData.item.url });
   }
 
-  /**
-   * Enable edit mode and save current data
-   */
-  onEditStart(): void {
-    this.previousData = this.endpoints;
-    this.isEditMode = true;
-  }
-
-  /**
-   * Disable edit mode and recover previous data
-   */
-  onEditCancel(): void {
-    this.endpoints = this.previousData;
-    this.isEditMode = false;
-  }
-
-  /**
-   * Checks for any real change made
-   */
-  get hasChanges(): boolean {
-    // check for filled new row
-    if (this.newLabel && this.newUrl) {
-      return true;
-    }
-    // otherwise deep object comparison
-    return !isEqual(this.previousData, this.endpoints);
+  editUrl(value: string, tableData: EvanTableItem<ServiceEndpoint>): void {
+    this.$emit('updateEndpoint', tableData.index, { label: tableData.item.label, url: value });
   }
 }

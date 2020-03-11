@@ -24,7 +24,7 @@ import { Watch } from 'vue-property-decorator';
 // evan.network imports
 import * as bcc from '@evan.network/api-blockchain-core';
 import { DispatcherInstance } from '@evan.network/ui';
-import { EvanComponent } from '@evan.network/ui-vue-core';
+import { EvanComponent, NavEntryInterface } from '@evan.network/ui-vue-core';
 
 import * as dispatchers from '../../dispatchers/registry';
 import { getPermissionSortFilter } from '../utils/shareSortFilters';
@@ -39,7 +39,7 @@ export default class ProfileRootComponent extends mixins(EvanComponent) {
   /**
    * navEntries for top navigation
    */
-  navEntries: Array<any> = [];
+  navEntries: NavEntryInterface[] = [];
 
   /**
    * Watch for dispatcher updates
@@ -208,6 +208,7 @@ export default class ProfileRootComponent extends mixins(EvanComponent) {
       {
         key: 'did',
         icon: 'mdi mdi-identifier',
+        disabled: !this.getRuntime().runtimeConfig.useIdentity,
       },
       {
         key: 'wallet',
@@ -231,6 +232,7 @@ export default class ProfileRootComponent extends mixins(EvanComponent) {
       text: `_profile.breadcrumbs.${entry.key.split('/')[0]}`,
       to: entry.key,
       icon: entry.icon,
+      disabled: entry.disabled,
     } : null));
 
     // remove sharings from old profiles
