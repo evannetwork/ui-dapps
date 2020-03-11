@@ -172,5 +172,8 @@ export async function getContacts(
     return contacts;
   }
 
-  return contacts.filter((entry) => entry.value !== runtime.activeIdentity && !/@/.test(entry.value));
+  return contacts
+    .filter((entry) => entry.value !== runtime.activeAccount
+      && entry.value !== runtime.activeIdentity
+      && !/@/.test(entry.value));
 }

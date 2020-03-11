@@ -132,10 +132,7 @@ export default class ContactsComponent extends mixins(EvanComponent) {
   }
 
   async fetchContacts(): Promise<Contact[]> {
-    const runtime = this.getRuntime();
-    const contacts = await this.contactService.getContacts();
-    return contacts.filter((item: Contact) => item.address !== runtime.activeAccount
-      && item.address !== runtime.activeIdentity);
+    return this.contactService.getContacts();
   }
 
   editContact(contact: EvanTableItem<Contact>): void {
