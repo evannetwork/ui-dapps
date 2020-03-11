@@ -408,7 +408,7 @@ export default class DAppWrapperComponent extends mixins(EvanComponent) {
    * runtimes
    */
   async handleLoginOnboarding(): Promise<void> {
-    this.stopSessionWatcher = await session.start(async (action: string): Promise<any> => {
+    this.stopSessionWatcher = await session.start(async (action: string): Promise<string> => {
       let result;
 
       switch (action) {
