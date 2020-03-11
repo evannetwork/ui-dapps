@@ -42,7 +42,7 @@
               </evan-nav-list>
             </evan-dapp-wrapper-level-2>
             <div
-              class="h-100 overflow-auto"
+              class="scroll-container h-100 overflow-auto"
               style="flex: 1"
             >
               <div
