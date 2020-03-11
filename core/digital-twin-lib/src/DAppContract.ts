@@ -145,7 +145,8 @@ export class DAppContract {
    * Check descriptions i18n and extend vue translation pipeline.
    */
   protected ensureI18N(): void {
-    const locales = ['en', this.vue.$i18n.locale()];
+    const currLocale = this.vue.$i18n.locale();
+    const locales = ['en', currLocale];
     const i18n = this.description?.i18n || { };
     let newTranslations = {
       description: this.description.description,
@@ -162,7 +163,7 @@ export class DAppContract {
       }
     });
 
-    this.vue.$i18n.add(locales[0], { [this.contractAddress]: newTranslations });
+    this.vue.$i18n.add(currLocale, { [this.contractAddress]: newTranslations });
   }
 
   /**

@@ -24,7 +24,7 @@
         <h5 class="my-0 py-0 d-flex align-items-baseline">
           <i class="mdi mr-2 mdi-lock" />
           <div class="d-flex flex-column">
-            <span class="font-weight-bold h5 my-0">{{ $t(`${$route.params.container}.${name}`, name) }}</span>
+            <span class="font-weight-bold h5 my-0">{{ $t(`${$route.params.container}.${name}.name`, name) }}</span>
             <small
               v-if="!isProhibited()"
             >
