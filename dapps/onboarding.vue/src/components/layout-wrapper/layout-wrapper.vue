@@ -20,34 +20,42 @@
 <template>
   <div class="layout-wrapper w-100">
     <div class="col col-lg-6 left-panel">
-      <img class="evan-logo"
-        :src="$store.state.onboardingBaseUrl + `/assets/logo.png`">
+      <img
+        class="evan-logo"
+        :src="`${$store.state.onboardingBaseUrl}/assets/logo.png`"
+      >
       <div class="h-100">
         <div class="w-100">
           <div class="banner-wrapper">
             <img
               :src="$store.state.onboardingBaseUrl + `/assets/left-panel/${ images[step] }`"
+              class="desc-banner"
               @load="setImageStyle()"
-              class="desc-banner">
+            >
           </div>
-          <h2 class="mx-8 mb-2 font-weight-bold text-dark" >
+          <h2 class="mx-8 mb-2 font-weight-bold text-dark">
             {{ `_onboarding.headings.${ type }.${ step }.title` | translate }}
           </h2>
-          <h3 class="mx-8 text-dark"
-            v-html="$t(`_onboarding.headings.${ type }.${ step }.desc`)">
-          </h3>
+          <p
+            class="mx-8 mt-8 text-dark"
+            v-html="$t(`_onboarding.headings.${ type }.${ step }.desc`)"
+          />
         </div>
       </div>
     </div>
-    <div class="col col-lg-6 content-wrapper" style="display: grid">
-      <slot></slot>
+    <div
+      class="col col-lg-6 content-wrapper"
+      style="display: grid"
+    >
+      <slot />
     </div>
   </div>
 </template>
 
 <script lang="ts">
-  import Component from './layout-wrapper';
-  export default Component;
+import Component from './layout-wrapper';
+
+export default Component;
 </script>
 
 <style lang="scss" scoped>

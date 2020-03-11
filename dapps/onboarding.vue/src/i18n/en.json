@@ -12,7 +12,7 @@
           "title": "Login to the evan.network"
         },
         "1": {
-          "desc": "",
+          "desc": "Your data security is very important to us. Therefore, the login process consists of two parts. Please insert your password, to unlock your profile and continue with your work.<br><br><b>Please note:</b> For security reasons, you must re-enter your password after each page load. In this way you remain completely self sovereign and master of your data.",
           "title": "Welcome to the evan.network"
         }
       },

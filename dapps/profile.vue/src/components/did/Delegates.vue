@@ -24,18 +24,15 @@
         <i class="mr-1 mdi mdi-earth" />
         {{ '_profile.did.delegates-title' | translate }}
       </h2>
-      <evan-button
-        v-if="!isEditMode"
-        class="btn-sm"
-        @click="onEditStart"
-      >
-        {{ '_evan.edit' | translate }}
-      </evan-button>
     </div>
     <p>{{ '_profile.did.delegates-desc' | translate }}</p>
 
+    <evan-loading v-if="isLoading" />
+
     <evan-table
+      v-else
       class="simple"
+      :show-empty="!isEditMode"
       :fields="columns"
       :items="delegates"
     >
@@ -89,30 +86,11 @@
           />
         </b-td>
       </template>
-    </evan-table>
 
-    <div
-      v-if="isEditMode"
-      class="d-flex mt-3 align-items-center justify-content-between"
-    >
-      <div class="d-flex align-items-center">
-        <i class="mdi mdi-information-outline mr-2" />
-        <span>{{ '_evan.transaction_costs_hint' | translate }}</span>
-      </div>
-      <div>
-        <evan-button @click="onEditCancel">
-          {{ '_evan.cancel' | translate }}
-        </evan-button>
-        <evan-button
-          class="ml-1"
-          type="primary"
-          :disabled="!hasChanges"
-          @click="saveDelegates"
-        >
-          {{ '_evan.save' | translate }}
-        </evan-button>
-      </div>
-    </div>
+      <template v-slot:empty>
+        <span>{{ '_profile.did.delegates-empty' | translate }}</span>
+      </template>
+    </evan-table>
   </div>
 </template>
 

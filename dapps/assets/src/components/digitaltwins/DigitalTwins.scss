@@ -23,10 +23,11 @@
   max-width: 850px;
   margin-left: auto;
   margin-right: auto;
+  padding: 16px;
 }
 
 .add-twin-btn {
-  position: fixed;
+  position: fixed !important;
   bottom: 40px;
   right: 60px;
 }

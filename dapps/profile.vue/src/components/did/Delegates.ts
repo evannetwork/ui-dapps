@@ -20,16 +20,16 @@
 import Component, { mixins } from 'vue-class-component';
 import { EvanComponent, EvanTableColumn, ContactInterface } from '@evan.network/ui-vue-core';
 import { profileUtils } from '@evan.network/ui';
-import { isEqual } from 'lodash';
 import { Prop } from 'vue-property-decorator';
-import { DidService } from './DidService';
 import { Delegate } from './DidInterfaces';
 
 @Component
 export default class DelegatesComponent extends mixins(EvanComponent) {
   @Prop() delegates: Delegate[];
 
-  isEditMode = false;
+  @Prop() isEditMode;
+
+  @Prop() isLoading;
 
   contacts: ContactInterface[] = [];
 
@@ -37,10 +37,12 @@ export default class DelegatesComponent extends mixins(EvanComponent) {
     {
       key: 'did',
       label: this.$t('_profile.did.did'),
+      tdClass: 'truncate',
     },
     {
       key: 'note',
       label: this.$t('_profile.did.note'),
+      tdClass: 'truncate',
     },
     {
       key: 'action',
@@ -49,58 +51,19 @@ export default class DelegatesComponent extends mixins(EvanComponent) {
     },
   ]
 
-
-  previousData: Delegate[] = [];
-
-  async mounted(): Promise<void> {
+  async created(): Promise<void> {
     this.contacts = await profileUtils.getContacts(this.getRuntime());
   }
 
-  /**
-   * Temporarily add contact to delegates
-   * @param contact selected contact
-   */
-  async onSelectContact(contact: ContactInterface): Promise<void> {
-    this.delegates = [...this.delegates, {
+  onSelectContact(contact: ContactInterface): void {
+    const newDelegate = {
       did: contact.value,
       note: contact.label,
-    }];
+    };
+    this.$emit('addDelegate', newDelegate);
   }
 
-  saveDelegates(): void {
-    DidService.saveDelegates(this.delegates);
-    this.isEditMode = false;
-  }
-
-  /**
-   * Removes the selected delegate temporarily
-   * @param index row index of the item to be removed
-   */
   deleteDelegate(index: number): void {
-    this.delegates = this.delegates.filter((_, i) => i !== index);
-  }
-
-  /**
-   * Enable edit mode and save current data
-   */
-  onEditStart(): void {
-    this.previousData = this.delegates;
-    this.isEditMode = true;
-  }
-
-  /**
-   * Disable edit mode and recover previous data
-   */
-  onEditCancel(): void {
-    this.delegates = this.previousData;
-    this.isEditMode = false;
-  }
-
-  /**
-   * Checks for any real change made
-   */
-  get hasChanges(): boolean {
-    // deep object comparison
-    return !isEqual(this.previousData, this.delegates);
+    this.$emit('deleteDelegate', index);
   }
 }

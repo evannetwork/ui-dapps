@@ -60,7 +60,7 @@ export default class BccHelper {
       }
     }
 
-    return !!window.localStorage['evan-use-identity'];
+    return window.localStorage.getItem('evan-use-identity') === 'true';
   }
 
   /**

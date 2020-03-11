@@ -19,19 +19,32 @@
 
 import Component, { mixins } from 'vue-class-component';
 import { EvanComponent } from '@evan.network/ui-vue-core';
-import { Runtime } from '@evan.network/api-blockchain-core';
-import { Delegate, DidDocumentTemplate, ServiceEndpoint } from './DidInterfaces';
+import { Runtime, DidDocument } from '@evan.network/api-blockchain-core';
+import { isEqual } from 'lodash';
+import { Delegate, ServiceEndpoint } from './DidInterfaces';
 import { DidService } from './DidService';
 
 @Component
 export default class DIDComponent extends mixins(EvanComponent) {
-  didDocument: DidDocumentTemplate = null;
+  didDocument: DidDocument = null;
 
   delegates: Delegate[] = null;
 
   endpoints: ServiceEndpoint[] = null;
 
+  isEditMode = false;
+
+  isLoading = false;
+
+  canSave = false;
+
+  previousDelegates: Delegate[] = null;
+
+  previousEndpoints: ServiceEndpoint[] = null;
+
   runtime: Runtime = null;
+
+  didService: DidService;
 
   onPageEntries = [
     {
@@ -40,7 +53,7 @@ export default class DIDComponent extends mixins(EvanComponent) {
     },
     {
       id: 'service-endpoints',
-      label: this.$t('_profile.did.service-endpoint-title'),
+      label: this.$t('_profile.did.service-endpoints-title'),
     },
     {
       id: 'delegates',
@@ -48,20 +61,120 @@ export default class DIDComponent extends mixins(EvanComponent) {
     },
   ]
 
-  async created(): Promise<void> {
-    this.didDocument = await DidService.fetchDidDocument();
-    this.delegates = await DidService.getDelegates(this.didDocument);
-    this.endpoints = await DidService.getServiceEndpoints(this.didDocument);
-    console.log('this.didDocument', this.didDocument);
-    console.log('this.delegates', this.delegates);
-    /* // TODO: switch after complete identity switch to: runtime.did.getDidDocument();
-       const identity = await this.runtime.verifications.getIdentityForAccount(this.runtime.activeAccount, true);
-       const did = await this.runtime.did.convertIdentityToDid(identity);
-       const document = await this.runtime.did.getDidDocumentTemplate();
-       await this.runtime.did.setDidDocument(did, document);
-       const retrieved = await this.runtime.did.getDidDocument(did); */
+  get hasEditRights(): boolean {
+    // Check if owner
+    if (this.runtime.activeIdentity === this.didDocument.id) {
+      return true;
+    }
+    // Check if current user is controller
+    if (this.didService.getControllers(this.didDocument).indexOf(this.runtime.activeIdentity)) {
+      return true;
+    }
+    return false;
   }
 
+  async created(): Promise<void> {
+    this.runtime = this.getRuntime();
+    this.didService = new DidService(this.runtime);
+    this.didDocument = await this.didService.fetchDidDocument();
+    this.delegates = await this.didService.getDelegates(this.didDocument);
+    this.endpoints = this.didService.getServiceEndpoints(this.didDocument);
+  }
+
+  /**
+   * Enable edit mode and save current data
+   */
+  onEditStart(): void {
+    this.previousDelegates = this.delegates;
+    this.previousEndpoints = this.endpoints;
+    this.isEditMode = true;
+  }
+
+  /**
+   * Disable edit mode and recover previous data
+   */
+  async onEditCancel(): Promise<void> {
+    this.delegates = this.previousDelegates;
+    this.endpoints = this.previousEndpoints;
+    this.isEditMode = false;
+  }
+
+  /**
+   * Update delegates and endpoints and persist using the service
+   */
+  async saveDidDocument(): Promise<void> {
+    this.isLoading = true;
+    let updatedDidDocument = DidService.updateServiceEndpoints(this.didDocument, this.endpoints);
+    updatedDidDocument = DidService.updateDelegates(updatedDidDocument, this.delegates);
+
+    await this.didService.updateDidDocument(updatedDidDocument).start(this.runtime, {});
+
+    this.didDocument = updatedDidDocument;
+    this.isLoading = false;
+    this.isEditMode = false;
+  }
+
+  /**
+   * Temporarily add new delegate
+   */
+  onAddDelegate(newDelegate: Delegate): void {
+    this.delegates = [...this.delegates, newDelegate];
+  }
+
+  /**
+   * Removes the selected delegate temporarily
+   * @param index row index of the item to be removed
+   */
+  onDeleteDelegate(index: number): void {
+    this.delegates = this.delegates.filter((_, i) => i !== index);
+  }
+
+  /**
+   * Temporarily add new endpoint and add new empty row
+   */
+  onAddEndpoint(newEndpoint: ServiceEndpoint): void {
+    this.endpoints = [...this.endpoints, newEndpoint];
+  }
+
+  /**
+   * Replace Endpoint entry with updated one
+   * @param index index of endpoint in array list
+   * @param endpoint updated endpoint
+   */
+  onUpdateEndpoint(index: number, endpoint: ServiceEndpoint): void {
+    this.endpoints = this.endpoints.map((item, idx) => (idx === index ? endpoint : item));
+    if (!endpoint.label || !endpoint.url) {
+      this.canSave = false;
+    } else {
+      this.canSave = true;
+    }
+  }
+
+  /**
+   * Removes the selected endpoint temporarily
+   * @param index row index of the item to be removed
+   */
+  onDeleteEndpoint(index: number): void {
+    this.endpoints = this.endpoints.filter((_, i) => i !== index);
+  }
+
+  /**
+   * Checks for any real change made
+   */
+  get hasChanges(): boolean {
+    // deep object comparison
+    return !isEqual(this.delegates, this.previousDelegates)
+      || !isEqual(this.endpoints, this.previousEndpoints);
+  }
+
+  /**
+   * Export DID Document as JSON and trigger its download
+   */
+  exportDidDoc(): void {
+    DidService.exportDocument(this.didDocument, this.didDocument.id);
+  }
+
+  // TODO refactor to (renderless) vue component
   copyToClipboard(text: string): void {
     const textArea = document.createElement('textarea');
 

@@ -47,7 +47,7 @@
             type="text-filter"
             icon="mdi mdi-account-outline"
             icon-position="left"
-            :class="{ active: filter === 'users' }"
+            :class="{ active: filter === 'user' }"
             :label="$t('_assets.contacts.users')"
             @click="filterByType('user')"
           />
@@ -195,10 +195,11 @@ h1.heading {
   max-width: 850px;
   margin-left: auto;
   margin-right: auto;
+  padding: 16px;
 }
 
 .add-contact-btn {
-  position: fixed;
+  position: fixed !important;
   bottom: 40px;
   right: 60px;
 }

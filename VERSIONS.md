@@ -10,11 +10,11 @@
 - dapps
   - add `ui-session` for handling logged in users
   - add `olddappbrowser.evan` dapp, to enable backwards compatibility
+- add DID Document section to profile DApp
 
 ### Fixes
 
 ### Deprecations
-
 
 ## Version 4.0.1
 - general bug fixes and small improvements
