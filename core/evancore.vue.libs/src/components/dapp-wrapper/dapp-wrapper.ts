@@ -408,7 +408,9 @@ export default class DAppWrapperComponent extends mixins(EvanComponent) {
    * runtimes
    */
   async handleLoginOnboarding(): Promise<void> {
-    this.stopSessionWatcher = await session.start(async (action: string) => {
+    this.stopSessionWatcher = await session.start(async (action: string): Promise<any> => {
+      let result;
+
       switch (action) {
         case 'onboarding': {
           await new Promise((resolve) => {
@@ -447,11 +449,18 @@ export default class DAppWrapperComponent extends mixins(EvanComponent) {
           break;
         }
         case 'password': {
-          return new Promise((resolve) => {
+          result = await new Promise((resolve) => {
             this.loading = false;
             this.userInfo.address = session.activeAccount;
-            this.login = (password: string): void => resolve(password);
+            this.login = (password: string): void => {
+              // if the user has logged in, reenable loading circle
+              this.login = null;
+              this.loading = true;
+              resolve(password);
+            };
           });
+
+          break;
         }
         case 'runtimeUpdate': {
           this.loading = true;
@@ -483,6 +492,8 @@ export default class DAppWrapperComponent extends mixins(EvanComponent) {
           // uknown event type?
         }
       }
+
+      return result;
     });
   }
 
