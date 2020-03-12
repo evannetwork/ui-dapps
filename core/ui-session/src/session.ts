@@ -342,7 +342,7 @@ export default class EvanSession {
    * profiles to enable useIdentity. If useIdentity is false, force activeIdentity to activeAccount.
    */
   static async initialCheck(): Promise<void> {
-    if (EvanSession.activeAccount) {
+    if (EvanSession.activeAccount && !EvanSession.activeIdentity) {
       const useIdentity = await bccHelper.isIdentityUsed(
         EvanSession.activeAccount,
         EvanSession.accountIdentity,

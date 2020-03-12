@@ -26,7 +26,13 @@ export function getDidFromIdentity(runtime: Runtime, identity: string): string {
 }
 
 export async function getDidFromAddress(runtime: Runtime, accountId: string): Promise<string> {
-  const identity = await runtime.verifications.getIdentityForAccount(accountId, true);
+  let identity = accountId;
+
+  try {
+    identity = await runtime.verifications.getIdentityForAccount(accountId, true);
+  } catch (ex) {
+    runtime.logger.log(`Tried to load identity for identity "${accountId}", ${ex.message}`, 'warning');
+  }
 
   return getDidFromIdentity(runtime, identity);
 }

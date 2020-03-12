@@ -45,35 +45,35 @@ export class ContactsService {
    */
   async getContacts(): Promise<Contact[]> {
     const { profile }: { profile: AddressbookEntry } = await this.runtime.profile.getAddressBook();
+    const contactKeys = Object.keys(profile).filter(
+      (address) => address !== this.runtime.activeAccount && address !== this.runtime.activeIdentity,
+    );
 
-    const data: Contact[] = [];
-    await Promise.all(Object.keys(profile).map(async (contactAddress: string) => {
+    return Promise.all(contactKeys.map(async (contactAddress: string) => {
       // filter out own account
-      if (contactAddress !== this.runtime.activeAccount) {
-        const type = await profileUtils.getProfileType(this.runtime, contactAddress);
-        const isPending = ContactsService.isPending(profile[contactAddress]);
-        let displayName;
-        if (isPending) {
-          // email address
-          displayName = contactAddress;
-        } else {
-          // either shared name or hash address
-          displayName = await profileUtils.getDisplayName(this.runtime, contactAddress);
-        }
-        data.push({
-          address: contactAddress,
-          alias: profile[contactAddress].alias,
-          createdAt: profile[contactAddress].createdAt,
-          displayName,
-          icon: profileUtils.getProfileTypeIcon(type),
-          isFavorite: profile[contactAddress].isFavorite,
-          isPending,
-          type,
-          updatedAt: profile[contactAddress].updatedAt,
-        });
+      const type = await profileUtils.getProfileType(this.runtime, contactAddress);
+      const isPending = ContactsService.isPending(profile[contactAddress]);
+      let displayName;
+      if (isPending) {
+        // email address
+        displayName = contactAddress;
+      } else {
+        // either shared name or hash address
+        displayName = await profileUtils.getDisplayName(this.runtime, contactAddress);
       }
+
+      return {
+        address: contactAddress,
+        alias: profile[contactAddress].alias,
+        createdAt: profile[contactAddress].createdAt,
+        displayName,
+        icon: profileUtils.getProfileTypeIcon(type),
+        isFavorite: profile[contactAddress].isFavorite,
+        isPending,
+        type,
+        updatedAt: profile[contactAddress].updatedAt,
+      };
     }));
-    return data;
   }
 
   async addContact(contactFormData: ContactFormData): Promise<void> {
