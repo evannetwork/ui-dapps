@@ -32,6 +32,6 @@ import EvanComponent from '../../component';
 @Component({ })
 export default class DAppLoadingComponent extends mixins(EvanComponent) {
   @Prop({
-    default: 'w-100 h-100 text-center pt-5 pb-5',
+    default: 'w-100 text-center pt-5 pb-5',
   }) classes: string;
 }

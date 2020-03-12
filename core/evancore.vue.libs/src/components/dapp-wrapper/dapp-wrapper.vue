@@ -326,14 +326,9 @@
     </div>
     <div
       v-else
-      class="dapp-wrapper-body"
+      class="dapp-wrapper-body bg-level-3"
     >
-      <div class="w-100 h-100 mt-5 text-center">
-        <div
-          class="spinner-border text-primary"
-          role="status"
-        />
-      </div>
+      <evan-loading />
     </div>
   </div>
 </template>
