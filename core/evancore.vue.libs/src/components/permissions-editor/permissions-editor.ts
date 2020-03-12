@@ -275,6 +275,21 @@ class PermissionsEditor extends mixins(EvanComponent) {
   async setUserNameWithAddress(): Promise<void> {
     this.selectedUsername = await profileUtils.getUserAlias(this.runtime, this.selectedContact);
   }
+
+  /**
+   * Return a short contact name with a max character length of 100.
+   *
+   * @param      {string}  name    name that should be shortened
+   * @return     {string}  shortened string
+   */
+  // eslint-disable-next-line class-methods-use-this
+  getShortName(name: string): string {
+    if (name.length > 100) {
+      return `${name.slice(100)}...`;
+    }
+
+    return name;
+  }
 }
 
 export default PermissionsEditor;

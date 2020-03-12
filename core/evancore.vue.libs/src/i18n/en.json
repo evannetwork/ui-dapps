@@ -132,6 +132,7 @@
     "please-login": "Please unlock your Identity to continue.",
     "profile": {
       "account-name": "Account Name",
+      "account-name-max-error": "Max. 100 characters",
       "no-alias": "No alias",
       "types": {
         "choose": "Specify Account Type",

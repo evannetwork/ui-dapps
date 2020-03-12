@@ -133,6 +133,7 @@
     "profile": {
       "account-name": "Account Name",
       "no-alias": "Kein Alias",
+      "account-name-max-error": "Max. 100 Zeichen",
       "types": {
         "choose": "Identitätstyp spezifieren",
         "company": "Unternehmen",
