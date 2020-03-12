@@ -47,15 +47,15 @@ class DAppTwin extends DigitalTwin {
    */
   dispatcherStates: {
     // true, if anything else is loading (includes also container loading)
-    twin: boolean;
+    twin?: boolean;
     // true when description is saved
-    description: boolean;
+    description?: boolean;
     // add / remove favorite
-    favorite: boolean;
+    favorite?: boolean;
     // adding twin to favorites
-    addFavorite: boolean;
+    addFavorite?: boolean;
     // removing twins from favorites
-    removeFavorite: boolean;
+    removeFavorite?: boolean;
   };
 
   /**
