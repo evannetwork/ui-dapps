@@ -69,9 +69,14 @@ Then('I want to see a table having {string} {int} rows', async (operator, count)
 
 Then('I want to see a cell with the content {string}', async (content) => {
   client.useXpath();
-
   await client.waitForElementPresent(`//table//td[normalize-space(text()) = "${content}"]`, WAIT_TIME_FOR_ELEMENT);
+  client.useCss();
+});
 
+Then('I do not want to see a cell with the content {string}', async (content) => {
+  client.useXpath();
+  await client.expect.element(`//table//td[normalize-space(text()) = "${content}"]`)
+    .to.not.be.present.after(WAIT_TIME_FOR_ELEMENT);
   client.useCss();
 });
 

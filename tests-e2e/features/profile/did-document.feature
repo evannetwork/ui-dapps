@@ -1,6 +1,5 @@
-@only
 Feature: DID Document in Profile DApp
-  Scenario: Add and remove Service Endpoint
+  Scenario: Add a Service Endpoint
     Given I log in to evan.network using vue with identityBased
     And I click on "Identity" in main menu
     And I click on "Decentralized ID" in sub menu
@@ -21,11 +20,3 @@ Feature: DID Document in Profile DApp
     When I click on button "Save"
       Then I want to see a cell with the content "ServiceEndpoint 1"
       And I want to see a cell with the content "https://test.de"
-
-    When I click on button "Edit"
-      Then I want to see a button "Save"
-      And I want to see a button "Cancel"
-      And the button "Save" should be "disabled"
-
-
-
