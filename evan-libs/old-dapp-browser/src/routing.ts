@@ -29,7 +29,19 @@ let lastRootENS: string;
 
 export let router: any;
 export let defaultDAppENS: string;
-export let history: string[];
+export let history: string[] = (() => {
+  // load history from cache
+  if (window.performance.navigation.type === 1 && !window.sessionStorage['evan-route-reloaded']) {
+    return [];
+  } else {
+    try {
+      return JSON.parse(window.sessionStorage['evan-route-history']);
+    } catch (ex) { }
+  }
+
+  // setup history functions
+  return [];
+})();
 
 /**
  * Go to onboarding. (#/onboarding.evan)
@@ -248,3 +260,4 @@ export function getQueryParameters(url: string = window.location.search.split('#
 
   return urlParams;
 }
+
