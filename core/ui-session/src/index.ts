@@ -25,6 +25,9 @@ import * as web3Helper from './web3Helper';
 
 System.map['@evan.network/ui-session'] = `uisession.libs.${getDomainName()}!dapp-content`;
 
+// early create web3 instance, so websocket can connect, while other dapps are loading
+web3Helper.getWeb3Instance();
+
 export {
   bccHelper,
   EvanLightwallet as lightwallet,
