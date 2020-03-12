@@ -343,17 +343,19 @@ export default class EvanSession {
    */
   static async initialCheck(): Promise<void> {
     if (EvanSession.activeAccount) {
-      if (!EvanSession.activeIdentity) {
-        const useIdentity = await bccHelper.isIdentityUsed(
-          EvanSession.activeAccount,
-          EvanSession.accountIdentity,
-        );
+      if (EvanSession.activeIdentity) {
+        return;
+      }
 
-        if (useIdentity) {
-          EvanSession.activeIdentity = await bccHelper.getIdentityForAccount(EvanSession.activeAccount);
-        } else {
-          EvanSession.activeIdentity = EvanSession.activeAccount;
-        }
+      const useIdentity = await bccHelper.isIdentityUsed(
+        EvanSession.activeAccount,
+        EvanSession.accountIdentity,
+      );
+
+      if (useIdentity) {
+        EvanSession.activeIdentity = await bccHelper.getIdentityForAccount(EvanSession.activeAccount);
+      } else {
+        EvanSession.activeIdentity = EvanSession.activeAccount;
       }
     } else {
       EvanSession.activeIdentity = '';
