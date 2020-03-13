@@ -25,23 +25,23 @@ module.exports = {
   accounts: {
     default: {
       mnemonic: process.env.USER_DEFAULT_MNEMONIC,
-      password: process.env.USER_DEFAULT_PASSWORD
+      password: process.env.USER_DEFAULT_PASSWORD,
     },
     wallet: {
       mnemonic: process.env.USER_WALLET_MNEMONIC,
-      password: process.env.USER_WALLET_PASSWORD
+      password: process.env.USER_WALLET_PASSWORD,
     },
     wallet2: {
       mnemonic: process.env.USER_WALLET2_MNEMONIC,
-      password: process.env.USER_WALLET2_PASSWORD
+      password: process.env.USER_WALLET2_PASSWORD,
     },
     rentalDispo: {
       mnemonic: process.env.USER_RENTAL_DISPO_MNEMONIC,
-      password: process.env.USER_RENTAL_DISPO_PASSWORD
+      password: process.env.USER_RENTAL_DISPO_PASSWORD,
     },
     rentalDriver: {
       mnemonic: process.env.USER_RENTAL_DRIVER_MNEMONIC,
-      password: process.env.USER_RENTAL_DRIVER_PASSWORD
+      password: process.env.USER_RENTAL_DRIVER_PASSWORD,
     },
     organizationIdentification: {
       accountId: process.env.USER_ORGANIZATION_IDENT_ACCOUNTID,
@@ -51,6 +51,10 @@ module.exports = {
     organizationIdentificationNonCompany: {
       mnemonic: process.env.USER_ORGANIZATION_IDENT_NON_COMPANY_MNEMONIC,
       password: process.env.USER_ORGANIZATION_IDENT_NON_COMPANY_PASSWORD,
+    },
+    identityBased: {
+      mnemonic: process.env.USER_IDENTITY_BASED_MNEMONIC,
+      password: process.env.USER_IDENTITY_BASED_PASSWORD,
     },
   },
 };

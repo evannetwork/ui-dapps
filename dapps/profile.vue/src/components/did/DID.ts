@@ -36,7 +36,7 @@ export default class DIDComponent extends mixins(EvanComponent) {
 
   isLoading = false;
 
-  canSave = false;
+  canSave = true;
 
   previousDelegates: Delegate[] = null;
 
