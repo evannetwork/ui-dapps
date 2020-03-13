@@ -35,6 +35,7 @@
             <h1>{{ '_profile.did.did-title' | translate }} ({{ '_profile.did.did' | translate }})</h1>
             <p>
               {{ '_profile.did.created-at' | translate }} {{ didDocument.created | moment('L') }}
+              &nbsp;
               {{ '_profile.did.updated-at' | translate }} {{ didDocument.updated | moment('L') }}
             </p>
           </div>
