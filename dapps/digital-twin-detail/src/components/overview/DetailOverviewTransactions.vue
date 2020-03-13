@@ -23,8 +23,7 @@
           <span>(EVE)</span>
         </template>
         <template v-slot:cell(timestamp)="data">
-          {{ data.item.timestamp | moment('L') }}
-          {{ data.item.timestamp | moment('LT') }}
+          {{ data.item.timestamp | moment('L') }} {{ data.item.timestamp | moment('LT') }}
         </template>
       </evan-table>
     </div>
