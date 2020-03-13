@@ -141,7 +141,7 @@
           </div>
 
           <div class="text-center mt-5">
-            <span>{{ '_onboarding.sign-up.already-signed-up' | translate }}</span>
+            <span class="mr-1">{{ '_onboarding.sign-up.already-signed-up' | translate }}</span>
             <router-link :to="{ name: 'sign-in', query: $route.query}">
               {{ '_onboarding.login' | translate }}
             </router-link>
