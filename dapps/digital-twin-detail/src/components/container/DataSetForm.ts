@@ -224,6 +224,11 @@ export default class DataSetFormComponent extends mixins(EvanComponent) {
         formData[key] = { files: formData[key] };
       } else if (uiSpecs.attr.type === 'number') {
         formData[key] = parseFloat(formData[key]);
+        if (Number.isNaN(formData[key])) {
+          delete formData[key];
+        }
+      } else if (uiSpecs.attr.type === 'string' && !formData[key]) {
+        delete formData[key];
       }
     });
 

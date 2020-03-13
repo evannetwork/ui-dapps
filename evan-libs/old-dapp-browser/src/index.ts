@@ -18,7 +18,7 @@
 */
 
 import {
-  routing, System, ipfs, loading,
+  System, ipfs, loading,
 } from '@evan.network/ui-dapp-browser';
 import * as CoreBundle from '@evan.network/api-blockchain-core';
 import * as SmartContracts from '@evan.network/smart-contracts-core';
@@ -31,6 +31,7 @@ import * as notifications from './notifications';
 import * as queue from './queue';
 import * as solc from './solc';
 import * as utils from './utils';
+import * as routing from './routing';
 import * as web3Helper from './web3';
 import { AccountStore } from './bcc/AccountStore';
 import { config } from './config';
