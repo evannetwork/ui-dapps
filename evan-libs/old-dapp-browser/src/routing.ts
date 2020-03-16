@@ -17,7 +17,7 @@
   the following URL: https://evan.network/license/
 */
 
-import { dapp } from '@evan.network/ui-dapp-browser';
+import { dapp, routing } from '@evan.network/ui-dapp-browser';
 
 import * as utils from './utils';
 import evanGlobals from './evanGlobals';
@@ -27,7 +27,7 @@ import evanGlobals from './evanGlobals';
  */
 let lastRootENS: string;
 
-export let router: any;
+export let router: any = routing.router;
 export let defaultDAppENS: string;
 
 function getHistory(): string[] {
@@ -161,42 +161,10 @@ export async function onRouteChange(): Promise<void> {
  * @return     {void}    resolved when routing was created
  */
 export async function initialize(initialRoute?: string): Promise<void> {
-  // load history from cache
-  if (window.performance.navigation.type === 1 && !window.sessionStorage['evan-route-reloaded']) {
-    history = [];
-  } else {
-    try {
-      history = JSON.parse(window.sessionStorage['evan-route-history']);
-    } catch (ex) { }
-  }
-
-  // setup history functions
-  history = history || [];
-  updateHistory();
-
-  // watch for window reload to save, that the current session was reloaded
-  delete window.sessionStorage['evan-route-reloaded'];
-  window.addEventListener('beforeunload', (event) => {
-    window.sessionStorage['evan-route-reloaded'] = true;
-  });
-
-  // if an default route was applied to the initialize function, navigate to it!
-  if (initialRoute) {
-    window.location.hash = initialRoute;
-  }
-
   // create Navigo with angular # routing
-  router = new Navigo(null, true, '#');
   defaultDAppENS = await getDefaultDAppENS();
 
-  // load current url for the first time
-  await onRouteChange();
-
-  if (typeof window.onhashchange !== 'undefined') {
-    window.addEventListener('hashchange', onRouteChange);
-  } else {
-    setInterval(onRouteChange, 100);
-  }
+  // was already done by original ui-dapp-browser router
 }
 
 /**
