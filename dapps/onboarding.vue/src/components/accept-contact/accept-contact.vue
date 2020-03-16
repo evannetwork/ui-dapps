@@ -49,7 +49,7 @@
           <template v-slot:footer>
             <button
               type="button"
-              class="btn  btn-primary font-weight-normal"
+              class="btn btn-primary font-weight-normal"
               @click="$refs.acceptingError.hide()"
             >
               {{ '_onboarding.sign-up.profile-create-error.ok' | translate }}
