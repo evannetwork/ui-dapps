@@ -211,10 +211,6 @@ export default class ProfileRootComponent extends mixins(EvanComponent) {
         disabled: !this.getRuntime().runtimeConfig.useIdentity,
       },
       {
-        key: 'wallet',
-        icon: 'mdi mdi-wallet-outline',
-      },
-      {
         key: 'verifications',
         icon: 'mdi mdi-check-decagram',
       },

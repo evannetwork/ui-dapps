@@ -59,12 +59,12 @@ const routeRegistration: Array<RouteRegistrationInterface> = [
       { name: 'detail', path: 'detail', component: ProfileDetailComponent },
       { name: 'settings', path: 'settings', component: ProfileSettingsComponent },
       { name: 'sharings', path: 'sharings', component: ProfileSharingsComponent },
-      { name: 'wallet', path: 'wallet', component: ProfileWalletComponent },
       { name: 'verifications', path: 'verifications', component: VerificationsComponent },
       { name: 'did', path: 'did', component: DIDComponent },
       { name: 'addressbook.vue', component: DAppLoaderComponent, path: `addressbook.vue.${dappBrowser.getDomainName()}` },
     ],
   },
+  { name: 'wallet', path: 'wallet', component: ProfileWalletComponent },
   // { path: '*', redirect: to => redirectToDefault(to), },
 ];
 

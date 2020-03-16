@@ -227,8 +227,7 @@ $themeEvan: map-merge(
 $themeEvan: map-merge(
   (
     // dapp-wrapper
-    dapp-wrapper-sidepanel-icon-color: cssVar('white'),
-    dapp-wrapper-sidepanel-list-active: cssVar('white'),
+    dapp-wrapper-sidepanel-icon-color: cssVar('text-color'),
     dapp-wrapper-sidepanel-shadow: 1px 0 20px rgba(0, 0, 0, 0.15),
   ),
   $themeEvan

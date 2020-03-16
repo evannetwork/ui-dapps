@@ -33,6 +33,7 @@ export interface RouteRegistrationInterface {
  * Used to map routes path including icon and title for dapp-wrapper sidebar
  */
 export interface DAppWrapperRouteInterface {
+  action?: Function; // () => ...
   fullPath?: string; // '/dashboard.evan/favorites.evan'
   icon: string; // 'mdi mdi-bookmark'
   id?: string; // 'synchronization'
