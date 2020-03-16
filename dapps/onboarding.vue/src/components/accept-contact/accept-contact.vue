@@ -60,7 +60,7 @@
         <div class="mt-3">
           <evan-success v-if="accepted" />
           <div
-            v-if="!accepted"
+            v-else
             class="text-center m-3"
           >
             <evan-loading v-if="accepting" />
