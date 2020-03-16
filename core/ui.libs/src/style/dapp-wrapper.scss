@@ -61,16 +61,16 @@ $sidebar-item-width: 40px;
         display: none;
       }
 
+      // only the sidepnale toggle only on small devices
+      #evan-dapp-sidepanel-toggle {
+        display: none;
+        order: 0;
+
+        margin-right: auto;
+      }
+
       ul.nav {
         align-items: center;
-
-        // only the sidepnale toggle only on small devices
-        #evan-dapp-sidepanel-toggle {
-          display: none;
-          order: 0;
-
-          margin-right: auto;
-        }
 
         &.bottom-nav {
           height: 100%;
@@ -202,17 +202,44 @@ $sidebar-item-width: 40px;
   }
 
   .dapp-wrapper-bottom-bar {
+    position: relative;
+
     display: flex;
 
     height: 64px;
     padding-right: 32px;
 
+    border-top: 3px solid cssVar('bg-level-3');
     background-color: cssVar('white');
 
     ul.nav {
       align-items: center;
 
       height: 100%;
+    }
+
+    .profile-preview {
+      line-height: 16px;
+
+      height: 100%;
+
+      .profile-picture {
+        position: absolute;
+        top: -10px;
+        left: 30px;
+
+        .mask {
+          border: 3px solid cssVar('white');
+        }
+      }
+
+      & > .info {
+        margin-left: 112px !important;
+      }
+
+      .profile-type {
+        font-size: 10px !important;
+      }
     }
   }
 
@@ -231,38 +258,21 @@ $sidebar-item-width: 40px;
       }
 
       .dapp-wrapper-sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+
         overflow: hidden;
         flex-direction: row;
+        justify-content: flex-end;
 
         width: 100%;
         height: $sidebar-small-width;
-        padding-bottom: 0;
+        padding: 0;
 
         ul.nav {
           flex-direction: row;
           flex-wrap: nowrap;
-
-          #evan-dapp-sidepanel-toggle {
-            display: flex;
-          }
-
-          &.bottom-nav {
-            position: fixed;
-            top: -2px;
-            left: 0;
-
-            justify-content: flex-end;
-
-            width: 100%;
-
-            background-color: cssVar('bg-inverted');
-          }
-
-          &.top-nav {
-            justify-content: space-around;
-
-            width: 100%;
-          }
 
           & > li {
             &, a {
@@ -277,11 +287,23 @@ $sidebar-item-width: 40px;
                 font-size: 24px;
               }
             }
+
+            a.active {
+              background-color: transparent;
+              box-shadow: none;
+            }
           }
         }
 
         .evan-tooltip {
           display: none !important;
+        }
+
+        #evan-dapp-sidepanel-toggle {
+          position: absolute;
+          left: 0;
+
+          display: flex;
         }
       }
 

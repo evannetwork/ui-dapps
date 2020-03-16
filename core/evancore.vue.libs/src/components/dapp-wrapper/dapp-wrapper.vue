@@ -35,6 +35,7 @@
         class="dapp-wrapper-body"
         :class="{
           'pt-0': onboarding || login,
+          'h-100': !topLevel || onboarding || login || loading,
         }"
       >
         <div
@@ -62,6 +63,27 @@
             class="dapp-wrapper-sidebar"
           >
             <slot name="sidebar">
+              <ul
+                id="evan-dapp-sidepanel-toggle"
+                class="nav"
+              >
+                <li>
+                  <a
+                    v-if="enabledSideBar2"
+                    :class="{ active: showSideBar }"
+                    @click="showSideBar = !showSideBar"
+                  >
+                    <i
+                      v-if="!showSideBar"
+                      class="mdi mdi-menu"
+                    />
+                    <i
+                      v-if="showSideBar"
+                      class="mdi mdi-close"
+                    />
+                  </a>
+                </li>
+              </ul>
               <ul class="nav top-nav">
                 <li
                   v-for="route in routes.topLeft"
@@ -82,22 +104,6 @@
               </ul>
               <ul class="nav bottom-nav">
                 <ul class="nav">
-                  <li id="evan-dapp-sidepanel-toggle">
-                    <a
-                      v-if="enabledSideBar2"
-                      :class="{ active: showSideBar }"
-                      @click="showSideBar = !showSideBar"
-                    >
-                      <i
-                        v-if="!showSideBar"
-                        class="mdi mdi-menu"
-                      />
-                      <i
-                        v-if="showSideBar"
-                        class="mdi mdi-close"
-                      />
-                    </a>
-                  </li>
                   <li
                     v-for="(route, index) in routes.centerLeft"
                     :key="route.path"
@@ -204,7 +210,9 @@
         class="dapp-wrapper-bottom-bar"
       >
         <div>
-          user
+          <evan-profile-preview
+            :address="$store.state.runtime.activeIdentity"
+          />
         </div>
         <div class="mx-auto" />
         <ul class="nav">
