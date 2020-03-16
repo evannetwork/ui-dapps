@@ -29,6 +29,22 @@
         </tr>
         <tr>
           <td class="property">
+            {{ '_twin-detail.overview.contract-address' | translate }}
+          </td>
+          <td class="value">
+            {{ $route.params.twin }}
+          </td>
+          <td class="action">
+            <evan-button
+              size="sm"
+              type="icon-secondary"
+              icon="mdi mdi-content-copy"
+              @click="copyToClipboard($route.params.twin)"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td class="property">
             {{ '_twin-detail.overview.owner' | translate }}
           </td>
           <td>{{ ownerName }}</td>
