@@ -105,7 +105,7 @@ dispatcher
           fromAlias: data.fromAlias,
           lang: data.currLang,
         },
-        runtime.web3.utils.toWei('1'),
+        runtime.web3.utils.toWei('0'),
       );
     } else {
       // generate communication keys
