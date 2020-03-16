@@ -133,13 +133,15 @@ export default class AcceptContact extends mixins(EvanComponent) {
         accountId: this.runtime.activeIdentity,
       });
 
-
       // load my address book
       await this.runtime.profile.loadForAccount(this.accountId,
         this.runtime.profile.treeLabels.addressBook);
       // search for the target public key
-      const targetProfile = await bccHelper.getProfileForAccount(bcc,
-        queryParams.inviteeAddress);
+      const targetProfile = new bcc.Profile({
+        ...(this.runtime as bcc.ProfileOptions),
+        profileOwner: queryParams.inviteeAddress as string,
+        accountId: queryParams.inviteeAddress as string,
+      });
       const targetPubKey = await targetProfile.getPublicKey();
       if (!targetPubKey) {
         throw new Error(`No public key found for account ${queryParams.inviteeAddress}`);
@@ -187,7 +189,7 @@ export default class AcceptContact extends mixins(EvanComponent) {
       }, 2000);
     } catch (ex) {
       utils.log(ex.message, 'error');
-      (<any> this.$refs.acceptingError).show();
+      (this.$refs.acceptingError as any).show();
     }
 
     // show loading
