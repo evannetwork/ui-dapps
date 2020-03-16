@@ -28,7 +28,7 @@
           <evan-loading v-if="loading" />
           <template v-else>
             <evan-dapp-wrapper-level-2
-              v-if="$store.state.profileDApp.isMyProfile"
+              v-if="$store.state.profileDApp.isMyProfile && $route.name !== 'wallet'"
             >
               <evan-nav-list :entries="navEntries">
                 <template slot="header">

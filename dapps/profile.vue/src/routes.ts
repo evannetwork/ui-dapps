@@ -49,6 +49,7 @@ const redirectToDefault = (to, childPath = 'detail'): string => [
 const routeRegistration: Array<RouteRegistrationInterface> = [
   { path: '', redirect: (to): string => redirectToDefault(to) },
   { path: 'verify', redirect: (to): string => redirectToDefault(to, 'verifications') },
+  { name: 'wallet', path: 'wallet', component: ProfileWalletComponent },
   {
     // just used for nested routing
     component: AccountRootComponent,
@@ -64,7 +65,6 @@ const routeRegistration: Array<RouteRegistrationInterface> = [
       { name: 'addressbook.vue', component: DAppLoaderComponent, path: `addressbook.vue.${dappBrowser.getDomainName()}` },
     ],
   },
-  { name: 'wallet', path: 'wallet', component: ProfileWalletComponent },
   // { path: '*', redirect: to => redirectToDefault(to), },
 ];
 

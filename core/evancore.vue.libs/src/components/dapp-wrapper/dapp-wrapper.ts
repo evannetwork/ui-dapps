@@ -230,50 +230,52 @@ export default class DAppWrapperComponent extends mixins(EvanComponent) {
   /**
    * routes that should be displayed in the sidepanel, if no sidebar slot is given
    */
-  routes: { [type: string]: Array<DAppWrapperRouteInterface> } = {
-    topLeft: [
-      {
-        icon: 'mdi mdi-apps',
-        path: `favorites.vue.${domainName}`,
-        title: `${i18nPref}.favorites`,
-      },
-    ],
-    centerLeft: [
-      {
-        icon: 'mdi mdi-cube-outline',
-        path: `assets.${domainName}`,
-        title: `${i18nPref}.assets`,
-      },
-      {
-        icon: 'mdi mdi-account-outline',
-        path: `profile.vue.${domainName}`,
-        title: `${i18nPref}.profile`,
-      },
-      {
-        icon: 'mdi mdi-credit-card-outline',
-        path: `profile.vue.${domainName}/${session.activeIdentity}/wallet`,
-        title: `${i18nPref}.wallet`,
-      },
-      {
-        icon: 'mdi mdi-bell-outline',
-        path: `mailbox.vue.${domainName}`,
-        title: `${i18nPref}.actions`,
-      },
-    ],
-    bottomRight: [
-      {
-        icon: 'mdi mdi-help-circle-outline',
-        path: `help.vue.${domainName}`,
-        title: `${i18nPref}.help`,
-      },
-      {
-        action: () => this.$refs.queuePanel.show(),
-        icon: 'mdi mdi-sync',
-        id: 'synchronization',
-        title: `${i18nPref}.synchronization`,
-      },
-    ],
-  };
+  get routes(): { [type: string]: Array<DAppWrapperRouteInterface> } {
+    return {
+      topLeft: [
+        {
+          icon: 'mdi mdi-apps',
+          path: `favorites.vue.${domainName}`,
+          title: `${i18nPref}.favorites`,
+        },
+      ],
+      centerLeft: [
+        {
+          icon: 'mdi mdi-cube-outline',
+          path: `assets.${domainName}`,
+          title: `${i18nPref}.assets`,
+        },
+        {
+          icon: 'mdi mdi-account-outline',
+          path: `profile.vue.${domainName}/${session.activeIdentity}`,
+          title: `${i18nPref}.profile`,
+        },
+        {
+          icon: 'mdi mdi-credit-card-outline',
+          path: `profile.vue.${domainName}/wallet`,
+          title: `${i18nPref}.wallet`,
+        },
+        {
+          icon: 'mdi mdi-bell-outline',
+          path: `mailbox.vue.${domainName}`,
+          title: `${i18nPref}.actions`,
+        },
+      ],
+      bottomRight: [
+        {
+          icon: 'mdi mdi-help-circle-outline',
+          path: `help.vue.${domainName}`,
+          title: `${i18nPref}.help`,
+        },
+        {
+          action: () => this.$refs.queuePanel.show(),
+          icon: 'mdi mdi-sync',
+          id: 'synchronization',
+          title: `${i18nPref}.synchronization`,
+        },
+      ],
+    };
+  }
 
   /**
    * Returns the i18n title key for the active route.
