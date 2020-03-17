@@ -21,10 +21,10 @@
 
 .evan {
   .toasted-container {
-    &.bottom-left {
+    &.bottom-right {
       position: fixed;
-      bottom: 15px;
-      left: 80px;
+      right: 8px;
+      bottom: 72px;
     }
 
     .toasted {

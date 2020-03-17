@@ -204,7 +204,7 @@ export async function initializeVue(initOptions: EvanVueOptionsInterface): Promi
   // add vue toaster
   Vue.use(VueToasted, {
     duration: 3000,
-    position: 'bottom-left',
+    position: 'bottom-right',
   });
 
   const vue = new Vue({
