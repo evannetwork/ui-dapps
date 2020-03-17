@@ -45,7 +45,7 @@ export default class ProfileRootComponent extends mixins(EvanComponent) {
    * Nav entries that are visible by others
    */
   // TODO: add verification to public nav entries, when verifications are public visible
-  publicNavEntries: string[] = ['detail', 'did'];
+  publicNavEntries = ['detail', 'did'];
 
   /**
    * Watch for dispatcher updates
