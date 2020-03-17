@@ -223,12 +223,11 @@
           >
             <a
               :id="`evan-dapp-${ (route.path || route.id).split('.')[0] }`"
-              :class="{ active: route.path && $route.path.startsWith(route.fullPath) }"
               :href="route.path ? `${ dapp.fullUrl }/${ route.path }` : null"
               @click="routeActivated(route)"
             >
               <i :class="route.icon" />
-              <evan-tooltip :placement="'right'">
+              <evan-tooltip :placement="'top'">
                 {{ route.title | translate }}
               </evan-tooltip>
             </a>
