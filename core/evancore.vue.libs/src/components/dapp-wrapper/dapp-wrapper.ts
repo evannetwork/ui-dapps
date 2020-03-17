@@ -268,7 +268,7 @@ export default class DAppWrapperComponent extends mixins(EvanComponent) {
           title: `${i18nPref}.help`,
         },
         {
-          action: () => this.$refs.queuePanel.show(),
+          action: () => (this.$refs.queuePanel as any).show(),
           icon: 'mdi mdi-sync',
           id: 'synchronization',
           title: `${i18nPref}.synchronization`,

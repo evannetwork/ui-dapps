@@ -334,7 +334,7 @@
     </template>
     <div
       v-else
-      class="dapp-wrapper-body bg-level-3"
+      class="dapp-wrapper-body bg-level-3 h-100"
     >
       <evan-loading />
     </div>
