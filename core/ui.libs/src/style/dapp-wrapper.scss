@@ -225,11 +225,12 @@ $sidebar-item-width: 40px;
 
       .profile-picture {
         position: absolute;
-        top: -10px;
+        top: -15px;
         left: 30px;
 
         .mask {
           border: 3px solid cssVar('white');
+          box-shadow: 0 8px 16px rgba(0, 0, 0, 0.16);
         }
       }
 
