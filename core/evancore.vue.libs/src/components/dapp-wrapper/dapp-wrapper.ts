@@ -256,7 +256,7 @@ export default class DAppWrapperComponent extends mixins(EvanComponent) {
           title: `${i18nPref}.wallet`,
         },
         {
-          icon: 'mdi mdi-bell-outline',
+          icon: 'mdi mdi-bell-outline rotate-45',
           path: `mailbox.vue.${domainName}`,
           title: `${i18nPref}.actions`,
         },
