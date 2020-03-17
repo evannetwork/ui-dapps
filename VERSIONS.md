@@ -10,6 +10,8 @@
 - dapps
   - add `ui-session` for handling logged in users
   - add `olddappbrowser.evan` dapp, to enable backwards compatibility
+  - `digital-twin-detail`
+    - add address to twin detail
 - add DID Document section to profile DApp
 
 ### Fixes
