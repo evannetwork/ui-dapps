@@ -20,13 +20,15 @@
 <template>
   <div :style="`--evan-swipe-panel-size: ${ width }`">
     <template v-if="isRendered">
-      <div class="evan-swipe-panel"
+      <div
+        class="evan-swipe-panel"
         :class="{
           'fixed': !mountId,
           'show': isShown,
           [`alignment-${alignment}`]: !mountId,
         }"
-        :style="customStyle">
+        :style="customStyle"
+      >
         <header v-if="!hideCloseButton || !!title">
           <slot name="header">
             <h3 class="title">
@@ -35,32 +37,35 @@
           </slot>
           <span class="mx-auto" />
           <evan-button
-            @click="hide($event)"
+            v-if="!hideCloseButton"
             class="btn-close"
             icon="mdi mdi-close"
             type="icon-secondary"
-            v-if="!hideCloseButton"
+            @click="hide($event)"
           />
         </header>
-        
+
         <main>
-          <slot></slot>
+          <slot />
         </main>
-        
+
         <footer>
-          <slot name="footer"></slot>
+          <slot name="footer" />
         </footer>
       </div>
-      <div v-if="showBackdrop" class="fullscreen"
-        @click="hide($event)">
-      </div>
+      <div
+        v-if="showBackdrop"
+        class="fullscreen"
+        @click="hide($event)"
+      />
     </template>
   </div>
 </template>
 
 <script lang="ts">
-  import Component from './swipe-panel';
-  export default Component;
+import Component from './swipe-panel';
+
+export default Component;
 </script>
 
 <style lang="scss" scoped>

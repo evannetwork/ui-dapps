@@ -243,6 +243,15 @@ $sidebar-item-width: 40px;
     }
   }
 
+
+  @media(min-width: 768px) {
+    #dapp-wrapper-sidebar-right {
+      .evan-swipe-panel {
+        height: calc(100vh - 64px);
+      }
+    }
+  }
+
   /**
    * the screen is very small
    */

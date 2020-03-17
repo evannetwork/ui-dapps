@@ -35,7 +35,7 @@
         class="dapp-wrapper-body"
         :class="{
           'pt-0': onboarding || login,
-          'h-100': !topLevel || onboarding || login || loading,
+          'h-100': !topLevel || onboarding || login,
         }"
       >
         <div
@@ -206,7 +206,7 @@
         />
       </div>
       <div
-        v-if="topLevel && !onboarding && !login && !loading"
+        v-if="topLevel && !onboarding && !login"
         class="dapp-wrapper-bottom-bar"
       >
         <div>
