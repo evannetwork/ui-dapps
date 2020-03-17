@@ -85,7 +85,7 @@ export default class ProfileRootComponent extends mixins(EvanComponent) {
    */
   isAccessDenied(routeName: string): boolean {
     return !this.$store.state.profileDApp.isMyProfile
-      && this.publicNavEntries.indexOf(routeName) === -1;
+      && !this.publicNavEntries.includes(routeName);
   }
 
   /**
