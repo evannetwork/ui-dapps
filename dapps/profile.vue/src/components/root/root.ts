@@ -79,6 +79,16 @@ export default class ProfileRootComponent extends mixins(EvanComponent) {
   }
 
   /**
+   * Check if a route name is accessable by others.
+   *
+   * @return     {boolean}  True if access denied, False otherwise.
+   */
+  isAccessDenied(routeName: string): boolean {
+    return !this.$store.state.profileDApp.isMyProfile
+      && this.publicNavEntries.indexOf(routeName) === -1;
+  }
+
+  /**
    * Setup navigation structure
    */
   async initialize(forceReload?: boolean): Promise<void> {
@@ -234,8 +244,7 @@ export default class ProfileRootComponent extends mixins(EvanComponent) {
         key: 'settings',
       },
     ]
-      .filter((entry) => this.$store.state.profileDApp.isMyProfile
-        || !entry || this.publicNavEntries.indexOf(entry.key) !== -1)
+      .filter((entry) => !entry || !this.isAccessDenied(entry.key))
       .map((entry) => (entry ? {
         disabled: entry.disabled,
         icon: entry.icon,

@@ -48,7 +48,7 @@
               style="flex: 1"
             >
               <div
-                v-if="!$store.state.profileDApp.isMyProfile && publicNavEntries.indexOf($route.name)"
+                v-if="isAccessDenied($route.name)"
                 class="h-100 text-center mt-10"
               >
                 <h3>{{ '_profile.not-permitted-view' | translate }}</h3>
