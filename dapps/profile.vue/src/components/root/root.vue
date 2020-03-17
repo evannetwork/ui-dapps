@@ -27,10 +27,11 @@
         <div class="h-100 d-flex flex-column">
           <evan-loading v-if="loading" />
           <template v-else>
-            <evan-dapp-wrapper-level-2
-              v-if="$store.state.profileDApp.isMyProfile"
-            >
-              <evan-nav-list :entries="navEntries">
+            <evan-dapp-wrapper-level-2>
+              <evan-nav-list
+                :entries="navEntries"
+                :show-logout="$store.state.profileDApp.isMyProfile"
+              >
                 <template slot="header">
                   <evan-profile-preview
                     class="p-4"
@@ -47,7 +48,7 @@
               style="flex: 1"
             >
               <div
-                v-if="!$store.state.profileDApp.isMyProfile && $route.name !== 'detail'"
+                v-if="isAccessDenied($route.name)"
                 class="h-100 text-center mt-10"
               >
                 <h3>{{ '_profile.not-permitted-view' | translate }}</h3>

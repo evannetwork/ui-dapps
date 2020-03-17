@@ -42,6 +42,12 @@ export default class ProfileRootComponent extends mixins(EvanComponent) {
   navEntries: NavEntryInterface[] = [];
 
   /**
+   * Nav entries that are visible by others
+   */
+  // TODO: add verification to public nav entries, when verifications are public visible
+  publicNavEntries = ['detail', 'did'];
+
+  /**
    * Watch for dispatcher updates
    */
   listeners: Array<any> = [];
@@ -70,6 +76,16 @@ export default class ProfileRootComponent extends mixins(EvanComponent) {
    */
   beforeDestroy(): void {
     this.listeners.forEach((listener) => listener());
+  }
+
+  /**
+   * Check if a route name is accessable by others.
+   *
+   * @return     {boolean}  True if access denied, False otherwise.
+   */
+  isAccessDenied(routeName: string): boolean {
+    return !this.$store.state.profileDApp.isMyProfile
+      && !this.publicNavEntries.includes(routeName);
   }
 
   /**
@@ -202,38 +218,40 @@ export default class ProfileRootComponent extends mixins(EvanComponent) {
   setNavEntries(): void {
     this.navEntries = [
       {
-        key: 'detail',
         icon: 'mdi mdi-account-outline',
+        key: 'detail',
       },
       {
-        key: 'did',
-        icon: 'mdi mdi-identifier',
         disabled: !this.getRuntime().runtimeConfig.useIdentity,
+        icon: 'mdi mdi-identifier',
+        key: 'did',
       },
       {
-        key: 'wallet',
         icon: 'mdi mdi-wallet-outline',
+        key: 'wallet',
       },
       {
-        key: 'verifications',
         icon: 'mdi mdi-check-decagram',
+        key: 'verifications',
       },
       {
-        key: 'sharings',
         icon: 'mdi mdi-share-variant',
+        key: 'sharings',
       },
       null,
       {
-        key: 'settings',
         icon: 'mdi mdi-settings',
+        key: 'settings',
       },
-    ].map((entry) => (entry ? {
-      id: `nav-entry-${entry.key}`,
-      text: `_profile.breadcrumbs.${entry.key.split('/')[0]}`,
-      to: entry.key,
-      icon: entry.icon,
-      disabled: entry.disabled,
-    } : null));
+    ]
+      .filter((entry) => !entry || !this.isAccessDenied(entry.key))
+      .map((entry) => (entry ? {
+        disabled: entry.disabled,
+        icon: entry.icon,
+        id: `nav-entry-${entry.key}`,
+        text: `_profile.breadcrumbs.${entry.key.split('/')[0]}`,
+        to: entry.key,
+      } : null));
 
     // remove sharings from old profiles
     if (!this.$store.state.profileDApp.profile.profileContainer || !this.$store.state.profileDApp.description) {
