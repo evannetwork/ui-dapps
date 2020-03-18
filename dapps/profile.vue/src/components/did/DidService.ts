@@ -9,21 +9,14 @@ import { ServiceEndpoint, Delegate } from './DidInterfaces';
  * Handles logic for fetching and persisting DID documents
  */
 export class DidService {
-  instance: DidService;
-
   runtime: Runtime;
 
   constructor(runtime: Runtime) {
-    // Singleton Service
-    if (this.instance) {
-      return this.instance;
-    }
     this.runtime = runtime;
-    this.instance = this;
   }
 
-  async fetchDidDocument(): Promise<DidDocument> {
-    const did = await this.runtime.did.convertIdentityToDid(this.runtime.activeIdentity);
+  async fetchDidDocument(identity: string): Promise<DidDocument> {
+    const did = await this.runtime.did.convertIdentityToDid(identity);
 
     return this.runtime.did.getDidDocument(did);
   }
