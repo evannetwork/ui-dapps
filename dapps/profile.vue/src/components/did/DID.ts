@@ -63,11 +63,11 @@ export default class DIDComponent extends mixins(EvanComponent) {
 
   get hasEditRights(): boolean {
     // Check if owner
-    if (this.runtime.activeIdentity === this.didDocument.id) {
+    if (this.runtime.activeIdentity === this.$route.params.address) {
       return true;
     }
     // Check if current user is controller
-    if (this.didService.getControllers(this.didDocument).indexOf(this.runtime.activeIdentity)) {
+    if (this.didService.getControllers(this.didDocument).indexOf(this.runtime.activeIdentity) >= 0) {
       return true;
     }
     return false;
