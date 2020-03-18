@@ -56,6 +56,7 @@ dispatcher
       const commKey = await runtime.keyExchange.decryptCommKey(data.attachment.key, commSecret.toString('hex'));
       await runtime.profile.addContactKey(data.mail.from, 'commKey', commKey.toString('utf-8'));
       await runtime.profile.addProfileKey(data.mail.from, 'alias', data.mail.fromAlias);
+      await runtime.profile.addProfileKey(data.mail.from, 'createdAt', new Date().toISOString());
 
       // remove old account that includes fromMail
       if (data.mail.fromMail) {
