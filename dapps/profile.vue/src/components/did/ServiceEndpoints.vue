@@ -41,14 +41,27 @@
 
       <template
         v-if="isEditMode"
-        v-slot:cell(label)="data"
+        v-slot:cell(id)="data"
       >
         <evan-form-control-input
           class="m-0"
           required
-          :placeholder="'_profile.did.label-placeholder' | translate"
-          :value="data.item.label"
-          @input="editLabel($event, data)"
+          :placeholder="'_profile.did.id-placeholder' | translate"
+          :value="data.item.id"
+          @input="editId($event, data)"
+        />
+      </template>
+
+      <template
+        v-if="isEditMode"
+        v-slot:cell(type)="data"
+      >
+        <evan-form-control-input
+          class="m-0"
+          required
+          :placeholder="'_profile.did.type-placeholder' | translate"
+          :value="data.item.type"
+          @input="editType($event, data)"
         />
       </template>
 
@@ -82,10 +95,18 @@
       >
         <b-td>
           <evan-form-control-input
-            id="labelInput"
-            v-model="newLabel"
+            id="idInput"
+            v-model="newId"
             class="m-0"
-            :placeholder="'_profile.did.label-placeholder' | translate"
+            :placeholder="'_profile.did.id-placeholder' | translate"
+          />
+        </b-td>
+        <b-td>
+          <evan-form-control-input
+            id="typelInput"
+            v-model="newType"
+            class="m-0"
+            :placeholder="'_profile.did.type-placeholder' | translate"
           />
         </b-td>
         <b-td>
@@ -103,7 +124,7 @@
             type="icon-secondary"
             icon="mdi mdi-plus"
             class="btn-sm"
-            :disabled="!newLabel || !newUrl"
+            :disabled="!newId || !newUrl || !newType"
             @click="addEndpointRow"
           />
         </b-td>

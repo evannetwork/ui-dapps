@@ -73,7 +73,8 @@ export class DidService {
       return [];
     }
     return didDocument.service.map((endpoint) => ({
-      label: endpoint.id,
+      id: endpoint.id,
+      type: endpoint.type,
       url: endpoint.serviceEndpoint,
     }));
   }
@@ -82,9 +83,9 @@ export class DidService {
     return {
       ...didDoc,
       service: endpoints.map((endpoint) => ({
-        id: endpoint.label,
+        id: endpoint.id,
+        type: endpoint.type,
         serviceEndpoint: endpoint.url,
-        type: 'TODO', // TODO
       })),
     };
   }
