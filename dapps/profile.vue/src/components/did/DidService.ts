@@ -50,9 +50,9 @@ export class DidService {
       // Filter out owner
       .filter((auth) => auth !== DidService.getOwner(didDocument))
       .map((auth) => auth.replace(regex, ''))
-      .map(async (delegateId) => ({
-        did: delegateId,
-        note: await profileUtils.getUserAlias(this.runtime, delegateId),
+      .map(async (did) => ({
+        did,
+        note: await profileUtils.getUserAlias(this.runtime, await this.runtime.did.convertDidToIdentity(did)),
       })));
   }
 

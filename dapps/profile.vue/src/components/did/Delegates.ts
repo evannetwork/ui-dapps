@@ -19,7 +19,7 @@
 
 import Component, { mixins } from 'vue-class-component';
 import { EvanComponent, EvanTableColumn, ContactInterface } from '@evan.network/ui-vue-core';
-import { profileUtils } from '@evan.network/ui';
+import { profileUtils, bccUtils } from '@evan.network/ui';
 import { Prop } from 'vue-property-decorator';
 import { Delegate } from './DidInterfaces';
 
@@ -53,6 +53,10 @@ export default class DelegatesComponent extends mixins(EvanComponent) {
 
   async created(): Promise<void> {
     this.contacts = await profileUtils.getContacts(this.getRuntime());
+    this.contacts = await Promise.all(this.contacts.map(async (contact) => ({
+      label: contact.label,
+      value: await bccUtils.getDidFromAddress(this.getRuntime(), contact.value),
+    })));
   }
 
   onSelectContact(contact: ContactInterface): void {
