@@ -25,6 +25,7 @@
       class="content"
     >
       <evan-onpage-navigation
+        class="d-none d-xxl-block"
         :entries="onPageEntries"
         scroll-container-selector=".scroll-container"
       />
