@@ -165,7 +165,7 @@
       "service-endpoints-desc": "Im Folgenden können Service Endpoints festgelegt werden, die mit dieser DID assoziiert werden sollen.",
       "service-endpoints-empty": "Noch keine Service Endpoints hinzugefügt",
       "service-endpoints-title": "Service Endpoints",
-      "type-placerholder": "Type",
+      "type-placeholder": "Type",
       "type": "Type",
       "updated-at": "aktualisiert am",
       "url-placeholder": "URL",

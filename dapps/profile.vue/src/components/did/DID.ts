@@ -144,7 +144,7 @@ export default class DIDComponent extends mixins(EvanComponent) {
    */
   onUpdateEndpoint(index: number, endpoint: ServiceEndpoint): void {
     this.endpoints = this.endpoints.map((item, idx) => (idx === index ? endpoint : item));
-    if (!endpoint.label || !endpoint.url) {
+    if (!endpoint.id || !endpoint.url || !endpoint.type) {
       this.canSave = false;
     } else {
       this.canSave = true;

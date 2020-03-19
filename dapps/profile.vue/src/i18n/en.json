@@ -165,7 +165,7 @@
       "service-endpoints-desc": "Below you can specify service endpoints, to which you want to associate your DID with.",
       "service-endpoints-empty": "No Service Endpoints added yet",
       "service-endpoints-title": "Service Endpoints",
-      "type-placerholder": "Type",
+      "type-placeholder": "Type",
       "type": "Type",
       "updated-at": "updated at",
       "url-placeholder": "URL",
