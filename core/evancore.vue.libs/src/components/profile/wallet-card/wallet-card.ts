@@ -84,7 +84,7 @@ export default class WalletCardComponent extends mixins(EvanComponent) {
         dapp.baseUrl,
         dapp.rootEns,
         `profile.vue.${dapp.domainName}`,
-        `${this.address}/wallet`,
+        `${this.address}`,
       ].join('/');
 
     await Promise.all([
