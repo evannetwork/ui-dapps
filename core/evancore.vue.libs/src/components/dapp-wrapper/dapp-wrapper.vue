@@ -345,3 +345,7 @@ import Component from './dapp-wrapper';
 
 export default Component;
 </script>
+
+<style lang="scss" scoped>
+@import 'dapp-wrapper.scss';
+</style>
