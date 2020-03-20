@@ -4,6 +4,7 @@ export interface Delegate {
 }
 
 export interface ServiceEndpoint {
-  label: string;
+  id: string;
+  type: string;
   url: string;
 }

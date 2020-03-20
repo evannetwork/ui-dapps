@@ -9,21 +9,14 @@ import { ServiceEndpoint, Delegate } from './DidInterfaces';
  * Handles logic for fetching and persisting DID documents
  */
 export class DidService {
-  instance: DidService;
-
   runtime: Runtime;
 
   constructor(runtime: Runtime) {
-    // Singleton Service
-    if (this.instance) {
-      return this.instance;
-    }
     this.runtime = runtime;
-    this.instance = this;
   }
 
-  async fetchDidDocument(): Promise<DidDocument> {
-    const did = await this.runtime.did.convertIdentityToDid(this.runtime.activeIdentity);
+  async fetchDidDocument(identity: string): Promise<DidDocument> {
+    const did = await this.runtime.did.convertIdentityToDid(identity);
 
     return this.runtime.did.getDidDocument(did);
   }
@@ -57,9 +50,9 @@ export class DidService {
       // Filter out owner
       .filter((auth) => auth !== DidService.getOwner(didDocument))
       .map((auth) => auth.replace(regex, ''))
-      .map(async (delegateId) => ({
-        did: delegateId,
-        note: await profileUtils.getUserAlias(this.runtime, delegateId),
+      .map(async (did) => ({
+        did,
+        note: await profileUtils.getUserAlias(this.runtime, await this.runtime.did.convertDidToIdentity(did)),
       })));
   }
 
@@ -80,7 +73,8 @@ export class DidService {
       return [];
     }
     return didDocument.service.map((endpoint) => ({
-      label: endpoint.id,
+      id: endpoint.id,
+      type: endpoint.type,
       url: endpoint.serviceEndpoint,
     }));
   }
@@ -89,9 +83,9 @@ export class DidService {
     return {
       ...didDoc,
       service: endpoints.map((endpoint) => ({
-        id: endpoint.label,
+        id: endpoint.id,
+        type: endpoint.type,
         serviceEndpoint: endpoint.url,
-        type: 'TODO', // TODO
       })),
     };
   }

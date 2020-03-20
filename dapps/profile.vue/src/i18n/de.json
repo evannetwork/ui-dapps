@@ -151,23 +151,26 @@
       }
     },
     "did": {
-      "created-at": "erstellt am",
       "choose-contact": "Kontakt auswählen",
-      "delegates-empty": "Noch keine Delegates ausgewählt",
+      "created-at": "erstellt am",
       "delegates-desc": "Im Folgenden können Delegates ausgewählt werden, die im Namen der Identität agieren dürfen. Diese sind beispielsweise befugt Informationen zu editieren, Daten freizugeben oder Transaktionen durchzuführen.",
+      "delegates-empty": "Noch keine Delegates ausgewählt",
       "delegates-title": "Delegates",
       "description": "Mit Decentralized Identities (DIDs) ist es möglich sich eindeutig, global und unabhängig vom Netzwerk zu identifizeren. Weiterhin ist es möglich festzulegen, wer Änderungen durchführen darf (Controller) und wer im Namen dieser Identität handeln darf (Delegates). Durch den Export dieses Dokumentes, können die Daten auch offline für andere freigeben werden.",
       "did-title": "Decentralized ID",
       "did": "DID",
       "export-document": "Dokument exportieren",
-      "label": "Label",
-      "label-placeholder": "Aussagekräftiger Name",
+      "id-placeholder": "DID",
+      "id": "ID",
       "note": "Notiz",
+      "service-endpoints-desc": "Im Folgenden können Service Endpoints festgelegt werden, die mit dieser DID assoziiert werden sollen.",
       "service-endpoints-empty": "Noch keine Service Endpoints hinzugefügt",
       "service-endpoints-title": "Service Endpoints",
-      "service-endpoints-desc": "Im Folgenden können Service Endpoints festgelegt werden, die mit dieser DID assoziiert werden sollen.",
+      "type-placeholder": "Type",
+      "type": "Type",
       "updated-at": "aktualisiert am",
-      "url-placeholder": "https://"
+      "url-placeholder": "URL",
+      "url": "Endpoint"
     },
     "dispatchers": {
       "did-document-update": "DID Dokument speichern",

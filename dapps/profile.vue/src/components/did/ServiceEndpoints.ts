@@ -32,17 +32,24 @@ export default class ServiceEndpointsComponent extends mixins(EvanComponent) {
 
   newUrl = null;
 
-  newLabel = null;
+  newId = null;
+
+  newType = null;
 
   columns: EvanTableColumn[] = [
     {
-      key: 'label',
-      label: this.$t('_profile.did.label'),
+      key: 'id',
+      label: this.$t('_profile.did.id'),
+      tdClass: 'truncate',
+    },
+    {
+      key: 'type',
+      label: this.$t('_profile.did.type'),
       tdClass: 'truncate',
     },
     {
       key: 'url',
-      label: 'URL',
+      label: this.$t('_profile.did.url'),
       tdClass: 'truncate',
     },
     {
@@ -53,12 +60,14 @@ export default class ServiceEndpointsComponent extends mixins(EvanComponent) {
   ]
 
   addEndpointRow(): void {
-    const newEndpoint = {
-      label: this.newLabel,
+    const newEndpoint: ServiceEndpoint = {
+      id: this.newId,
+      type: this.newType,
       url: this.newUrl,
     };
-    this.newLabel = null;
+    this.newId = null;
     this.newUrl = null;
+    this.newType = null;
 
     this.$emit('addEndpoint', newEndpoint);
   }
@@ -71,11 +80,15 @@ export default class ServiceEndpointsComponent extends mixins(EvanComponent) {
     this.$emit('deleteEndpoint', index);
   }
 
-  editLabel(value: string, tableData: EvanTableItem<ServiceEndpoint>): void {
-    this.$emit('updateEndpoint', tableData.index, { label: value, url: tableData.item.url });
+  editId(value: string, tableData: EvanTableItem<ServiceEndpoint>): void {
+    this.$emit('updateEndpoint', tableData.index, { id: value, type: tableData.item.type, url: tableData.item.url });
+  }
+
+  editType(value: string, tableData: EvanTableItem<ServiceEndpoint>): void {
+    this.$emit('updateEndpoint', tableData.index, { id: tableData.item.id, type: value, url: tableData.item.url });
   }
 
   editUrl(value: string, tableData: EvanTableItem<ServiceEndpoint>): void {
-    this.$emit('updateEndpoint', tableData.index, { label: tableData.item.label, url: value });
+    this.$emit('updateEndpoint', tableData.index, { id: tableData.item.id, type: tableData.item.type, url: value });
   }
 }

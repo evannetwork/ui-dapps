@@ -44,7 +44,7 @@
             <evan-button
               v-if="!isEditMode"
               class="mr-1 btn-sm"
-              @disabled="!hasEditRights"
+              :disabled="!hasEditRights"
               @click="onEditStart"
             >
               {{ '_evan.edit' | translate }}

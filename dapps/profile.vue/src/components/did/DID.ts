@@ -63,11 +63,11 @@ export default class DIDComponent extends mixins(EvanComponent) {
 
   get hasEditRights(): boolean {
     // Check if owner
-    if (this.runtime.activeIdentity === this.didDocument.id) {
+    if (this.runtime.activeIdentity === this.$route.params.address) {
       return true;
     }
     // Check if current user is controller
-    if (this.didService.getControllers(this.didDocument).indexOf(this.runtime.activeIdentity)) {
+    if (this.didService.getControllers(this.didDocument).includes(this.runtime.activeIdentity)) {
       return true;
     }
     return false;
@@ -76,7 +76,8 @@ export default class DIDComponent extends mixins(EvanComponent) {
   async created(): Promise<void> {
     this.runtime = this.getRuntime();
     this.didService = new DidService(this.runtime);
-    this.didDocument = await this.didService.fetchDidDocument();
+
+    this.didDocument = await this.didService.fetchDidDocument(this.$route.params.address);
     this.delegates = await this.didService.getDelegates(this.didDocument);
     this.endpoints = this.didService.getServiceEndpoints(this.didDocument);
   }
@@ -143,7 +144,7 @@ export default class DIDComponent extends mixins(EvanComponent) {
    */
   onUpdateEndpoint(index: number, endpoint: ServiceEndpoint): void {
     this.endpoints = this.endpoints.map((item, idx) => (idx === index ? endpoint : item));
-    if (!endpoint.label || !endpoint.url) {
+    if (!endpoint.id || !endpoint.url || !endpoint.type) {
       this.canSave = false;
     } else {
       this.canSave = true;
