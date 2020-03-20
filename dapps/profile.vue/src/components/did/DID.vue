@@ -18,7 +18,7 @@
 */
 
 <template>
-  <div class="d-flex">
+  <div class="wrapper d-flex">
     <evan-loading v-if="!didDocument" />
     <div
       v-else
@@ -142,17 +142,18 @@ export default Component;
 </script>
 
 <style lang="scss" scoped>
+.wrapper {
+  padding: 64px 24px;
+}
 .content {
   margin-left: auto;
   margin-right: auto;
-  padding-top: 56px;
-  padding-bottom: 56px;
   max-width: 560px;
 }
 .content-card {
   background: white;
   border-radius: 4px;
-  width: 560px;
+  width: 100%;
   padding: 24px 24px;
 
   .card-heading {

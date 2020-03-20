@@ -109,7 +109,6 @@ export default Component;
 .content-card {
   background: white;
   border-radius: 4px;
-  width: 560px;
   padding: 24px 24px;
 }
 </style>
