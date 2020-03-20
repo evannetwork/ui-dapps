@@ -84,7 +84,11 @@
             :placeholder="'_profile.did.choose-contact' | translate"
             :clear-search-on-select="true"
             @input="onSelectContact"
-          />
+          >
+            <template #no-options>
+              {{ '_profile.did.no-delegate-options' | translate }}
+            </template>
+          </evan-v-select>
         </b-td>
       </template>
 
