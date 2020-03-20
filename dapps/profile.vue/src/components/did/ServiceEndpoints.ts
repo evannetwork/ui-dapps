@@ -81,14 +81,26 @@ export default class ServiceEndpointsComponent extends mixins(EvanComponent) {
   }
 
   editId(value: string, tableData: EvanTableItem<ServiceEndpoint>): void {
-    this.$emit('updateEndpoint', tableData.index, { id: value, type: tableData.item.type, url: tableData.item.url });
+    this.$emit('updateEndpoint', tableData.index, {
+      id: value,
+      type: tableData.item.type,
+      url: tableData.item.url,
+    });
   }
 
   editType(value: string, tableData: EvanTableItem<ServiceEndpoint>): void {
-    this.$emit('updateEndpoint', tableData.index, { id: tableData.item.id, type: value, url: tableData.item.url });
+    this.$emit('updateEndpoint', tableData.index, {
+      id: tableData.item.id,
+      type: value,
+      url: tableData.item.url,
+    });
   }
 
   editUrl(value: string, tableData: EvanTableItem<ServiceEndpoint>): void {
-    this.$emit('updateEndpoint', tableData.index, { id: tableData.item.id, type: tableData.item.type, url: value });
+    this.$emit('updateEndpoint', tableData.index, {
+      id: tableData.item.id,
+      type: tableData.item.type,
+      url: value,
+    });
   }
 }
