@@ -39,12 +39,19 @@ export default class DigitalTwinDetailComponent extends mixins(EvanComponent) {
    */
   hashChangeWatcher: any;
 
+  /**
+   * Watch for delete dispatcher updates, so the search result can be refreshed
+   */
+  clearTwinDeleteWatcher: Function;
+
   navItems: NavEntryInterface[] = [];
 
   /**
    * Clear the hash change watcher
    */
   beforeDestroy(): void {
+    this.clearTwinDeleteWatcher();
+
     // clear listeners
     if (this.hashChangeWatcher) {
       window.removeEventListener('hashchange', this.hashChangeWatcher);
@@ -114,6 +121,13 @@ export default class DigitalTwinDetailComponent extends mixins(EvanComponent) {
     // watch for hash changes, so the contract address can be simply replaced within the url
     window.addEventListener('hashchange', this.hashChangeWatcher);
 
+    this.clearTwinDeleteWatcher = twinDeleteDispatcher
+      .watch(({ detail: { status } }: CustomEvent) => {
+        if (status === 'finished') {
+          setTimeout(() => this.close());
+        }
+      });
+
     this.navItems = this.getNavItems();
   }
 
@@ -123,8 +137,6 @@ export default class DigitalTwinDetailComponent extends mixins(EvanComponent) {
     await twinDeleteDispatcher.start(this.getRuntime(), {
       address: this.$store.state.twin.contractAddress,
     });
-
-    this.close();
   }
 
   /**
