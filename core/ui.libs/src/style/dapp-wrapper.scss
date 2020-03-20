@@ -46,7 +46,7 @@ $sidebar-item-width: 40px;
     }
 
     .dapp-wrapper-sidebar {
-      z-index: 1028;
+      z-index: 998;
 
       display: flex;
       flex-direction: column;
@@ -269,6 +269,7 @@ $sidebar-item-width: 40px;
 
       .dapp-wrapper-sidebar {
         position: fixed;
+        z-index: 1032;
         top: 0;
         left: 0;
 
