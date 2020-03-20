@@ -67,7 +67,7 @@ export default class DIDComponent extends mixins(EvanComponent) {
       return true;
     }
     // Check if current user is controller
-    if (this.didService.getControllers(this.didDocument).indexOf(this.runtime.activeIdentity) >= 0) {
+    if (this.didService.getControllers(this.didDocument).includes(this.runtime.activeIdentity)) {
       return true;
     }
     return false;
