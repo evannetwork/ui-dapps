@@ -80,7 +80,7 @@
           <evan-v-select
             class="m-0"
             :value="null"
-            :options="contacts"
+            :options="filteredContacts"
             :placeholder="'_profile.did.choose-contact' | translate"
             :clear-search-on-select="true"
             @input="onSelectContact"

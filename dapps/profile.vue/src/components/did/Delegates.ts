@@ -53,10 +53,21 @@ export default class DelegatesComponent extends mixins(EvanComponent) {
 
   async created(): Promise<void> {
     this.contacts = await profileUtils.getContacts(this.getRuntime());
+    // Attach DID instead of accountId / identity
     this.contacts = await Promise.all(this.contacts.map(async (contact) => ({
       label: contact.label,
       value: await bccUtils.getDidFromAddress(this.getRuntime(), contact.value),
     })));
+  }
+
+  /**
+   * Filter out already set delegates
+   */
+  get filteredContacts(): ContactInterface[] {
+    return this.contacts.filter((contact) => {
+      const dids = this.delegates.map((delegate) => delegate.did);
+      return !dids.includes(contact.value);
+    });
   }
 
   onSelectContact(contact: ContactInterface): void {
