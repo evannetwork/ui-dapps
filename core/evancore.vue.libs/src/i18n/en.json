@@ -1,12 +1,13 @@
 {
   "_evan": {
     "_routes": {
-      "actions": "Actions",
+      "actions": "Notifications",
       "assets": "My Assets",
       "digitaltwins": "Digital Twins",
       "explorer": "Explorer",
       "favorites": "DApps",
       "help": "Help",
+      "wallet": "Wallet",
       "profile": "Identity",
       "synchronization": "Synchronization",
       "verifications": "Verification Center"

@@ -1,5 +1,6 @@
 {
   "_profile": {
+    "my-profile": "My Profile",
     "bmail": {
       "share": {
         "body": "Hello,\n\nidentity information from {alias} has been shared with you. Use the \"open attachment\" button to view the identity.\n\nBest regards,\n\n{alias}",

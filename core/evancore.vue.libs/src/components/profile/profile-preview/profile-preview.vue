@@ -44,7 +44,7 @@
           class="force-oneline account-name"
           :href="`${ dapp.baseUrl }/${ dapp.rootEns }/profile.vue.${ dapp.domainName }/${ address }/detail`"
         >
-          <b class="text-dark">
+          <b>
             {{ userInfo.accountName }}
           </b>
         </a>

@@ -47,9 +47,10 @@ export default DetailDataComponent;
   background: white;
   border: 2px solid cssVar('bg-level-2');
   margin-left: 3px;
-  height: 100vh;
+  height: calc(100vh - 128px);
   position: sticky;
   top: 0;
+  margin: 32px 0 32px 8px;
   overflow-y: auto;
 
   .evan-nav-list {

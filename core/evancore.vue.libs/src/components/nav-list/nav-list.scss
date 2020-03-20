@@ -56,10 +56,11 @@
       }
 
       &.active {
-        background-color: cssVar('bg-level-2');
+        border-top: 1px solid cssVar('primary');
+        border-bottom: 1px solid cssVar('primary');
 
         &, * {
-          color: cssVar('dark');
+          color: cssVar('primary');
         }
       };
 

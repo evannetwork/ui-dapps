@@ -18,8 +18,9 @@
 */
 
 @import './utils';
-$sidebar-width: 64px;
+$sidebar-width: 104px;
 $sidebar-small-width: 64px;
+$sidebar-item-width: 40px;
 
 .evan .evan-dapp-wrapper {
   &, .dapp-wrapper-main, .dapp-wrapper-content-wrapper {
@@ -35,10 +36,17 @@ $sidebar-small-width: 64px;
     display: flex;
     flex-direction: row;
 
-    height: 100%;
+    height: calc(100% - 64px);
+
+    background-color: cssVar('bg-level-3');
+
+    .dapp-wrapper-body {
+      height: 100%;
+      padding: 0;
+    }
 
     .dapp-wrapper-sidebar {
-      z-index: 1028;
+      z-index: 998;
 
       display: flex;
       flex-direction: column;
@@ -46,74 +54,33 @@ $sidebar-small-width: 64px;
 
       width: $sidebar-width;
       min-width: $sidebar-width;
+      padding: 32px 0;
       padding-bottom: 7px;
-
-      background-color: cssVar('bg-inverted');
 
       .sidebar-header {
         display: none;
       }
 
-      ul.nav {
-        // only the sidepnale toggle only on small devices
-        #evan-dapp-sidepanel-toggle {
-          display: none;
-          order: 0;
+      // sidepanel toggle only on small devices
+      #evan-dapp-sidepanel-toggle {
+        display: none;
+        order: 0;
 
-          margin-right: auto;
+        margin-right: auto;
+      }
+
+      ul.nav {
+        align-items: center;
+
+        &.bottom-nav {
+          height: 100%;
         }
 
         & > li {
+          display: flex;
+          justify-content: center;
+
           width: 100%;
-
-          a {
-            font-weight: 600;
-            line-height: 45px;
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            width: 100%;
-            height: 45px;
-
-            cursor: pointer;
-            transition: 1s ease-out background-color, 1s ease-out color;
-
-            color: cssVar('body-color');
-
-            span, p {
-              font-weight: 600;
-            }
-
-            & > i {
-              font-size: 1.6em;
-              font-style: normal;
-
-              display: inline-block;
-
-              text-align: center;
-              vertical-align: middle;
-
-              color: cssVar('dapp-wrapper-sidepanel-icon-color');
-            }
-
-            .spinner-border {
-              color: cssVar('dapp-wrapper-sidepanel-icon-color');
-            }
-
-            &.active {
-              transition: 0.3s ease-out background-color, 0.3s ease-out color;
-
-              background-color: cssVar('dapp-wrapper-sidepanel-list-active');
-            }
-
-            &.active, &:hover {
-              &, & *, .spinner-border {
-                color: cssVar('primary');
-              }
-            }
-          }
         }
       }
     }
@@ -122,13 +89,20 @@ $sidebar-small-width: 64px;
       display: none;
     }
 
+    .dapp-wrapper-sidebar-2-wrapper {
+      padding: 32px 0;
+    }
+
     .dapp-wrapper-sidebar-2 {
       z-index: 20;
+
+      height: 100%;
 
       background-color: cssVar('bg-level-1');
 
       & > * {
         overflow-y: auto;
+
         min-width: 240px;
         height: 100%;
 
@@ -172,6 +146,113 @@ $sidebar-small-width: 64px;
     }
   }
 
+  .dapp-wrapper-sidebar, .dapp-wrapper-bottom-bar {
+    ul.nav {
+      li {
+        a {
+          font-weight: 600;
+          line-height: $sidebar-item-width;
+
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          width: $sidebar-item-width;
+          height: $sidebar-item-width;
+
+          cursor: pointer;
+
+          color: cssVar('text-color');
+
+          span, p {
+            font-weight: 600;
+          }
+
+          & > i {
+            font-size: 2rem;
+            font-style: normal;
+
+            display: inline-block;
+
+            text-align: center;
+            vertical-align: middle;
+
+            color: cssVar('dapp-wrapper-sidepanel-icon-color');
+          }
+
+          .spinner-border {
+            color: cssVar('dapp-wrapper-sidepanel-icon-color');
+          }
+
+          &.active {
+            transition: 0.3s ease-out background-color, 0.3s ease-out color;
+
+            background-color: cssVar('white');
+            box-shadow: 0 2px 8px rgba(70, 194, 191, 0.5), 0 1px 4px rgba(0, 0, 0, 0.16);
+          }
+
+          &.active, &:hover {
+            &, & *, .spinner-border {
+              color: cssVar('primary');
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .dapp-wrapper-bottom-bar {
+    position: relative;
+
+    display: flex;
+
+    height: 64px;
+    padding-right: 32px;
+
+    border-top: 3px solid cssVar('bg-level-3');
+    background-color: cssVar('white');
+
+    ul.nav {
+      align-items: center;
+
+      height: 100%;
+    }
+
+    .profile-preview {
+      line-height: 16px;
+
+      height: 100%;
+
+      .profile-picture {
+        position: absolute;
+        bottom: 16px;
+        left: 30px;
+
+        .mask {
+          border: 3px solid cssVar('white');
+          box-shadow: 0 8px 16px rgba(0, 0, 0, 0.16);
+        }
+      }
+
+      & > .info {
+        margin-left: 112px !important;
+      }
+
+      .profile-type {
+        font-size: 10px !important;
+      }
+    }
+  }
+
+
+  @media(min-width: 768px) {
+    #dapp-wrapper-sidebar-right {
+      .evan-swipe-panel {
+        height: calc(100vh - 64px);
+      }
+    }
+  }
+
   /**
    * the screen is very small
    */
@@ -187,38 +268,22 @@ $sidebar-small-width: 64px;
       }
 
       .dapp-wrapper-sidebar {
+        position: fixed;
+        z-index: 1032;
+        top: 0;
+        left: 0;
+
         overflow: hidden;
         flex-direction: row;
+        justify-content: flex-end;
 
         width: 100%;
         height: $sidebar-small-width;
-        padding-bottom: 0;
+        padding: 0;
 
         ul.nav {
           flex-direction: row;
           flex-wrap: nowrap;
-
-          #evan-dapp-sidepanel-toggle {
-            display: flex;
-          }
-
-          &.bottom-nav {
-            position: fixed;
-            top: -2px;
-            left: 0;
-
-            justify-content: flex-end;
-
-            width: 100%;
-
-            background-color: cssVar('bg-inverted');
-          }
-
-          &.top-nav {
-            justify-content: space-around;
-
-            width: 100%;
-          }
 
           & > li {
             &, a {
@@ -233,11 +298,23 @@ $sidebar-small-width: 64px;
                 font-size: 24px;
               }
             }
+
+            a.active {
+              background-color: transparent;
+              box-shadow: none;
+            }
           }
         }
 
         .evan-tooltip {
           display: none !important;
+        }
+
+        #evan-dapp-sidepanel-toggle {
+          position: absolute;
+          left: 0;
+
+          display: flex;
         }
       }
 
@@ -265,6 +342,10 @@ $sidebar-small-width: 64px;
       }
     }
   }
+
+  .mdi-bell-outline.rotate-45 {
+    transform: rotate(45deg);
+  }
 }
 
 .dapp-wrapper-sidebar-2 {
@@ -275,23 +356,6 @@ $sidebar-small-width: 64px;
       &.active, &:hover {
         border-left: 4px solid cssVar('primary');
         background-color: cssVar('bg-level-1');
-      }
-
-      ul.sub-nav {
-        margin-left: 0;
-        padding-left: 0;
-
-        list-style: none;
-
-        li {
-          a {
-            color: cssVar('text-color');
-
-            &.active, &:hover {
-              color: cssVar('primary');
-            }
-          }
-        }
       }
     }
   }

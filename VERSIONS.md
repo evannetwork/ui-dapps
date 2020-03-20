@@ -12,6 +12,8 @@
   - add `olddappbrowser.evan` dapp, to enable backwards compatibility
   - `digital-twin-detail`
     - add address to twin detail
+- core
+  - add new sidebar / bottom bar design with active identity display
 - add DID Document section to profile DApp
 
 ### Fixes

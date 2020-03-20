@@ -108,8 +108,8 @@ export default class ProfileRootComponent extends mixins(EvanComponent) {
    * Load currents profiles data.
    */
   async setupProfile(): Promise<void> {
-    const { address } = this.$route.params;
     const runtime = this.getRuntime();
+    const address = this.$route.params.address || runtime.activeIdentity;
     const { activeIdentity } = runtime;
     const profile = new bcc.Profile({
       accountId: runtime.activeIdentity,
@@ -225,10 +225,6 @@ export default class ProfileRootComponent extends mixins(EvanComponent) {
         disabled: !this.getRuntime().runtimeConfig.useIdentity,
         icon: 'mdi mdi-identifier',
         key: 'did',
-      },
-      {
-        icon: 'mdi mdi-wallet-outline',
-        key: 'wallet',
       },
       {
         icon: 'mdi mdi-check-decagram',

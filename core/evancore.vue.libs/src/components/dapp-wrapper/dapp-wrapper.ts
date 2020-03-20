@@ -75,58 +75,6 @@ export default class DAppWrapperComponent extends mixins(EvanComponent) {
   }) brandSmall: string;
 
   /**
-   * routes that should be displayed in the sidepanel, if no sidebar slot is given
-   */
-  @Prop({
-    type: Array,
-    default(): DAppWrapperRouteInterface[] {
-      return [
-        {
-          icon: 'mdi mdi-apps',
-          path: `favorites.vue.${domainName}`,
-          title: `${i18nPref}.favorites`,
-        },
-        {
-          icon: 'mdi mdi-cube-outline',
-          path: `assets.${domainName}`,
-          title: `${i18nPref}.assets`,
-        },
-        {
-          icon: 'mdi mdi-checkbox-marked-circle-outline',
-          path: `verifications.vue.${domainName}`,
-          title: `${i18nPref}.verifications`,
-        },
-      ];
-    },
-  }) routes: Array<DAppWrapperRouteInterface>;
-
-  /**
-   * organized like the normal routes, but displayed smaller on the bottom of the nav
-   */
-  @Prop({
-    type: Array,
-    default(): DAppWrapperRouteInterface[] {
-      return [
-        {
-          icon: 'mdi mdi-format-list-checks',
-          path: `mailbox.vue.${domainName}`,
-          title: `${i18nPref}.actions`,
-        },
-        {
-          icon: 'mdi mdi-help-circle-outline',
-          path: `help.vue.${domainName}`,
-          title: `${i18nPref}.help`,
-        },
-        {
-          icon: 'mdi mdi-account-outline',
-          path: `profile.vue.${domainName}`,
-          title: `${i18nPref}.profile`,
-        },
-      ];
-    },
-  }) bottomRoutes: Array<DAppWrapperRouteInterface>;
-
-  /**
    * base url of the vue component that uses the dapp-wrapper (e.g.: dashboard.evan)
    */
   @Prop({
@@ -280,18 +228,70 @@ export default class DAppWrapperComponent extends mixins(EvanComponent) {
   dispatcherHandler: EvanVueDispatcherHandler = null;
 
   /**
+   * routes that should be displayed in the sidepanel, if no sidebar slot is given
+   */
+  get routes(): { [type: string]: Array<DAppWrapperRouteInterface> } {
+    return {
+      topLeft: [
+        {
+          icon: 'mdi mdi-apps',
+          path: `favorites.vue.${domainName}`,
+          title: `${i18nPref}.favorites`,
+        },
+      ],
+      centerLeft: [
+        {
+          icon: 'mdi mdi-cube-outline',
+          path: `assets.${domainName}`,
+          title: `${i18nPref}.assets`,
+        },
+        {
+          icon: 'mdi mdi-account-outline',
+          path: `profile.vue.${domainName}/${session.activeIdentity}`,
+          title: `${i18nPref}.profile`,
+        },
+        {
+          icon: 'mdi mdi-credit-card-outline',
+          path: `profile.vue.${domainName}/wallet`,
+          title: `${i18nPref}.wallet`,
+        },
+        {
+          icon: 'mdi mdi-bell-outline rotate-45',
+          path: `mailbox.vue.${domainName}`,
+          title: `${i18nPref}.actions`,
+        },
+      ],
+      bottomRight: [
+        {
+          icon: 'mdi mdi-help-circle-outline',
+          path: `help.vue.${domainName}`,
+          title: `${i18nPref}.help`,
+        },
+        {
+          action: () => (this.$refs.queuePanel as any).show(),
+          icon: 'mdi mdi-sync',
+          id: 'synchronization',
+          title: `${i18nPref}.synchronization`,
+        },
+      ],
+    };
+  }
+
+  /**
    * Returns the i18n title key for the active route.
    *
    * @return     {string}  active route i18n or route path
    */
   get activeRouteTitle(): string {
-    if (this.routes) {
-      const allRoutes = [].concat(this.routes, this.bottomRoutes || []);
+    const allRoutes = [
+      ...this.routes.topLeft,
+      ...this.routes.centerLeft,
+      ...this.routes.bottomRight,
+    ];
 
-      for (let i = 0; i < allRoutes.length; i += 1) {
-        if (this.$route.path.startsWith(allRoutes[i].fullPath)) {
-          return allRoutes[i].title;
-        }
+    for (let i = 0; i < allRoutes.length; i += 1) {
+      if (this.$route.path.startsWith(allRoutes[i].fullPath)) {
+        return allRoutes[i].title;
       }
     }
 
@@ -312,13 +312,12 @@ export default class DAppWrapperComponent extends mixins(EvanComponent) {
    * Initialize the core runtime for the evan network.
    */
   async created(): Promise<any> {
-    // disable sidebar, when no routes are defined
-    if (!this.routes || this.routes.length === 0) {
-      this.enableSidebar = false;
-    }
-
     // create fullPath for current routes to get correct active state
-    [...(this.routes || []), ...(this.bottomRoutes || [])].forEach((route) => {
+    [
+      ...this.routes.topLeft,
+      ...this.routes.centerLeft,
+      ...this.routes.bottomRight,
+    ].forEach((route) => {
       route.fullPath = `${this.dapp.baseHash}/${route.path}`; // eslint-disable-line no-param-reassign
     });
 

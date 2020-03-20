@@ -1,5 +1,6 @@
 {
   "_profile": {
+    "my-profile": "Mein Profil",
     "bmail": {
       "share": {
         "body": "Guten Tag,\n\nIhnen wurden Identitätsinformationen von {alias} freigegeben. Nutzen Sie den \"Anhang öffnen\" Button, um sich die Identität anzusehen.\n\nMit freundlichen Grüßen,\n\n{alias}",
