@@ -3,6 +3,13 @@ orbs:
   node: circleci/node@1.1.6
 jobs:
   build-and-test:
+    parameters:
+       test-env:
+         type: env_var_name
+         default: NIGHTWATCH_ENV
+       test-pattern:
+         type: env_var_name
+         default: TESTPATTERN
     executor:
       name: node/default
     steps:
@@ -14,6 +21,5 @@ workflows:
     build-and-test:
       jobs:
         - build-and-test:
-            environment:
-              NIGHTWATCH_ENV: chrome
-              TESTPATTERN: features/core/login.feature
+            test-env: chrome
+            test-pattern: features/core/login.feature
