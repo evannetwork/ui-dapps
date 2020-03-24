@@ -20,41 +20,41 @@ jobs:
                 export TESTPATTERN=<< parameters.test-pattern >>
             - run: cd tests-e2e && npm install && npm run test-testnet-specific
 workflows:
-    build-and-test:
-      jobs:
-        - build-and-test:
+  build-and-test:
+    jobs:
+      - build-and-test:
           test-env: chrome
           test-pattern: features/core/login.feature
-        - build-and-test:
+      - build-and-test:
           test-env: firefox
           test-pattern: features/core/login.feature
-        - build-and-test:
+      - build-and-test:
           test-env: chrome
           test-pattern: features/core/dashboard.feature
-        - build-and-test:
+      - build-and-test:
           test-env: firefox
           test-pattern: features/core/dashboard.feature
-        - build-and-test:
+      - build-and-test:
           test-env: chrome
           test-pattern: features/core/onboarding.feature
-        - build-and-test:
+      - build-and-test:
           test-env: firefox
           test-pattern: features/core/onboarding.feature
-        - build-and-test:
+      - build-and-test:
           test-env: chrome
           test-pattern: features/profile/eve-payment-vue.feature
-        - build-and-test:
+      - build-and-test:
           test-env: chrome
           test-pattern: features/profile/eve-sending.feature
-        - build-and-test:
+      - build-and-test:
           test-env: chrome
           test-pattern: features/assets/contacts.feature
-        - build-and-test:
+      - build-and-test:
           test-env: firefox
           test-pattern: features/assets/contacts.feature
-        - build-and-test:
+      - build-and-test:
           test-env: chrome
           test-pattern: features/assets/digital-twins.feature
-        - build-and-test:
+      - build-and-test:
           test-env: firefox
           test-pattern: features/assets/digital-twins.feature
