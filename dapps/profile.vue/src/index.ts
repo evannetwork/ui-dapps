@@ -23,6 +23,7 @@ import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
 import { TablePlugin } from 'bootstrap-vue';
 import VueFormulate from '@braid/vue-formulate';
+import { de } from '@braid/vue-formulate-i18n';
 import Main from './components/root/root.vue';
 import translations from './i18n/translations';
 import routes from './routes';
@@ -57,7 +58,8 @@ export async function startDApp(container: any, dbcpName: any, dappEnsOrContract
   );
   Vue.use(TablePlugin);
   Vue.use(VueFormulate, {
-    locale: 'en',
+    plugins: [de],
+    locale: Vue.i18n.locale(),
   });
 
   await initializeVue({

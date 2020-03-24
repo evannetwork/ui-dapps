@@ -30,11 +30,9 @@ export default class ServiceEndpointsComponent extends mixins(EvanComponent) {
 
   @Prop() endpoints: ServiceEndpoint[];
 
-  newUrl = null;
+  formValues = {};
 
-  newId = null;
-
-  newType = null;
+  formKey = 'initial';
 
   columns: EvanTableColumn[] = [
     {
@@ -63,15 +61,21 @@ export default class ServiceEndpointsComponent extends mixins(EvanComponent) {
     return this.endpoints.map((endpoint) => endpoint.id);
   }
 
-  addEndpointRow(): void {
+  hasFormErrors(): Promise<boolean> {
+    return (this.$refs.form as any).hasValidationErrors();
+  }
+
+  onSubmit(formData): void {
     const newEndpoint: ServiceEndpoint = {
-      id: this.newId,
-      type: this.newType,
-      url: this.newUrl,
+      id: formData.newId,
+      type: formData.newType,
+      url: formData.newUrl,
     };
-    this.newId = null;
-    this.newUrl = null;
-    this.newType = null;
+
+    this.formValues = {};
+    // Workaround to re-mount the form so that it isn't dirty
+    // see: https://github.com/wearebraid/vue-formulate/issues/40
+    this.formKey = new Date().toISOString();
 
     this.$emit('addEndpoint', newEndpoint);
   }
