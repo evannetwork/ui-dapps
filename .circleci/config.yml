@@ -5,17 +5,18 @@ jobs:
   build-and-test:
     parameters:
        test-env:
-         type: env_var_name
-         default: NIGHTWATCH_ENV
+         type: string
        test-pattern:
-         type: env_var_name
-         default: TESTPATTERN
+         type: string
     executor:
       name: node/default
     steps:
       - checkout
       - node/with-cache:
           steps:
+            - run: |
+                export NIGHTWATCH_ENV=<< parameters.test-env >>
+                export TESTPATTERN=<< parameters.test-pattern >>
             - run: cd tests-e2e && npm install && npm run test-testnet-specific
 workflows:
     build-and-test:
