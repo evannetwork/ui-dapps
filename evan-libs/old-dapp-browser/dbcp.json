@@ -9,7 +9,7 @@
       "files": [
         "olddappbrowser.js"
       ],
-      "origin": "QmQXDC3pjVTjp782aVWzohmYAcn6WTzzVzFEHd4aqCqk1G",
+      "origin": "Qmb5ZAAVYem7nS2WCAy3aG8RK6HmGgniqik7gq7nRJRqEZ",
       "type": "cached-dapp"
     },
     "dbcpVersion": 2,
@@ -26,7 +26,7 @@
     ],
     "version": "2.8.0",
     "versions": {
-      "2.8.0": "QmQXDC3pjVTjp782aVWzohmYAcn6WTzzVzFEHd4aqCqk1G"
+      "2.8.0": "QmRkNTPxXEfmWzeAnRNa5CSHZS6b2GsEpQNZvN3mQSiyrW"
     }
   }
 }
