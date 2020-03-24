@@ -91,6 +91,7 @@ workflows:
             - step4
       - test:
           test-env: chrome
+          name: step9
           test-pattern: features/assets/contacts.feature
           requires:
             - step5
@@ -99,6 +100,7 @@ workflows:
             - step8
       - test:
           test-env: firefox
+          name: step10
           test-pattern: features/assets/contacts.feature
           requires:
             - step5
@@ -107,6 +109,7 @@ workflows:
             - step8
       - test:
           test-env: chrome
+          name: step11
           test-pattern: features/assets/digital-twins.feature
           requires:
             - step5
@@ -115,6 +118,7 @@ workflows:
             - step8
       - test:
           test-env: firefox
+          name: step12
           test-pattern: features/assets/digital-twins.feature
           requires:
             - step5
