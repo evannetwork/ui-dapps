@@ -99,7 +99,13 @@
             v-model="newId"
             type="text"
             name="newId"
-            validation="required"
+            validation="required|unique"
+            :validation-rules="{
+              unique: ({ value }) => !endpointIds.includes(value)
+            }"
+            :validation-messages="{
+              unique: $t('_profile.did.id-unique-error')
+            }"
             :placeholder="'_profile.did.id-placeholder' | translate"
           />
         </b-td>
@@ -109,7 +115,7 @@
             type="text"
             name="newType"
             validation="required"
-            :placeholder="'_profile.did.id-placeholder' | translate"
+            :placeholder="'_profile.did.type-placeholder' | translate"
           />
         </b-td>
         <b-td>
