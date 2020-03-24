@@ -2,8 +2,15 @@ version: 2.1
 orbs:
   node: circleci/node@1.1.6
 jobs:
-  build-and-test:
-    parallelism: 3
+  build:
+    executor:
+      name: node/default
+    steps:
+      - checkout
+      - node/with-cache:
+          steps:
+            - run: cd tests-e2e && npm install
+  test:
     parameters:
        test-env:
          type: string
@@ -12,49 +19,105 @@ jobs:
     executor:
       name: node/default
     steps:
-      - checkout
       - node/with-cache:
           steps:
             - run: |
                 export NIGHTWATCH_ENV=<< parameters.test-env >>
                 export TESTPATTERN=<< parameters.test-pattern >>
-            - run: cd tests-e2e && npm install && npm run test-testnet-specific
+            - run: cd tests-e2e && npm run test-testnet-specific
 workflows:
   build-and-test:
     jobs:
-      - build-and-test:
+      - build
+      - test:
           test-env: chrome
+          name: step1
           test-pattern: features/core/login.feature
-      - build-and-test:
+          requires:
+            - build
+      - test:
           test-env: firefox
+          name: step2
           test-pattern: features/core/login.feature
-      - build-and-test:
+          requires:
+            - build
+      - test:
           test-env: chrome
+          name: step3
           test-pattern: features/core/dashboard.feature
-      - build-and-test:
+          requires:
+            - build
+      - test:
           test-env: firefox
+          name: step4
           test-pattern: features/core/dashboard.feature
-      - build-and-test:
+          requires:
+            - build
+      - test:
           test-env: chrome
+          name: step5
           test-pattern: features/core/onboarding.feature
-      - build-and-test:
+          requires:
+            - step1
+            - step2
+            - step3
+            - step4
+      - test:
           test-env: firefox
+          name: step6
           test-pattern: features/core/onboarding.feature
-      - build-and-test:
+          requires:
+            - step1
+            - step2
+            - step3
+            - step4
+      - test:
           test-env: chrome
+          name: step7
           test-pattern: features/profile/eve-payment-vue.feature
-      - build-and-test:
+          requires:
+            - step1
+            - step2
+            - step3
+            - step4
+      - test:
           test-env: chrome
+          name: step8
           test-pattern: features/profile/eve-sending.feature
-      - build-and-test:
+          requires:
+            - step1
+            - step2
+            - step3
+            - step4
+      - test:
           test-env: chrome
           test-pattern: features/assets/contacts.feature
-      - build-and-test:
+          requires:
+            - step5
+            - step6
+            - step7
+            - step8
+      - test:
           test-env: firefox
           test-pattern: features/assets/contacts.feature
-      - build-and-test:
+          requires:
+            - step5
+            - step6
+            - step7
+            - step8
+      - test:
           test-env: chrome
           test-pattern: features/assets/digital-twins.feature
-      - build-and-test:
+          requires:
+            - step5
+            - step6
+            - step7
+            - step8
+      - test:
           test-env: firefox
           test-pattern: features/assets/digital-twins.feature
+          requires:
+            - step5
+            - step6
+            - step7
+            - step8
