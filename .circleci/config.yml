@@ -19,12 +19,13 @@ jobs:
     executor:
       name: node/default
     steps:
+      - checkout
       - node/with-cache:
           steps:
             - run: |
                 export NIGHTWATCH_ENV=<< parameters.test-env >>
                 export TESTPATTERN=<< parameters.test-pattern >>
-            - run: cd tests-e2e && npm run test-testnet-specific
+            - run: cd tests-e2e && npm install && npm run test-testnet-specific
 workflows:
   build-and-test:
     jobs:
