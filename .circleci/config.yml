@@ -4,8 +4,6 @@ orbs:
 jobs:
   build-and-test:
     environment:
-        BROWSERSTACK_USERNAME: sebastiandechant1
-        BROWSERSTACK_ACCESS_KEY: RGGRf1pszY4bDimAxQdX
         NIGHTWATCH_ENV: chrome
         TESTPATTERN: features/core/login.feature
     executor:
