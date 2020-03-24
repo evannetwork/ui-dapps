@@ -12,9 +12,7 @@ jobs:
       - checkout
       - node/with-cache:
           steps:
-            - run: cd tests-e2e
-            - run: npm install
-            - run: npm run test-testnet-specific
+            - run: cd tests-e2e && npm install && npm run test-testnet-specific
 workflows:
     build-and-test:
       jobs:
