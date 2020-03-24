@@ -1,0 +1,23 @@
+version: 2.1
+orbs:
+  node: circleci/node@1.1.6
+jobs:
+  build-and-test:
+    environment:
+        BROWSERSTACK_USERNAME: sebastiandechant1
+        BROWSERSTACK_ACCESS_KEY: RGGRf1pszY4bDimAxQdX
+        NIGHTWATCH_ENV: chrome
+        TESTPATTERN: features/core/login.feature
+    executor:
+      name: node/default
+    steps:
+      - checkout
+      - node/with-cache:
+          steps:
+            - run: cd tests-e2e
+            - run: npm install
+            - run: npm run test-testnet-specific
+workflows:
+    build-and-test:
+      jobs:
+        - build-and-test
