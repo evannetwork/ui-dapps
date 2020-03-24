@@ -46,8 +46,8 @@ if (localBrowser) {
     globals: {
       accounts,
     },
-    silent: false,
-    disable_error_log: false,
+    /* silent: false,
+       disable_error_log: false, */
     output_timestamp: true,
     webdriver: {
       keep_alive: false,
