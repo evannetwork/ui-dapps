@@ -59,6 +59,10 @@ export default class ServiceEndpointsComponent extends mixins(EvanComponent) {
     },
   ]
 
+  get endpointIds(): string[] {
+    return this.endpoints.map((endpoint) => endpoint.id);
+  }
+
   addEndpointRow(): void {
     const newEndpoint: ServiceEndpoint = {
       id: this.newId,

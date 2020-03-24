@@ -5,6 +5,7 @@
     "@babel/polyfill": "^7.2.5",
     "@babel/preset-env": "^7.3.1",
     "@babel/runtime": "^7.3.1",
+    "@braid/vue-formulate": "^2.2.4",
     "@evan.network/api-blockchain-core": "^2.3.0",
     "@evan.network/smart-contracts-core": "^2.1.1",
     "@evan.network/ui-dapp-browser": "^3.0.0",

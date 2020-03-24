@@ -35,13 +35,13 @@
       :fields="columns"
       :items="endpoints"
     >
-      <template v-slot:empty>
+      <template #empty>
         {{ '_profile.did.empty-service-endpoints' }}
       </template>
 
       <template
         v-if="isEditMode"
-        v-slot:cell(id)="data"
+        #cell(id)="data"
       >
         <evan-form-control-input
           class="m-0"
@@ -54,7 +54,7 @@
 
       <template
         v-if="isEditMode"
-        v-slot:cell(type)="data"
+        #cell(type)="data"
       >
         <evan-form-control-input
           class="m-0"
@@ -67,7 +67,7 @@
 
       <template
         v-if="isEditMode"
-        v-slot:cell(url)="data"
+        #cell(url)="data"
       >
         <evan-form-control-input
           class="table-input m-0"
@@ -79,7 +79,7 @@
         />
       </template>
 
-      <template v-slot:cell(action)="data">
+      <template #cell(action)="data">
         <evan-button
           v-show="isEditMode"
           class="btn-sm"
@@ -89,33 +89,35 @@
         />
       </template>
 
+      <!-- New Endpoint Row -->
       <template
         v-if="isEditMode"
-        v-slot:bottom-row
+        #bottom-row
       >
         <b-td>
-          <evan-form-control-input
-            id="idInput"
+          <FormulateInput
             v-model="newId"
-            class="m-0"
+            type="text"
+            name="newId"
+            validation="required"
             :placeholder="'_profile.did.id-placeholder' | translate"
           />
         </b-td>
         <b-td>
-          <evan-form-control-input
-            id="typelInput"
+          <FormulateInput
             v-model="newType"
-            class="m-0"
-            :placeholder="'_profile.did.type-placeholder' | translate"
+            type="text"
+            name="newType"
+            validation="required"
+            :placeholder="'_profile.did.id-placeholder' | translate"
           />
         </b-td>
         <b-td>
-          <evan-form-control-input
-            id="urlInput"
+          <FormulateInput
             v-model="newUrl"
-            class="table-input m-0"
             type="url"
-            required
+            name="newUrl"
+            validation="required|url"
             :placeholder="'_profile.did.url-placeholder' | translate"
           />
         </b-td>
@@ -130,7 +132,7 @@
         </b-td>
       </template>
 
-      <template v-slot:empty>
+      <template #empty>
         <span>{{ '_profile.did.service-endpoints-empty' | translate }}</span>
       </template>
     </evan-table>
@@ -144,9 +146,62 @@ export default Component;
 </script>
 
 <style lang="scss" scoped>
+@import '~@evan.network/ui/src/style/utils';
+
 .content-card {
   background: white;
   border-radius: 4px;
   padding: 24px 24px;
+}
+
+.simple {
+  tr > td {
+    padding: 0.5em;
+  }
+}
+
+/deep/ .formulate-input {
+  .formulate-input-wrapper {
+    input, textarea {
+      font-size: 12px;
+
+      color: cssVar('gray-900');
+      border: 1px solid cssVar('gray-500');
+
+      display: block;
+      width: 100%;
+      height: calc(1.5em + 0.8rem + 2px);
+      padding: 0.4rem 1.125rem;
+      line-height: 1.5;
+      background-clip: padding-box;
+      border-radius: 5px;
+      transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+
+      &:focus {
+        border: 1px solid cssVar('primary');
+      }
+
+      &[disabled] {
+        color: cssVar('gray-600');
+        border: 1px solid cssVar('gray-200');
+      }
+    }
+  }
+
+  /deep/ .formulate-input-errors {
+    list-style: none;
+    padding: 0;
+
+    .formulate-input-error {
+      color: cssVar('danger');
+    }
+  }
+
+  // TODO: Discuss if we need danger border too
+  // &[data-has-errors="true"] {
+  //   input, textarea {
+  //     border: 1px solid cssVar('danger');
+  //   }
+  // }
 }
 </style>
