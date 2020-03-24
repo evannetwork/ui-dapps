@@ -59,35 +59,23 @@ workflows:
           test-pattern: features/core/onboarding.feature
           requires:
             - step1
-            - step2
-            - step3
-            - step4
       - test:
           test-env: firefox
           name: step6
           test-pattern: features/core/onboarding.feature
           requires:
-            - step1
             - step2
-            - step3
-            - step4
       - test:
           test-env: chrome
           name: step7
           test-pattern: features/profile/eve-payment-vue.feature
           requires:
-            - step1
-            - step2
             - step3
-            - step4
       - test:
           test-env: chrome
           name: step8
           test-pattern: features/profile/eve-sending.feature
           requires:
-            - step1
-            - step2
-            - step3
             - step4
       - test:
           test-env: chrome
@@ -95,33 +83,21 @@ workflows:
           test-pattern: features/assets/contacts.feature
           requires:
             - step5
-            - step6
-            - step7
-            - step8
       - test:
           test-env: firefox
           name: step10
           test-pattern: features/assets/contacts.feature
           requires:
-            - step5
             - step6
-            - step7
-            - step8
       - test:
           test-env: chrome
           name: step11
           test-pattern: features/assets/digital-twins.feature
           requires:
-            - step5
-            - step6
             - step7
-            - step8
       - test:
           test-env: firefox
           name: step12
           test-pattern: features/assets/digital-twins.feature
           requires:
-            - step5
-            - step6
-            - step7
             - step8
