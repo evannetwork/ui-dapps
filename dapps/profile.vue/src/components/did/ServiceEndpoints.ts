@@ -22,6 +22,11 @@ import { EvanComponent, EvanTableColumn, EvanTableItem } from '@evan.network/ui-
 import { Prop } from 'vue-property-decorator';
 import { ServiceEndpoint } from './DidInterfaces';
 
+interface FormValues {
+  newId?: string;
+  newType?: string;
+  newUrl?: string;
+}
 @Component
 export default class ServiceEndpointsComponent extends mixins(EvanComponent) {
   @Prop() isEditMode;
@@ -30,7 +35,7 @@ export default class ServiceEndpointsComponent extends mixins(EvanComponent) {
 
   @Prop() endpoints: ServiceEndpoint[];
 
-  formValues = {};
+  formValues: FormValues = {};
 
   formKey = 'initial';
 
@@ -61,9 +66,10 @@ export default class ServiceEndpointsComponent extends mixins(EvanComponent) {
     return this.endpoints.map((endpoint) => endpoint.id);
   }
 
-  hasFormErrors(): Promise<boolean> {
-    return (this.$refs.form as any).hasValidationErrors();
-  }
+  // get hasFormErrors(): boolean {
+  //   console.log('(this.$refs.form as any).hasValidationErrors()', (this.$refs.form as any).hasValidationErrors());
+  //   return (this.$refs.form as any).hasValidationErrors().then((flag) => flag);
+  // }
 
   onSubmit(formData): void {
     const newEndpoint: ServiceEndpoint = {

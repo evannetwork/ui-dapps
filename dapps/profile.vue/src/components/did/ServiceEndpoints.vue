@@ -43,16 +43,25 @@
         :items="endpoints"
       >
         <template #empty>
-          {{ '_profile.did.empty-service-endpoints' }}
+          {{ '_profile.did.empty-service-endpoints' | translate }}
         </template>
 
         <template
           v-if="isEditMode"
           #cell(id)="data"
         >
-          <evan-form-control-input
-            class="m-0"
-            required
+          <FormulateInput
+            type="text"
+            name="id"
+            :validation="[
+              ['required'],
+              ['not', ...endpointIds.filter((_, idx) => idx !== data.index), formValues.newId],
+              ['starts_with', 'did:']
+            ]"
+            :validation-messages="{
+              not: $t('_profile.did.id-unique-error'),
+              starts_with: $t('_profile.did.did-format-error'),
+            }"
             :placeholder="'_profile.did.id-placeholder' | translate"
             :value="data.item.id"
             @input="editId($event, data)"
@@ -137,7 +146,6 @@
               type="icon-secondary"
               icon="mdi mdi-plus"
               class="btn-sm"
-              :disabled="hasFormErrors"
             />
           </b-td>
         </template>
