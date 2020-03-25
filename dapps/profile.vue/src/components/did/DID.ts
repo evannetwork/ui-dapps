@@ -36,13 +36,11 @@ export default class DIDComponent extends mixins(EvanComponent) {
 
   isLoading = false;
 
-  canSave = true;
-
   previousDelegates: Delegate[] = null;
 
   previousEndpoints: ServiceEndpoint[] = null;
 
-  hasEndpointsError = false;
+  isEndpointsValid = false;
 
   runtime: Runtime = null;
 
@@ -70,6 +68,13 @@ export default class DIDComponent extends mixins(EvanComponent) {
     }
     // Check if current user is controller
     if (this.didService.getControllers(this.didDocument).includes(this.runtime.activeIdentity)) {
+      return true;
+    }
+    return false;
+  }
+
+  get canSave(): boolean {
+    if (this.isEndpointsValid && this.hasChanges) {
       return true;
     }
     return false;
@@ -147,12 +152,6 @@ export default class DIDComponent extends mixins(EvanComponent) {
   onUpdateEndpoint(index: number, endpoint: ServiceEndpoint): void {
     // Replace with updated endpoint
     this.endpoints = this.endpoints.map((item, idx) => (idx === index ? endpoint : item));
-
-    if (this.hasEndpointsError) {
-      this.canSave = false;
-    } else {
-      this.canSave = true;
-    }
   }
 
   /**
@@ -163,10 +162,10 @@ export default class DIDComponent extends mixins(EvanComponent) {
     this.endpoints = this.endpoints.filter((_, i) => i !== index);
   }
 
-  onEndpointsFormChange(hasError: boolean): void {
-    this.hasEndpointsError = hasError;
-    console.log('hasError', hasError);
+  async onEndpointsFormChange(isValid: Promise<boolean>): Promise<void> {
+    this.isEndpointsValid = await isValid;
   }
+
 
   /**
    * Checks for any real change made

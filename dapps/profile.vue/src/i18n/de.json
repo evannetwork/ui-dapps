@@ -174,7 +174,8 @@
       "url": "Endpoint",
       "id-unique-error": "ID muss eindeutig sein",
       "did-format-error": "Format: did: ...",
-      "required-error": "Feld ist erforderlich"
+      "required-error": "Feld ist erforderlich",
+      "empty-service-endpoints": "Keine Service Endpoints angegeben"
     },
     "dispatchers": {
       "did-document-update": "DID Dokument speichern",

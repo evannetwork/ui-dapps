@@ -60,7 +60,7 @@
               <evan-button
                 class="ml-1 btn-sm"
                 type="primary"
-                :disabled="!hasChanges || !canSave || isLoading"
+                :disabled="!canSave || isLoading"
                 @click="saveDidDocument"
               >
                 {{ '_evan.save' | translate }}

@@ -23,9 +23,7 @@ import { Prop, Watch } from 'vue-property-decorator';
 import { ServiceEndpoint } from './DidInterfaces';
 
 interface FormValues {
-  newId?: string;
-  newType?: string;
-  newUrl?: string;
+  [key: string]: string;
 }
 @Component
 export default class ServiceEndpointsComponent extends mixins(EvanComponent) {
@@ -66,21 +64,9 @@ export default class ServiceEndpointsComponent extends mixins(EvanComponent) {
     return this.endpoints.map((endpoint) => endpoint.id);
   }
 
-  @Watch('formValues')
-  async onFormChange(prev, to) {
-    console.log('this.$refs.form', this.$refs.form);
-    const hasErrors = await (this.$refs.form as any).hasValidationErrors();
-    // if () {
-    //   hasErrors = await (this.$refs.form as any).hasValidationErrors();
-    // }
-
-    this.$emit('formChanged', hasErrors);
+  onFormChange(): void {
+    this.$emit('formChanged', this.isFormValid());
   }
-
-  // get hasFormErrors(): boolean {
-  //   console.log('(this.$refs.form as any).hasValidationErrors()', (this.$refs.form as any).hasValidationErrors());
-  //   return (this.$refs.form as any).hasValidationErrors().then((flag) => flag);
-  // }
 
   onSubmit(formValues: FormValues): void {
     const newEndpoint: ServiceEndpoint = {
@@ -89,15 +75,25 @@ export default class ServiceEndpointsComponent extends mixins(EvanComponent) {
       url: formValues.newUrl,
     };
 
-    const newEndpoints = [...this.endpoints, newEndpoint];
+    // const newEndpoints = [...this.endpoints, newEndpoint];
 
     this.formValues = {};
+
     // Workaround to re-mount the form so that it isn't dirty
     // see: https://github.com/wearebraid/vue-formulate/issues/40
     this.formKey = new Date().toISOString();
 
     this.$emit('addEndpoint', newEndpoint);
-    this.$emit('updateEndpoints', newEndpoints);
+    // this.$emit('updateEndpoints', newEndpoints);
+  }
+
+  async isFormValid(): Promise<boolean> {
+    // Ignore the new input fields for validation
+    const inputs = Object.keys(this.formValues).filter((key) => !key.startsWith('new'));
+    const { form }: any = this.$refs;
+    const errors = await Promise.all(inputs.map((key): Promise<boolean> => form.registry[key].hasValidationErrors()));
+
+    return !errors.some((errorFlag) => errorFlag);
   }
 
   /**

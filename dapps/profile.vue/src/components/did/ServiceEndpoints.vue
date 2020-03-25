@@ -22,10 +22,10 @@
     <div class="mb-3 d-flex flex-row justify-content-between align-items-center">
       <h2>
         <i class="mr-1 mdi mdi-earth" />
-        {{ '_profile.did.service-endpoints-title' | translate }}
+        {{ $t('_profile.did.service-endpoints-title') }}
       </h2>
     </div>
-    <p>{{ '_profile.did.service-endpoints-desc' | translate }}</p>
+    <p>{{ $t('_profile.did.service-endpoints-desc') }}</p>
 
     <evan-loading v-if="isLoading" />
 
@@ -35,6 +35,7 @@
       :key="formKey"
       v-model="formValues"
       @submit="onSubmit"
+      @input="onFormChange"
     >
       <evan-table
         class="simple"
@@ -43,7 +44,7 @@
         :items="endpoints"
       >
         <template #empty>
-          {{ '_profile.did.empty-service-endpoints' | translate }}
+          {{ $t('_profile.did.empty-service-endpoints') }}
         </template>
 
         <template
@@ -62,7 +63,7 @@
               not: $t('_profile.did.id-unique-error'),
               starts_with: $t('_profile.did.did-format-error'),
             }"
-            :placeholder="'_profile.did.id-placeholder' | translate"
+            :placeholder="$t('_profile.did.id-placeholder')"
             :value="data.item.id"
             @input="editId($event, data)"
           />
@@ -74,9 +75,9 @@
         >
           <FormulateInput
             type="text"
-            name="type"
+            :name="`type-${data.index}`"
             validation="required"
-            :placeholder="'_profile.did.type-placeholder' | translate"
+            :placeholder="$t('_profile.did.type-placeholder')"
             :value="data.item.type"
             @input="editType($event, data)"
           />
@@ -88,9 +89,9 @@
         >
           <FormulateInput
             type="url"
-            name="url"
+            :name="`url-${data.index}`"
             validation="required|url"
-            :placeholder="'_profile.did.url-placeholder' | translate"
+            :placeholder="$t('_profile.did.url-placeholder')"
             :value="data.item.url"
             @input="editUrl($event, data)"
           />
@@ -124,7 +125,7 @@
                 not: $t('_profile.did.id-unique-error'),
                 starts_with: $t('_profile.did.did-format-error'),
               }"
-              :placeholder="'_profile.did.id-placeholder' | translate"
+              :placeholder="$t('_profile.did.id-placeholder')"
             />
           </b-td>
           <b-td>
@@ -132,7 +133,7 @@
               type="text"
               name="newType"
               validation="required"
-              :placeholder="'_profile.did.type-placeholder' | translate"
+              :placeholder="$t('_profile.did.type-placeholder')"
             />
           </b-td>
           <b-td>
@@ -140,7 +141,7 @@
               type="url"
               name="newUrl"
               validation="required|url"
-              :placeholder="'_profile.did.url-placeholder' | translate"
+              :placeholder="$t('_profile.did.url-placeholder')"
             />
           </b-td>
           <b-td>
@@ -154,7 +155,7 @@
         </template>
 
         <template #empty>
-          <span>{{ '_profile.did.service-endpoints-empty' | translate }}</span>
+          <span>{{ $t('_profile.did.service-endpoints-empty') }}</span>
         </template>
       </evan-table>
     </FormulateForm>
@@ -218,12 +219,5 @@ export default Component;
       color: cssVar('danger');
     }
   }
-
-  // TODO: Discuss if we need danger border too
-  // &[data-has-errors="true"] {
-  //   input, textarea {
-  //     border: 1px solid cssVar('danger');
-  //   }
-  // }
 }
 </style>
