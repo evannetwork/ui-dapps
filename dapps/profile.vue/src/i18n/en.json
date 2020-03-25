@@ -1,6 +1,5 @@
 {
   "_profile": {
-    "my-profile": "My Profile",
     "bmail": {
       "share": {
         "body": "Hello,\n\nidentity information from {alias} has been shared with you. Use the \"open attachment\" button to view the identity.\n\nBest regards,\n\n{alias}",
@@ -157,20 +156,20 @@
       "delegates-empty": "No Delegates assigned yet",
       "delegates-title": "Delegates",
       "description": "With Decentralized Identities (DID) you can identify yourself uniquely, globally and independently of the network or platform. You may also define, who is allowed to make changes to this identity (controller) and who receives authorization to act on behalf of it (delegates). Exporting this document enables you to share all the information with others offline.",
-      "did-title": "Decentralized ID",
       "did": "DID",
+      "did-title": "Decentralized ID",
       "export-document": "Export Document",
-      "id-placeholder": "DID",
       "id": "ID",
+      "id-placeholder": "DID",
       "note": "Note",
       "service-endpoints-desc": "Below you can specify service endpoints, to which you want to associate your DID with.",
       "service-endpoints-empty": "No Service Endpoints added yet",
       "service-endpoints-title": "Service Endpoints",
-      "type-placeholder": "Type",
       "type": "Type",
+      "type-placeholder": "Type",
       "updated-at": "updated at",
-      "url-placeholder": "URL",
-      "url": "Endpoint"
+      "url": "Endpoint",
+      "url-placeholder": "URL"
     },
     "dispatchers": {
       "did-document-update": "Update DID Document",
@@ -181,6 +180,7 @@
       "send-eve": "Sending EVEs",
       "verification-accept": "Accepting Verification"
     },
+    "my-profile": "My Profile",
     "not-permitted": {
       "accountDetails": "Identity information",
       "contact": "Contact details",
@@ -189,6 +189,17 @@
       "registration": "Registration data"
     },
     "not-permitted-view": "You do not have permission to view this data for the selected Identity.",
+    "security-info": {
+      "encryption-key": {
+        "exported": "Exported Encryption Key and copied to clipboard",
+        "title": "Export Encryption Key"
+      },
+      "private-key": {
+        "exported": "Exported Private Key and copied to clipboard",
+        "title": "Export Private Key"
+      },
+      "title": "Sicherheitsinformationen"
+    },
     "settings": {
       "desc": "Settings",
       "dev-domain": {

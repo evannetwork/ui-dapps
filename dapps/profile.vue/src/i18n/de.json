@@ -1,6 +1,5 @@
 {
   "_profile": {
-    "my-profile": "Mein Profil",
     "bmail": {
       "share": {
         "body": "Guten Tag,\n\nIhnen wurden Identitätsinformationen von {alias} freigegeben. Nutzen Sie den \"Anhang öffnen\" Button, um sich die Identität anzusehen.\n\nMit freundlichen Grüßen,\n\n{alias}",
@@ -157,20 +156,20 @@
       "delegates-empty": "Noch keine Delegates ausgewählt",
       "delegates-title": "Delegates",
       "description": "Mit Decentralized Identities (DIDs) ist es möglich sich eindeutig, global und unabhängig vom Netzwerk zu identifizeren. Weiterhin ist es möglich festzulegen, wer Änderungen durchführen darf (Controller) und wer im Namen dieser Identität handeln darf (Delegates). Durch den Export dieses Dokumentes, können die Daten auch offline für andere freigeben werden.",
-      "did-title": "Decentralized ID",
       "did": "DID",
+      "did-title": "Decentralized ID",
       "export-document": "Dokument exportieren",
-      "id-placeholder": "DID",
       "id": "ID",
+      "id-placeholder": "DID",
       "note": "Notiz",
       "service-endpoints-desc": "Im Folgenden können Service Endpoints festgelegt werden, die mit dieser DID assoziiert werden sollen.",
       "service-endpoints-empty": "Noch keine Service Endpoints hinzugefügt",
       "service-endpoints-title": "Service Endpoints",
-      "type-placeholder": "Type",
       "type": "Type",
+      "type-placeholder": "Type",
       "updated-at": "aktualisiert am",
-      "url-placeholder": "URL",
-      "url": "Endpoint"
+      "url": "Endpoint",
+      "url-placeholder": "URL"
     },
     "dispatchers": {
       "did-document-update": "DID Dokument speichern",
@@ -181,6 +180,7 @@
       "send-eve": "EVEs werden gesendet",
       "verification-accept": "Verifikation wird angenommen"
     },
+    "my-profile": "Mein Profil",
     "not-permitted": {
       "accountDetails": "Identitätsinformationen",
       "contact": "Kontaktdaten",
@@ -189,6 +189,17 @@
       "registration": "Registrierungsdaten"
     },
     "not-permitted-view": "Sie haben keine Rechte, diese Daten für die ausgewählte Identität anzusehen.",
+    "security-info": {
+      "encryption-key": {
+        "exported": "Encryption Key exportiert und in die Zwischenablage gelegt",
+        "title": "Encryption Key exportieren"
+      },
+      "private-key": {
+        "exported": "Private Key exportiert und in die Zwischenablage gelegt",
+        "title": "Private Key exportieren"
+      },
+      "title": "Security Information"
+    },
     "settings": {
       "desc": "Einstellungen",
       "dev-domain": {
