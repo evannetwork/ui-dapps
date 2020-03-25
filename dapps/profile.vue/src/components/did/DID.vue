@@ -121,6 +121,7 @@
         @addEndpoint="onAddEndpoint"
         @deleteEndpoint="onDeleteEndpoint"
         @updateEndpoint="onUpdateEndpoint"
+        @formChanged="onEndpointsFormChange"
       />
 
       <delegates

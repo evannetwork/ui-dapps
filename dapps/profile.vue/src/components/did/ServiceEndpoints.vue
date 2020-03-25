@@ -31,8 +31,8 @@
 
     <FormulateForm
       v-else
-      :key="formKey"
       ref="form"
+      :key="formKey"
       v-model="formValues"
       @submit="onSubmit"
     >
@@ -52,7 +52,7 @@
         >
           <FormulateInput
             type="text"
-            name="id"
+            :name="`id-${data.index}`"
             :validation="[
               ['required'],
               ['not', ...endpointIds.filter((_, idx) => idx !== data.index), formValues.newId],
@@ -72,9 +72,10 @@
           v-if="isEditMode"
           #cell(type)="data"
         >
-          <evan-form-control-input
-            class="m-0"
-            required
+          <FormulateInput
+            type="text"
+            name="type"
+            validation="required"
             :placeholder="'_profile.did.type-placeholder' | translate"
             :value="data.item.type"
             @input="editType($event, data)"
@@ -85,10 +86,10 @@
           v-if="isEditMode"
           #cell(url)="data"
         >
-          <evan-form-control-input
-            class="table-input m-0"
+          <FormulateInput
             type="url"
-            required
+            name="url"
+            validation="required|url"
             :placeholder="'_profile.did.url-placeholder' | translate"
             :value="data.item.url"
             @input="editUrl($event, data)"
@@ -116,10 +117,12 @@
               name="newId"
               :validation="[
                 ['required'],
-                ['not', ...endpointIds]
+                ['not', ...endpointIds],
+                ['starts_with', 'did:']
               ]"
               :validation-messages="{
-                not: $t('_profile.did.id-unique-error')
+                not: $t('_profile.did.id-unique-error'),
+                starts_with: $t('_profile.did.did-format-error'),
               }"
               :placeholder="'_profile.did.id-placeholder' | translate"
             />

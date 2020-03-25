@@ -42,6 +42,8 @@ export default class DIDComponent extends mixins(EvanComponent) {
 
   previousEndpoints: ServiceEndpoint[] = null;
 
+  hasEndpointsError = false;
+
   runtime: Runtime = null;
 
   didService: DidService;
@@ -146,16 +148,11 @@ export default class DIDComponent extends mixins(EvanComponent) {
     // Replace with updated endpoint
     this.endpoints = this.endpoints.map((item, idx) => (idx === index ? endpoint : item));
 
-    if (!endpoint.id || !endpoint.url || !endpoint.type || !this.isEndpointsUnique) {
+    if (this.hasEndpointsError) {
       this.canSave = false;
     } else {
       this.canSave = true;
     }
-  }
-
-  get isEndpointsUnique(): boolean {
-    const ids = this.endpoints.map((endpoint) => endpoint.id);
-    return new Set(ids).size === this.endpoints.length;
   }
 
   /**
@@ -164,6 +161,11 @@ export default class DIDComponent extends mixins(EvanComponent) {
    */
   onDeleteEndpoint(index: number): void {
     this.endpoints = this.endpoints.filter((_, i) => i !== index);
+  }
+
+  onEndpointsFormChange(hasError: boolean): void {
+    this.hasEndpointsError = hasError;
+    console.log('hasError', hasError);
   }
 
   /**

@@ -60,6 +60,18 @@ export async function startDApp(container: any, dbcpName: any, dappEnsOrContract
   Vue.use(VueFormulate, {
     plugins: [de],
     locale: Vue.i18n.locale(),
+    locales: {
+      en: {
+        required(): string {
+          return 'This field is required';
+        },
+      },
+      de: {
+        required(): string {
+          return 'Dies ist ein Pflichtfeld';
+        },
+      },
+    },
   });
 
   await initializeVue({

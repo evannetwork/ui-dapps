@@ -171,7 +171,10 @@
       "type": "Type",
       "updated-at": "updated at",
       "url-placeholder": "URL",
-      "url": "Endpoint"
+      "url": "Endpoint",
+      "id-unique-error": "ID must be unique",
+      "did-format-error": "Format: did: ...",
+      "required-error": "Field is required"
     },
     "dispatchers": {
       "did-document-update": "Update DID Document",

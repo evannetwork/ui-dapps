@@ -19,7 +19,7 @@
 
 import Component, { mixins } from 'vue-class-component';
 import { EvanComponent, EvanTableColumn, EvanTableItem } from '@evan.network/ui-vue-core';
-import { Prop } from 'vue-property-decorator';
+import { Prop, Watch } from 'vue-property-decorator';
 import { ServiceEndpoint } from './DidInterfaces';
 
 interface FormValues {
@@ -66,17 +66,30 @@ export default class ServiceEndpointsComponent extends mixins(EvanComponent) {
     return this.endpoints.map((endpoint) => endpoint.id);
   }
 
+  @Watch('formValues')
+  async onFormChange(prev, to) {
+    console.log('this.$refs.form', this.$refs.form);
+    const hasErrors = await (this.$refs.form as any).hasValidationErrors();
+    // if () {
+    //   hasErrors = await (this.$refs.form as any).hasValidationErrors();
+    // }
+
+    this.$emit('formChanged', hasErrors);
+  }
+
   // get hasFormErrors(): boolean {
   //   console.log('(this.$refs.form as any).hasValidationErrors()', (this.$refs.form as any).hasValidationErrors());
   //   return (this.$refs.form as any).hasValidationErrors().then((flag) => flag);
   // }
 
-  onSubmit(formData): void {
+  onSubmit(formValues: FormValues): void {
     const newEndpoint: ServiceEndpoint = {
-      id: formData.newId,
-      type: formData.newType,
-      url: formData.newUrl,
+      id: formValues.newId,
+      type: formValues.newType,
+      url: formValues.newUrl,
     };
+
+    const newEndpoints = [...this.endpoints, newEndpoint];
 
     this.formValues = {};
     // Workaround to re-mount the form so that it isn't dirty
@@ -84,6 +97,7 @@ export default class ServiceEndpointsComponent extends mixins(EvanComponent) {
     this.formKey = new Date().toISOString();
 
     this.$emit('addEndpoint', newEndpoint);
+    this.$emit('updateEndpoints', newEndpoints);
   }
 
   /**
