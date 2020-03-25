@@ -93,8 +93,6 @@ class AddDigitalTwinComponent extends mixins(EvanComponent) {
         }
 
         if (status === 'error') {
-          alert('There was a problem creating the twin. Please check your config and try again.');
-
           this.loading = false;
         }
 

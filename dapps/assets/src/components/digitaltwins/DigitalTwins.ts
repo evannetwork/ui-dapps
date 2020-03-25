@@ -142,7 +142,6 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
       if (newFilter === 'favorites') {
         // TODO: query by all IDs from favorites
 
-        alert('This function will be available soon.');
         this.selectedFilter = oldFilter;
 
         return;
