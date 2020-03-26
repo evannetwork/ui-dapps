@@ -64,8 +64,9 @@ export default class DelegatesComponent extends mixins(EvanComponent) {
    * Filter out already set delegates
    */
   get filteredContacts(): ContactInterface[] {
+    const dids = this.delegates.map((delegate) => delegate.did);
+    
     return this.contacts.filter((contact) => {
-      const dids = this.delegates.map((delegate) => delegate.did);
       return !dids.includes(contact.value);
     });
   }
