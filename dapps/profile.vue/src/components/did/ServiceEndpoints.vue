@@ -29,136 +29,106 @@
 
     <evan-loading v-if="isLoading" />
 
-    <FormulateForm
+    <ValidationObserver
       v-else
-      ref="form"
-      :key="formKey"
-      v-model="formValues"
-      @submit="onSubmit"
-      @input="onFormChange"
+      v-slot="{ invalid }"
+      slim
     >
-      <evan-table
-        class="simple"
-        :show-empty="!isEditMode"
-        :fields="columns"
-        :items="endpoints"
+      <form
+        :key="formKey"
+        @submit.prevent="onSubmitRow"
       >
-        <template #empty>
-          {{ $t('_profile.did.empty-service-endpoints') }}
-        </template>
-
-        <template
-          v-if="isEditMode"
-          #cell(id)="data"
+        <evan-table
+          class="simple"
+          :show-empty="!isEditMode"
+          :fields="columns"
+          :items="endpoints"
         >
-          <FormulateInput
-            type="text"
-            :name="`id-${data.index}`"
-            :validation="[
-              ['required'],
-              ['not', ...endpointIds.filter((_, idx) => idx !== data.index), formValues.newId],
-              ['starts_with', 'did:']
-            ]"
-            :validation-messages="{
-              not: $t('_profile.did.id-unique-error'),
-              starts_with: $t('_profile.did.did-format-error'),
-            }"
-            :placeholder="$t('_profile.did.id-placeholder')"
-            :value="data.item.id"
-            @input="editId($event, data)"
-          />
-        </template>
+          <template #empty>
+            {{ $t('_profile.did.empty-service-endpoints') }}
+          </template>
 
-        <template
-          v-if="isEditMode"
-          #cell(type)="data"
-        >
-          <FormulateInput
-            type="text"
-            :name="`type-${data.index}`"
-            validation="required"
-            :placeholder="$t('_profile.did.type-placeholder')"
-            :value="data.item.type"
-            @input="editType($event, data)"
-          />
-        </template>
-
-        <template
-          v-if="isEditMode"
-          #cell(url)="data"
-        >
-          <FormulateInput
-            type="url"
-            :name="`url-${data.index}`"
-            validation="required|url"
-            :placeholder="$t('_profile.did.url-placeholder')"
-            :value="data.item.url"
-            @input="editUrl($event, data)"
-          />
-        </template>
-
-        <template #cell(action)="data">
-          <evan-button
-            v-show="isEditMode"
-            class="btn-sm"
-            type="icon-secondary"
-            icon="mdi mdi-trash-can-outline"
-            @click="deleteEndpoint(data.index)"
-          />
-        </template>
-
-        <!-- New Endpoint Row -->
-        <template
-          v-if="isEditMode"
-          #bottom-row
-        >
-          <b-td>
-            <FormulateInput
-              type="text"
-              name="newId"
-              :validation="[
-                ['required'],
-                ['not', ...endpointIds],
-                ['starts_with', 'did:']
-              ]"
-              :validation-messages="{
-                not: $t('_profile.did.id-unique-error'),
-                starts_with: $t('_profile.did.did-format-error'),
-              }"
-              :placeholder="$t('_profile.did.id-placeholder')"
-            />
-          </b-td>
-          <b-td>
-            <FormulateInput
-              type="text"
-              name="newType"
-              validation="required"
-              :placeholder="$t('_profile.did.type-placeholder')"
-            />
-          </b-td>
-          <b-td>
-            <FormulateInput
-              type="url"
-              name="newUrl"
-              validation="required|url"
-              :placeholder="$t('_profile.did.url-placeholder')"
-            />
-          </b-td>
-          <b-td>
+          <template #cell(action)="data">
             <evan-button
-              native-type="submit"
-              type="icon-secondary"
-              icon="mdi mdi-plus"
+              v-show="isEditMode"
               class="btn-sm"
+              type="icon-secondary"
+              icon="mdi mdi-trash-can-outline"
+              @click="deleteEndpoint(data.index)"
             />
-          </b-td>
-        </template>
+          </template>
 
-        <template #empty>
-          <span>{{ $t('_profile.did.service-endpoints-empty') }}</span>
-        </template>
-      </evan-table>
-    </FormulateForm>
+          <!-- New Endpoint Row -->
+          <template
+            v-if="isEditMode"
+            #bottom-row
+          >
+            <b-td>
+              <ValidationProvider
+                name="newId"
+                :rules="{
+                  required,
+                  excluded: endpointIds,
+                  startsWith: 'did:'
+                }"
+                slim
+              >
+                <div slot-scope="{ errors }">
+                  <evan-form-control-input
+                    v-model="newId"
+                    class="m-0"
+                  />
+                  <span>{{ errors[0] }}</span>
+                </div>
+              </ValidationProvider>
+            </b-td>
+            <b-td>
+              <ValidationProvider
+                name="newType"
+                rules="required"
+                slim
+              >
+                <div slot-scope="{ errors }">
+                  <evan-form-control-input
+                    v-model="newType"
+                    class="m-0"
+                  />
+                  <span>{{ errors[0] }}</span>
+                </div>
+              </ValidationProvider>
+            </b-td>
+            <b-td>
+              <ValidationProvider
+                name="newUrl"
+                rules="required|url"
+                slim
+              >
+                <div slot-scope="{ errors }">
+                  <evan-form-control-input
+                    v-model="newUrl"
+                    class="m-0"
+                  />
+                  <span>{{ errors[0] }}</span>
+                </div>
+              </ValidationProvider>
+            </b-td>
+            <b-td>
+              <evan-button
+                native-type="submit"
+                type="icon-secondary"
+                icon="mdi mdi-plus"
+                class="btn-sm"
+                :disabled="invalid"
+              />
+            </b-td>
+          </template>
+
+          <template #empty>
+            <span>{{ $t('_profile.did.service-endpoints-empty') }}</span>
+          </template>
+        </evan-table>
+      </form>
+    </ValidationObserver>
   </div>
 </template>
 

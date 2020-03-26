@@ -118,10 +118,7 @@
         :is-edit-mode="isEditMode"
         :is-loading="isLoading"
         class="mb-3"
-        @addEndpoint="onAddEndpoint"
-        @deleteEndpoint="onDeleteEndpoint"
-        @updateEndpoint="onUpdateEndpoint"
-        @formChanged="onEndpointsFormChange"
+        @updateEndpoints="onUpdateEndpoints"
       />
 
       <delegates

@@ -40,8 +40,6 @@ export default class DIDComponent extends mixins(EvanComponent) {
 
   previousEndpoints: ServiceEndpoint[] = null;
 
-  isEndpointsValid = false;
-
   runtime: Runtime = null;
 
   didService: DidService;
@@ -73,11 +71,20 @@ export default class DIDComponent extends mixins(EvanComponent) {
     return false;
   }
 
+  /**
+   * Enable or disable save button
+   */
   get canSave(): boolean {
-    if (this.isEndpointsValid && this.hasChanges) {
-      return true;
-    }
-    return false;
+    return this.hasChanges;
+  }
+
+  /**
+   * Checks for any real change made
+   */
+  get hasChanges(): boolean {
+    // deep object comparison
+    return !isEqual(this.delegates, this.previousDelegates)
+      || !isEqual(this.endpoints, this.previousEndpoints);
   }
 
   async created(): Promise<void> {
@@ -101,7 +108,7 @@ export default class DIDComponent extends mixins(EvanComponent) {
   /**
    * Disable edit mode and recover previous data
    */
-  async onEditCancel(): Promise<void> {
+  onEditCancel(): void {
     this.delegates = this.previousDelegates;
     this.endpoints = this.previousEndpoints;
     this.isEditMode = false;
@@ -137,43 +144,8 @@ export default class DIDComponent extends mixins(EvanComponent) {
     this.delegates = this.delegates.filter((_, i) => i !== index);
   }
 
-  /**
-   * Temporarily add new endpoint and add new empty row
-   */
-  onAddEndpoint(newEndpoint: ServiceEndpoint): void {
-    this.endpoints = [...this.endpoints, newEndpoint];
-  }
-
-  /**
-   * Replace Endpoint entry with updated one
-   * @param index index of endpoint in array list
-   * @param endpoint updated endpoint
-   */
-  onUpdateEndpoint(index: number, endpoint: ServiceEndpoint): void {
-    // Replace with updated endpoint
-    this.endpoints = this.endpoints.map((item, idx) => (idx === index ? endpoint : item));
-  }
-
-  /**
-   * Removes the selected endpoint temporarily
-   * @param index row index of the item to be removed
-   */
-  onDeleteEndpoint(index: number): void {
-    this.endpoints = this.endpoints.filter((_, i) => i !== index);
-  }
-
-  async onEndpointsFormChange(isValid: Promise<boolean>): Promise<void> {
-    this.isEndpointsValid = await isValid;
-  }
-
-
-  /**
-   * Checks for any real change made
-   */
-  get hasChanges(): boolean {
-    // deep object comparison
-    return !isEqual(this.delegates, this.previousDelegates)
-      || !isEqual(this.endpoints, this.previousEndpoints);
+  onUpdateEndpoints(newEndpoints: ServiceEndpoint[]): void {
+    this.endpoints = [...newEndpoints];
   }
 
   /**
