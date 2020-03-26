@@ -139,8 +139,6 @@ export default Component;
 </script>
 
 <style lang="scss" scoped>
-@import '~@evan.network/ui/src/style/utils';
-
 .content-card {
   background: white;
   border-radius: 4px;
@@ -150,44 +148,6 @@ export default Component;
 .simple {
   tr > td {
     padding: 0.5em;
-  }
-}
-
-/deep/ .formulate-input {
-  .formulate-input-wrapper {
-    input, textarea {
-      font-size: 12px;
-
-      color: cssVar('gray-900');
-      border: 1px solid cssVar('gray-500');
-
-      display: block;
-      width: 100%;
-      height: calc(1.5em + 0.8rem + 2px);
-      padding: 0.4rem 1.125rem;
-      line-height: 1.5;
-      background-clip: padding-box;
-      border-radius: 5px;
-      transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-
-      &:focus {
-        border: 1px solid cssVar('primary');
-      }
-
-      &[disabled] {
-        color: cssVar('gray-600');
-        border: 1px solid cssVar('gray-200');
-      }
-    }
-  }
-
-  /deep/ .formulate-input-errors {
-    list-style: none;
-    padding: 0;
-
-    .formulate-input-error {
-      color: cssVar('danger');
-    }
   }
 }
 </style>
