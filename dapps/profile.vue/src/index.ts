@@ -22,8 +22,6 @@ import { initializeVue, getDomainName } from '@evan.network/ui-vue-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
 import { TablePlugin } from 'bootstrap-vue';
-import VueFormulate from '@braid/vue-formulate';
-import { de } from '@braid/vue-formulate-i18n';
 import Main from './components/root/root.vue';
 import translations from './i18n/translations';
 import routes from './routes';
@@ -57,22 +55,6 @@ export async function startDApp(container: any, dbcpName: any, dappEnsOrContract
     `${profileDbcp.name}.${getDomainName()}`,
   );
   Vue.use(TablePlugin);
-  Vue.use(VueFormulate, {
-    plugins: [de],
-    locale: Vue.i18n.locale(),
-    locales: {
-      en: {
-        required(): string {
-          return 'This field is required';
-        },
-      },
-      de: {
-        required(): string {
-          return 'Dies ist ein Pflichtfeld';
-        },
-      },
-    },
-  });
 
   await initializeVue({
     components,
