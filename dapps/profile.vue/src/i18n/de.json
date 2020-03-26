@@ -191,12 +191,12 @@
     "not-permitted-view": "Sie haben keine Rechte, diese Daten für die ausgewählte Identität anzusehen.",
     "security-info": {
       "encryption-key": {
-        "exported": "Encryption Key exportiert und in die Zwischenablage gelegt",
-        "title": "Encryption Key exportieren"
+        "exported": "Encryption-Key in die Zwischenablage kopiert",
+        "title": "Encryption Key kopieren"
       },
       "private-key": {
-        "exported": "Private Key exportiert und in die Zwischenablage gelegt",
-        "title": "Private Key exportieren"
+        "exported": "Private-Key in die Zwischenablage kopiert",
+        "title": "Private Key kopieren"
       },
       "title": "Security Information"
     },
