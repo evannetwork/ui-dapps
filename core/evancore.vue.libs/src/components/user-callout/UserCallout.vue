@@ -36,10 +36,24 @@
         V
       </button>
 
+      <hr class="divider">
 
-      <button @click="$refs.logout.logout()">
-        Logout
-      </button>
+      <div class="callout-button-row">
+        <button class="callout-button">
+          Test
+        </button>
+        <i class="mdi mdi-cog" />
+      </div>
+
+      <div class="callout-button-row">
+        <button
+          class="callout-button"
+          @click="$refs.logout.logout()"
+        >
+          Logout
+        </button>
+        <i class="mdi mdi-off" />
+      </div>
     </div>
 
     <evan-logout ref="logout" />
@@ -72,12 +86,17 @@ export default Component;
 </script>
 
 <style lang="scss" scoped>
+@import '~@evan.network/ui/src/style/utils';
+
 .callout {
   position: fixed;
   display: flex;
   flex-direction: column;
   background-color: white;
   z-index: 1001;
+
+  padding-left: 24px;
+  padding-right: 24px;
 
   bottom: 0;
   left: 0;
@@ -104,11 +123,18 @@ export default Component;
   top: 16px;
 }
 
+.divider {
+  margin: 0 !important;
+  width: 100%;
+  border: 1px solid cssVar('gray-300') !important;
+}
+
 /deep/ .profile-picture {
   position: relative !important;
+  left: initial !important;
 }
 
 /deep/ .d-flex.flex-column.justify-content-center.ml-3.info {
-  margin-left: 42px !important;
+  margin-left: 16px !important;
 }
 </style>
