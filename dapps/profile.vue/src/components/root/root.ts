@@ -26,7 +26,6 @@ import * as bcc from '@evan.network/api-blockchain-core';
 import { DispatcherInstance } from '@evan.network/ui';
 import { EvanComponent, NavEntryInterface } from '@evan.network/ui-vue-core';
 
-import { bccHelper } from '@evan.network/ui-session';
 import * as dispatchers from '../../dispatchers/registry';
 import { getPermissionSortFilter } from '../utils/shareSortFilters';
 

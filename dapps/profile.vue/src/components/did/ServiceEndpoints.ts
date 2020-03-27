@@ -117,7 +117,12 @@ export default class ServiceEndpointsComponent extends mixins(EvanComponent) {
     extend('url', {
       validate: (value: string) => {
         try {
-          const test = new URL(value);
+          /**
+           * Validate against RFC 3986
+           * Not pretty, but a regex would be even worse
+           */
+          // eslint-disable-next-line no-new
+          new URL(value);
           return true;
         } catch (e) {
           return false;

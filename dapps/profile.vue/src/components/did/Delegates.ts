@@ -39,11 +39,12 @@ export default class DelegatesComponent extends mixins(EvanComponent) {
       label: this.$t('_profile.did.did'),
       tdClass: 'truncate',
     },
-    {
-      key: 'note',
-      label: this.$t('_profile.did.note'),
-      tdClass: 'truncate',
-    },
+    // Remove note from concept. Technically not possible to reliably resolve note from did atm
+    // {
+    //   key: 'note',
+    //   label: this.$t('_profile.did.note'),
+    //   tdClass: 'truncate',
+    // },
     {
       key: 'action',
       label: '',
@@ -65,10 +66,8 @@ export default class DelegatesComponent extends mixins(EvanComponent) {
    */
   get filteredContacts(): ContactInterface[] {
     const dids = this.delegates.map((delegate) => delegate.did);
-    
-    return this.contacts.filter((contact) => {
-      return !dids.includes(contact.value);
-    });
+
+    return this.contacts.filter((contact) => !dids.includes(contact.value));
   }
 
   onSelectContact(contact: ContactInterface): void {
