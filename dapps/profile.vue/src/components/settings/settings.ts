@@ -18,13 +18,11 @@
 */
 
 // vue imports
-import Vue from 'vue';
 import Component, { mixins } from 'vue-class-component';
-import { Prop } from 'vue-property-decorator';
 
 // evan.network imports
+import { session, lightwallet } from '@evan.network/ui-session';
 import { EvanComponent } from '@evan.network/ui-vue-core';
-import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
 @Component({ })
@@ -96,5 +94,45 @@ export default class ProfileSettingsComponent extends mixins(EvanComponent) {
       // else clear the value
       delete window.localStorage['evan-dev-dapps-domain'];
     }
+  }
+
+  // TODO refactor to (renderless) vue component
+  copyToClipboard(text: string, toastText: string): void {
+    const textArea = document.createElement('textarea');
+
+    textArea.value = text;
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textArea);
+
+    this.$toasted.show(
+      this.$t(toastText),
+      {
+        duration: 3000,
+        type: 'success',
+      },
+    );
+  }
+
+  /**
+   * Export the private key for the current logged in account
+   */
+  async exportPrivateKey(): Promise<void> {
+    const vault = await lightwallet.loadUnlockedVault();
+    const privateKey = lightwallet.getPrivateKey(vault, session.activeAccount);
+
+    this.copyToClipboard(privateKey, '_profile.security-info.private-key.exported');
+  }
+
+  /**
+   * Export the private key for the current logged in account
+   */
+  async exportEncryptionKey(): Promise<void> {
+    const vault = await lightwallet.loadUnlockedVault();
+    const encryptionKey = await lightwallet.getEncryptionKey();
+
+    this.copyToClipboard(encryptionKey, '_profile.security-info.encryption-key.exported');
   }
 }
