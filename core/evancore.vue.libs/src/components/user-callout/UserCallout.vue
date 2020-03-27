@@ -16,15 +16,45 @@
   Fifth Floor, Boston, MA, 02110-1301 USA, or download the license from
   the following URL: https://evan.network/license/
 */
-// map the original vue path to bootstrap.vue.libs
-import { getDomainName, System } from '@evan.network/ui-dapp-browser';
 
-System.map['bootstrap-vue'] = `bootstrap.vue.libs.${getDomainName()}!dapp-content`;
+<template>
+  <div>
+    <b-overlay
+      :show="show"
+      blur="0"
+      variant="dark"
+      opacity="0.5"
+      z-index="1000"
+      no-center
+      fixed
+      no-wrap
+      @click="show = false"
+    >
+      <template #overlay>
+        <div
+          class="callout"
+        >
+          Test
+        </div>
+      </template>
+    </b-overlay>
+    <button @click="show = !show" />
+  </div>
+</template>
 
-export {
-  TableLitePlugin,
-  TablePlugin,
-  TableSimplePlugin,
-  DropdownPlugin,
-  OverlayPlugin,
-} from 'bootstrap-vue';
+<script lang="ts">
+import Component from './UserCallout';
+
+export default Component;
+</script>
+
+<style lang="scss" scoped>
+.callout {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  border: 1px solid red;
+  width: 250px;
+  height: 300px;
+}
+</style>

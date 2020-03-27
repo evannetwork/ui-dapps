@@ -16,15 +16,18 @@
   Fifth Floor, Boston, MA, 02110-1301 USA, or download the license from
   the following URL: https://evan.network/license/
 */
-// map the original vue path to bootstrap.vue.libs
-import { getDomainName, System } from '@evan.network/ui-dapp-browser';
 
-System.map['bootstrap-vue'] = `bootstrap.vue.libs.${getDomainName()}!dapp-content`;
+import Component, { mixins } from 'vue-class-component';
+import { Prop } from 'vue-property-decorator';
+import EvanComponent from '../../component';
 
-export {
-  TableLitePlugin,
-  TablePlugin,
-  TableSimplePlugin,
-  DropdownPlugin,
-  OverlayPlugin,
-} from 'bootstrap-vue';
+/**
+ * Shows the callout element when extending the profile in bottom nav
+ *
+ * @class         UserCallout
+ * @selector      evan-user-callout
+ */
+@Component
+export default class UserCallout extends mixins(EvanComponent) {
+  show = false;
+}

@@ -214,6 +214,7 @@
             :address="$store.state.runtime.activeIdentity"
           />
         </div>
+        <evan-user-callout />
         <div class="mx-auto" />
         <ul class="nav">
           <li

@@ -69,6 +69,7 @@ import SwipePanelComponentClass from './swipe-panel/swipe-panel';
 import TableComponent from './table/table.vue';
 import TooltipComponent from './tooltip/tooltip.vue';
 import UnderDevelopmentComponent from './under-development/under-development.vue';
+import UserCallout from './user-callout/UserCallout.vue';
 import WalletCardComponent from './profile/wallet-card/wallet-card.vue';
 import SearchBoxComponent from './searchbox/Searchbox.vue';
 // export them all, so other applications can access them
@@ -169,6 +170,7 @@ const componentRegistration: Array<ComponentRegistrationInterface> = [
   { name: 'evan-table', component: TableComponent },
   { name: 'evan-tooltip', component: TooltipComponent },
   { name: 'evan-under-development', component: UnderDevelopmentComponent },
+  { name: 'evan-user-callout', component: UserCallout },
   { name: 'evan-v-select', component: vSelect },
   { name: 'evan-wallet-card', component: WalletCardComponent },
 ];
