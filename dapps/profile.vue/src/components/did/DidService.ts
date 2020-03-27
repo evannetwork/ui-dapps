@@ -1,7 +1,5 @@
-import {
-  DidDocument, Runtime,
-} from '@evan.network/api-blockchain-core';
-import { profileUtils, Dispatcher, DispatcherInstance } from '@evan.network/ui';
+import { DidDocument, Runtime } from '@evan.network/api-blockchain-core';
+import { Dispatcher, DispatcherInstance } from '@evan.network/ui';
 import { getDomainName } from '@evan.network/ui-vue-core';
 import { ServiceEndpoint, Delegate } from './DidInterfaces';
 
@@ -42,18 +40,14 @@ export class DidService {
    * Returns the delegates excluding the owner entry
    * @param didDocument specified did document
    */
+  // eslint-disable-next-line class-methods-use-this
   async getDelegates(didDocument: DidDocument): Promise<Delegate[]> {
-    // regex to remove #key suffixes
-    const regex = /([#])(key-)(\d)+/;
-
-    return Promise.all(didDocument.authentication
+    return didDocument.authentication
+      .map((authEntry) => didDocument.publicKey.find((keyEntry) => keyEntry.id === authEntry))
+      .map((entry) => entry.controller)
       // Filter out owner
-      .filter((auth) => auth !== DidService.getOwner(didDocument))
-      .map((auth) => auth.replace(regex, ''))
-      .map(async (did) => ({
-        did,
-        note: await profileUtils.getUserAlias(this.runtime, await this.runtime.did.convertDidToIdentity(did)),
-      })));
+      .filter((did) => did !== DidService.getOwner(didDocument))
+      .map((did) => ({ did }));
   }
 
   static updateDelegates(didDoc: DidDocument, delegates: Delegate[]): DidDocument {
@@ -104,8 +98,8 @@ export class DidService {
    * @param didDoc DID Document to get the owner for
    */
   static getOwner(didDoc: DidDocument): string {
-    return didDoc.authentication.find((item) => didDoc.publicKey
-      .map((key) => key.id).includes(item));
+    // Assume this as convention for now
+    return didDoc.publicKey[0].controller;
   }
 
   /**
