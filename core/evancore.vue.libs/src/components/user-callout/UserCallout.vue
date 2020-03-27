@@ -19,6 +19,31 @@
 
 <template>
   <div>
+    <div
+      class="callout"
+      :class="{ active: show }"
+    >
+      <div style="width:100%; height:64px">
+        <evan-profile-preview
+          :address="$store.state.runtime.activeIdentity"
+        />
+      </div>
+
+      <button
+        class="toggle-button"
+        @click="show = !show"
+      >
+        V
+      </button>
+
+
+      <button @click="$refs.logout.logout()">
+        Logout
+      </button>
+    </div>
+
+    <evan-logout ref="logout" />
+
     <b-overlay
       :show="show"
       blur="0"
@@ -32,13 +57,11 @@
     >
       <template #overlay>
         <div
-          class="callout"
-        >
-          Test
-        </div>
+          class="close-overlay"
+          @click="show = false"
+        />
       </template>
     </b-overlay>
-    <button @click="show = !show" />
   </div>
 </template>
 
@@ -50,11 +73,42 @@ export default Component;
 
 <style lang="scss" scoped>
 .callout {
-  position: absolute;
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  z-index: 1001;
+
   bottom: 0;
   left: 0;
-  border: 1px solid red;
+  // border: 1px solid red;
   width: 250px;
   height: 300px;
+
+  transform: translateY(239px);
+  transition: transform 0.5s ease-in-out;
+
+  &.active {
+    transform: translateY(0);
+  }
+}
+
+.close-overlay {
+  width: 100vw;
+  height: 100vh;
+}
+
+.toggle-button {
+  position: absolute;
+  right: 16px;
+  top: 16px;
+}
+
+/deep/ .profile-picture {
+  position: relative !important;
+}
+
+/deep/ .d-flex.flex-column.justify-content-center.ml-3.info {
+  margin-left: 42px !important;
 }
 </style>
