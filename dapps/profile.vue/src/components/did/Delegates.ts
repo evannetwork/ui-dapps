@@ -39,7 +39,10 @@ export default class DelegatesComponent extends mixins(EvanComponent) {
       label: this.$t('_profile.did.did'),
       tdClass: 'truncate',
     },
-    // Remove note from concept. Technically not possible to reliably resolve note from did atm
+    /**
+     * Remove note for now. Technically not possible to reliably resolve note from did atm.
+     * A user that has been added with accountId cant be resolved through the DID
+     */
     // {
     //   key: 'note',
     //   label: this.$t('_profile.did.note'),
