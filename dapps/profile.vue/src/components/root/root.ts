@@ -26,6 +26,7 @@ import * as bcc from '@evan.network/api-blockchain-core';
 import { DispatcherInstance } from '@evan.network/ui';
 import { EvanComponent, NavEntryInterface } from '@evan.network/ui-vue-core';
 
+import { bccHelper } from '@evan.network/ui-session';
 import * as dispatchers from '../../dispatchers/registry';
 import { getPermissionSortFilter } from '../utils/shareSortFilters';
 
@@ -99,7 +100,7 @@ export default class ProfileRootComponent extends mixins(EvanComponent) {
 
     this.$store.state.loadingProfile = this.setupProfile();
     await this.$store.state.loadingProfile;
-    this.setNavEntries();
+    await this.setNavEntries();
 
     this.loading = false;
   }
@@ -215,14 +216,14 @@ export default class ProfileRootComponent extends mixins(EvanComponent) {
   /**
    * Applies the navigation entries for the current opened profile.
    */
-  setNavEntries(): void {
+  async setNavEntries(): Promise<void> {
     this.navEntries = [
       {
         icon: 'mdi mdi-account-outline',
         key: 'detail',
       },
       {
-        disabled: !this.getRuntime().runtimeConfig.useIdentity,
+        disabled: !(await this.getRuntime().verifications.isIdentity(this.$route.params.address)),
         icon: 'mdi mdi-identifier',
         key: 'did',
       },
