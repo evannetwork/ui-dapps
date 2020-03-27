@@ -165,7 +165,7 @@
       "no-delegate-options": "Kein Kontakt verfügbar",
       "note": "Notiz",
       "service-endpoints-desc": "Im Folgenden können Service Endpoints festgelegt werden, die mit dieser DID assoziiert werden sollen.",
-      "service-endpoints-empty": "Noch keine Service Endpoints hinzugefügt",
+      "service-endpoints-empty": "Kein Service Endpoints angegeben",
       "service-endpoints-title": "Service Endpoints",
       "type-placeholder": "Type",
       "type": "Type",

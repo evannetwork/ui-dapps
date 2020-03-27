@@ -165,7 +165,7 @@
       "no-delegate-options": "No valid contact available",
       "note": "Note",
       "service-endpoints-desc": "Below you can specify service endpoints, to which you want to associate your DID with.",
-      "service-endpoints-empty": "No Service Endpoints added yet",
+      "service-endpoints-empty": "No Service Endpoints specified",
       "service-endpoints-title": "Service Endpoints",
       "type-placeholder": "Type",
       "type": "Type",
