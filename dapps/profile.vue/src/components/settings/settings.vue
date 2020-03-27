@@ -56,35 +56,31 @@
       </div>
 
       <div class="white-box border-smooth rounded p-4 mt-3">
-        <div class="d-flex">
-          <evan-form-control-checkbox
-            id="devMode"
-            v-model="devMode"
-            class="mr-3"
-            style="min-width: 0;"
-            @input="devModeChanged()"
-          />
-          <label
-            class="form-check-label"
-            for="devMode"
-          >
-            {{ '_profile.settings.developer-mode' | translate }}
-          </label>
-        </div>
+        <b>
+          {{ '_profile.settings.developer-mode' | translate }}
+        </b>
+        <evan-form-control-checkbox
+          id="devMode"
+          v-model="devMode"
+          class="mt-3"
+          style="min-width: 0;"
+          @input="devModeChanged()"
+        />
 
         <template v-if="devMode">
+          <b>
+            {{ `_profile.settings.dev-domain.title` | translate }}
+          </b>
           <div class="d-flex align-items-center mt-3">
-            <evan-form-control-checkbox
-              id="devDomainEnabled"
-              v-model="devDomainEnabled"
-              class="mr-3"
-              style="min-width: 0;"
-              @input="devDomainChanged()"
-            />
-            <div class="form-group w-100">
-              <label for="devDomain">
-                {{ `_profile.settings.dev-domain.title` | translate }}
-              </label>
+            <div>
+              <evan-form-control-checkbox
+                id="devDomainEnabled"
+                v-model="devDomainEnabled"
+                class="mr-3"
+                @input="devDomainChanged()"
+              />
+            </div>
+            <div class="form-group ml-3 w-100">
               <input
                 id="devDomain"
                 ref="devDomain"
@@ -100,6 +96,31 @@
             {{ '_profile.settings.dev-domain.desc' | translate }}
           </span>
         </template>
+      </div>
+
+      <div
+        v-if="devMode"
+        class="white-box border-smooth rounded p-4 mt-3"
+      >
+        <b>
+          {{ '_profile.security-info.title' | translate }}
+        </b>
+
+        <div class="d-flex justify-content-center mt-3">
+          <evan-button
+            class="mr-3"
+            type="danger"
+            @click="exportPrivateKey()"
+          >
+            {{ '_profile.security-info.private-key.title' | translate }}
+          </evan-button>
+          <evan-button
+            type="danger"
+            @click="exportEncryptionKey()"
+          >
+            {{ '_profile.security-info.encryption-key.title' | translate }}
+          </evan-button>
+        </div>
       </div>
     </template>
   </div>

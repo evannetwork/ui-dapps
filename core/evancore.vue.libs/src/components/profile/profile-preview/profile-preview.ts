@@ -96,8 +96,10 @@ export default class ProfilePreviewComponent extends mixins(EvanComponent) {
    */
   profile: bcc.Profile = null;
 
-  @Watch('$attrs') onChildChanged(val: UserInfoInterface, oldVal: UserInfoInterface): void {
-    Object.assign(this.userInfo, this.$attrs, { pictureSrc: this.$attrs.src });
+  @Watch('$attrs') onChildChanged(): void {
+    if (this.userInfo && this.$attrs.src) {
+      Object.assign(this.userInfo, this.$attrs, { pictureSrc: this.$attrs.src });
+    }
   }
 
   /**
