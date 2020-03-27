@@ -75,6 +75,7 @@
               >
                 <div slot-scope="{ errors }">
                   <evan-form-control-input
+                    id="newId"
                     v-model="newId"
                     class="m-0"
                   />
@@ -90,6 +91,7 @@
               >
                 <div slot-scope="{ errors }">
                   <evan-form-control-input
+                    id="newType"
                     v-model="newType"
                     class="m-0"
                   />
@@ -105,6 +107,7 @@
               >
                 <div slot-scope="{ errors }">
                   <evan-form-control-input
+                    id="newUrl"
                     v-model="newUrl"
                     class="m-0"
                   />
