@@ -180,7 +180,7 @@ $table-row-height: 56px;
 
       td, th {
         padding: 8px;
-        vertical-align: initial !important;
+        vertical-align: baseline !important;
 
         &.truncate {
           overflow: hidden;
