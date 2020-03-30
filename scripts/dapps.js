@@ -131,7 +131,7 @@ const logServing = () => {
   output.push(`\nbuild type           : ${watching ? 'serving' : 'building'}`);
   output.push(`environment          : ${nodeEnv}`);
   if (expressApp) {
-    output.push('started local server : http://localhost:3000');
+    output.push('started local server : http://localhost:3000/dev.html');
   }
 
   categories.forEach((category) => {
