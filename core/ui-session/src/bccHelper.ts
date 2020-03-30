@@ -60,7 +60,7 @@ export default class BccHelper {
       }
     }
 
-    return window.localStorage.getItem('evan-use-identity') === 'true';
+    return window.localStorage.getItem('evan-use-identity') !== 'false';
   }
 
   /**
@@ -118,12 +118,13 @@ export default class BccHelper {
 
     // create the new runtime
     options.contracts = options.contracts || SmartContracts;
+    // be backwards compatible to old dapp browser
     const runtime = await createDefaultRuntime(
       web3,
       dfs || new Ipfs({
         web3,
         dfsConfig: ipfs.ipfsConfig,
-        cache: ipfs.getIpfsCache(),
+        cache: ipfs.getIpfsCache ? ipfs.getIpfsCache() : ipfs.ipfsConfig.ipfsCache,
         logLog,
         logLogLevel,
       }),
@@ -308,6 +309,7 @@ export default class BccHelper {
       }
     } catch (ex) {
       // could not be resolved?
+      console.warn(`Address is not onboarded: ${address}: ${ex.message}`);
     }
 
     return profileAddress !== nullAddress;

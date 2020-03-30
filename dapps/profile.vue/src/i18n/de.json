@@ -1,6 +1,5 @@
 {
   "_profile": {
-    "my-profile": "Mein Profil",
     "bmail": {
       "share": {
         "body": "Guten Tag,\n\nIhnen wurden Identitätsinformationen von {alias} freigegeben. Nutzen Sie den \"Anhang öffnen\" Button, um sich die Identität anzusehen.\n\nMit freundlichen Grüßen,\n\n{alias}",
@@ -171,11 +170,11 @@
       "service-endpoints-desc": "Im Folgenden sind Service Endpoints spezifizert, die mit dieser DID assoziiert werden.",
       "service-endpoints-empty": "Kein Service Endpoints angegeben",
       "service-endpoints-title": "Service Endpoints",
-      "type-placeholder": "Type",
       "type": "Type",
+      "type-placeholder": "Type",
       "updated-at": "aktualisiert am",
-      "url-placeholder": "URL",
-      "url": "Endpoint"
+      "url": "Endpoint",
+      "url-placeholder": "URL"
     },
     "dispatchers": {
       "did-document-update": "DID Dokument speichern",
@@ -186,6 +185,7 @@
       "send-eve": "EVEs werden gesendet",
       "verification-accept": "Verifikation wird angenommen"
     },
+    "my-profile": "Mein Profil",
     "not-permitted": {
       "accountDetails": "Identitätsinformationen",
       "contact": "Kontaktdaten",
@@ -194,6 +194,17 @@
       "registration": "Registrierungsdaten"
     },
     "not-permitted-view": "Sie haben keine Rechte, diese Daten für die ausgewählte Identität anzusehen.",
+    "security-info": {
+      "encryption-key": {
+        "exported": "Encryption-Key in die Zwischenablage kopiert",
+        "title": "Encryption Key kopieren"
+      },
+      "private-key": {
+        "exported": "Private-Key in die Zwischenablage kopiert",
+        "title": "Private Key kopieren"
+      },
+      "title": "Security Information"
+    },
     "settings": {
       "desc": "Einstellungen",
       "dev-domain": {

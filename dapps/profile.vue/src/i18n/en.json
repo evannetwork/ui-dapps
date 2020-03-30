@@ -1,6 +1,5 @@
 {
   "_profile": {
-    "my-profile": "My Profile",
     "bmail": {
       "share": {
         "body": "Hello,\n\nidentity information from {alias} has been shared with you. Use the \"open attachment\" button to view the identity.\n\nBest regards,\n\n{alias}",
@@ -171,11 +170,11 @@
       "service-endpoints-desc": "Below service endpoints are specified, to which you want to associate your DID with.",
       "service-endpoints-empty": "No Service Endpoints specified",
       "service-endpoints-title": "Service Endpoints",
-      "type-placeholder": "Type",
       "type": "Type",
+      "type-placeholder": "Type",
       "updated-at": "updated at",
-      "url-placeholder": "URL",
-      "url": "Endpoint"
+      "url": "Endpoint",
+      "url-placeholder": "URL"
     },
     "dispatchers": {
       "did-document-update": "Update DID Document",
@@ -186,6 +185,7 @@
       "send-eve": "Sending EVEs",
       "verification-accept": "Accepting Verification"
     },
+    "my-profile": "My Profile",
     "not-permitted": {
       "accountDetails": "Identity information",
       "contact": "Contact details",
@@ -194,6 +194,17 @@
       "registration": "Registration data"
     },
     "not-permitted-view": "You do not have permission to view this data for the selected Identity.",
+    "security-info": {
+      "encryption-key": {
+        "exported": "Exported Encryption Key and copied to clipboard",
+        "title": "Export Encryption Key"
+      },
+      "private-key": {
+        "exported": "Exported Private Key and copied to clipboard",
+        "title": "Export Private Key"
+      },
+      "title": "Sicherheitsinformationen"
+    },
     "settings": {
       "desc": "Settings",
       "dev-domain": {
