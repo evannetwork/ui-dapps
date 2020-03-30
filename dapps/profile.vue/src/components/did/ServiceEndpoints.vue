@@ -22,118 +22,116 @@
     <div class="mb-3 d-flex flex-row justify-content-between align-items-center">
       <h2>
         <i class="mr-1 mdi mdi-earth" />
-        {{ '_profile.did.service-endpoints-title' | translate }}
+        {{ $t('_profile.did.service-endpoints-title') }}
       </h2>
     </div>
-    <p>{{ '_profile.did.service-endpoints-desc' | translate }}</p>
+    <p>{{ $t('_profile.did.service-endpoints-desc') }}</p>
 
     <evan-loading v-if="isLoading" />
-    <evan-table
+
+    <ValidationObserver
       v-else
-      class="simple"
-      :show-empty="!isEditMode"
-      :fields="columns"
-      :items="endpoints"
+      v-slot="{ invalid }"
+      slim
     >
-      <template v-slot:empty>
-        {{ '_profile.did.empty-service-endpoints' }}
-      </template>
-
-      <template
-        v-if="isEditMode"
-        v-slot:cell(id)="data"
+      <form
+        :key="formKey"
+        @submit.prevent="onSubmitRow"
       >
-        <evan-form-control-input
-          class="m-0"
-          required
-          :placeholder="'_profile.did.id-placeholder' | translate"
-          :value="data.item.id"
-          @input="editId($event, data)"
-        />
-      </template>
+        <evan-table
+          class="simple"
+          :show-empty="!isEditMode"
+          :fields="columns"
+          :items="endpoints"
+        >
+          <template #empty>
+            {{ $t('_profile.did.empty-service-endpoints') }}
+          </template>
 
-      <template
-        v-if="isEditMode"
-        v-slot:cell(type)="data"
-      >
-        <evan-form-control-input
-          class="m-0"
-          required
-          :placeholder="'_profile.did.type-placeholder' | translate"
-          :value="data.item.type"
-          @input="editType($event, data)"
-        />
-      </template>
+          <template #cell(action)="data">
+            <evan-button
+              v-show="isEditMode"
+              class="btn-sm"
+              type="icon-secondary"
+              icon="mdi mdi-trash-can-outline"
+              @click="deleteEndpoint(data.index)"
+            />
+          </template>
 
-      <template
-        v-if="isEditMode"
-        v-slot:cell(url)="data"
-      >
-        <evan-form-control-input
-          class="table-input m-0"
-          type="url"
-          required
-          :placeholder="'_profile.did.url-placeholder' | translate"
-          :value="data.item.url"
-          @input="editUrl($event, data)"
-        />
-      </template>
+          <!-- New Endpoint Row -->
+          <template
+            v-if="isEditMode"
+            #bottom-row
+          >
+            <b-td>
+              <ValidationProvider
+                name="newId"
+                :rules="{
+                  required,
+                  excluded: endpointIds,
+                  startsWith: 'did:'
+                }"
+                slim
+              >
+                <div slot-scope="{ errors }">
+                  <evan-form-control-input
+                    id="newId"
+                    v-model="newId"
+                    class="m-0"
+                  />
+                  <span>{{ errors[0] }}</span>
+                </div>
+              </ValidationProvider>
+            </b-td>
+            <b-td>
+              <ValidationProvider
+                name="newType"
+                rules="required"
+                slim
+              >
+                <div slot-scope="{ errors }">
+                  <evan-form-control-input
+                    id="newType"
+                    v-model="newType"
+                    class="m-0"
+                  />
+                  <span>{{ errors[0] }}</span>
+                </div>
+              </ValidationProvider>
+            </b-td>
+            <b-td>
+              <ValidationProvider
+                name="newUrl"
+                rules="required|url"
+                slim
+              >
+                <div slot-scope="{ errors }">
+                  <evan-form-control-input
+                    id="newUrl"
+                    v-model="newUrl"
+                    class="m-0"
+                  />
+                  <span>{{ errors[0] }}</span>
+                </div>
+              </ValidationProvider>
+            </b-td>
+            <b-td>
+              <evan-button
+                native-type="submit"
+                type="icon-secondary"
+                icon="mdi mdi-plus"
+                class="btn-sm"
+                :disabled="invalid"
+              />
+            </b-td>
+          </template>
 
-      <template v-slot:cell(action)="data">
-        <evan-button
-          v-show="isEditMode"
-          class="btn-sm"
-          type="icon-secondary"
-          icon="mdi mdi-trash-can-outline"
-          @click="deleteEndpoint(data.index)"
-        />
-      </template>
-
-      <template
-        v-if="isEditMode"
-        v-slot:bottom-row
-      >
-        <b-td>
-          <evan-form-control-input
-            id="idInput"
-            v-model="newId"
-            class="m-0"
-            :placeholder="'_profile.did.id-placeholder' | translate"
-          />
-        </b-td>
-        <b-td>
-          <evan-form-control-input
-            id="typelInput"
-            v-model="newType"
-            class="m-0"
-            :placeholder="'_profile.did.type-placeholder' | translate"
-          />
-        </b-td>
-        <b-td>
-          <evan-form-control-input
-            id="urlInput"
-            v-model="newUrl"
-            class="table-input m-0"
-            type="url"
-            required
-            :placeholder="'_profile.did.url-placeholder' | translate"
-          />
-        </b-td>
-        <b-td>
-          <evan-button
-            type="icon-secondary"
-            icon="mdi mdi-plus"
-            class="btn-sm"
-            :disabled="!newId || !newUrl || !newType"
-            @click="addEndpointRow"
-          />
-        </b-td>
-      </template>
-
-      <template v-slot:empty>
-        <span>{{ '_profile.did.service-endpoints-empty' | translate }}</span>
-      </template>
-    </evan-table>
+          <template #empty>
+            <span>{{ $t('_profile.did.service-endpoints-empty') }}</span>
+          </template>
+        </evan-table>
+      </form>
+    </ValidationObserver>
   </div>
 </template>
 
@@ -147,7 +145,12 @@ export default Component;
 .content-card {
   background: white;
   border-radius: 4px;
-  width: 560px;
   padding: 24px 24px;
+}
+
+.simple {
+  tr > td {
+    padding: 0.5em;
+  }
 }
 </style>

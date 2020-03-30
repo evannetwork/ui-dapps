@@ -175,6 +175,10 @@
     "view-profile": "View Identity",
     "welcome-to-evan": "Welcome to the evan.network",
     "write": "write",
-    "yes": "Yes"
+    "yes": "Yes",
+    "validation": {
+      "required": "This field is required",
+      "url": "Enter a valid URL"
+    }
   }
 }

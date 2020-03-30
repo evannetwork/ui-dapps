@@ -18,11 +18,18 @@
 */
 
 import Component, { mixins } from 'vue-class-component';
-import { EvanComponent, EvanTableColumn, EvanTableItem } from '@evan.network/ui-vue-core';
+import { EvanComponent, EvanTableColumn } from '@evan.network/ui-vue-core';
 import { Prop } from 'vue-property-decorator';
+import { ValidationProvider, ValidationObserver, extend } from 'vee-validate';
+import { required, excluded } from 'vee-validate/dist/rules';
 import { ServiceEndpoint } from './DidInterfaces';
 
-@Component
+@Component({
+  components: {
+    ValidationProvider,
+    ValidationObserver,
+  },
+})
 export default class ServiceEndpointsComponent extends mixins(EvanComponent) {
   @Prop() isEditMode;
 
@@ -30,11 +37,13 @@ export default class ServiceEndpointsComponent extends mixins(EvanComponent) {
 
   @Prop() endpoints: ServiceEndpoint[];
 
-  newUrl = null;
+  formKey = 'initial';
 
-  newId = null;
+  newId: string = null;
 
-  newType = null;
+  newType: string = null;
+
+  newUrl: string = null;
 
   columns: EvanTableColumn[] = [
     {
@@ -59,17 +68,31 @@ export default class ServiceEndpointsComponent extends mixins(EvanComponent) {
     },
   ]
 
-  addEndpointRow(): void {
-    const newEndpoint: ServiceEndpoint = {
-      id: this.newId,
-      type: this.newType,
-      url: this.newUrl,
-    };
-    this.newId = null;
-    this.newUrl = null;
-    this.newType = null;
+  get endpointIds(): string[] {
+    return this.endpoints.map((endpoint) => endpoint.id);
+  }
 
-    this.$emit('addEndpoint', newEndpoint);
+  created(): void {
+    this.initValidation();
+  }
+
+  onSubmitRow(): void {
+    const newEndpoints: ServiceEndpoint[] = [
+      ...this.endpoints,
+      {
+        id: this.newId,
+        type: this.newType,
+        url: this.newUrl,
+      },
+    ];
+
+    this.newId = null;
+    this.newType = null;
+    this.newUrl = null;
+    // Workaround to reset to non-dirty inputs
+    this.formKey = new Date().toISOString();
+
+    this.$emit('updateEndpoints', newEndpoints);
   }
 
   /**
@@ -77,18 +100,41 @@ export default class ServiceEndpointsComponent extends mixins(EvanComponent) {
    * @param index row index of the item to be removed
    */
   deleteEndpoint(index: number): void {
-    this.$emit('deleteEndpoint', index);
+    const newEndpoints = this.endpoints.filter((_, idx) => idx !== index);
+
+    this.$emit('updateEndpoints', newEndpoints);
   }
 
-  editId(value: string, tableData: EvanTableItem<ServiceEndpoint>): void {
-    this.$emit('updateEndpoint', tableData.index, { id: value, type: tableData.item.type, url: tableData.item.url });
-  }
+  /**
+   * Set up used validation rules
+   */
+  initValidation(): void {
+    extend('required', {
+      ...required,
+      message: this.$t('_evan.validation.required'),
+    });
 
-  editType(value: string, tableData: EvanTableItem<ServiceEndpoint>): void {
-    this.$emit('updateEndpoint', tableData.index, { id: tableData.item.id, type: value, url: tableData.item.url });
-  }
+    extend('url', {
+      validate: (value: string) => {
+        try {
+          // Validate against RFC 3986
+          return !!new URL(value);
+        } catch (e) {
+          return false;
+        }
+      },
+      message: this.$t('_evan.validation.url'),
+    });
 
-  editUrl(value: string, tableData: EvanTableItem<ServiceEndpoint>): void {
-    this.$emit('updateEndpoint', tableData.index, { id: tableData.item.id, type: tableData.item.type, url: value });
+    extend('excluded', {
+      ...excluded,
+      message: this.$t('_profile.did.id-unique-error'),
+    });
+
+    extend('startsWith', {
+      validate: (value: string, args: { term: string }) => value.startsWith(args.term),
+      message: this.$t('_profile.did.did-format-error'),
+      params: ['term'],
+    });
   }
 }

@@ -1,6 +1,6 @@
 export interface Delegate {
   did: string;
-  note: string;
+  note?: string;
 }
 
 export interface ServiceEndpoint {

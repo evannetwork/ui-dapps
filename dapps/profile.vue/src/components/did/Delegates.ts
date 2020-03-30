@@ -39,11 +39,15 @@ export default class DelegatesComponent extends mixins(EvanComponent) {
       label: this.$t('_profile.did.did'),
       tdClass: 'truncate',
     },
-    {
-      key: 'note',
-      label: this.$t('_profile.did.note'),
-      tdClass: 'truncate',
-    },
+    /**
+     * Remove note for now. Technically not possible to reliably resolve note from did atm.
+     * A user that has been added with accountId cant be resolved through the DID
+     */
+    // {
+    //   key: 'note',
+    //   label: this.$t('_profile.did.note'),
+    //   tdClass: 'truncate',
+    // },
     {
       key: 'action',
       label: '',
@@ -53,10 +57,20 @@ export default class DelegatesComponent extends mixins(EvanComponent) {
 
   async created(): Promise<void> {
     this.contacts = await profileUtils.getContacts(this.getRuntime());
+    // Attach DID instead of accountId / identity
     this.contacts = await Promise.all(this.contacts.map(async (contact) => ({
       label: contact.label,
       value: await bccUtils.getDidFromAddress(this.getRuntime(), contact.value),
     })));
+  }
+
+  /**
+   * Filter out already set delegates
+   */
+  get filteredContacts(): ContactInterface[] {
+    const dids = this.delegates.map((delegate) => delegate.did);
+
+    return this.contacts.filter((contact) => !dids.includes(contact.value));
   }
 
   onSelectContact(contact: ContactInterface): void {

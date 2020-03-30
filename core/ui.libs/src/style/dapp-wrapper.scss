@@ -245,7 +245,7 @@ $sidebar-item-width: 40px;
   }
 
 
-  @media(min-width: 768px) {
+  @media(min-width: 992px) { // lg breakpoint
     #dapp-wrapper-sidebar-right {
       .evan-swipe-panel {
         height: calc(100vh - 64px);
@@ -254,9 +254,9 @@ $sidebar-item-width: 40px;
   }
 
   /**
-   * the screen is very small
+   * below tablet
    */
-  @media (max-width: 768px) {
+  @media (max-width: 992px) {
     .dapp-wrapper-body {
       flex-direction: column-reverse;
 

@@ -36,8 +36,6 @@ export default class DIDComponent extends mixins(EvanComponent) {
 
   isLoading = false;
 
-  canSave = true;
-
   previousDelegates: Delegate[] = null;
 
   previousEndpoints: ServiceEndpoint[] = null;
@@ -73,6 +71,22 @@ export default class DIDComponent extends mixins(EvanComponent) {
     return false;
   }
 
+  /**
+   * Enable or disable save button
+   */
+  get canSave(): boolean {
+    return this.hasChanges && !this.isLoading;
+  }
+
+  /**
+   * Checks for any real change made
+   */
+  get hasChanges(): boolean {
+    // deep object comparison
+    return !isEqual(this.delegates, this.previousDelegates)
+      || !isEqual(this.endpoints, this.previousEndpoints);
+  }
+
   async created(): Promise<void> {
     this.runtime = this.getRuntime();
     this.didService = new DidService(this.runtime);
@@ -94,7 +108,7 @@ export default class DIDComponent extends mixins(EvanComponent) {
   /**
    * Disable edit mode and recover previous data
    */
-  async onEditCancel(): Promise<void> {
+  onEditCancel(): void {
     this.delegates = this.previousDelegates;
     this.endpoints = this.previousEndpoints;
     this.isEditMode = false;
@@ -130,42 +144,8 @@ export default class DIDComponent extends mixins(EvanComponent) {
     this.delegates = this.delegates.filter((_, i) => i !== index);
   }
 
-  /**
-   * Temporarily add new endpoint and add new empty row
-   */
-  onAddEndpoint(newEndpoint: ServiceEndpoint): void {
-    this.endpoints = [...this.endpoints, newEndpoint];
-  }
-
-  /**
-   * Replace Endpoint entry with updated one
-   * @param index index of endpoint in array list
-   * @param endpoint updated endpoint
-   */
-  onUpdateEndpoint(index: number, endpoint: ServiceEndpoint): void {
-    this.endpoints = this.endpoints.map((item, idx) => (idx === index ? endpoint : item));
-    if (!endpoint.id || !endpoint.url || !endpoint.type) {
-      this.canSave = false;
-    } else {
-      this.canSave = true;
-    }
-  }
-
-  /**
-   * Removes the selected endpoint temporarily
-   * @param index row index of the item to be removed
-   */
-  onDeleteEndpoint(index: number): void {
-    this.endpoints = this.endpoints.filter((_, i) => i !== index);
-  }
-
-  /**
-   * Checks for any real change made
-   */
-  get hasChanges(): boolean {
-    // deep object comparison
-    return !isEqual(this.delegates, this.previousDelegates)
-      || !isEqual(this.endpoints, this.previousEndpoints);
+  onUpdateEndpoints(newEndpoints: ServiceEndpoint[]): void {
+    this.endpoints = [...newEndpoints];
   }
 
   /**
