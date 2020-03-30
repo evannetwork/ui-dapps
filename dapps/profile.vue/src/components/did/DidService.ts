@@ -40,6 +40,7 @@ export class DidService {
    * Returns the delegates excluding the owner entry
    * @param didDocument specified did document
    */
+  // eslint-disable-next-line class-methods-use-this
   async getDelegates(didDocument: DidDocument): Promise<Delegate[]> {
     // regex to remove #key suffixes
     const regex = /([#])(key-)(\d)+/;
@@ -50,7 +51,8 @@ export class DidService {
       .map((auth) => auth.replace(regex, ''))
       .map(async (did) => ({
         did,
-        note: await profileUtils.getUserAlias(this.runtime, await this.runtime.did.convertDidToIdentity(did)),
+        // Currently not using the note
+        // note: await profileUtils.getUserAlias(this.runtime, await this.runtime.did.convertDidToIdentity(did)),
       })));
   }
 
