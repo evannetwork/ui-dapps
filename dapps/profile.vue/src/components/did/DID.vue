@@ -33,11 +33,11 @@
       <div class="mb-3">
         <div class="mb-1 d-flex flex-row justify-content-between">
           <div>
-            <h1>{{ '_profile.did.did-title' | translate }} ({{ '_profile.did.did' | translate }})</h1>
+            <h1>{{ $t('_profile.did.did-title') }} ({{ $t('_profile.did.did' ) }})</h1>
             <p>
-              {{ '_profile.did.created-at' | translate }} {{ didDocument.created | moment('L') }}
+              {{ $t('_profile.did.created-at') }} {{ didDocument.created | moment('L') }},
               &nbsp;
-              {{ '_profile.did.updated-at' | translate }} {{ didDocument.updated | moment('L') }}
+              {{ $t('_profile.did.updated-at') }} {{ didDocument.updated | moment('L') }}
             </p>
           </div>
           <div class="text-right">
@@ -47,7 +47,7 @@
               :disabled="!hasEditRights"
               @click="onEditStart"
             >
-              {{ '_evan.edit' | translate }}
+              {{ $t('_evan.edit') }}
             </evan-button>
             <template v-else>
               <evan-button
@@ -55,19 +55,19 @@
                 :disabled="isLoading"
                 @click="onEditCancel"
               >
-                {{ '_evan.cancel' | translate }}
+                {{ $t('_evan.cancel') }}
               </evan-button>
               <evan-button
                 class="ml-1 btn-sm"
                 type="primary"
-                :disabled="!canSave || isLoading"
+                :disabled="!canSave"
                 @click="saveDidDocument"
               >
-                {{ '_evan.save' | translate }}
+                {{ $t('_evan.save') }}
               </evan-button>
               <div class="d-flex align-items-center">
                 <i class="mdi mdi-information-outline mr-2" />
-                <span>{{ '_evan.transaction_costs_hint' | translate }}</span>
+                <span>{{ $t('_evan.transaction_costs_hint') }}</span>
               </div>
             </template>
 
@@ -76,11 +76,11 @@
               class="btn-sm"
               @click="exportDidDoc"
             >
-              {{ '_profile.did.export-document' | translate }}
+              {{ $t('_profile.did.export-document') }}
             </evan-button>
           </div>
         </div>
-        <p>{{ '_profile.did.description' | translate }}</p>
+        <p>{{ $t('_profile.did.description') }}</p>
       </div>
 
       <div
@@ -89,14 +89,14 @@
       >
         <h2 class="card-heading">
           <i class="mr-1 mdi mdi-earth" />
-          {{ '_profile.did.did-title' | translate }}
+          {{ $t('_profile.did.did-title') }}
         </h2>
 
         <table class="mt-3 w-100">
           <tbody>
             <tr>
               <td style="width: 60px">
-                {{ '_profile.did.did' | translate }}
+                {{ $t('_profile.did.did') }}
               </td>
               <td>{{ didDocument.id }}</td>
               <td class="action">

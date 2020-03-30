@@ -75,7 +75,7 @@ export default class DIDComponent extends mixins(EvanComponent) {
    * Enable or disable save button
    */
   get canSave(): boolean {
-    return this.hasChanges;
+    return this.hasChanges && !this.isLoading;
   }
 
   /**
