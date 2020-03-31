@@ -121,6 +121,7 @@ export default class DIDComponent extends mixins(EvanComponent) {
     this.isLoading = true;
     let updatedDidDocument = DidService.updateServiceEndpoints(this.didDocument, this.endpoints);
     updatedDidDocument = DidService.updateDelegates(updatedDidDocument, this.delegates);
+    updatedDidDocument.updated = new Date().toISOString();
 
     await this.didService.updateDidDocument(updatedDidDocument).start(this.runtime, {});
 
