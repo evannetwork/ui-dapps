@@ -24,7 +24,7 @@
 
 .evan-swipe-panel {
   position: relative;
-  z-index: 1000;
+  z-index: 1002;
   top: 0;
 
   width: cssVar('swipe-panel-size');
@@ -69,7 +69,7 @@
     border-top: 1px solid cssVar('border-color-2');
     padding: 24px 32px;
   }
-  
+
 
   & {
     &, h1, h2, h3, h4, h5, span, p, li, b, label, small {

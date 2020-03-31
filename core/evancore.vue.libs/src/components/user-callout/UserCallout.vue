@@ -139,13 +139,14 @@ export default Component;
   display: flex;
   flex-direction: column;
   background-color: white;
-  z-index: 1001;
   width: 250px;
+  z-index: 1001;
   transition: transform 0.3s ease-in-out;
 
   &.active {
-    transform: translateY(calc(-100% + 64px));
+    transform: translateY(calc(-100% + 61px));
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    // z-index: 1001;
   }
 }
 
