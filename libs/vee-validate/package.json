@@ -1,0 +1,19 @@
+{
+  "author": "evan GmbH",
+  "description": "",
+  "keywords": [
+    "javascript",
+    "typescript",
+    "API",
+    "VueJS",
+    "DApp",
+    "CSS"
+  ],
+  "main": "dist/validate.vee.libs.js",
+  "name": "@evan.network/vee-validate",
+  "scripts": {
+    "build": "gulp --gulpfile ../../scripts/dapp/gulpfile.js --dapp $(pwd)"
+  },
+  "typings": "dist/validate.vee.libs.d.ts",
+  "version": "3.2.5"
+}
