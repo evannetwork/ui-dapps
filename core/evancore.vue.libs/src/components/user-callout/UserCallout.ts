@@ -43,4 +43,18 @@ export default class UserCallout extends mixins(EvanComponent) {
   }]
 
   show = false;
+
+  isChangingRuntime = false;
+
+  async switchAccount(id: string) {
+    console.log('id', id);
+    this.show = false;
+    this.isChangingRuntime = true;
+
+    await new Promise((resolve) => {
+      setTimeout(resolve, 3000);
+    });
+
+    this.isChangingRuntime = false;
+  }
 }

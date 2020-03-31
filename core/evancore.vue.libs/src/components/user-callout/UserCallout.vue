@@ -22,6 +22,7 @@
     <div
       class="callout"
       :class="{ active: show }"
+      :style="{ 'z-index': isChangingRuntime ? 1000 : 1001 }"
     >
       <div
         class="active-account"
@@ -68,6 +69,7 @@
           v-for="account in accounts"
           :key="account.id"
           class="d-block switch-account"
+          @click="switchAccount(account.id)"
         >
           <evan-profile-preview
             size="sm-plus"
@@ -105,7 +107,7 @@
     <evan-logout ref="logout" />
 
     <b-overlay
-      :show="show"
+      :show="show || isChangingRuntime"
       blur="0"
       variant="dark"
       opacity="0.5"
@@ -116,6 +118,23 @@
       @click="show = false"
     >
       <template #overlay>
+        <div
+          v-if="isChangingRuntime"
+          class="text-center"
+        >
+          <p id="cancel-label">
+            Please wait...
+          </p>
+          <b-button
+            ref="cancel"
+            variant="outline-danger"
+            size="sm"
+            aria-describedby="cancel-label"
+            @click="show = false"
+          >
+            Cancel
+          </b-button>
+        </div>
         <div
           class="close-overlay"
           @click="show = false"
