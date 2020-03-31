@@ -37,7 +37,7 @@
         @changed="userInfo.picture.files[0] = $event; startEditing();"
       />
       <div
-        v-if="size === 'default' || size === 'sm'"
+        v-if="size === 'default' || size === 'sm' || size === 'sm-plus'"
         class="d-flex flex-column justify-content-center ml-3 info"
       >
         <a

@@ -175,6 +175,12 @@
     "view-profile": "View Identity",
     "welcome-to-evan": "Welcome to the evan.network",
     "write": "write",
-    "yes": "Yes"
+    "yes": "Yes",
+    "user-callout": {
+      "account-settings": "Account Settings",
+      "switch-account": "Switch to another account",
+      "create-new-account": "Create new Account",
+      "user-account": "User Account"
+    }
   }
 }

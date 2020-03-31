@@ -23,37 +23,83 @@
       class="callout"
       :class="{ active: show }"
     >
-      <div style="width:100%; height:64px">
+      <div
+        class="active-account"
+        style="width:100%; height:64px"
+      >
         <evan-profile-preview
           :address="$store.state.runtime.activeIdentity"
         />
       </div>
 
-      <button
-        class="toggle-button"
+      <evan-button
+        class="toggle-button btn-sm"
+        type="icon"
         @click="show = !show"
       >
-        V
-      </button>
+        <i
+          class="mdi"
+          :class="{ 'mdi-chevron-down': show, 'mdi-chevron-up': !show }"
+        />
+      </evan-button>
 
-      <hr class="divider">
-
-      <div class="callout-button-row">
-        <button class="callout-button">
-          Test
-        </button>
-        <i class="mdi mdi-cog" />
+      <div class="divier-wrapper">
+        <hr class="divider">
       </div>
 
-      <div class="callout-button-row">
-        <button
-          class="callout-button"
-          @click="$refs.logout.logout()"
+      <evan-button
+        class="callout-button account-settings"
+      >
+        {{ $t('_evan.user-callout.account-settings') }}
+        <div class="mx-auto" />
+        <i
+          class="mdi mdi-settings-outline"
+          style="font-size: 18px"
+        />
+      </evan-button>
+
+      <!-- Switch Account -->
+      <template v-if="accounts">
+        <div class="switch">
+          {{ $t('_evan.user-callout.switch-account') }}
+        </div>
+
+        <a
+          v-for="account in accounts"
+          :key="account.id"
+          class="d-block switch-account"
         >
-          Logout
-        </button>
-        <i class="mdi mdi-off" />
-      </div>
+          <evan-profile-preview
+            size="sm-plus"
+            :address="$store.state.runtime.activeIdentity"
+          />
+        </a>
+
+        <div class="divier-wrapper">
+          <hr class="divider">
+        </div>
+      </template>
+
+      <evan-button class="callout-button">
+        {{ $t('_evan.user-callout.create-new-account') }}
+        <div class="mx-auto" />
+        <i
+          class="mdi mdi-plus"
+          style="font-size: 18px"
+        />
+      </evan-button>
+
+      <evan-button
+        class="callout-button"
+        @click="$refs.logout.logout()"
+      >
+        {{ $t('_evan.logout') }}
+        <div class="mx-auto" />
+        <i
+          class="mdi mdi-power"
+          style="font-size: 18px"
+        />
+      </evan-button>
     </div>
 
     <evan-logout ref="logout" />
@@ -94,21 +140,40 @@ export default Component;
   flex-direction: column;
   background-color: white;
   z-index: 1001;
+  width: 250px;
+  transition: transform 0.3s ease-in-out;
 
+  &.active {
+    transform: translateY(calc(-100% + 64px));
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  }
+}
+
+/deep/ .callout .callout-button {
+  font-size: 12px;
+  font-weight: 600;
+
+  display: flex;
+  align-items: center;
+
+  height: 56px;
   padding-left: 24px;
   padding-right: 24px;
 
-  bottom: 0;
-  left: 0;
-  // border: 1px solid red;
-  width: 250px;
-  height: 300px;
+  border: none;
+  outline: none;
+  background-color: white;
 
-  transform: translateY(239px);
-  transition: transform 0.5s ease-in-out;
+  &, * {
+    color: cssVar('gray-900');
+  }
 
-  &.active {
-    transform: translateY(0);
+  &:hover {
+    &, * {
+      color: cssVar('primary') !important;
+      border: 0;
+      background-color: inherit !important;
+    }
   }
 }
 
@@ -123,18 +188,56 @@ export default Component;
   top: 16px;
 }
 
-.divider {
-  margin: 0 !important;
-  width: 100%;
-  border: 1px solid cssVar('gray-300') !important;
+.divier-wrapper {
+  padding: 4px 24px;
+  .divider {
+    margin: 0 !important;
+    width: 100%;
+    border: 1px solid cssVar('gray-300') !important;
+  }
 }
 
-/deep/ .profile-picture {
-  position: relative !important;
-  left: initial !important;
+.active-account {
+  /deep/ .profile-picture {
+    position: relative !important;
+    left: initial !important;
+    margin-left: 24px;
+  }
+}
+
+.switch-account {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  color: cssVar('text-color') !important;;
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: none !important;;
+  }
+
+  /deep/ .profile-picture {
+    position: relative !important;
+    left: initial !important;
+    margin-left: 24px;
+    bottom: initial !important;
+
+    .mask {
+      box-shadow: none !important;
+    }
+  }
 }
 
 /deep/ .d-flex.flex-column.justify-content-center.ml-3.info {
   margin-left: 16px !important;
+}
+
+.account-settings {
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.12);
+}
+
+.switch {
+  background: cssVar('gray-200');
+  padding: 4px;
+  text-align: center;
 }
 </style>

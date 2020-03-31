@@ -115,4 +115,7 @@
   &.sm {
     @include masks(30px);
   }
+  &.sm-plus {
+    @include masks(56px);
+  }
 }

@@ -21,6 +21,12 @@ import Component, { mixins } from 'vue-class-component';
 import { Prop } from 'vue-property-decorator';
 import EvanComponent from '../../component';
 
+interface Account {
+  id: string;
+  displayName: string;
+  type: string;
+}
+
 /**
  * Shows the callout element when extending the profile in bottom nav
  *
@@ -29,5 +35,11 @@ import EvanComponent from '../../component';
  */
 @Component
 export default class UserCallout extends mixins(EvanComponent) {
+  accounts: Account[] = [{
+    id: '0x000',
+    displayName: 'Test Account',
+    type: this.$t('_evan.user-callout.user-account'),
+  }]
+
   show = false;
 }
