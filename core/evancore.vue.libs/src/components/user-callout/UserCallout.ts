@@ -18,7 +18,7 @@
 */
 
 import Component, { mixins } from 'vue-class-component';
-import { Prop } from 'vue-property-decorator';
+// import { Prop } from 'vue-property-decorator';
 import EvanComponent from '../../component';
 
 interface Account {
@@ -35,6 +35,7 @@ interface Account {
  */
 @Component
 export default class UserCallout extends mixins(EvanComponent) {
+  // TODO make it a prop in next branch
   accounts: Account[] = [{
     id: '0x000',
     displayName: 'Test Account',
