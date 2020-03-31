@@ -48,10 +48,10 @@
           icon="mdi mdi-plus"
           highlight="true"
           :title="'_profile.verifications.notary.request-notary-verification' | translate"
-          @click="$refs.requestNotary.show();"
         >
           <template v-slot:actions>
             <evan-button
+              @click="$refs.requestNotary.show();"
               type="secondary"
             >
               {{ '_profile.verifications.notary.request.request-ident' | translate }}

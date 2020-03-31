@@ -22,7 +22,7 @@
     <evan-loading v-if="loading" />
     <div
       v-else
-      class="p-xxl-11 p-xl-6 p-3"
+      class="evan-content-container"
     >
       <div class="d-flex flex-wrap justify-content-center">
         <evan-wallet-card :address="$store.state.profileDApp.address" />

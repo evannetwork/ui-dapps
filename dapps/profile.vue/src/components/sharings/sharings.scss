@@ -21,20 +21,14 @@ the following URL: https://evan.network/license/
 
 .profile-sharings {
   @media (min-width: 1200px) {
-    .container {
+    .evan-content-container {
       .plus-button {
         display: none;
       }
     }
   }
 
-  .container {
-    .content {
-      max-width: 640px;
-      margin: 0 auto;
-      padding: 32px;
-    }
-
+  .evan-content-container {
     .plus-button {
       position: absolute;
       right: 24px;
