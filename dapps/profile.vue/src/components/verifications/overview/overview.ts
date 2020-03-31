@@ -63,7 +63,7 @@ export default class VerificationsOverviewComponent extends mixins(EvanComponent
     this.address = this.$route.params.address || runtime.activeIdentity;
 
     // switch issue account
-    this.canIssue = runtime.activeIdentity === '0x4F7Fb22489Dd72BBfbBCBac7C68cb499A56309f9';
+    this.canIssue = runtime.activeIdentity === '0x662fD340606B6c00C51d1915A9f66C081E412e4B';
 
     // load users type
     this.type = (await runtime.dataContract.getEntry(

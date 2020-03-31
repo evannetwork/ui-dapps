@@ -400,7 +400,7 @@
             "body": "Hiermit beantrage Ich eine Notarielle Bestätigung für die folgenden Informationen: <ul><li>Identität: {organizationEvanId}</li><li>Account: {accountId}</li><li>Handelsregisternummer: {organizationRegistration}</li><li>Organisation: {organizationName}</li><li>Kontakt: {organizationContact}</li><li>Anschrift: {organizationStreetAddress}</li><li>Stadt: {organizationZipCode} {organizationCity} ,{organizationCountry}</li></ul>",
             "title": "Beantragung einer Notariellen Bestätigung"
           },
-          "not-enough-funds": "<i class=\"mdi mdi-alert-outline\"></i> Sie benötigen mindestens 200 EVE. Ihre Wallet hat nicht genügend EVE ({readableFunds} EVE)! <a href=\"/#/dashboard.evan/profile.evan/buy-eve\">EVE kaufen</a>",
+          "not-enough-funds": "<i class=\"mdi mdi-alert-outline\"></i> Sie benötigen mindestens 200 EVE. Ihre Wallet hat nicht genügend EVE ({readableFunds} EVE)! <a href=\"/#/dashboard.vue.evan/profile.vue.evan/wallet\">EVE kaufen</a>",
           "only-de": "Momentan wird die notarielle Verifikation nur für Unternehmen in Deutschland unterstützt.",
           "postal-address": "Anschrift",
           "proof": {

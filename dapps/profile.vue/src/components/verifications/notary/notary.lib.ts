@@ -21,7 +21,6 @@ import { utils } from '@evan.network/ui-dapp-browser';
 
 import axios from 'axios';
 import { agentUrl } from '@evan.network/ui';
-import { bccHelper } from '@evan.network/ui-session';
 
 let notarySmartAgentAccountId = '0xD2Ce53253e56C0F7AF7A4AED096AEC11e59A2024';
 let verificationCost = '200000000000000000000'; // 200 EVE
@@ -39,7 +38,7 @@ if (utils.environment === 'testcore') {
  * @param      {string}      requestId  identification request id
  */
 async function closeRequest(runtime: bcc.Runtime, requestId: string) {
-  const allRequests = await axios({
+  await axios({
     method: 'POST',
     url: `${agentUrl}/api/smart-agents/smart-agent-2fi/request/close`,
     headers: { Authorization: await bcc.utils.getSmartAgentAuthHeaders(runtime) },
