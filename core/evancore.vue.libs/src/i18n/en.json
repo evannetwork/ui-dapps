@@ -172,15 +172,15 @@
       "desc": "The area shown is currently under construction and will be available soon.",
       "title": "Under construction"
     },
+    "user-callout": {
+      "account-settings": "Account Settings",
+      "create-new-account": "Create new Account",
+      "switch-account": "Switch to another account",
+      "user-account": "User Account"
+    },
     "view-profile": "View Identity",
     "welcome-to-evan": "Welcome to the evan.network",
     "write": "write",
-    "yes": "Yes",
-    "user-callout": {
-      "account-settings": "Account Settings",
-      "switch-account": "Switch to another account",
-      "create-new-account": "Create new Account",
-      "user-account": "User Account"
-    }
+    "yes": "Yes"
   }
 }
