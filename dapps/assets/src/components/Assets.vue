@@ -40,7 +40,7 @@
           name="fade"
           mode="out-in"
         >
-          <div class="container content">
+          <div class="evan-content-container">
             <router-view />
           </div>
         </transition>

@@ -36,6 +36,13 @@
     background-color: cssVar('bg-inverted') !important;
   }
 
+  .evan-content-container {
+    max-width: 850px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 32px 16px;
+  }
+
   .evan-highlight {
     cursor: pointer;
     transition: 0.3s ease-out border, 0.3s ease-out transform;

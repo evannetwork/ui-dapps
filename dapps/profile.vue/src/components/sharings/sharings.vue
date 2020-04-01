@@ -21,7 +21,7 @@ the following URL: https://evan.network/license/
   <div class="profile-sharings">
     <evan-loading v-if="loading" />
     <template v-else>
-      <div class="container">
+      <div class="evan-content-container">
         <evan-button
           class="plus-button"
           size="lg"
@@ -74,35 +74,33 @@ the following URL: https://evan.network/license/
           </template>
         </evan-swipe-panel>
 
-        <div class="content">
-          <h3 class="font-weight-bold">
-            {{ '_profile.sharings.title' | translate }}
-          </h3>
-          <p>{{ '_profile.sharings.desc' | translate }}</p>
+        <h3 class="font-weight-bold">
+          {{ '_profile.sharings.title' | translate }}
+        </h3>
+        <p>{{ '_profile.sharings.desc' | translate }}</p>
 
-          <template v-if="sharedContacts && sharedContacts.length > 0">
-            <evan-base-list
-              class="mt-5"
-              :data="sharedContacts"
-              :is-selected-callback="isSelectedCallback"
-              :item-clicked-callback="(item, event) => handleSharedContactClick(item, event)"
-            >
-              <template v-slot:item="{item}">
-                <evan-shared-contact
-                  :item="item"
-                  :remove-callback="() => handleRemoveSharedContact(item)"
-                  :is-loading="!!isLoadingContacts && isLoadingContacts.has(item.accountId)"
-                />
-              </template>
-            </evan-base-list>
-          </template>
+        <template v-if="sharedContacts && sharedContacts.length > 0">
+          <evan-base-list
+            class="mt-5"
+            :data="sharedContacts"
+            :is-selected-callback="isSelectedCallback"
+            :item-clicked-callback="(item, event) => handleSharedContactClick(item, event)"
+          >
+            <template v-slot:item="{item}">
+              <evan-shared-contact
+                :item="item"
+                :remove-callback="() => handleRemoveSharedContact(item)"
+                :is-loading="!!isLoadingContacts && isLoadingContacts.has(item.accountId)"
+              />
+            </template>
+          </evan-base-list>
+        </template>
 
-          <template v-else>
-            <div class="hint-no-sharings text-muted text-center">
-              {{ '_profile.sharings.no-data' | translate }}
-            </div>
-          </template>
-        </div>
+        <template v-else>
+          <div class="hint-no-sharings text-muted text-center">
+            {{ '_profile.sharings.no-data' | translate }}
+          </div>
+        </template>
       </div>
     </template>
   </div>

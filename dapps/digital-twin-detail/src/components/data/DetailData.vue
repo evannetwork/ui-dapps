@@ -27,7 +27,7 @@
       />
     </div>
 
-    <div class="content">
+    <div class="evan-content-container">
       <router-view :key="$route.params.container" />
     </div>
   </div>
@@ -61,11 +61,5 @@ export default DetailDataComponent;
       }
     }
   }
-}
-
-.content {
-  margin-left: auto;
-  margin-right: auto;
-  padding-top: 56px;
 }
 </style>
