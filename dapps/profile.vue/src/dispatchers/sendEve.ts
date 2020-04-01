@@ -32,9 +32,17 @@ dispatcher
   .step(async (instance: DispatcherInstance, data: any) => {
     const { runtime } = instance;
 
+    // if the user selects a identity to send eve to, load the owner of this identity and sent the
+    // eve to this user
+    let toAccount = data.accountId;
+    const toIsIdentity = await runtime.verifications.isIdentity(toAccount);
+    if (toIsIdentity) {
+      toAccount = await runtime.verifications.getOwnerAddressForIdentity(toAccount);
+    }
+
     await runtime.executor.executeSend({
       from: runtime.activeIdentity,
-      to: data.accountId,
+      to: toAccount,
       value: runtime.web3.utils.toWei(data.amount.toString(), 'ether'),
     });
   });

@@ -26,6 +26,11 @@ import { sendEveDispatcher } from '../../dispatchers/registry';
 @Component({})
 export default class WalletComponent extends mixins(EvanComponent) {
   /**
+   * Current account to show the wallet for
+   */
+  accountId: string = null;
+
+  /**
    * Current display mode in side panel.
    */
   activeMode = 0;
@@ -56,6 +61,7 @@ export default class WalletComponent extends mixins(EvanComponent) {
    * Bin window resize watcher to handle side panel state and handle send eve events.
    */
   async created(): Promise<void> {
+    this.accountId = this.getRuntime().activeAccount;
     await this.loadBalance();
 
     // setup dispatcher watchers

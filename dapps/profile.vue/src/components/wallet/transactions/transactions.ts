@@ -84,7 +84,7 @@ export default class TransactionsComponent extends mixins(EvanComponent) {
       ? 'https://explorer.evan.network'
       : 'https://testexplorer.evan.network';
 
-    this.explorerTransactionsUrl = `${this.explorerTransactionsUrl}/address/${runtime.activeIdentity}/transactions`;
+    this.explorerTransactionsUrl = `${this.explorerTransactionsUrl}/address/${runtime.activeAccount}/transactions`;
 
     // watch for buy eve events
     const reload = () => this.loadTransactions();
@@ -130,7 +130,7 @@ export default class TransactionsComponent extends mixins(EvanComponent) {
     );
 
     const paymentEvents = await bRC.getPastEvents('AddedReceiver', {
-      filter: { receiver: runtime.activeIdentity },
+      filter: { receiver: runtime.activeAccount },
       fromBlock: 0,
       toBlock: 'latest',
     });
