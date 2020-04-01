@@ -26,7 +26,7 @@ import { sendEveDispatcher } from '../../dispatchers/registry';
 @Component({})
 export default class WalletComponent extends mixins(EvanComponent) {
   /**
-   * Current account die show the wallet for
+   * Current account to show the wallet for
    */
   accountId: string = null;
 
