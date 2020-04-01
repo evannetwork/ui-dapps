@@ -105,7 +105,7 @@ module.exports = function getWebpackConfig(
           use: [
             MiniCssExtractPlugin.loader, // process.env.NODE_ENV !== 'production' ? 'style-loader' : MiniCssExtractPlugin.loader,
             'css-loader', // translates css into commonJS
-            'resolve-url-loader',
+            { loader: 'resolve-url-loader', options: { removeCR: true, sourceMap: true } },
             {
               loader: 'sass-loader',
               options: {

@@ -362,7 +362,7 @@
         "request": {
           "contact": {
             "error": "Please enter a contact person!",
-            "label": "Contact Person *",
+            "label": "Contact Person",
             "placeholder": "Enter contact name"
           },
           "costs": {
@@ -400,7 +400,7 @@
             "body": "I hereby request a Notary Verification with the following information: <br><br><ul><li>Identity: {organizationEvanId}</li><li>Account: {accountId}</li><li>Commercial Register Number: {organizationRegistration}</li><li>Organization: {organizationName}</li><li>Contact: {organizationContact}</li><li>Address: {organizationStreetAddress}</li><li>City: {organizationZipCode} {organizationCity} ,{organizationCountry}</li></ul>",
             "title": "Request for Notary Verification"
           },
-          "not-enough-funds": "<i class=\"mdi mdi-alert-outline\"></i> You need at least 200 EVE on your wallet. Your wallet has insufficient funds ({readableFunds} EVE)! <a href=\"/#/dashboard.evan/profile.evan/buy-eve\">Buy EVE</a>",
+          "not-enough-funds": "<i class=\"mdi mdi-alert-outline\"></i> You need at least 200 EVE on your wallet. Your wallet has insufficient funds ({readableFunds} EVE)! <a href=\"/#/dashboard.vue.evan/profile.vue.evan/wallet\">Buy EVE</a>",
           "only-de": "Currently, notary verification is only supported for companies in Germany.",
           "postal-address": "Postal Address",
           "proof": {
