@@ -61,6 +61,7 @@
     "tslint": "^5.16.0",
     "typescript": "^3.7.4",
     "uglifyjs-webpack-plugin": "^1.2.7",
+    "vee-validate": "^3.2.5",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^2.0.0",
     "vue": "^2.5.2",

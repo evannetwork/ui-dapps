@@ -1,6 +1,5 @@
 {
   "_profile": {
-    "my-profile": "Mein Profil",
     "bmail": {
       "share": {
         "body": "Guten Tag,\n\nIhnen wurden Identitätsinformationen von {alias} freigegeben. Nutzen Sie den \"Anhang öffnen\" Button, um sich die Identität anzusehen.\n\nMit freundlichen Grüßen,\n\n{alias}",
@@ -153,24 +152,29 @@
     "did": {
       "choose-contact": "Kontakt auswählen",
       "created-at": "erstellt am",
-      "delegates-desc": "Im Folgenden können Delegates ausgewählt werden, die im Namen der Identität agieren dürfen. Diese sind beispielsweise befugt Informationen zu editieren, Daten freizugeben oder Transaktionen durchzuführen.",
-      "delegates-empty": "Noch keine Delegates ausgewählt",
+      "delegates-desc": "Im Folgenden sind Delegates angegeben, die im Namen der Identität agieren dürfen. Diese sind beispielsweise befugt Informationen zu editieren, Daten freizugeben oder Transaktionen durchzuführen.",
+      "delegates-empty": "Keine Delegates angegeben",
       "delegates-title": "Delegates",
-      "description": "Mit Decentralized Identities (DIDs) ist es möglich sich eindeutig, global und unabhängig vom Netzwerk zu identifizeren. Weiterhin ist es möglich festzulegen, wer Änderungen durchführen darf (Controller) und wer im Namen dieser Identität handeln darf (Delegates). Durch den Export dieses Dokumentes, können die Daten auch offline für andere freigeben werden.",
+      "description": "Mit Decentralized Identities (DIDs) ist es möglich, sich eindeutig, global und unabhängig vom Netzwerk zu identifizeren. Weiterhin ist es möglich festzulegen, wer Änderungen durchführen darf (Controller) und wer im Namen dieser Identität handeln darf (Delegates). Durch den Export dieses Dokumentes, können die Daten auch offline freigeben werden.",
+      "did-format-error": "Format: did: ...",
       "did-title": "Decentralized ID",
       "did": "DID",
+      "empty-service-endpoints": "Keine Service Endpoints angegeben",
       "export-document": "Dokument exportieren",
       "id-placeholder": "DID",
+      "id-unique-error": "ID muss eindeutig sein",
       "id": "ID",
+      "no-delegate-options": "Kein Kontakt verfügbar",
       "note": "Notiz",
-      "service-endpoints-desc": "Im Folgenden können Service Endpoints festgelegt werden, die mit dieser DID assoziiert werden sollen.",
-      "service-endpoints-empty": "Noch keine Service Endpoints hinzugefügt",
+      "required-error": "Feld ist erforderlich",
+      "service-endpoints-desc": "Im Folgenden sind Service Endpoints spezifizert, die mit dieser DID assoziiert werden.",
+      "service-endpoints-empty": "Kein Service Endpoints angegeben",
       "service-endpoints-title": "Service Endpoints",
-      "type-placeholder": "Type",
       "type": "Type",
+      "type-placeholder": "Type",
       "updated-at": "aktualisiert am",
-      "url-placeholder": "URL",
-      "url": "Endpoint"
+      "url": "Endpoint",
+      "url-placeholder": "URL"
     },
     "dispatchers": {
       "did-document-update": "DID Dokument speichern",
@@ -181,6 +185,7 @@
       "send-eve": "EVEs werden gesendet",
       "verification-accept": "Verifikation wird angenommen"
     },
+    "my-profile": "Mein Profil",
     "not-permitted": {
       "accountDetails": "Identitätsinformationen",
       "contact": "Kontaktdaten",
@@ -189,6 +194,17 @@
       "registration": "Registrierungsdaten"
     },
     "not-permitted-view": "Sie haben keine Rechte, diese Daten für die ausgewählte Identität anzusehen.",
+    "security-info": {
+      "encryption-key": {
+        "exported": "Encryption-Key in die Zwischenablage kopiert",
+        "title": "Encryption Key kopieren"
+      },
+      "private-key": {
+        "exported": "Private-Key in die Zwischenablage kopiert",
+        "title": "Private Key kopieren"
+      },
+      "title": "Security Information"
+    },
     "settings": {
       "desc": "Einstellungen",
       "dev-domain": {
@@ -384,7 +400,7 @@
             "body": "Hiermit beantrage Ich eine Notarielle Bestätigung für die folgenden Informationen: <ul><li>Identität: {organizationEvanId}</li><li>Account: {accountId}</li><li>Handelsregisternummer: {organizationRegistration}</li><li>Organisation: {organizationName}</li><li>Kontakt: {organizationContact}</li><li>Anschrift: {organizationStreetAddress}</li><li>Stadt: {organizationZipCode} {organizationCity} ,{organizationCountry}</li></ul>",
             "title": "Beantragung einer Notariellen Bestätigung"
           },
-          "not-enough-funds": "<i class=\"mdi mdi-alert-outline\"></i> Sie benötigen mindestens 200 EVE. Ihre Wallet hat nicht genügend EVE ({readableFunds} EVE)! <a href=\"/#/dashboard.evan/profile.evan/buy-eve\">EVE kaufen</a>",
+          "not-enough-funds": "<i class=\"mdi mdi-alert-outline\"></i> Sie benötigen mindestens 200 EVE. Ihre Wallet hat nicht genügend EVE ({readableFunds} EVE)! <a href=\"/#/dashboard.vue.evan/profile.vue.evan/wallet\">EVE kaufen</a>",
           "only-de": "Momentan wird die notarielle Verifikation nur für Unternehmen in Deutschland unterstützt.",
           "postal-address": "Anschrift",
           "proof": {

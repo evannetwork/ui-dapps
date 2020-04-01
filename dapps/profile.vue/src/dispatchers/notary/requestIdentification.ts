@@ -39,15 +39,9 @@ const dispatcher = new Dispatcher(
  */
 async function doKeyExchange(runtime: any, targetAcc: string, alias: string) {
   const profile = new bcc.Profile({
+    ...runtime,
     accountId: targetAcc,
-    contractLoader: runtime.contractLoader,
-    dataContract: runtime.dataContract,
-    defaultCryptoAlgo: 'aes',
-    executor: runtime.executor,
-    ipld: runtime.ipld,
-    log: runtime.logger.log,
-    nameResolver: runtime.nameResolver,
-    rightsAndRoles: runtime.rightsAndRoles,
+    profileOwner: targetAcc,
   } as bcc.ProfileOptions);
 
   const targetPubKey = await profile.getPublicKey();

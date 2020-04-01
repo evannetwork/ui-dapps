@@ -181,6 +181,10 @@
     "view-profile": "Identität anzeigen",
     "welcome-to-evan": "Willkommen im evan.network",
     "write": "schreiben",
-    "yes": "Ja"
+    "yes": "Ja",
+    "validation": {
+      "required": "Dieses Feld wird benötigt",
+      "url": "Geben Sie eine gültige URL ein"
+    }
   }
 }

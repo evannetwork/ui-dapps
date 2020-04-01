@@ -222,7 +222,26 @@
               :href="route.path ? `${ dapp.fullUrl }/${ route.path }` : null"
               @click="routeActivated(route)"
             >
-              <i :class="route.icon" />
+              <template v-if="route.id === 'synchronization'">
+                <div
+                  v-if="queueLoading || queueCount"
+                  class="spinner-border spinner-border-sm"
+                />
+                <template v-else>
+                  <i
+                    v-if="queueErrorCount"
+                    class="mdi mdi-alert text-danger"
+                  />
+                  <i
+                    v-else
+                    class="mdi mdi-sync"
+                  />
+                </template>
+              </template>
+              <i
+                v-else
+                :class="route.icon"
+              />
               <evan-tooltip :placement="'top'">
                 {{ route.title | translate }}
               </evan-tooltip>
@@ -301,7 +320,7 @@
                       @click="startDispatcherInstance(instance);"
                     />
                     <i
-                      class="mdi mdi-close-circle-outline ml-3 text-light clickable"
+                      class="mdi mdi-close-circle-outline ml-3 clickable"
                       style="font-size: 1.5em"
                       @click="
                         instanceInteraction = { type: 'delete', instance: instance };

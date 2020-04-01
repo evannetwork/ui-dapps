@@ -108,9 +108,6 @@ $table-row-height: 56px;
       & > td {
         font-size: 12px;
 
-        padding-top: 0;
-        padding-bottom: 0;
-
         vertical-align: middle;
 
         border: none;
@@ -183,6 +180,7 @@ $table-row-height: 56px;
 
       td, th {
         padding: 8px;
+        vertical-align: baseline !important;
 
         &.truncate {
           overflow: hidden;

@@ -15,8 +15,12 @@
 - core
   - add new sidebar / bottom bar design with active identity display
 - add DID Document section to profile DApp
+- libs
+  - add `vee-validate` as dapp library (`validate.vee.libs`)
 
 ### Fixes
+- Last transactions for twins created by identities are now appearing
+
 
 ### Deprecations
 

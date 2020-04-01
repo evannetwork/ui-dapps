@@ -22,10 +22,10 @@
     <div class="mb-3 d-flex flex-row justify-content-between align-items-center">
       <h2>
         <i class="mr-1 mdi mdi-earth" />
-        {{ '_profile.did.delegates-title' | translate }}
+        {{ $t('_profile.did.delegates-title') }}
       </h2>
     </div>
-    <p>{{ '_profile.did.delegates-desc' | translate }}</p>
+    <p>{{ $t('_profile.did.delegates-desc') }}</p>
 
     <evan-loading v-if="isLoading" />
 
@@ -36,13 +36,9 @@
       :fields="columns"
       :items="delegates"
     >
-      <template v-slot:empty>
-        {{ '_profile.did.empty-delegates' }}
-      </template>
-
       <template
         v-if="isEditMode"
-        v-slot:cell(label)="data"
+        #cell(label)="data"
       >
         <evan-form-control-input
           class="clean-input"
@@ -52,7 +48,7 @@
 
       <template
         v-if="isEditMode"
-        v-slot:cell(url)="data"
+        #cell(url)="data"
       >
         <evan-form-control-input
           class="clean-input"
@@ -60,7 +56,7 @@
         />
       </template>
 
-      <template v-slot:cell(action)="data">
+      <template #cell(action)="data">
         <evan-button
           v-show="isEditMode"
           class="btn-sm"
@@ -72,7 +68,7 @@
 
       <template
         v-if="isEditMode"
-        v-slot:bottom-row
+        #bottom-row
       >
         <b-td colspan="3">
           <!-- $props and $attr binding with evan-form-control-v-select isn't ideal.
@@ -80,16 +76,20 @@
           <evan-v-select
             class="m-0"
             :value="null"
-            :options="contacts"
-            :placeholder="'_profile.did.choose-contact' | translate"
+            :options="filteredContacts"
+            :placeholder="$t('_profile.did.choose-contact')"
             :clear-search-on-select="true"
             @input="onSelectContact"
-          />
+          >
+            <template #no-options>
+              {{ $t('_profile.did.no-delegate-options') }}
+            </template>
+          </evan-v-select>
         </b-td>
       </template>
 
-      <template v-slot:empty>
-        <span>{{ '_profile.did.delegates-empty' | translate }}</span>
+      <template #empty>
+        <span>{{ $t('_profile.did.delegates-empty') }}</span>
       </template>
     </evan-table>
   </div>
@@ -105,7 +105,6 @@ export default Component;
 .content-card {
   background: white;
   border-radius: 4px;
-  width: 560px;
   padding: 24px 24px;
 }
 </style>

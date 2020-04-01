@@ -230,52 +230,7 @@ export default class DAppWrapperComponent extends mixins(EvanComponent) {
   /**
    * routes that should be displayed in the sidepanel, if no sidebar slot is given
    */
-  get routes(): { [type: string]: Array<DAppWrapperRouteInterface> } {
-    return {
-      topLeft: [
-        {
-          icon: 'mdi mdi-apps',
-          path: `favorites.vue.${domainName}`,
-          title: `${i18nPref}.favorites`,
-        },
-      ],
-      centerLeft: [
-        {
-          icon: 'mdi mdi-cube-outline',
-          path: `assets.${domainName}`,
-          title: `${i18nPref}.assets`,
-        },
-        {
-          icon: 'mdi mdi-account-outline',
-          path: `profile.vue.${domainName}/${session.activeIdentity}`,
-          title: `${i18nPref}.profile`,
-        },
-        {
-          icon: 'mdi mdi-credit-card-outline',
-          path: `profile.vue.${domainName}/wallet`,
-          title: `${i18nPref}.wallet`,
-        },
-        {
-          icon: 'mdi mdi-bell-outline rotate-45',
-          path: `mailbox.vue.${domainName}`,
-          title: `${i18nPref}.actions`,
-        },
-      ],
-      bottomRight: [
-        {
-          icon: 'mdi mdi-help-circle-outline',
-          path: `help.vue.${domainName}`,
-          title: `${i18nPref}.help`,
-        },
-        {
-          action: () => (this.$refs.queuePanel as any).show(),
-          icon: 'mdi mdi-sync',
-          id: 'synchronization',
-          title: `${i18nPref}.synchronization`,
-        },
-      ],
-    };
-  }
+  routes: { [type: string]: Array<DAppWrapperRouteInterface> } = null;
 
   /**
    * Returns the i18n title key for the active route.
@@ -312,14 +267,7 @@ export default class DAppWrapperComponent extends mixins(EvanComponent) {
    * Initialize the core runtime for the evan network.
    */
   async created(): Promise<any> {
-    // create fullPath for current routes to get correct active state
-    [
-      ...this.routes.topLeft,
-      ...this.routes.centerLeft,
-      ...this.routes.bottomRight,
-    ].forEach((route) => {
-      route.fullPath = `${this.dapp.baseHash}/${route.path}`; // eslint-disable-line no-param-reassign
-    });
+    this.setRoutes();
 
     // check if the current browser is allowed
     if (dappBrowser.utils.browserName === 'Firefox' && dappBrowser.utils.isPrivateMode) {
@@ -474,6 +422,7 @@ export default class DAppWrapperComponent extends mixins(EvanComponent) {
           await this.dispatcherHandler.initialize();
 
           // send logged in event
+          this.setRoutes();
           this.$emit('loggedin', this.$store.state.runtime);
           this.onboarding = false;
           this.loading = false;
@@ -671,6 +620,65 @@ export default class DAppWrapperComponent extends mixins(EvanComponent) {
     }
 
     return dispatcher;
+  }
+
+  /**
+   * Update routes and enforce rerendering
+   */
+  setRoutes(): void {
+    this.$set(this, 'routes', {
+      topLeft: [
+        {
+          icon: 'mdi mdi-apps',
+          path: `favorites.vue.${domainName}`,
+          title: `${i18nPref}.favorites`,
+        },
+      ],
+      centerLeft: [
+        {
+          icon: 'mdi mdi-cube-outline',
+          path: `assets.${domainName}`,
+          title: `${i18nPref}.assets`,
+        },
+        {
+          icon: 'mdi mdi-account-outline',
+          path: `profile.vue.${domainName}/${session.activeIdentity}`,
+          title: `${i18nPref}.profile`,
+        },
+        {
+          icon: 'mdi mdi-credit-card-outline',
+          path: `profile.vue.${domainName}/wallet`,
+          title: `${i18nPref}.wallet`,
+        },
+        {
+          icon: 'mdi mdi-bell-outline rotate-45',
+          path: `mailbox.vue.${domainName}`,
+          title: `${i18nPref}.actions`,
+        },
+      ],
+      bottomRight: [
+        {
+          icon: 'mdi mdi-help-circle-outline',
+          path: `help.vue.${domainName}`,
+          title: `${i18nPref}.help`,
+        },
+        {
+          action: () => (this.$refs.queuePanel as any).show(),
+          icon: 'mdi mdi-sync',
+          id: 'synchronization',
+          title: `${i18nPref}.synchronization`,
+        },
+      ],
+    });
+
+    // create fullPath for current routes to get correct active state
+    [
+      ...this.routes.topLeft,
+      ...this.routes.centerLeft,
+      ...this.routes.bottomRight,
+    ].forEach((route) => {
+      route.fullPath = `${this.dapp.baseHash}/${route.path}`; // eslint-disable-line no-param-reassign
+    });
   }
 
   /**

@@ -97,9 +97,11 @@ export default class DetailOverviewComponent extends mixins(EvanComponent) {
 
         // Add fee in EVE
         try {
+          const gasUsed = transaction.relatedTransactionGas || transaction.gas;
+          const gasPrice = transaction.relatedTransactionGasPrice || transaction.gasPrice;
           enhancedTransaction.feeInEve = parseFloat(
             this.runtime.web3.utils.fromWei(
-              (transaction.gas * parseFloat(transaction.gasPrice)).toString(),
+              (gasUsed * parseFloat(gasPrice)).toString(),
               'ether',
             ),
           ).toFixed(3);
