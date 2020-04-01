@@ -43,7 +43,8 @@ export default class DetailOverviewTransactionsComponent extends mixins(EvanComp
   ];
 
   onRowClicked(row: TwinTransaction): void {
-    window.open(this.getRouteToTransactionExplorer(row.hash), '_blank');
+    const hash = row.relatedTransactionHash || row.hash;
+    window.open(this.getRouteToTransactionExplorer(hash), '_blank');
   }
 
   getRouteToTransactionExplorer(transactionId: string): string {

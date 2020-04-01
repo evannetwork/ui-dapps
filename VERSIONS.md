@@ -17,6 +17,8 @@
 - add DID Document section to profile DApp
 
 ### Fixes
+- Last transactions for twins created by identities are now appearing
+
 
 ### Deprecations
 

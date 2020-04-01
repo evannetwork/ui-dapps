@@ -39,6 +39,9 @@ export interface TwinTransaction {
   to: string;
   timestamp: number;
   transactionIndex: number;
+  relatedTransactionHash?: string;
+  relatedTransactionGas?: number;
+  relatedTransactionGasPrice?: string;
 }
 
 export interface Method {
