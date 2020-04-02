@@ -25,6 +25,7 @@ import BrowserSettingsComponent from './components/browser/browser.vue';
 
 // map them to element names, so they can be used within templates
 const routeRegistration: Array<RouteRegistrationInterface> = [
+  { path: '', redirect: { name: 'settings-identity' } },
   { path: 'account', name: 'settings-account', component: AccountSettingsComponent },
   { path: 'browser', name: 'settings-browser', component: BrowserSettingsComponent },
   { path: 'identity', name: 'settings-identity', component: IdentitySettingsComponent },

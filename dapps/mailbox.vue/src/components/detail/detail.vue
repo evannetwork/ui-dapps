@@ -19,7 +19,7 @@
 
 <template>
   <div class="container-wide">
-    <div class="white-box border-smooth rounded">
+    <div class="white-box w-100">
       <evan-loading v-if="loading"></evan-loading>
       <template v-if="!loading">
         <div class="d-flex pl-3 pr-3 pt-4 pb-4 border-bottom align-items-center">

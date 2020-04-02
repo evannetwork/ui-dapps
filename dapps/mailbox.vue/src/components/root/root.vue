@@ -140,17 +140,13 @@
             </button>
           </div>
         </div>
-        <div
+        <transition
           v-else
-          class="evan-content-container"
+          name="fade"
+          mode="out-in"
         >
-          <transition
-            name="fade"
-            mode="out-in"
-          >
-            <router-view />
-          </transition>
-        </div>
+          <router-view />
+        </transition>
       </template>
     </evan-dapp-wrapper>
   </div>
