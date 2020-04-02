@@ -29,7 +29,7 @@
             <evan-nav-list
               :entries="navEntries"
               header-icon="bell-outline"
-              header-text="_settings.header"
+              header-text="_mailbox.mailbox"
             />
           </div>
         </evan-dapp-wrapper-level-2>
@@ -140,13 +140,17 @@
             </button>
           </div>
         </div>
-        <transition
+        <div
           v-else
-          name="fade"
-          mode="out-in"
+          class="evan-content-container"
         >
-          <router-view />
-        </transition>
+          <transition
+            name="fade"
+            mode="out-in"
+          >
+            <router-view />
+          </transition>
+        </div>
       </template>
     </evan-dapp-wrapper>
   </div>
