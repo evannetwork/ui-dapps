@@ -1,5 +1,30 @@
 {
   "_settings": {
+    "account": {
+      "encryption-key": {
+        "exported": "Exported Encryption Key and copied to clipboard",
+        "title": "Export Encryption Key"
+      },
+      "private-key": {
+        "exported": "Exported Private Key and copied to clipboard",
+        "title": "Export Private Key"
+      },
+      "security-info": "Sicherheitsinformationen"
+    },
+    "browser": {
+      "dev-domain": {
+        "desc": "With this configuration the ending \".evan\" is replaced by the given address. With this logic it is possible to use applications on different domains simultaneously for test purposes (e.g.: myapp.test.evan).",
+        "title": "Applications from test-domain"
+      },
+      "developer-mode": "Developer Mode",
+      "language": "Language",
+      "languages": {
+        "browser": "Browser-Language",
+        "de": "German",
+        "en": "English"
+      },
+      "reload-hint": "Please reload the application if you have changed the language settings."
+    },
     "header": "Settings",
     "identity": {
       "dispatcher": {

@@ -88,29 +88,10 @@
   }
 
   .white-box {
-    background-color: cssVar('white');
-
-    .header, .footer {
-      display: flex;
-      align-items: center;
-
-      height: 64px;
-      padding: 0 1.5rem;
-    }
-
-    .header {
-      border-bottom: 1px solid cssVar('border-color-2');
-    }
-
-    .content {
-      padding: 1.5rem;
-    }
-
-    .footer {
-      justify-content: flex-end;
-
-      border-top: 1px solid cssVar('border-color-2');
-    }
+    background: white;
+    border-radius: 4px;
+    width: 564px;
+    padding: 24px 24px;
   }
 
   .evan-triangle {

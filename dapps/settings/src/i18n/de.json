@@ -1,5 +1,30 @@
 {
   "_settings": {
+    "account": {
+      "encryption-key": {
+        "exported": "Encryption-Key in die Zwischenablage kopiert",
+        "title": "Encryption Key kopieren"
+      },
+      "private-key": {
+        "exported": "Private-Key in die Zwischenablage kopiert",
+        "title": "Private Key kopieren"
+      },
+      "security-info": "Security Information"
+    },
+    "browser": {
+      "dev-domain": {
+        "desc": "Mit dieser Konfiguration wird die Endung \".evan\" durch die angegebene Adresse ersetzt. Über diese Logik ist es möglich, Applikation auf verschiedenen Domains gleichzeitig für Testzwecke zu verwenden (z.B.: myapp.test.evan).",
+        "title": "Applikation von Test-Domain"
+      },
+      "developer-mode": "Entwicklermodus",
+      "language": "Sprache",
+      "languages": {
+        "browser": "Browser-Sprache",
+        "de": "Deutsch",
+        "en": "Englisch"
+      },
+      "reload-hint": "Bitte laden Sie die Anwendung neu, wenn Sie die Spracheinstellungen geändert haben."
+    },
     "header": "Settings",
     "identity": {
       "dispatcher": {

@@ -18,8 +18,30 @@
 */
 
 <template>
-  <div>
-    account config
+  <div class="evan-content-container">
+    <div
+      class="white-box mt-5"
+    >
+      <h3 class="mb-5 d-block">
+        {{ '_settings.account.security-info' | translate }}
+      </h3>
+
+      <div class="d-flex justify-content-center mt-3">
+        <evan-button
+          class="mr-3"
+          type="danger"
+          @click="exportPrivateKey()"
+        >
+          {{ '_settings.account.private-key.title' | translate }}
+        </evan-button>
+        <evan-button
+          type="danger"
+          @click="exportEncryptionKey()"
+        >
+          {{ '_settings.account.encryption-key.title' | translate }}
+        </evan-button>
+      </div>
+    </div>
   </div>
 </template>
 

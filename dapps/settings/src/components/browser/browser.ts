@@ -22,7 +22,69 @@ import Component, { mixins } from 'vue-class-component';
 
 // evan.network imports
 import { EvanComponent } from '@evan.network/ui-vue-core';
+import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
 @Component({ })
-export default class BrowserSettingsComponent extends mixins(EvanComponent) {
+export default class ProfileSettingsComponent extends mixins(EvanComponent) {
+  /**
+   * dev mode settings
+   */
+  devMode = false;
+
+  devDomainEnabled = false;
+
+  devDomain = '';
+
+  /**
+   * Language settings
+   */
+  language = '';
+
+  /**
+   * Load the mail details
+   */
+  async created(): void {
+    this.devMode = window.localStorage['evan-developer-mode'] === 'true';
+    this.devDomainEnabled = !!window.localStorage['evan-dev-dapps-domain'];
+    this.devDomain = window.localStorage['evan-dev-dapps-domain']
+      || `test.${dappBrowser.getDomainName()}`;
+    this.language = window.localStorage['evan-language'] || '';
+  }
+
+  /**
+   * Current language has changed.
+   */
+  languageChanged(): void {
+    if (this.language) {
+      window.localStorage['evan-language'] = this.language;
+    } else {
+      delete window.localStorage['evan-language'];
+    }
+  }
+
+  /**
+   * Developer mode has changed
+   */
+  devModeChanged(): void {
+    if (this.devMode) {
+      window.localStorage['evan-developer-mode'] = this.devMode;
+    } else {
+      delete window.localStorage['evan-developer-mode'];
+    }
+
+    this.devDomainChanged();
+  }
+
+  /**
+   * Dev domain has changed
+   */
+  devDomainChanged(): void {
+    // only save the input, when the dev domains are enabled
+    if (this.devMode && this.devDomainEnabled) {
+      window.localStorage['evan-dev-dapps-domain'] = this.devDomain;
+    } else {
+      // else clear the value
+      delete window.localStorage['evan-dev-dapps-domain'];
+    }
+  }
 }
