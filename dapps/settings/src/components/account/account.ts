@@ -53,7 +53,7 @@ export default class AccountSettingsComponent extends mixins(EvanComponent) {
     const vault = await lightwallet.loadUnlockedVault();
     const privateKey = lightwallet.getPrivateKey(vault, session.activeAccount);
 
-    this.copyToClipboard(privateKey, '_profile.security-info.private-key.exported');
+    this.copyToClipboard(privateKey, '_settings.account.private-key.exported');
   }
 
   /**
@@ -63,6 +63,6 @@ export default class AccountSettingsComponent extends mixins(EvanComponent) {
     await lightwallet.loadUnlockedVault();
     const encryptionKey = await lightwallet.getEncryptionKey();
 
-    this.copyToClipboard(encryptionKey, '_profile.security-info.encryption-key.exported');
+    this.copyToClipboard(encryptionKey, '_settings.account.encryption-key.exported');
   }
 }
