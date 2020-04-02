@@ -156,14 +156,14 @@
       "delegates-empty": "Keine Delegates angegeben",
       "delegates-title": "Delegates",
       "description": "Mit Decentralized Identities (DIDs) ist es möglich, sich eindeutig, global und unabhängig vom Netzwerk zu identifizeren. Weiterhin ist es möglich festzulegen, wer Änderungen durchführen darf (Controller) und wer im Namen dieser Identität handeln darf (Delegates). Durch den Export dieses Dokumentes, können die Daten auch offline freigeben werden.",
+      "did": "DID",
       "did-format-error": "Format: did: ...",
       "did-title": "Decentralized ID",
-      "did": "DID",
       "empty-service-endpoints": "Keine Service Endpoints angegeben",
       "export-document": "Dokument exportieren",
+      "id": "ID",
       "id-placeholder": "DID",
       "id-unique-error": "ID muss eindeutig sein",
-      "id": "ID",
       "no-delegate-options": "Kein Kontakt verfügbar",
       "note": "Notiz",
       "required-error": "Feld ist erforderlich",
@@ -194,6 +194,7 @@
       "registration": "Registrierungsdaten"
     },
     "not-permitted-view": "Sie haben keine Rechte, diese Daten für die ausgewählte Identität anzusehen.",
+    "profile": "Profil",
     "security-info": {
       "encryption-key": {
         "exported": "Encryption-Key in die Zwischenablage kopiert",

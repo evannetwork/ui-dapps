@@ -32,18 +32,9 @@
             >
               <evan-nav-list
                 :entries="navEntries"
-                :show-logout="$store.state.profileDApp.isMyProfile"
-              >
-                <template slot="header">
-                  <evan-profile-preview
-                    class="p-4"
-                    style="width: 240px;"
-                    size="sm"
-                    :account-details="$store.state.profileDApp.data.accountDetails"
-                    :address="$store.state.runtime.activeIdentity"
-                  />
-                </template>
-              </evan-nav-list>
+                header-icon="account-outline"
+                header-text="_profile.profile"
+              />
             </evan-dapp-wrapper-level-2>
             <div
               class="scroll-container h-100 overflow-auto"

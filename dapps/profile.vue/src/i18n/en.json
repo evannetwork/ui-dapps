@@ -156,14 +156,14 @@
       "delegates-empty": "No Delegates specified",
       "delegates-title": "Delegates",
       "description": "With Decentralized Identities (DID) one can identify himself uniquely, globally and independently of the network or platform. It's possible to define, who is allowed to make changes to this identity (controller) and who receives authorization to act on behalf of it (delegates). Exporting this document enables the sharing of information offline.",
+      "did": "DID",
       "did-format-error": "Format: did: ...",
       "did-title": "Decentralized ID",
-      "did": "DID",
       "empty-service-endpoints": "No Service Endpoints specified",
       "export-document": "Export Document",
+      "id": "ID",
       "id-placeholder": "DID",
       "id-unique-error": "ID must be unique",
-      "id": "ID",
       "no-delegate-options": "No valid contact available",
       "note": "Note",
       "required-error": "Field is required",
@@ -194,6 +194,7 @@
       "registration": "Registration data"
     },
     "not-permitted-view": "You do not have permission to view this data for the selected Identity.",
+    "profile": "Profile",
     "security-info": {
       "encryption-key": {
         "exported": "Exported Encryption Key and copied to clipboard",
