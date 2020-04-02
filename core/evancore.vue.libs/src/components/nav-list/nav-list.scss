@@ -23,6 +23,18 @@
   height: 100%;
   padding-bottom: 1px;
 
+  .navlist-header {
+    margin: 32px 0;
+
+    text-align: center;
+
+    .navlist-header-icon {
+      font-size: 6rem;
+
+      color: cssVar('gray-900');
+    }
+  }
+
   &, .nav-entries {
     display: flex;
     flex-direction: column;

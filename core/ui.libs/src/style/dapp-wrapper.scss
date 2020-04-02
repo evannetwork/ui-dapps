@@ -81,6 +81,7 @@ $sidebar-item-width: 40px;
           justify-content: center;
 
           width: 100%;
+          margin-top: 8px;
         }
       }
     }
@@ -245,7 +246,8 @@ $sidebar-item-width: 40px;
   }
 
 
-  @media(min-width: 992px) { // lg breakpoint
+  @media(min-width: 992px) {
+    // lg breakpoint
     #dapp-wrapper-sidebar-right {
       .evan-swipe-panel {
         height: calc(100vh - 64px);

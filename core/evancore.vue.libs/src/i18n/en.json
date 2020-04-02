@@ -7,10 +7,11 @@
       "explorer": "Explorer",
       "favorites": "DApps",
       "help": "Help",
-      "wallet": "Wallet",
       "profile": "Identity",
+      "settings": "Settings",
       "synchronization": "Synchronization",
-      "verifications": "Verification Center"
+      "verifications": "Verification Center",
+      "wallet": "Wallet"
     },
     "address": {
       "copied": "Address copied",
@@ -161,8 +162,8 @@
       "add-contact": "Go to Contact overview",
       "defineFor": "Define the permissions for {contactName}.",
       "description": "To share your information with another contact, fill out the form below and click on “Update Sharing Options”",
-      "noPermissions": "No permissions available to edit.",
       "description-no-contacts": "Information can be shared with other partners after you have established a secure connection to their evan.network identity. Go to the contact overview and invite your partners via email or identity ID to share your data trustfully.",
+      "noPermissions": "No permissions available to edit.",
       "permissionsTitle": "Update Permissions",
       "selectContact": "Select contact to share with",
       "update": "Share data"
@@ -172,13 +173,13 @@
       "desc": "The area shown is currently under construction and will be available soon.",
       "title": "Under construction"
     },
-    "view-profile": "View Identity",
-    "welcome-to-evan": "Welcome to the evan.network",
-    "write": "write",
-    "yes": "Yes",
     "validation": {
       "required": "This field is required",
       "url": "Enter a valid URL"
-    }
+    },
+    "view-profile": "View Identity",
+    "welcome-to-evan": "Welcome to the evan.network",
+    "write": "write",
+    "yes": "Yes"
   }
 }

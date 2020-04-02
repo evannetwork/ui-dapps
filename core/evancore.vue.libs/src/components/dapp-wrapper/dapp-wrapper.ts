@@ -655,6 +655,11 @@ export default class DAppWrapperComponent extends mixins(EvanComponent) {
           path: `mailbox.vue.${domainName}`,
           title: `${i18nPref}.actions`,
         },
+        {
+          icon: 'mdi mdi-settings-outline',
+          path: `settings.${domainName}`,
+          title: `${i18nPref}.settings`,
+        },
       ],
       bottomRight: [
         {

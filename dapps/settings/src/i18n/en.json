@@ -1,0 +1,15 @@
+{
+  "_settings": {
+    "header": "Settings",
+    "identity": {
+      "dispatcher": {
+        "share": "Granting access to identity..."
+      }
+    },
+    "routes": {
+      "account": "Account",
+      "browser": "Browser",
+      "identity": "User Management"
+    }
+  }
+}
