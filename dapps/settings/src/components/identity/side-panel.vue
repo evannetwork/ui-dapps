@@ -20,15 +20,16 @@
 <template>
   <div>
     <evan-button
+      v-if="canEdit"
       :type="'icon-primary'"
       size="lg"
       class="side-panel-open"
       icon="mdi mdi-plus"
-      @click="$refs.identitySidepanel.show()"
+      @click="show()"
     />
 
     <evan-swipe-panel
-      ref="panel"
+      ref="sidePanel"
       alignment="right"
       type="default"
       class="light"
@@ -41,8 +42,15 @@
           ref="form"
           :editable="canEdit"
           :form="form"
-          :i18n-scope="'_settings.identity.form'"
+          :i18n-scope="'_settings.identity.side-panel.form'"
           :only-form="true"
+        />
+
+        <evan-permissions
+          :permissions="permissions"
+          :contract-id="address"
+          :update-permissions="updatePermissions"
+          :i18n-scope="'_settings.identity.side-panel.perm'"
         />
       </div>
 
@@ -60,7 +68,7 @@
             type="primary"
             native-type="submit"
             class="ml-3 flex-grow-1"
-            :disabled="!checkFormValid()"
+            :disabled="!form.isValid"
             :label="'_settings.identity.side-panel.submit' | translate"
             @click="save"
           />
@@ -71,16 +79,25 @@
 </template>
 
 <script lang="ts">
-import Component from './side-panel.ts';
+import Component from './side-panel';
 
 export default Component;
 </script>
 
 <style lang="scss" scoped>
-@import '~@evan.network/ui/src/style/utils';
 .side-panel-open {
   position: fixed !important;
   bottom: 80px;
   right: 60px;
+}
+
+/deep/ table {
+  tbody {
+    display: none;
+  }
+
+  thead h4 {
+    font-size: 14px !important;
+  }
 }
 </style>

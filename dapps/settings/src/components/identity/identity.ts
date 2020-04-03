@@ -20,6 +20,7 @@
 import Component, { mixins } from 'vue-class-component';
 import { EvanComponent } from '@evan.network/ui-vue-core';
 import { profileUtils } from '@evan.network/ui';
+import { Runtime } from '@evan.network/api-blockchain-core';
 import { session } from '@evan.network/ui-session';
 
 import { Contact } from './interfaces';
@@ -29,7 +30,7 @@ export default class IdentitySettingsComponent extends mixins(EvanComponent) {
   /**
    * All contacts that have the profile key `identityAccess`
    */
-  contacts: Array<Contact> = null;
+  contacts: Contact[] = null;
 
   /**
    * Is the current user allowed to grant access?
@@ -109,14 +110,14 @@ export default class IdentitySettingsComponent extends mixins(EvanComponent) {
   /**
    * Load all contacts that are flagged with the `identityAccess` flag.
    */
-  async getPermittedContacts(): Promise<Contact> {
-    const { profile }: { profile: AddressbookEntry } = await this.runtime.profile.getAddressBook();
+  async getPermittedContacts(): Promise<Contact[]> {
+    const { profile }: { profile: any } = await this.runtime.profile.getAddressBook();
 
     return Promise.all(Object.keys(profile)
       .filter((address) => address.startsWith('0x')
         && address !== this.runtime.activeAccount
-        && address !== this.runtime.activeIdentity)
-      // && profile[address].identityAccess);
+        && address !== this.runtime.activeIdentity
+        && profile[address].identityAccess)
       .map(async (contactAddress: string) => {
         // filter out own account
         const [type, displayName] = await Promise.all([
@@ -131,7 +132,7 @@ export default class IdentitySettingsComponent extends mixins(EvanComponent) {
           icon: profileUtils.getProfileTypeIcon(type),
           note: profile[contactAddress].identityAccessNote || '',
           type,
-        };
+        } as Contact;
       }));
   }
 }

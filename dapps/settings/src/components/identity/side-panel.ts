@@ -18,8 +18,14 @@
 */
 
 import Component, { mixins } from 'vue-class-component';
-import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-session';
-import { session } from '@evan.network/ui-vue-core';
+import {
+  EvanComponent,
+  EvanForm,
+  EvanFormControl,
+  PermissionsInterface,
+} from '@evan.network/ui-vue-core';
+import { profileUtils } from '@evan.network/ui';
+import { session } from '@evan.network/ui-session';
 
 import { Contact } from './interfaces';
 import { identityShareDispatcher } from '../../dispatchers';
@@ -32,14 +38,21 @@ interface IdentityForm extends EvanForm {
 @Component
 export default class IdentitySidePanelComponent extends mixins(EvanComponent) {
   /**
+   * Check if the current activeIdentity is the owner of the selected identity
+   */
+  canEdit = false;
+
+  /**
    * Current selected contact. Will be set by the sow function
    */
   contact: Contact = null;
 
+  originalContact: Contact = null;
+
   /**
    * All available contacts
    */
-  contacts: [] = null;
+  contacts = null;
 
   /**
    * Identity formular specification (address / note)
@@ -47,14 +60,14 @@ export default class IdentitySidePanelComponent extends mixins(EvanComponent) {
   form: IdentityForm = null;
 
   /**
+   * permssions to pass into the evan-permissions component
+   */
+  permissions: PermissionsInterface;
+
+  /**
    * show loading until owner was loaded
    */
   loading = true;
-
-  /**
-   * Check if the current activeIdentity is the owner of the selected identity
-   */
-  canEdit: string = null;
 
   /**
    * was a contact selected for edit?
@@ -71,7 +84,7 @@ export default class IdentitySidePanelComponent extends mixins(EvanComponent) {
       session.identityRuntime.verifications.getOwnerAddressForIdentity(session.activeIdentity),
     ]);
     this.contacts = contacts;
-    this.canEdit = owner === session.accountRuntime.activeIdentity;
+    this.canEdit = owner === session.accountRuntime.underlyingAccount;
     this.loading = false;
   }
 
@@ -81,7 +94,8 @@ export default class IdentitySidePanelComponent extends mixins(EvanComponent) {
   hide(): void {
     this.contact = null;
     this.form = null;
-    this.sidePanel.hide();
+    this.originalContact = null;
+    this.$refs.sidePanel.hide();
   }
 
   /**
@@ -101,12 +115,14 @@ export default class IdentitySidePanelComponent extends mixins(EvanComponent) {
     this.form = (new EvanForm(this, {
       address: {
         value: this.contact.address || '',
+        validate: (vueInstance, form, control: EvanFormControl): boolean|string => session
+          .identityRuntime.web3.utils.isAddress(control.value),
         uiSpecs: {
           type: 'v-select',
           attr: {
             disabled: !this.isNew,
             required: true,
-            options: contacts,
+            options: this.contacts,
           },
         },
       },
@@ -117,12 +133,46 @@ export default class IdentitySidePanelComponent extends mixins(EvanComponent) {
   }
 
   /**
+   * Update the permissions object to match the identityAccess param.
+   */
+  setupPermissions(): void {
+    this.permissions = {
+      identity: {
+        read: this.contact.identityAccess === 'read' || this.contact.identityAccess === 'write',
+        readWrite: this.contact.identityAccess === 'write',
+      },
+    };
+  }
+
+  /**
    * Move the side-panel in.
    */
   show(contact: Contact): void {
-    this.contact = contact || { };
+    this.originalContact = contact || { };
+    this.contact = { ...this.originalContact };
     this.isNew = !contact;
     this.setupForm();
-    this.sidePanel.show();
+    this.setupPermissions();
+    this.$refs.sidePanel.show();
+  }
+
+  /**
+   * Write permission changes to current contact
+   *
+   * @param      {PermissionsInterface}  permissions  latest permission confugration
+   */
+  updatePermissions(event: PermissionsInterface): void {
+    const idPerm = event.permissions.identity;
+    const originPerm = this.originalContact.identityAccess;
+
+    // do not allow to remove read permissions
+    // eslint-disable-next-line no-nested-ternary
+    let resolvedPerm = idPerm.readWrite ? 'write' : idPerm.read ? 'read' : false;
+    if (!resolvedPerm && (originPerm === 'read' || originPerm === 'write')) {
+      resolvedPerm = 'read';
+    }
+
+    this.contact.identityAccess = resolvedPerm;
+    this.setupPermissions();
   }
 }

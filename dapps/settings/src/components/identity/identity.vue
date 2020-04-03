@@ -86,7 +86,7 @@
 </template>
 
 <script lang="ts">
-import Component from './identity.ts';
+import Component from './identity';
 
 export default Component;
 </script>

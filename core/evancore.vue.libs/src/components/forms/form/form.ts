@@ -249,7 +249,7 @@ export default class EvanFormComponent extends mixins(EvanComponent) {
     let returnTranslation = attr !== 'hint';
     if (EvanFormComponent.hasControlAttr(control, attr)) {
       // allow property definition within uiSpecis and within attr (specifing label within attr would be confusing)
-      const specOverwrite = control.uiSpecs.attr && control.uiSpecs.attr[attr]
+      const specOverwrite = control.uiSpecs.attr[attr]
         ? control.uiSpecs.attr[attr]
         : control.uiSpecs[attr];
       // if the attribute is a dynamic function, execute and return the value

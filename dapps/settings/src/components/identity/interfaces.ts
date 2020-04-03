@@ -21,9 +21,10 @@ import { profileUtils } from '@evan.network/ui';
 
 export interface Contact {
   address: string;
-  note: string;
-  granted: string;
   displayName: string;
+  granted: string;
   icon: string;
+  identityAccess: string|boolean;
+  note: string;
   type: profileUtils.ProfileType;
 }

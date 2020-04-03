@@ -30,6 +30,25 @@
       "dispatcher": {
         "share": "Granting access to identity..."
       },
+      "side-panel": {
+        "cancel": "Cancel",
+        "form": {
+          "address": {
+            "error": "Please select a contact to grant access to.",
+            "label": "Contact",
+            "placeholder": "Contact to grant access to."
+          },
+          "note": {
+            "label": "Note / Role",
+            "placeholder": "Admin / Procurement / User XYZ"
+          }
+        },
+        "perm": {
+          "name": "Identity access"
+        },
+        "submit": "Save",
+        "title": "Identity permissions"
+      },
       "table": {
         "columns": {
           "granted": "Access granted",

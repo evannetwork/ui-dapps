@@ -27,8 +27,6 @@ import components from './components';
 
 export * from './dispatchers';
 
-console.log(components);
-
 /**
  * StartDapp function that is called by the ui-dapp-browser, including an container and the current
  * dbcp. So startup, it's evan time!

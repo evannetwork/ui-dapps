@@ -7,7 +7,8 @@
       },
       "entrypoint": "settings.js",
       "files": [
-        "settings.js"
+        "settings.js",
+        "settings.css"
       ],
       "origin": "Qmd5gvb5WRuP985vyWcrXuWiMBQKapuDdGnzbYVCMwVwin",
       "primaryColor": "#b66e74",

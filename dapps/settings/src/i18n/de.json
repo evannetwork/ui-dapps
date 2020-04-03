@@ -30,6 +30,25 @@
       "dispatcher": {
         "share": "Identitätszugriff erteilen..."
       },
+      "side-panel": {
+        "cancel": "Abbrechen",
+        "form": {
+          "address": {
+            "error": "Please select a contact to grant access to.",
+            "label": "Kontakt",
+            "placeholder": "Berechtigungen vergeben an"
+          },
+          "note": {
+            "label": "Notiz / Rolle",
+            "placeholder": "Admin / Beschaffung / Nutzer XYZ"
+          }
+        },
+        "perm": {
+          "name": "Identitiätszugriff"
+        },
+        "submit": "Speichern",
+        "title": "Identitätsberechtigung"
+      },
       "table": {
         "columns": {
           "granted": "Zugriff erteilt",
@@ -40,11 +59,6 @@
           "filtered": "Keine Ergebnisse mit dem aktuellen Filter gefunden.",
           "text": "Es sind noch keine Identitäten berechtigt, über Ihre Identität zu interagieren."
         }
-      },
-      "side-panel": {
-        "title": "Identitätsberechtigung",
-        "cancel": "Abbrechen",
-        "submit": "Speichern"
       }
     },
     "routes": {
