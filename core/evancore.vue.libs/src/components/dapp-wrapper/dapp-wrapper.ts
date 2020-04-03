@@ -230,28 +230,7 @@ export default class DAppWrapperComponent extends mixins(EvanComponent) {
   /**
    * routes that should be displayed in the sidepanel, if no sidebar slot is given
    */
-  routes: { [type: string]: Array<DAppWrapperRouteInterface> } = null;
-
-  /**
-   * Returns the i18n title key for the active route.
-   *
-   * @return     {string}  active route i18n or route path
-   */
-  get activeRouteTitle(): string {
-    const allRoutes = [
-      ...this.routes.topLeft,
-      ...this.routes.centerLeft,
-      ...this.routes.bottomRight,
-    ];
-
-    for (let i = 0; i < allRoutes.length; i += 1) {
-      if (this.$route.path.startsWith(allRoutes[i].fullPath)) {
-        return allRoutes[i].title;
-      }
-    }
-
-    return this.$route.path;
-  }
+  routes: { [category: string]: { [type: string]: Array<DAppWrapperRouteInterface> } } = null;
 
   /**
    * Triggered when the a root sidebar navigation was clicked. If the route already activated, show
@@ -665,19 +644,21 @@ export default class DAppWrapperComponent extends mixins(EvanComponent) {
           },
         ],
       },
-      bottomRight: [
-        {
-          icon: 'mdi mdi-help-circle-outline',
-          path: `help.vue.${domainName}`,
-          title: `${i18nPref}.help`,
-        },
-        {
-          action: () => (this.$refs.queuePanel as any).show(),
-          icon: 'mdi mdi-sync',
-          id: 'synchronization',
-          title: `${i18nPref}.synchronization`,
-        },
-      ],
+      bottom: {
+        right: [
+          {
+            icon: 'mdi mdi-help-circle-outline',
+            path: `help.vue.${domainName}`,
+            title: `${i18nPref}.help`,
+          },
+          {
+            action: () => (this.$refs.queuePanel as any).show(),
+            icon: 'mdi mdi-sync',
+            id: 'synchronization',
+            title: `${i18nPref}.synchronization`,
+          },
+        ],
+      },
     });
 
     // create fullPath for current routes to get correct active state
@@ -685,7 +666,7 @@ export default class DAppWrapperComponent extends mixins(EvanComponent) {
       ...this.routes.left.top,
       ...this.routes.left.center,
       ...this.routes.left.bottom,
-      ...this.routes.bottomRight,
+      ...this.routes.bottom.right,
     ].forEach((route) => {
       route.fullPath = `${this.dapp.baseHash}/${route.path}`; // eslint-disable-line no-param-reassign
     });

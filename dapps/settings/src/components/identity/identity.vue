@@ -18,8 +18,70 @@
 */
 
 <template>
-  <div>
-    identity config
+  <div class="evan-content-container">
+    <evan-loading v-if="loading" />
+    <template v-else>
+      <evan-searchbox
+        id="searchBox"
+        ref="searchBox"
+        :debounce-time="250"
+        @keyup="$set(table, 'filter', $refs.searchBox.searchTerm)"
+      >
+        <span>{{ '_settings.routes.identity' | translate }}</span>
+      </evan-searchbox>
+
+      <identity-sidepanel ref="identitySidepanel" />
+
+      <evan-table
+        class="clickable-rows"
+        primary-key="address"
+        :items="contacts"
+        :fields="table.columns"
+        :filter="table.filter"
+        :filter-included-fields="table.filterBy"
+        :show-empty="true"
+        :show-scrollbar="true"
+        :sticky-header="'calc(100vh - 85px)'"
+        :tbody-transition-props="{ name: 'list', mode: 'out-in' }"
+        @row-clicked="$refs.identitySidepanel.show($event)"
+      >
+        <template v-slot:cell(displayName)="contacts">
+          {{
+            contacts.item.displayName || contacts.item.address
+          }}
+        </template>
+        <template v-slot:cell(note)="contacts">
+          {{
+            contacts.item.note
+          }}
+        </template>
+        <template v-slot:cell(icon)="contacts">
+          <i
+            class="table-icon"
+            :class="contacts.item.icon"
+          />
+        </template>
+        <template v-slot:cell(granted)="contacts">
+          {{ contacts.item.granted | moment('L') }}
+        </template>
+        <template v-slot:cell(actions)="contacts">
+          <evan-loading
+            v-if="granting[contacts.item.address]"
+          />
+        </template>
+        <template v-slot:table-caption>
+          <div class="table-spacer" />
+        </template>
+
+        <!-- Empty slots -->
+        <template v-slot:empty>
+          <span>{{ '_settings.identity.table.empty.text' | translate }}</span>
+        </template>
+        <template v-slot:emptyfiltered>
+          <span>{{ '_settings.identity.table.empty.filtered' | translate }}</span>
+        </template>
+      </evan-table>
+    </template>
   </div>
 </template>
 

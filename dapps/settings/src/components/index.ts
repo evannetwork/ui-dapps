@@ -17,11 +17,8 @@
   the following URL: https://evan.network/license/
 */
 
-// import evan libs
-import { ComponentRegistrationInterface } from '@evan.network/ui-vue-core';
+import IdentitySidePanelComponent from './identity/side-panel.vue';
 
-// map them to element names, so they can be used within templates
-const componentRegistration: Array<ComponentRegistrationInterface> = [
+export default [
+  { name: 'identity-sidepanel', component: IdentitySidePanelComponent },
 ];
-
-export default componentRegistration;

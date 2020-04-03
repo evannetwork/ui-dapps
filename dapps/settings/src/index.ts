@@ -25,8 +25,9 @@ import translations from './i18n';
 import routes from './routes';
 import components from './components';
 
-// export dispatchers
 export * from './dispatchers';
+
+console.log(components);
 
 /**
  * StartDapp function that is called by the ui-dapp-browser, including an container and the current

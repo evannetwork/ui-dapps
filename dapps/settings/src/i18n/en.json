@@ -29,6 +29,17 @@
     "identity": {
       "dispatcher": {
         "share": "Granting access to identity..."
+      },
+      "table": {
+        "columns": {
+          "granted": "Access granted",
+          "name": "Name",
+          "note": "Note / Role"
+        },
+        "empty": {
+          "filtered": "No results found with the current filter.",
+          "text": "No identities are yet authorized to interact via your identity."
+        }
       }
     },
     "routes": {

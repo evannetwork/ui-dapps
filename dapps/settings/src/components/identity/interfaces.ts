@@ -16,15 +16,14 @@
   Fifth Floor, Boston, MA, 02110-1301 USA, or download the license from
   the following URL: https://evan.network/license/
 */
-// map the original vue path to bootstrap.vue.libs
-import { getDomainName, System } from '@evan.network/ui-dapp-browser';
-import 'bootstrap-vue/dist/bootstrap-vue.css';
 
-System.map['bootstrap-vue'] = `bootstrap.vue.libs.${getDomainName()}!dapp-content`;
+import { profileUtils } from '@evan.network/ui';
 
-export {
-  TableLitePlugin,
-  TablePlugin,
-  TableSimplePlugin,
-  DropdownPlugin,
-} from 'bootstrap-vue';
+export interface Contact {
+  address: string;
+  note: string;
+  granted: string;
+  displayName: string;
+  icon: string;
+  type: profileUtils.ProfileType;
+}

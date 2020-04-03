@@ -29,6 +29,22 @@
     "identity": {
       "dispatcher": {
         "share": "Identitätszugriff erteilen..."
+      },
+      "table": {
+        "columns": {
+          "granted": "Zugriff erteilt",
+          "name": "Name",
+          "note": "Notiz / Rolle"
+        },
+        "empty": {
+          "filtered": "Keine Ergebnisse mit dem aktuellen Filter gefunden.",
+          "text": "Es sind noch keine Identitäten berechtigt, über Ihre Identität zu interagieren."
+        }
+      },
+      "side-panel": {
+        "title": "Identitätsberechtigung",
+        "cancel": "Abbrechen",
+        "submit": "Speichern"
       }
     },
     "routes": {

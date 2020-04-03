@@ -3,7 +3,6 @@
     "author": "evan GmbH",
     "dapp": {
       "dependencies": {
-        "bootstrap.vue.libs": "^2.1.0",
         "countries.libs": "^1.1.0",
         "evancore.vue.libs": "^2.0.0",
         "lib.digital-twin": "^3.0.0",

@@ -17,12 +17,121 @@
   the following URL: https://evan.network/license/
 */
 
-// vue imports
 import Component, { mixins } from 'vue-class-component';
-
-// evan.network imports
 import { EvanComponent } from '@evan.network/ui-vue-core';
+import { profileUtils } from '@evan.network/ui';
+import { session } from '@evan.network/ui-session';
 
-@Component({ })
+import { Contact } from './interfaces';
+
+@Component
 export default class IdentitySettingsComponent extends mixins(EvanComponent) {
+  /**
+   * All contacts that have the profile key `identityAccess`
+   */
+  contacts: Array<Contact> = null;
+
+  /**
+   * Is the current user allowed to grant access?
+   */
+  enableAccessGranting = false;
+
+  /**
+   * Contacts that getting currently permissions
+   */
+  granting = { };
+
+  /**
+   * Show loading symbol until contacts were loaded.
+   */
+  loading = true;
+
+  /**
+   * Current session runtime for quick access
+   */
+  runtime: Runtime;
+
+  /**
+   * Table configuration
+   */
+  table = {
+    columns: [
+      {
+        key: 'icon',
+        label: '',
+        sortable: false,
+        thClass: 'th-icon',
+      },
+      {
+        key: 'displayName',
+        label: this.$t('_settings.identity.table.columns.name'),
+        sortable: true,
+        tdClass: 'truncate',
+      },
+      {
+        key: 'note',
+        label: this.$t('_settings.identity.table.columns.note'),
+        sortable: true,
+        tdClass: 'truncate',
+      },
+      {
+        key: 'granted',
+        label: this.$t('_settings.identity.table.columns.granted'),
+        sortable: true,
+        thClass: 'th-date',
+      },
+      {
+        key: 'actions',
+        label: '',
+        sortable: false,
+        thClass: 'th-icon',
+        tdClass: 'td-multi-icon',
+      },
+    ],
+    filterBy: [
+      'address',
+      'alias',
+      'displayName',
+      'note',
+    ],
+    filter: '',
+  }
+
+  /**
+   * Load initial data
+   */
+  async created(): Promise<void> {
+    this.runtime = session.identityRuntime;
+    this.contacts = await this.getPermittedContacts();
+    this.loading = false;
+  }
+
+  /**
+   * Load all contacts that are flagged with the `identityAccess` flag.
+   */
+  async getPermittedContacts(): Promise<Contact> {
+    const { profile }: { profile: AddressbookEntry } = await this.runtime.profile.getAddressBook();
+
+    return Promise.all(Object.keys(profile)
+      .filter((address) => address.startsWith('0x')
+        && address !== this.runtime.activeAccount
+        && address !== this.runtime.activeIdentity)
+      // && profile[address].identityAccess);
+      .map(async (contactAddress: string) => {
+        // filter out own account
+        const [type, displayName] = await Promise.all([
+          profileUtils.getProfileType(this.runtime, contactAddress),
+          profileUtils.getUserAlias(this.runtime, contactAddress),
+        ]);
+
+        return {
+          address: contactAddress,
+          displayName,
+          granted: profile[contactAddress].identityAccessGranted || '',
+          icon: profileUtils.getProfileTypeIcon(type),
+          note: profile[contactAddress].identityAccessNote || '',
+          type,
+        };
+      }));
+  }
 }

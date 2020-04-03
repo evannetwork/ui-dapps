@@ -17,14 +17,11 @@
   the following URL: https://evan.network/license/
 */
 
-// vue imports
 import Component, { mixins } from 'vue-class-component';
-
-// evan.network imports
 import { EvanComponent } from '@evan.network/ui-vue-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
-@Component({ })
+@Component
 export default class ProfileSettingsComponent extends mixins(EvanComponent) {
   /**
    * dev mode settings
