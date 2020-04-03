@@ -73,7 +73,7 @@ export default class ServiceEndpointsComponent extends mixins(EvanComponent) {
   }
 
   created(): void {
-    this.initValidation();
+    this.setupValidation();
   }
 
   onSubmitRow(): void {
@@ -108,7 +108,7 @@ export default class ServiceEndpointsComponent extends mixins(EvanComponent) {
   /**
    * Set up used validation rules
    */
-  initValidation(): void {
+  setupValidation(): void {
     extend('required', {
       ...required,
       message: this.$t('_evan.validation.required'),
