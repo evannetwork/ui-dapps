@@ -173,10 +173,10 @@
       "title": "Under construction"
     },
     "user-callout": {
-      "account-settings": "Account Settings",
-      "create-new-account": "Create new Account",
-      "switch-account": "Switch to another account",
-      "user-account": "User Account"
+      "account-settings": "Identity Settings",
+      "create-new-account": "Add new Identity",
+      "switch-account": "Switch to another Identity",
+      "user-account": "User Identity"
     },
     "view-profile": "View Identity",
     "welcome-to-evan": "Welcome to the evan.network",
