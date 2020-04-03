@@ -1,3 +1,21 @@
+/*
+  Copyright (C) 2018-present evan GmbH.
+
+  This program is free software: you can redistribute it and/or modify it
+  under the terms of the GNU Affero General Public License, version 3,
+  as published by the Free Software Foundation.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  See the GNU Affero General Public License for more details.
+
+  You should have received a copy of the GNU Affero General Public License
+  along with this program. If not, see http://www.gnu.org/licenses/ or
+  write to the Free Software Foundation, Inc., 51 Franklin Street,
+  Fifth Floor, Boston, MA, 02110-1301 USA, or download the license from
+  the following URL: https://evan.network/license/
+*/
 
 @import '~@evan.network/ui/src/style/utils';
 
@@ -15,32 +33,32 @@
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     // z-index: 1001;
   }
-}
 
-/deep/ .callout .callout-button {
-  font-size: 12px;
-  font-weight: 600;
+  .callout-button {
+    font-size: 12px;
+    font-weight: 600;
 
-  display: flex;
-  align-items: center;
+    display: flex;
+    align-items: center;
 
-  height: 56px;
-  padding-left: 24px;
-  padding-right: 24px;
+    height: 56px;
+    padding-left: 24px;
+    padding-right: 24px;
 
-  border: none;
-  outline: none;
-  background-color: white;
+    border: none;
+    outline: none;
+    background-color: white;
 
-  &, * {
-    color: cssVar('gray-900');
-  }
-
-  &:hover {
     &, * {
-      color: cssVar('primary') !important;
-      border: 0;
-      background-color: inherit !important;
+      color: cssVar('gray-900');
+    }
+
+    &:hover {
+      &, * {
+        color: cssVar('primary') !important;
+        border: 0;
+        background-color: inherit !important;
+      }
     }
   }
 }
@@ -56,7 +74,7 @@
   top: 16px;
 }
 
-.divier-wrapper {
+.divider-wrapper {
   padding: 4px 24px;
   .divider {
     margin: 0 !important;
