@@ -3,6 +3,8 @@ import { Dispatcher, DispatcherInstance } from '@evan.network/ui';
 import { getDomainName } from '@evan.network/ui-vue-core';
 import { ServiceEndpoint, Delegate } from './DidInterfaces';
 
+const PUB_KEY_TYPE = 'Secp256k1VerificationKey2018';
+
 /**
  * Handles logic for fetching and persisting DID documents
  */
@@ -57,7 +59,6 @@ export class DidService {
    */
   async updateDelegates(newDelegates: string[], didDoc: DidDocument): Promise<DidDocument> {
     const delegateKeys = DidService.getDelegates(didDoc).map((delegate) => delegate.id);
-    const type = 'Secp256k1VerificationKey2018';
 
     // DidDoc without delegates
     const cleanDidDoc = {
@@ -72,7 +73,7 @@ export class DidService {
         ...cleanDidDoc.publicKey,
         ...await Promise.all(newDelegates.map(async (did, idx) => ({
           id: `${cleanDidDoc.id}#delegate-${idx}`,
-          type,
+          type: PUB_KEY_TYPE,
           controller: did,
           ethereumAddress: await this.getAccountForDid(did),
         }))),
