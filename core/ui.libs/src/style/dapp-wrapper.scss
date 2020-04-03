@@ -54,8 +54,7 @@ $sidebar-item-width: 40px;
 
       width: $sidebar-width;
       min-width: $sidebar-width;
-      padding: 32px 0;
-      padding-bottom: 7px;
+      padding: 44px 0;
 
       .sidebar-header {
         display: none;
@@ -72,16 +71,11 @@ $sidebar-item-width: 40px;
       ul.nav {
         align-items: center;
 
-        &.bottom-nav {
-          height: 100%;
-        }
-
         & > li {
           display: flex;
           justify-content: center;
 
           width: 100%;
-          margin-top: 8px;
         }
       }
     }
@@ -91,7 +85,7 @@ $sidebar-item-width: 40px;
     }
 
     .dapp-wrapper-sidebar-2-wrapper {
-      padding: 32px 0;
+      padding: 44px 0;
     }
 
     .dapp-wrapper-sidebar-2 {

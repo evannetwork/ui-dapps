@@ -627,40 +627,44 @@ export default class DAppWrapperComponent extends mixins(EvanComponent) {
    */
   setRoutes(): void {
     this.$set(this, 'routes', {
-      topLeft: [
-        {
-          icon: 'mdi mdi-apps',
-          path: `favorites.vue.${domainName}`,
-          title: `${i18nPref}.favorites`,
-        },
-      ],
-      centerLeft: [
-        {
-          icon: 'mdi mdi-cube-outline',
-          path: `assets.${domainName}`,
-          title: `${i18nPref}.assets`,
-        },
-        {
-          icon: 'mdi mdi-account-outline',
-          path: `profile.vue.${domainName}/${session.activeIdentity}`,
-          title: `${i18nPref}.profile`,
-        },
-        {
-          icon: 'mdi mdi-credit-card-outline',
-          path: `profile.vue.${domainName}/wallet`,
-          title: `${i18nPref}.wallet`,
-        },
-        {
-          icon: 'mdi mdi-bell-outline rotate-45',
-          path: `mailbox.vue.${domainName}`,
-          title: `${i18nPref}.actions`,
-        },
-        {
-          icon: 'mdi mdi-settings-outline',
-          path: `settings.${domainName}`,
-          title: `${i18nPref}.settings`,
-        },
-      ],
+      left: {
+        top: [
+          {
+            icon: 'mdi mdi-apps',
+            path: `favorites.vue.${domainName}`,
+            title: `${i18nPref}.favorites`,
+          },
+        ],
+        center: [
+          {
+            icon: 'mdi mdi-cube-outline',
+            path: `assets.${domainName}`,
+            title: `${i18nPref}.assets`,
+          },
+          {
+            icon: 'mdi mdi-account-outline',
+            path: `profile.vue.${domainName}/${session.activeIdentity}`,
+            title: `${i18nPref}.profile`,
+          },
+          {
+            icon: 'mdi mdi-credit-card-outline',
+            path: `profile.vue.${domainName}/wallet`,
+            title: `${i18nPref}.wallet`,
+          },
+          {
+            icon: 'mdi mdi-bell-outline rotate-45',
+            path: `mailbox.vue.${domainName}`,
+            title: `${i18nPref}.actions`,
+          },
+        ],
+        bottom: [
+          {
+            icon: 'mdi mdi-settings-outline',
+            path: `settings.${domainName}`,
+            title: `${i18nPref}.settings`,
+          },
+        ],
+      },
       bottomRight: [
         {
           icon: 'mdi mdi-help-circle-outline',
@@ -678,8 +682,9 @@ export default class DAppWrapperComponent extends mixins(EvanComponent) {
 
     // create fullPath for current routes to get correct active state
     [
-      ...this.routes.topLeft,
-      ...this.routes.centerLeft,
+      ...this.routes.left.top,
+      ...this.routes.left.center,
+      ...this.routes.left.bottom,
       ...this.routes.bottomRight,
     ].forEach((route) => {
       route.fullPath = `${this.dapp.baseHash}/${route.path}`; // eslint-disable-line no-param-reassign

@@ -25,7 +25,7 @@
     >
       <template v-slot:content>
         <evan-dapp-wrapper-level-2>
-          <div style="width: 300px;">
+          <div>
             <evan-nav-list
               :entries="navEntries"
               header-icon="bell-outline"
