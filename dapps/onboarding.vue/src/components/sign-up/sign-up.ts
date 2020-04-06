@@ -337,11 +337,11 @@ export default class SignUp extends mixins(EvanComponent) {
     const privateKey = lightwallet.getPrivateKey(vault, accountId);
 
     const runtime = await bccHelper.createRuntime(
-      accountId, null, vault.encryptionKey, privateKey,
+      accountId, null, null, privateKey,
     );
 
     return {
-      password, vault, provider, accountId, privateKey, runtime,
+      password, provider, accountId, privateKey, runtime,
     };
   }
 
@@ -358,7 +358,7 @@ export default class SignUp extends mixins(EvanComponent) {
 
       try {
         const {
-          password, accountId, privateKey, runtime, vault,
+          password, accountId, privateKey, runtime,
         } = await this.getProfileCreationData();
 
         await bcc.Onboarding.createOfflineProfile(
@@ -367,10 +367,11 @@ export default class SignUp extends mixins(EvanComponent) {
           accountId,
           privateKey,
           this.recaptchaToken,
+          password,
           runtime.environment,
         );
 
-        await this.finishOnboarding(runtime, vault, accountId, password);
+        await this.finishOnboarding(runtime, accountId, password);
 
         // show done animation and navigate to signed in page
         this.creatingProfile = 5;
@@ -407,20 +408,22 @@ export default class SignUp extends mixins(EvanComponent) {
    * @param      {string}      accountId  account id
    * @param      {string}      password   password
    */
-  async finishOnboarding(runtime: bcc.Runtime, vault: any, accountId: string, password: string) {
+  async finishOnboarding(runtime: bcc.Runtime, accountId: string, password: string) {
     // check if onboarded, else throw it!
     if (!runtime.profile) {
       throw new Error('Onboarding has finished, but user isnt onboarded?');
     }
 
-    // profile is setup!
-    await lightwallet.createVaultAndSetActive(this.mnemonic, password);
+    // ensure that correct encryptionKey is used
+    const identity = await bccHelper.getIdentityForAccount(accountId);
+    lightwallet.overwriteVaultEncryptionKey(
+      accountId,
+      lightwallet.getEncryptionKeyFromPassword(identity, password),
+    );
+    const vault = await lightwallet.createVaultAndSetActive(this.mnemonic, password);
+
+    // force correct account / identity usage
     session.provider = 'internal';
-
-    // set encrypted mnemonic for temporary usage
-    this.persistMnemonic(runtime, vault);
-
-    // force correct account and identity
     session.activeAccount = accountId;
     const isUseIdentity = await bccHelper.isIdentityUsed(session.activeAccount);
     if (isUseIdentity) {
@@ -428,6 +431,9 @@ export default class SignUp extends mixins(EvanComponent) {
     } else {
       session.activeIdentity = accountId;
     }
+
+    // set encrypted mnemonic for temporary usage
+    this.persistMnemonic(runtime, vault.encryptionKey);
   }
 
   /**
@@ -436,7 +442,7 @@ export default class SignUp extends mixins(EvanComponent) {
    * @param runtime
    * @param { encryptionKey }
    */
-  async persistMnemonic(runtime, { encryptionKey }): Promise<void> {
+  async persistMnemonic(runtime, encryptionKey): Promise<void> {
     const cryptor = runtime.sharing.options.cryptoProvider
       .getCryptorByCryptoAlgo(runtime.sharing.options.defaultCryptoAlgo);
     const encryptedMnemonic = await cryptor.encrypt(this.mnemonic, { key: encryptionKey });

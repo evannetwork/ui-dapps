@@ -450,7 +450,7 @@ export default class DAppWrapperComponent extends mixins(EvanComponent) {
    */
   async loadUserSpecific(): Promise<void> {
     this.userInfo.loading = true;
-    this.userInfo.address = session.activeIdentity;
+    this.userInfo.address = session.activeAccount;
 
     // load alias from addressbook
     this.userInfo.addressBook = await this.$store.state.runtime.profile.getAddressBook();
