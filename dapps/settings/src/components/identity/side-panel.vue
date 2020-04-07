@@ -68,7 +68,7 @@
             type="primary"
             native-type="submit"
             class="ml-3 flex-grow-1"
-            :disabled="!form.isValid"
+            :disabled="!form.isValid || !hasChanged()"
             :label="'_settings.identity.side-panel.submit' | translate"
             @click="save"
           />

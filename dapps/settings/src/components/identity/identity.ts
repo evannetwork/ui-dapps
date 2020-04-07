@@ -46,7 +46,7 @@ export default class IdentitySettingsComponent extends mixins(EvanComponent) {
   /**
    * Contacts that getting currently permissions
    */
-  granting = { };
+  loadingStates = { };
 
   /**
    * Show loading symbol until contacts were loaded.
@@ -128,8 +128,12 @@ export default class IdentitySettingsComponent extends mixins(EvanComponent) {
       return;
     }
 
+    // load contacts, check for loading dispatchers and filter out permitted contacts
     this.contacts = await this.loadContacts();
+    this.loadingStates = await this.getLoadingStates();
+    this.permittedContacts = this.getPermittedContacts();
 
+    // watch for changes
     this.identityShareDispatcherClear = identityShareDispatcher.watch(async ($event) => {
       if ($event.detail.status === 'finished' || $event.detail.status === 'deleted') {
         this.loading = true;
@@ -137,17 +141,8 @@ export default class IdentitySettingsComponent extends mixins(EvanComponent) {
         this.loading = false;
       }
 
-      const instances = await identityShareDispatcher.getInstances(this.runtime, true) as DispatcherInstance[];
-      const granting = { };
-      instances.forEach((instance: DispatcherInstance) => {
-        granting[instance.data.contact.address] = true;
-      });
-
-      // update table data and display also the contacts that are in loading progress
-      this.granting = granting;
-      this.permittedContacts = this.contacts.filter(
-        (contact) => contact.hasIdentityAccess || granting[contact.address],
-      );
+      this.loadingStates = await this.getLoadingStates();
+      this.permittedContacts = this.getPermittedContacts();
     });
 
     this.loading = false;
@@ -157,13 +152,14 @@ export default class IdentitySettingsComponent extends mixins(EvanComponent) {
    * Load all contacts that are flagged with the `identityAccess` flag.
    */
   async loadContacts(): Promise<IdentityAccessContact[]> {
-    const { profile, keys }: { profile: any; keys: any } = await this.runtime.profile.getAddressBook();
+    const { profile }: { profile: any } = await this.runtime.profile.getAddressBook();
 
     return Promise.all(Object.keys(profile)
       .filter((address) => address.startsWith('0x')
         && address !== this.runtime.activeAccount
         && address !== this.runtime.activeIdentity)
       .map(async (contactAddress: string) => {
+        const contact = profile[contactAddress];
         // filter out own account
         const [type, displayName] = await Promise.all([
           profileUtils.getProfileType(this.runtime, contactAddress),
@@ -173,12 +169,36 @@ export default class IdentitySettingsComponent extends mixins(EvanComponent) {
         return {
           address: contactAddress,
           displayName,
-          granted: profile[contactAddress].identityAccessGranted || '',
+          granted: contact.identityAccessGranted ? new Date(parseInt(contact.identityAccessGranted, 10)) : '',
           icon: profileUtils.getProfileTypeIcon(type),
-          hasIdentityAccess: profile[contactAddress].hasIdentityAccess || false,
-          note: profile[contactAddress].identityAccessNote || '',
+          hasIdentityAccess: contact.hasIdentityAccess || false,
+          note: contact.identityAccessNote || '',
           type,
         } as IdentityAccessContact;
       }));
+  }
+
+  /**
+   * Load latest dispatcher instances and check which identities currently gets access.
+   */
+  async getLoadingStates(): Promise<void> {
+    const instances = await identityShareDispatcher.getInstances(this.runtime, true) as DispatcherInstance[];
+    const loadingStates = { };
+
+    instances.forEach((instance: DispatcherInstance) => {
+      loadingStates[instance.data.contact.address] = true;
+    });
+
+    // update table data and display also the contacts that are in loading progress
+    return loadingStates;
+  }
+
+  /**
+   * Filter all contacts for hasIdentityAccess filter and sets the permittedContacts array.
+   */
+  getPermittedContacts(): void {
+    return this.contacts.filter(
+      (contact) => contact.hasIdentityAccess || this.loadingStates[contact.address],
+    );
   }
 }

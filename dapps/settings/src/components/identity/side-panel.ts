@@ -26,9 +26,9 @@ import {
   PermissionsInterface,
   SwipePanelComponentClass,
 } from '@evan.network/ui-vue-core';
-import { session, lightwallet } from '@evan.network/ui-session';
+import { session } from '@evan.network/ui-session';
 import { profileUtils } from '@evan.network/ui';
-import { getDomainName } from '@evan.network/ui-dapp-browser';
+import { lodash } from '@evan.network/api-blockchain-core';
 
 import { IdentityAccessContact } from '../../interfaces';
 import { identityShareDispatcher } from '../../dispatchers';
@@ -87,6 +87,18 @@ export default class IdentitySidePanelComponent extends mixins(EvanComponent) {
   }
 
   /**
+   * Check if something in the ui was changed
+   *
+   * @return     {boolean}  True if changed, False otherwise.
+   */
+  hasChanged(): boolean {
+    return !lodash.isEqual({
+      ...this.contact,
+      ...this.form.getFormData(),
+    }, this.originalContact);
+  }
+
+  /**
    * Move the side-panel out and resets contact and form
    */
   hide(): void {
@@ -107,10 +119,11 @@ export default class IdentitySidePanelComponent extends mixins(EvanComponent) {
     };
 
     // start identity invite dispatcher and pass translated b-mail content
+    const fromAlias = await profileUtils.getUserAlias(runtime);
     identityShareDispatcher.start(this.getRuntime(), {
       contact,
       bmail: {
-        fromAlias: await profileUtils.getUserAlias(runtime),
+        fromAlias,
         title: this.$t('_settings.identity.share.title'),
         body: this.$t('_settings.identity.share.body', {
           alias: fromAlias,
@@ -119,6 +132,8 @@ export default class IdentitySidePanelComponent extends mixins(EvanComponent) {
         }).replace(/\n/g, '<br>'),
       },
     });
+
+    this.hie();
   }
 
   /**

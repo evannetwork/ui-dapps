@@ -22,24 +22,24 @@ import * as bcc from '@evan.network/api-blockchain-core';
 import { Dispatcher, DispatcherInstance } from '@evan.network/ui';
 
 const dispatcher = new Dispatcher(
-  `mailbox.vue.${ dappBrowser.getDomainName() }`,
+  `mailbox.vue.${dappBrowser.getDomainName()}`,
   'attachmentDispatcher',
   40 * 1000,
-  '_mailbox.dispatcher.attachment'
+  '_mailbox.dispatcher.attachment',
 );
 
 dispatcher
   .step(async (instance: DispatcherInstance, data: any) => {
-    const runtime = instance.runtime;
+    const { runtime } = instance;
     if (data.attachment.type === 'commKey') {
       const privateKey = await runtime.profile.getContactKey(
         runtime.activeIdentity,
-        'dataKey'
+        'dataKey',
       );
       const myPubKey = await runtime.profile.getPublicKey();
       runtime.keyExchange.setPublicKey(myPubKey, privateKey);
 
-      let profile = new bcc.Profile({
+      const profile = new bcc.Profile({
         accountId: data.mail.from,
         contractLoader: runtime.profile.options.contractLoader,
         dataContract: runtime.profile.options.dataContract,
@@ -48,7 +48,7 @@ dispatcher
         ipld: runtime.profile.options.ipld,
         nameResolver: runtime.profile.options.nameResolver,
         rightsAndRoles: runtime.profile.options.rightsAndRoles,
-      })
+      });
       const targetPubKey = await profile.getPublicKey();
 
       const commSecret = runtime.keyExchange.computeSecretKey(targetPubKey);
@@ -65,21 +65,27 @@ dispatcher
       }
 
       await runtime.profile.storeForAccount(runtime.profile.treeLabels.addressBook);
+    } else if (data.attachment.type === 'identityAccess') {
+      await runtime.profile.setIdentityAccess();
     } else if (data.attachment.type === 'verifications') {
-      for (let key of data.attachment.keys) {
-        let storeKey = key.storeKey;
-        let storeValue = key.storeValue;
+      // eslint-disable-next-line no-restricted-syntax
+      for (const key of data.attachment.keys) {
+        const { storeKey, storeValue } = key;
+        // eslint-disable-next-line no-await-in-loop
         await runtime.profile.addBcContract(key.context || 'contracts', storeKey, storeValue);
       }
 
-      for (let verification of data.attachment.verifications) {
+      // eslint-disable-next-line no-restricted-syntax
+      for (const verification of data.attachment.verifications) {
         // load nested verifications
+        // eslint-disable-next-line no-await-in-loop
         const nestedVerification = await runtime.verifications.getNestedVerificationsV2(
           runtime.activeIdentity,
           verification,
-          false
+          false,
         );
 
+        // eslint-disable-next-line no-await-in-loop
         await runtime.verifications.confirmVerification(
           runtime.activeIdentity,
           runtime.activeIdentity,
@@ -90,12 +96,12 @@ dispatcher
       await runtime.profile.storeForAccount(runtime.profile.treeLabels.contracts);
     } else {
       // check if a specific store value was specified, if not, use the latest dbcp description
-      let storeKey = data.attachment.storeKey || data.attachment.address;
-      let storeValue = data.attachment.storeValue;
+      const storeKey = data.attachment.storeKey || data.attachment.address;
+      const { storeValue } = data.attachment.storeValue;
       if (!storeValue) {
         const contractDefinition = await runtime.description.getDescriptionFromContract(
           data.attachment.address,
-          runtime.activeIdentity
+          runtime.activeIdentity,
         );
         storeValue = contractDefinition.public;
       }

@@ -72,7 +72,7 @@
         </template>
         <template v-slot:cell(actions)="contact">
           <evan-loading
-            v-if="granting[contact.item.address]"
+            v-if="loadingStates[contact.item.address]"
           />
         </template>
         <template v-slot:table-caption>
