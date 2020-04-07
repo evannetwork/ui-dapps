@@ -36,24 +36,8 @@
       :fields="columns"
       :items="delegates"
     >
-      <template
-        v-if="isEditMode"
-        #cell(label)="data"
-      >
-        <evan-form-control-input
-          class="clean-input"
-          :value="data.item.label"
-        />
-      </template>
-
-      <template
-        v-if="isEditMode"
-        #cell(url)="data"
-      >
-        <evan-form-control-input
-          class="clean-input"
-          :value="data.item.url"
-        />
+      <template #cell(did)="data">
+        {{ data.item }}
       </template>
 
       <template #cell(action)="data">

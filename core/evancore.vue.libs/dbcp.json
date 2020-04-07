@@ -4,7 +4,7 @@
     "dapp": {
       "dependencies": {
         "axios.vue.libs": "^0.18.0",
-        "bootstrap.vue.libs": "^2.1.0",
+        "bootstrap.vue.libs": "^2.9.0",
         "i18n.vuex.libs": "1.11.0",
         "lodash.libs": "4.17.15",
         "moment.libs": "^2.0.0",

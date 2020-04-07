@@ -316,6 +316,7 @@ export default class EvanSession {
             null,
             { executor },
           );
+          // TODO: replace with correct create runtime from account runtime
           EvanSession.identityRuntime = await bccHelper.createRuntime(
             activeAccount,
             activeIdentity,

@@ -21,14 +21,15 @@ import Component, { mixins } from 'vue-class-component';
 import { EvanComponent } from '@evan.network/ui-vue-core';
 import { Runtime, DidDocument } from '@evan.network/api-blockchain-core';
 import { isEqual } from 'lodash';
-import { Delegate, ServiceEndpoint } from './DidInterfaces';
+import { ServiceEndpoint } from './DidInterfaces';
 import { DidService } from './DidService';
 
 @Component
 export default class DIDComponent extends mixins(EvanComponent) {
   didDocument: DidDocument = null;
 
-  delegates: Delegate[] = null;
+  // Delegate DIDs
+  delegates: string[] = null;
 
   endpoints: ServiceEndpoint[] = null;
 
@@ -36,7 +37,7 @@ export default class DIDComponent extends mixins(EvanComponent) {
 
   isLoading = false;
 
-  previousDelegates: Delegate[] = null;
+  previousDelegates: string[] = null;
 
   previousEndpoints: ServiceEndpoint[] = null;
 
@@ -92,7 +93,7 @@ export default class DIDComponent extends mixins(EvanComponent) {
     this.didService = new DidService(this.runtime);
 
     this.didDocument = await this.didService.fetchDidDocument(this.$route.params.address);
-    this.delegates = await this.didService.getDelegates(this.didDocument);
+    this.delegates = DidService.getDelegates(this.didDocument).map((delegate) => delegate.controller);
     this.endpoints = this.didService.getServiceEndpoints(this.didDocument);
   }
 
@@ -119,12 +120,18 @@ export default class DIDComponent extends mixins(EvanComponent) {
    */
   async saveDidDocument(): Promise<void> {
     this.isLoading = true;
+
     let updatedDidDocument = DidService.updateServiceEndpoints(this.didDocument, this.endpoints);
-    updatedDidDocument = DidService.updateDelegates(updatedDidDocument, this.delegates);
+    updatedDidDocument = await this.didService.updateDelegates(this.delegates, updatedDidDocument);
+    updatedDidDocument.updated = new Date().toISOString();
 
-    await this.didService.updateDidDocument(updatedDidDocument).start(this.runtime, {});
+    try {
+      await this.didService.updateDidDocument(updatedDidDocument).start(this.runtime, {});
+      this.didDocument = updatedDidDocument;
+    } catch (e) {
+      this.runtime.logger.log('Updating DID Document failed', 'error');
+    }
 
-    this.didDocument = updatedDidDocument;
     this.isLoading = false;
     this.isEditMode = false;
   }
@@ -132,7 +139,7 @@ export default class DIDComponent extends mixins(EvanComponent) {
   /**
    * Temporarily add new delegate
    */
-  onAddDelegate(newDelegate: Delegate): void {
+  onAddDelegate(newDelegate: string): void {
     this.delegates = [...this.delegates, newDelegate];
   }
 

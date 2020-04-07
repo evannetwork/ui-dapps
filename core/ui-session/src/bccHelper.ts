@@ -254,9 +254,10 @@ export default class BccHelper {
          const isCorrect = !!targetPrivateKey; */
       if (runtime.profile) {
         // directly overwrite the latest encryption key for this account
-        await EvanlightWallet.overwriteVaultEncryptionKey(
-          accountId,
-          EvanlightWallet.getEncryptionKeyFromPassword(encryptionSalt, password),
+        await EvanlightWallet.overwriteVaultEncryptionKey(accountId, encryptionKey);
+        runtime.logger.log(
+          `Decrypt ${accountId} with encryptionSalt ${encryptionSalt}`,
+          'info',
         );
       }
 
@@ -265,12 +266,15 @@ export default class BccHelper {
 
     let checks: Function[];
     if (useIdentity) {
-      /* 1. Check for new identity logic
-         TODO: use account identity salting! (passwordCheck(accountIdentity)) */
-      checks = [(): Promise<boolean> => passwordCheck(accountId)];
+      checks = [
+        // 1. check for password salted with account id
+        (): Promise<boolean> => passwordCheck(accountIdentity),
+        // 2. check for password salted with identity
+        (): Promise<boolean> => passwordCheck(accountId),
+      ];
     } else {
       checks = [
-        // 2. check for password salting with account id
+        // 2. check for password salted with account id
         (): Promise<boolean> => passwordCheck(accountId),
         // 3. support very old passwords
         (): Promise<boolean> => passwordCheck(''),

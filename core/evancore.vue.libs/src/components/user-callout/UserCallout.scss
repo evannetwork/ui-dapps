@@ -1,0 +1,128 @@
+/*
+  Copyright (C) 2018-present evan GmbH.
+
+  This program is free software: you can redistribute it and/or modify it
+  under the terms of the GNU Affero General Public License, version 3,
+  as published by the Free Software Foundation.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  See the GNU Affero General Public License for more details.
+
+  You should have received a copy of the GNU Affero General Public License
+  along with this program. If not, see http://www.gnu.org/licenses/ or
+  write to the Free Software Foundation, Inc., 51 Franklin Street,
+  Fifth Floor, Boston, MA, 02110-1301 USA, or download the license from
+  the following URL: https://evan.network/license/
+*/
+
+@import '~@evan.network/ui/src/style/utils';
+
+.callout {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  width: 250px;
+  z-index: 1001;
+  transition: transform 0.3s ease-in-out;
+
+  &.active {
+    transform: translateY(calc(-100% + 61px));
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    // z-index: 1001;
+  }
+
+  .callout-button {
+    font-size: 12px;
+    font-weight: 600;
+
+    display: flex;
+    align-items: center;
+
+    height: 56px;
+    padding-left: 24px;
+    padding-right: 24px;
+
+    border: none;
+    outline: none;
+    background-color: white;
+
+    &, * {
+      color: cssVar('gray-900');
+    }
+
+    &:hover {
+      &, * {
+        color: cssVar('primary') !important;
+        border: 0;
+        background-color: inherit !important;
+      }
+    }
+  }
+}
+
+.close-overlay {
+  width: 100vw;
+  height: 100vh;
+}
+
+.toggle-button {
+  position: absolute;
+  right: 16px;
+  top: 16px;
+}
+
+.divider-wrapper {
+  padding: 4px 24px;
+  .divider {
+    margin: 0 !important;
+    width: 100%;
+    border: 1px solid cssVar('gray-300') !important;
+  }
+}
+
+.active-account {
+  /deep/ .profile-picture {
+    position: relative !important;
+    left: initial !important;
+    margin-left: 24px;
+  }
+}
+
+.switch-account {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  color: cssVar('text-color') !important;;
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: none !important;;
+  }
+
+  /deep/ .profile-picture {
+    position: relative !important;
+    left: initial !important;
+    margin-left: 24px;
+    bottom: initial !important;
+
+    .mask {
+      box-shadow: none !important;
+    }
+  }
+}
+
+/deep/ .d-flex.flex-column.justify-content-center.ml-3.info {
+  margin-left: 16px !important;
+}
+
+.account-settings {
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.12);
+}
+
+.switch {
+  background: cssVar('gray-200');
+  padding: 4px;
+  text-align: center;
+}

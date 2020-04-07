@@ -1,6 +1,8 @@
 export interface Delegate {
-  did: string;
-  note?: string;
+  id: string;
+  type: string;
+  controller: string;
+  ethereumAddress: string;
 }
 
 export interface ServiceEndpoint {
