@@ -32,24 +32,14 @@ const dispatcher = new Dispatcher(
 dispatcher
   .step(async (
     instance: DispatcherInstance,
-    { contact, bmail }: { contact: IdentityAccessContact; bmail: any },
+    { contact, bmail }: { contact: IdentityAccessContact; bmail: { title: string; body: string; fromAlias: string } },
   ) => {
-    const { profile } = instance.runtime;
-    const { address, note, hasIdentityAccess } = contact;
-
-    await Promise.all([
-      // add "cosmetic" profile keys
-      profile.addProfileKey(address, 'hasIdentityAccess', hasIdentityAccess as string),
-      profile.addProfileKey(address, 'identityAccessGranted', Date.now().toString()),
-      profile.addProfileKey(address, 'identityAccessNote', note),
-      // send the b-mail to the invited user
-      instance.runtime.mailbox.sendMail(bmail, instance.runtime.activeIdentity, address),
-      // (() => {
-      //   if (hasIdentityAccess === 'write') {
-
-      //   }
-      // })(),
-    ]);
+    await instance.runtime.identity.grantAccess(
+      contact.address,
+      contact.hasIdentityAccess,
+      bmail,
+      contact.note,
+    );
   });
 
 export default dispatcher;

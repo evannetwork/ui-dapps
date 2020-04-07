@@ -27,6 +27,7 @@
     },
     "header": "Settings",
     "identity": {
+      "not-support": "Sie sind aktuell mit einem alten, nicht identitätsbasierenden, Profil angemeldet. Die Nutzerverwaltung für Identititäten wird nur für aktuelle Profile unterstützt.",
       "dispatcher": {
         "share": "Identitätszugriff erteilen..."
       },

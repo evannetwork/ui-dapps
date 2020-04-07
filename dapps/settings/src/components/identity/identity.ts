@@ -19,11 +19,12 @@
 
 import Component, { mixins } from 'vue-class-component';
 import { EvanComponent } from '@evan.network/ui-vue-core';
-import { profileUtils } from '@evan.network/ui';
+import { profileUtils, DispatcherInstance } from '@evan.network/ui';
 import { Runtime } from '@evan.network/api-blockchain-core';
 import { session } from '@evan.network/ui-session';
 
 import { IdentityAccessContact } from '../../interfaces';
+import { identityShareDispatcher } from '../../dispatchers';
 
 @Component
 export default class IdentitySettingsComponent extends mixins(EvanComponent) {
@@ -31,6 +32,11 @@ export default class IdentitySettingsComponent extends mixins(EvanComponent) {
    * All contacts that have the profile key `identityAccess`
    */
   contacts: IdentityAccessContact[] = null;
+
+  /**
+   * Contacts filtered with identity access
+   */
+  permittedContacts: IdentityAccessContact[] = null;
 
   /**
    * Is the current user allowed to grant access?
@@ -98,20 +104,59 @@ export default class IdentitySettingsComponent extends mixins(EvanComponent) {
     filter: '',
   }
 
+  useIdentity = false;
+
+  /**
+   * Clear identity share dispatcher watcher in beforeDestroy
+   */
+  identityShareDispatcherClear: Function;
+
+  beforeDestroy(): void {
+    this.identityShareDispatcherClear();
+  }
+
   /**
    * Load initial data
    */
   async created(): Promise<void> {
     this.runtime = session.identityRuntime;
+    this.useIdentity = this.runtime.runtimeConfig.useIdentity;
+
+    // don't allow this ui for profiles without useIdentity
+    if (!this.useIdentity) {
+      this.loading = false;
+      return;
+    }
+
     this.contacts = await this.loadContacts();
-    this.permittedContacts = this.contacts.filter((contact) => contact.hasIdentityAccess);
+
+    this.identityShareDispatcherClear = identityShareDispatcher.watch(async ($event) => {
+      if ($event.detail.status === 'finished' || $event.detail.status === 'deleted') {
+        this.loading = true;
+        await this.loadContacts();
+        this.loading = false;
+      }
+
+      const instances = await identityShareDispatcher.getInstances(this.runtime, true) as DispatcherInstance[];
+      const granting = { };
+      instances.forEach((instance: DispatcherInstance) => {
+        granting[instance.data.contact.address] = true;
+      });
+
+      // update table data and display also the contacts that are in loading progress
+      this.granting = granting;
+      this.permittedContacts = this.contacts.filter(
+        (contact) => contact.hasIdentityAccess || granting[contact.address],
+      );
+    });
+
     this.loading = false;
   }
 
   /**
    * Load all contacts that are flagged with the `identityAccess` flag.
    */
-  async loadContacts(): Promise<Contact[]> {
+  async loadContacts(): Promise<IdentityAccessContact[]> {
     const { profile, keys }: { profile: any; keys: any } = await this.runtime.profile.getAddressBook();
 
     return Promise.all(Object.keys(profile)

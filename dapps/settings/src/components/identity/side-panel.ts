@@ -106,37 +106,17 @@ export default class IdentitySidePanelComponent extends mixins(EvanComponent) {
       ...this.form.getFormData(),
     };
 
-    // load encryptionKey and alias to be able to attach it to the b-mail
-    const [fromAlias, encryptionKey] = await Promise.all([
-      profileUtils.getUserAlias(runtime),
-      lightwallet.getEncryptionKey(),
-    ]);
-
     // start identity invite dispatcher and pass translated b-mail content
     identityShareDispatcher.start(this.getRuntime(), {
       contact,
       bmail: {
-        content: {
-          from: runtime.activeIdentity,
-          fromAlias,
-          title: this.$t('_settings.identity.share.title'),
-          body: this.$t('_settings.identity.share.body', {
-            alias: fromAlias,
-            identity: runtime.activeIdentity,
-            access: this.$t(`_settings.identity.share.type.${contact.hasIdentityAccess}`),
-          }).replace(/\n/g, '<br>'),
-          attachments: [
-            {
-              fullPath: `/${this.dapp.rootEns}/settings.${getDomainName()}`,
-              type: 'url',
-            },
-            {
-              encryptionKey,
-              permission: contact.hasIdentityAccess,
-              type: 'identityAccess',
-            },
-          ],
-        },
+        fromAlias: await profileUtils.getUserAlias(runtime),
+        title: this.$t('_settings.identity.share.title'),
+        body: this.$t('_settings.identity.share.body', {
+          alias: fromAlias,
+          identity: runtime.activeIdentity,
+          access: this.$t(`_settings.identity.share.type.${contact.hasIdentityAccess}`),
+        }).replace(/\n/g, '<br>'),
       },
     });
   }

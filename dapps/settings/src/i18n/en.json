@@ -27,6 +27,7 @@
     },
     "header": "Settings",
     "identity": {
+      "not-support": "You are currently logged in with an old, non-identity-based profile. User management for identities is only supported for current profiles.",
       "dispatcher": {
         "share": "Granting access to identity..."
       },

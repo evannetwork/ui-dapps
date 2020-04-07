@@ -20,6 +20,9 @@
 <template>
   <div class="evan-content-container">
     <evan-loading v-if="loading" />
+    <template v-else-if="!useIdentity">
+      <h3>{{ '_settings.identity.not-support' | translate }}</h3>
+    </template>
     <template v-else>
       <evan-searchbox
         id="searchBox"
