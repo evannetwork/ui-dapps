@@ -44,7 +44,8 @@ export default class UserCallout extends mixins(EvanComponent) {
 
   isChangingRuntime = false;
 
-  async switchAccount(id: string): Promise<void> {
+  async switchIdentity(id: string): Promise<void> {
+    const TEST_ID = '0x67ed20047c1f6d955b7020dd8296afac6ababea5';
     console.log('id', id);
     this.show = false;
     this.isChangingRuntime = true;
