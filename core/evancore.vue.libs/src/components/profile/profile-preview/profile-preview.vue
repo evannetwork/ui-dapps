@@ -43,6 +43,7 @@
         <a
           class="force-oneline account-name"
           :href="`${ dapp.baseUrl }/${ dapp.rootEns }/profile.vue.${ dapp.domainName }/${ address }/detail`"
+          @click="disableLink ? $event.preventDefault(): null"
         >
           <b>
             {{ userInfo.accountName }}

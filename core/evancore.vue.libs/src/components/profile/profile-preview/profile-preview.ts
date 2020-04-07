@@ -66,6 +66,8 @@ export default class ProfilePreviewComponent extends mixins(EvanComponent) {
 
   @Prop() href;
 
+  @Prop({ default: false }) disableLink: boolean;
+
   /**
    * Show loading symbol
    */

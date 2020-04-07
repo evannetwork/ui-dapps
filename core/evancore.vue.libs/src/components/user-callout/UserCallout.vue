@@ -80,7 +80,7 @@
           <evan-profile-preview
             size="sm-plus"
             :address="account"
-            :href="null"
+            :disable-link="true"
           />
         </a>
 
