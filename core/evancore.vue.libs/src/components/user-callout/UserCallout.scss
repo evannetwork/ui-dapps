@@ -54,11 +54,9 @@
     }
 
     &:hover {
-      &, * {
-        color: cssVar('primary') !important;
-        border: 0;
-        background-color: inherit !important;
-      }
+      color: cssVar('primary') !important;
+      border: 0;
+      background-color: inherit !important;
     }
   }
 }

@@ -23,7 +23,9 @@
       class="callout"
       :class="{ active: show }"
     >
+      <evan-loading v-if="isChangingRuntime" />
       <div
+        v-else
         class="active-account"
         style="width:100%; height:64px"
       >
@@ -58,6 +60,9 @@
           class="mdi mdi-settings-outline"
           style="font-size: 18px"
         />
+        <evan-tooltip placement="right">
+          {{ $t('_evan.coming-soon') }}
+        </evan-tooltip>
       </evan-button>
 
       <!-- Switch Account -->
@@ -70,7 +75,7 @@
           v-for="account in accounts"
           :key="account"
           class="d-block switch-account"
-          @click="switchAccount(account)"
+          @click="switchIdentity(account)"
         >
           <evan-profile-preview
             size="sm-plus"
@@ -91,6 +96,9 @@
           class="mdi mdi-plus"
           style="font-size: 18px"
         />
+        <evan-tooltip placement="right">
+          {{ $t('_evan.coming-soon') }}
+        </evan-tooltip>
       </evan-button>
 
       <evan-button

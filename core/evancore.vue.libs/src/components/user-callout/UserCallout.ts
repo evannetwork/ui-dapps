@@ -55,7 +55,7 @@ export default class UserCallout extends mixins(EvanComponent) {
     this.accounts = accessAddresses;
   }
 
-  async switchAccount(id: string): Promise<void> {
+  async switchIdentity(id: string): Promise<void> {
     // just show overlay, dapp-wrapper will reload the whole ui
     session.changeActiveIdentity(id);
     this.isChangingRuntime = true;
