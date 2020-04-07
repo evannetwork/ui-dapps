@@ -20,6 +20,7 @@
 import { config, routing } from '@evan.network/ui-dapp-browser';
 import {
   ExecutorAgent,
+  getRuntimeForIdentity,
   lodash,
   logLog,
   logLogLevel,
@@ -307,6 +308,7 @@ export default class EvanSession {
             privateKey = lightwallet.getPrivateKey(vault, activeAccount);
           }
 
+          EvanSession.accountIdentity = await bccHelper.getIdentityForAccount(activeAccount);
           EvanSession.accountRuntime = await bccHelper.createRuntime(
             activeAccount,
             EvanSession.accountIdentity,
@@ -316,16 +318,15 @@ export default class EvanSession {
             null,
             { executor },
           );
-          // TODO: replace with correct create runtime from account runtime
-          EvanSession.identityRuntime = await bccHelper.createRuntime(
-            activeAccount,
-            activeIdentity,
-            encryptionKey,
-            privateKey,
-            lodash.cloneDeep(config),
-            null,
-            { executor },
-          );
+          // use default runtime or create the on behalf of identity runtime
+          if (EvanSession.accountIdentity === activeIdentity) {
+            EvanSession.identityRuntime = EvanSession.accountRuntime;
+          } else {
+            EvanSession.identityRuntime = await getRuntimeForIdentity(
+              EvanSession.accountRuntime,
+              activeIdentity,
+            );
+          }
         }
       })();
 

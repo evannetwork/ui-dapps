@@ -18,6 +18,9 @@
 */
 
 import Component, { mixins } from 'vue-class-component';
+import { session } from '@evan.network/ui-session';
+import { profileUtils } from '@evan.network/ui';
+
 import EvanComponent from '../../component';
 
 interface Account {
@@ -54,5 +57,22 @@ export default class UserCallout extends mixins(EvanComponent) {
     });
 
     this.isChangingRuntime = false;
+  }
+
+  async created () {
+    const identityAccess = (await session.accountRuntime.profile.getIdentityAccessList() || {});
+    const accessAddresses = Object
+      .keys(identityAccess)
+      .filter((address: string) => address !== session.activeIdentity);
+
+    if (session.activeIdentity !== session.accountIdentity) {
+      accessAddresses.push(session.accountIdentity);
+    }
+
+    this.accounts = await Promise.all(accessAddresses.map(async (address) => ({
+      id: address,
+      displayName: await profileUtils.getUserAlias(session.accountRuntime, address),
+      type: await profileUtils.getProfileType(session.accountRuntime, address),
+    })));
   }
 }
