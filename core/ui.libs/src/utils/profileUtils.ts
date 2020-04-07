@@ -177,19 +177,3 @@ export async function getContacts(
       && entry.value !== runtime.activeIdentity
       && !/@/.test(entry.value));
 }
-
-export async function getSwitchableIdentities(runtime: Runtime): Promise<any[]> {
-  const profile = new Profile({
-    ...(runtime as ProfileOptions),
-    accountId: runtime.activeIdentity,
-  });
-
-  const addressbook = await profile.getAddressBook();
-  const { keys } = addressbook;
-  const filteredIdentities = Object.keys(keys)
-    .filter((key) => keys[key].identityAccess)
-    .map((identity) => ({ [identity]: keys[identity] }));
-
-  console.log('identities', filteredIdentities);
-  return filteredIdentities;
-}

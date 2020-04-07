@@ -130,20 +130,13 @@
       <template #overlay>
         <div
           v-if="isChangingRuntime"
-          class="text-center"
+          class="switching-identity"
         >
-          <p id="cancel-label">
-            Please wait...
-          </p>
-          <b-button
-            ref="cancel"
-            variant="outline-danger"
-            size="sm"
-            aria-describedby="cancel-label"
-            @click="show = false"
-          >
-            Cancel
-          </b-button>
+          <div>
+            <p>
+              {{ $t('_evan.switching-identity') }}
+            </p>
+          </div>
         </div>
 
         <div

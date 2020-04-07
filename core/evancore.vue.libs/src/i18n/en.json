@@ -186,6 +186,7 @@
       "required": "This field is required",
       "url": "Enter a valid URL"
     },
-    "coming-soon": "Coming soon"
+    "coming-soon": "Coming soon",
+    "switching-identity": "Switching identity ..."
   }
 }

@@ -22,12 +22,6 @@ import { session } from '@evan.network/ui-session';
 
 import EvanComponent from '../../component';
 
-interface Account {
-  id: string;
-  displayName: string;
-  type: string;
-}
-
 /**
  * Shows the callout element when extending the profile in bottom nav
  *
@@ -43,21 +37,23 @@ export default class UserCallout extends mixins(EvanComponent) {
   isChangingRuntime = false;
 
   async created(): Promise<void> {
-    const identityAccess = (await session.accountRuntime.profile.getIdentityAccessList() || {});
-    const accessAddresses = Object
-      .keys(identityAccess)
+    const accessibleIdentities = await session.accountRuntime.profile.getIdentityAccessList() || {};
+    const addresses = Object
+      .keys(accessibleIdentities)
       .filter((address: string) => address.length === 42 && address !== session.activeIdentity);
 
+    // Add the initial identity to the list
     if (session.activeIdentity !== session.accountIdentity) {
-      accessAddresses.push(session.accountIdentity);
+      addresses.push(session.accountIdentity);
     }
 
-    this.accounts = accessAddresses;
+    this.accounts = addresses;
   }
 
   async switchIdentity(id: string): Promise<void> {
-    // just show overlay, dapp-wrapper will reload the whole ui
-    session.changeActiveIdentity(id);
     this.isChangingRuntime = true;
+    this.show = false;
+
+    session.changeActiveIdentity(id);
   }
 }
