@@ -51,6 +51,8 @@
 
       <evan-button
         class="callout-button account-settings"
+        :href="`#/${dapp.rootEns}/settings.${dapp.domainName}/identity`"
+        @click="show = false"
       >
         {{ $t('_evan.user-callout.account-settings') }}
         <div class="mx-auto" />
@@ -77,7 +79,7 @@
         >
           <evan-profile-preview
             size="sm-plus"
-            :address="$store.state.runtime.activeIdentity"
+            :address="account.id"
           />
         </a>
 
