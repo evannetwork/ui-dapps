@@ -48,14 +48,17 @@
     outline: none;
     background-color: white;
 
-    &, * {
+    &, i.mdi {
       color: cssVar('gray-900');
+      transition: color 0.5s ease-out;
     }
 
     &:hover {
-      color: cssVar('primary') !important;
-      border: 0;
-      background-color: inherit !important;
+      &, i.mdi {
+        color: cssVar('primary') !important;
+        border: 0;
+        background-color: inherit !important;
+      }
     }
   }
 }
