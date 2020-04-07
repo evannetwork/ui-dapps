@@ -19,7 +19,6 @@
 
 import Component, { mixins } from 'vue-class-component';
 import { session } from '@evan.network/ui-session';
-import { profileUtils } from '@evan.network/ui';
 
 import EvanComponent from '../../component';
 
@@ -37,42 +36,28 @@ interface Account {
  */
 @Component
 export default class UserCallout extends mixins(EvanComponent) {
-  accounts: Account[] = [{
-    id: '0x000',
-    displayName: 'Test Account',
-    type: this.$t('_evan.user-callout.user-account'),
-  }]
+  accounts: string[] = [];
 
   show = false;
 
   isChangingRuntime = false;
 
-  async switchAccount(id: string): Promise<void> {
-    console.log('id', id);
-    this.show = false;
-    this.isChangingRuntime = true;
-
-    await new Promise((resolve) => {
-      setTimeout(resolve, 2000);
-    });
-
-    this.isChangingRuntime = false;
-  }
-
-  async created () {
+  async created(): Promise<void> {
     const identityAccess = (await session.accountRuntime.profile.getIdentityAccessList() || {});
     const accessAddresses = Object
       .keys(identityAccess)
-      .filter((address: string) => address !== session.activeIdentity);
+      .filter((address: string) => address.length === 42 && address !== session.activeIdentity);
 
     if (session.activeIdentity !== session.accountIdentity) {
       accessAddresses.push(session.accountIdentity);
     }
 
-    this.accounts = await Promise.all(accessAddresses.map(async (address) => ({
-      id: address,
-      displayName: await profileUtils.getUserAlias(session.accountRuntime, address),
-      type: await profileUtils.getProfileType(session.accountRuntime, address),
-    })));
+    this.accounts = accessAddresses;
+  }
+
+  async switchAccount(id: string): Promise<void> {
+    // just show overlay, dapp-wrapper will reload the whole ui
+    session.changeActiveIdentity(id);
+    this.isChangingRuntime = true;
   }
 }

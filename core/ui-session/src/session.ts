@@ -44,6 +44,9 @@ let lastAccount = '';
 let lastIdentity = '';
 // used to only start runtime resolve once
 const runtimeLoadCache = { };
+// functions that should be called, when accoun / identity was changed
+const accountChangeWatcher = [];
+const identityChangeWatcher = [];
 
 export default class EvanSession {
   /**
@@ -114,6 +117,27 @@ export default class EvanSession {
   static set activeIdentity(identity: string) {
     lastIdentity = identity;
     window.localStorage['evan-identity'] = identity;
+  }
+
+  /**
+   * Forces a identity update and does not set lastIdentity and trigger watcher handlers.
+   *
+   * @param      {string}  account  identity address to use
+   */
+  static changeActiveAccount(identity: string): void {
+    window.localStorage['evan-account'] = identity;
+    window.localStorage.removeItem('evan-identity');
+    accountChangeWatcher.forEach((watcher) => watcher());
+  }
+
+  /**
+   * Forces a identity update and does not set lastIdentity and trigger watcher handlers.
+   *
+   * @param      {string}  identity  identity address to use
+   */
+  static changeActiveIdentity(identity: string): void {
+    window.localStorage['evan-identity'] = identity;
+    identityChangeWatcher.forEach((watcher) => watcher());
   }
 
   static get provider(): string {
@@ -223,16 +247,19 @@ export default class EvanSession {
    */
   static onAccountChange(callback: Function): () => void {
     const storage = window.localStorage;
-    const watcher = (event: StorageEvent): void => {
-      if (event.key === 'evan-account' && lastAccount !== storage['evan-account']) {
+    const watcher = (event?: StorageEvent): void => {
+      if ((!event || event.key === 'evan-identity') && lastAccount !== storage['evan-account']) {
         EvanSession.isOldProfile = false;
         callback(EvanSession.activeAccount);
       }
     };
 
     lastAccount = storage['evan-account'];
-    window.addEventListener('storage', watcher);
-    return (): void => window.removeEventListener('storage', watcher);
+    accountChangeWatcher.push(watcher);
+    return (): void => {
+      accountChangeWatcher.splice(accountChangeWatcher.indexOf(watcher), 1);
+      window.removeEventListener('storage', watcher);
+    };
   }
 
   /**
@@ -240,15 +267,19 @@ export default class EvanSession {
    */
   static onIdentityChange(callback: Function): () => void {
     const storage = window.localStorage;
-    const watcher = (event: StorageEvent): void => {
-      if (event.key === 'evan-identity' && lastIdentity !== storage['evan-identity']) {
+    const watcher = (event?: StorageEvent): void => {
+      if ((!event || event.key === 'evan-identity') && lastIdentity !== storage['evan-identity']) {
         callback(EvanSession.activeAccount);
       }
     };
 
     lastIdentity = storage['evan-identity'];
     window.addEventListener('storage', watcher);
-    return (): void => window.removeEventListener('storage', watcher);
+    identityChangeWatcher.push(watcher);
+    return (): void => {
+      identityChangeWatcher.splice(identityChangeWatcher.indexOf(watcher), 1);
+      window.removeEventListener('storage', watcher);
+    };
   }
 
   /**

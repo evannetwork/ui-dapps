@@ -442,7 +442,7 @@ export default class DAppWrapperComponent extends mixins(EvanComponent) {
       }
 
       return result;
-    });
+    }, this.topLevel);
   }
 
   /**

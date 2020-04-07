@@ -68,13 +68,14 @@
 
         <a
           v-for="account in accounts"
-          :key="account.id"
+          :key="account"
           class="d-block switch-account"
-          @click="switchAccount(account.id)"
+          @click="switchAccount(account)"
         >
           <evan-profile-preview
             size="sm-plus"
-            :address="account.id"
+            :address="account"
+            :href="null"
           />
         </a>
 
