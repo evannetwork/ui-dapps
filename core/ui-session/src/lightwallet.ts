@@ -117,9 +117,11 @@ export default class EvanLightWallet {
    *
    * @param      {any}     vault   vault to save locally
    */
-  static setVaultActive(vault: any) {
+  static setVaultActive(vault: any): void {
+    const accounts = EvanLightWallet.getAccounts(vault, 1);
+    // eslint-disable-next-line prefer-destructuring
+    window.localStorage['evan-account'] = accounts[0];
     window.localStorage['evan-vault'] = vault.serialize();
-
     cachedVault = vault;
   }
 
@@ -164,14 +166,21 @@ export default class EvanLightWallet {
    *
    * @return     {string}  encryption key
    */
-  static async getEncryptionKey(): Promise<string> {
+  static async getEncryptionKey(address?: string): Promise<string> {
     const agentExecutor = await session.getAgentExecutor();
     // if an executor agent should be used, return the key instantly
-    if (agentExecutor) {
+    if (agentExecutor && (!address || agentExecutor.accountId === address)) {
       return agentExecutor.key;
     // if the url was opened using an specific mnemonic and password, use this one!
     }
 
+    // if custom encryption key was set, return this per default (default would be encryption key
+    // for account)
+    if (address && customEncryptionKeys[address]) {
+      return customEncryptionKeys[address];
+    }
+
+    // if no custom encryption key was set, return the default for the primary vault account
     const vault = await EvanLightWallet.loadUnlockedVault();
     if (vault) {
       return vault.encryptionKey;
@@ -224,11 +233,8 @@ export default class EvanLightWallet {
    */
   static async createVaultAndSetActive(mnemonic: string, password: string): Promise<void> {
     const vault = await EvanLightWallet.getNewVault(mnemonic, password);
-    const accounts = EvanLightWallet.getAccounts(vault, 1);
-
     EvanLightWallet.setVaultActive(vault);
-    // eslint-disable-next-line prefer-destructuring
-    window.localStorage['evan-account'] = accounts[0];
+    return vault;
   }
 
   /**

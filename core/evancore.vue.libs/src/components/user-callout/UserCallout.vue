@@ -43,7 +43,7 @@
         />
       </evan-button>
 
-      <div class="divier-wrapper">
+      <div class="divider-wrapper">
         <hr class="divider">
       </div>
 
@@ -76,7 +76,7 @@
           />
         </a>
 
-        <div class="divier-wrapper">
+        <div class="divider-wrapper">
           <hr class="divider">
         </div>
       </template>

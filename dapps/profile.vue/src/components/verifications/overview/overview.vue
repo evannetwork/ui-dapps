@@ -18,7 +18,7 @@
 */
 
 <template>
-  <div class="profile-verification-overview container-wide h-100">
+  <div class="profile-verification-overview evan-content-container h-100">
     <div class="d-flex align-items-center">
       <div class="d-flex align-items-center">
         <h3 class="font-weight-bold mb-0">

@@ -173,10 +173,10 @@
       "title": "In Entwicklung"
     },
     "user-callout": {
-      "account-settings": "Kontoeinstellungen",
-      "create-new-account": "Neuen Account erstellen",
-      "switch-account": "Zu einem anderen Konto wechseln",
-      "user-account": "Benutzerkonto"
+      "account-settings": "Identitätseinstellungen",
+      "create-new-account": "Identität hinzufügen",
+      "switch-account": "Zu einer anderen Identität wechseln",
+      "user-account": "Identität"
     },
     "view-profile": "Identität anzeigen",
     "welcome-to-evan": "Willkommen im evan.network",

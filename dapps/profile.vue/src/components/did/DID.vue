@@ -18,11 +18,11 @@
 */
 
 <template>
-  <div class="wrapper d-flex">
+  <div>
     <evan-loading v-if="!didDocument" />
     <div
       v-else
-      class="content"
+      class="evan-content-container"
     >
       <evan-onpage-navigation
         class="d-none d-xxl-block"
@@ -142,11 +142,6 @@ export default Component;
 <style lang="scss" scoped>
 .wrapper {
   padding: 64px 24px;
-}
-.content {
-  margin-left: auto;
-  margin-right: auto;
-  max-width: 560px;
 }
 .content-card {
   background: white;

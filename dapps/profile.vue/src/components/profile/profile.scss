@@ -23,32 +23,4 @@
   .profile-verification-card {
     margin-top: 1em;
   }
-
-  .profile-row {
-    display: flex;
-    justify-content: flex-end;
-
-    .left-col {
-      flex-grow: 1;
-    }
-
-    .col {
-      overflow: hidden;
-      flex-basis: auto;
-      min-width: auto;
-      flex-basis: auto;
-    }
-
-    @media(min-width: 1200px) {
-      .left-col, .right-col {
-        box-sizing: content-box;
-        flex-basis: 0;
-      }
-      // match wallet card width
-      .right-col {
-        min-width: 323px !important;
-        max-width: 323px !important;
-      }
-    }
-  }
 }

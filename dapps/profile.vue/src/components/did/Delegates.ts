@@ -21,11 +21,10 @@ import Component, { mixins } from 'vue-class-component';
 import { EvanComponent, EvanTableColumn, ContactInterface } from '@evan.network/ui-vue-core';
 import { profileUtils, bccUtils } from '@evan.network/ui';
 import { Prop } from 'vue-property-decorator';
-import { Delegate } from './DidInterfaces';
 
 @Component
 export default class DelegatesComponent extends mixins(EvanComponent) {
-  @Prop() delegates: Delegate[];
+  @Prop() delegates: string[];
 
   @Prop() isEditMode;
 
@@ -39,15 +38,6 @@ export default class DelegatesComponent extends mixins(EvanComponent) {
       label: this.$t('_profile.did.did'),
       tdClass: 'truncate',
     },
-    /**
-     * Remove note for now. Technically not possible to reliably resolve note from did atm.
-     * A user that has been added with accountId cant be resolved through the DID
-     */
-    // {
-    //   key: 'note',
-    //   label: this.$t('_profile.did.note'),
-    //   tdClass: 'truncate',
-    // },
     {
       key: 'action',
       label: '',
@@ -68,17 +58,11 @@ export default class DelegatesComponent extends mixins(EvanComponent) {
    * Filter out already set delegates
    */
   get filteredContacts(): ContactInterface[] {
-    const dids = this.delegates.map((delegate) => delegate.did);
-
-    return this.contacts.filter((contact) => !dids.includes(contact.value));
+    return this.contacts.filter((contact) => !this.delegates.includes(contact.value));
   }
 
   onSelectContact(contact: ContactInterface): void {
-    const newDelegate = {
-      did: contact.value,
-      note: contact.label,
-    };
-    this.$emit('addDelegate', newDelegate);
+    this.$emit('addDelegate', contact.value);
   }
 
   deleteDelegate(index: number): void {
