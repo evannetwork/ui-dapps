@@ -66,7 +66,7 @@
       </evan-button>
 
       <!-- Switch Account -->
-      <template v-if="accounts">
+      <template v-if="accounts.length">
         <div class="switch">
           {{ $t('_evan.user-callout.switch-account') }}
         </div>
