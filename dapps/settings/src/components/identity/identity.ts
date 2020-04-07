@@ -23,14 +23,14 @@ import { profileUtils } from '@evan.network/ui';
 import { Runtime } from '@evan.network/api-blockchain-core';
 import { session } from '@evan.network/ui-session';
 
-import { Contact } from './interfaces';
+import { IdentityAccessContact } from '../../interfaces';
 
 @Component
 export default class IdentitySettingsComponent extends mixins(EvanComponent) {
   /**
    * All contacts that have the profile key `identityAccess`
    */
-  contacts: Contact[] = null;
+  contacts: IdentityAccessContact[] = null;
 
   /**
    * Is the current user allowed to grant access?
@@ -103,21 +103,21 @@ export default class IdentitySettingsComponent extends mixins(EvanComponent) {
    */
   async created(): Promise<void> {
     this.runtime = session.identityRuntime;
-    this.contacts = await this.getPermittedContacts();
+    this.contacts = await this.loadContacts();
+    this.permittedContacts = this.contacts.filter((contact) => contact.hasIdentityAccess);
     this.loading = false;
   }
 
   /**
    * Load all contacts that are flagged with the `identityAccess` flag.
    */
-  async getPermittedContacts(): Promise<Contact[]> {
-    const { profile }: { profile: any } = await this.runtime.profile.getAddressBook();
+  async loadContacts(): Promise<Contact[]> {
+    const { profile, keys }: { profile: any; keys: any } = await this.runtime.profile.getAddressBook();
 
     return Promise.all(Object.keys(profile)
       .filter((address) => address.startsWith('0x')
         && address !== this.runtime.activeAccount
-        && address !== this.runtime.activeIdentity
-        && profile[address].identityAccess)
+        && address !== this.runtime.activeIdentity)
       .map(async (contactAddress: string) => {
         // filter out own account
         const [type, displayName] = await Promise.all([
@@ -130,9 +130,10 @@ export default class IdentitySettingsComponent extends mixins(EvanComponent) {
           displayName,
           granted: profile[contactAddress].identityAccessGranted || '',
           icon: profileUtils.getProfileTypeIcon(type),
+          hasIdentityAccess: profile[contactAddress].hasIdentityAccess || false,
           note: profile[contactAddress].identityAccessNote || '',
           type,
-        } as Contact;
+        } as IdentityAccessContact;
       }));
   }
 }

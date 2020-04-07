@@ -30,12 +30,15 @@
         <span>{{ '_settings.routes.identity' | translate }}</span>
       </evan-searchbox>
 
-      <identity-sidepanel ref="identitySidepanel" />
+      <identity-sidepanel
+        ref="identitySidepanel"
+        :contacts="contacts"
+      />
 
       <evan-table
         class="clickable-rows"
         primary-key="address"
-        :items="contacts"
+        :items="permittedContacts"
         :fields="table.columns"
         :filter="table.filter"
         :filter-included-fields="table.filterBy"
@@ -45,28 +48,28 @@
         :tbody-transition-props="{ name: 'list', mode: 'out-in' }"
         @row-clicked="$refs.identitySidepanel.show($event)"
       >
-        <template v-slot:cell(displayName)="contacts">
+        <template v-slot:cell(displayName)="contact">
           {{
-            contacts.item.displayName || contacts.item.address
+            contact.item.displayName || contact.item.address
           }}
         </template>
-        <template v-slot:cell(note)="contacts">
+        <template v-slot:cell(note)="contact">
           {{
-            contacts.item.note
+            contact.item.note
           }}
         </template>
-        <template v-slot:cell(icon)="contacts">
+        <template v-slot:cell(icon)="contact">
           <i
             class="table-icon"
-            :class="contacts.item.icon"
+            :class="contact.item.icon"
           />
         </template>
-        <template v-slot:cell(granted)="contacts">
-          {{ contacts.item.granted | moment('L') }}
+        <template v-slot:cell(granted)="contact">
+          {{ contact.item.granted | moment('L') }}
         </template>
-        <template v-slot:cell(actions)="contacts">
+        <template v-slot:cell(actions)="contact">
           <evan-loading
-            v-if="granting[contacts.item.address]"
+            v-if="granting[contact.item.address]"
           />
         </template>
         <template v-slot:table-caption>

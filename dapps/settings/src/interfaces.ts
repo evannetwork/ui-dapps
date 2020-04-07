@@ -19,12 +19,12 @@
 
 import { profileUtils } from '@evan.network/ui';
 
-export interface Contact {
+export interface IdentityAccessContact {
   address: string;
   displayName: string;
   granted: string;
+  hasIdentityAccess: string|boolean;
   icon: string;
-  identityAccess: string|boolean;
   note: string;
   type: profileUtils.ProfileType;
 }

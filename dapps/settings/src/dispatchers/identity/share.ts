@@ -20,6 +20,8 @@
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 import { Dispatcher, DispatcherInstance } from '@evan.network/ui';
 
+import { IdentityAccessContact } from '../../interfaces';
+
 const dispatcher = new Dispatcher(
   `settings.${dappBrowser.getDomainName()}`,
   'identityShareDispatcher',
@@ -28,8 +30,26 @@ const dispatcher = new Dispatcher(
 );
 
 dispatcher
-  .step(async (instance: DispatcherInstance, data: any) => {
-    throw new Error('not implemented');
+  .step(async (
+    instance: DispatcherInstance,
+    { contact, bmail }: { contact: IdentityAccessContact; bmail: any },
+  ) => {
+    const { profile } = instance.runtime;
+    const { address, note, hasIdentityAccess } = contact;
+
+    await Promise.all([
+      // add "cosmetic" profile keys
+      profile.addProfileKey(address, 'hasIdentityAccess', hasIdentityAccess as string),
+      profile.addProfileKey(address, 'identityAccessGranted', Date.now().toString()),
+      profile.addProfileKey(address, 'identityAccessNote', note),
+      // send the b-mail to the invited user
+      instance.runtime.mailbox.sendMail(bmail, instance.runtime.activeIdentity, address),
+      // (() => {
+      //   if (hasIdentityAccess === 'write') {
+
+      //   }
+      // })(),
+    ]);
   });
 
 export default dispatcher;

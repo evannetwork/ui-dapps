@@ -18,16 +18,19 @@
 */
 
 import Component, { mixins } from 'vue-class-component';
+import { Prop } from 'vue-property-decorator';
 import {
   EvanComponent,
   EvanForm,
   EvanFormControl,
   PermissionsInterface,
+  SwipePanelComponentClass,
 } from '@evan.network/ui-vue-core';
+import { session, lightwallet } from '@evan.network/ui-session';
 import { profileUtils } from '@evan.network/ui';
-import { session } from '@evan.network/ui-session';
+import { getDomainName } from '@evan.network/ui-dapp-browser';
 
-import { Contact } from './interfaces';
+import { IdentityAccessContact } from '../../interfaces';
 import { identityShareDispatcher } from '../../dispatchers';
 
 interface IdentityForm extends EvanForm {
@@ -37,6 +40,8 @@ interface IdentityForm extends EvanForm {
 
 @Component
 export default class IdentitySidePanelComponent extends mixins(EvanComponent) {
+  @Prop() contacts: IdentityAccessContact[];
+
   /**
    * Check if the current activeIdentity is the owner of the selected identity
    */
@@ -45,14 +50,9 @@ export default class IdentitySidePanelComponent extends mixins(EvanComponent) {
   /**
    * Current selected contact. Will be set by the sow function
    */
-  contact: Contact = null;
+  contact: IdentityAccessContact = null;
 
-  originalContact: Contact = null;
-
-  /**
-   * All available contacts
-   */
-  contacts = null;
+  originalContact: IdentityAccessContact = null;
 
   /**
    * Identity formular specification (address / note)
@@ -79,11 +79,9 @@ export default class IdentitySidePanelComponent extends mixins(EvanComponent) {
    */
   async created(): Promise<void> {
     // load contacts for user select, load owner for enable / disable edit
-    const [contacts, owner] = await Promise.all([
-      profileUtils.getContacts(session.identityRuntime),
-      session.identityRuntime.verifications.getOwnerAddressForIdentity(session.activeIdentity),
-    ]);
-    this.contacts = contacts;
+    const owner = await session.identityRuntime.verifications.getOwnerAddressForIdentity(
+      session.activeIdentity,
+    );
     this.canEdit = owner === session.accountRuntime.underlyingAccount;
     this.loading = false;
   }
@@ -95,16 +93,51 @@ export default class IdentitySidePanelComponent extends mixins(EvanComponent) {
     this.contact = null;
     this.form = null;
     this.originalContact = null;
-    this.$refs.sidePanel.hide();
+    (this.$refs.sidePanel as SwipePanelComponentClass).hide();
   }
 
   /**
    * Save the current specification
    */
-  save(): void {
-    identityShareDispatcher.start(this.getRuntime(), {
+  async save(): Promise<void> {
+    const runtime = this.getRuntime();
+    const contact = {
       ...this.contact,
       ...this.form.getFormData(),
+    };
+
+    // load encryptionKey and alias to be able to attach it to the b-mail
+    const [fromAlias, encryptionKey] = await Promise.all([
+      profileUtils.getUserAlias(runtime),
+      lightwallet.getEncryptionKey(),
+    ]);
+
+    // start identity invite dispatcher and pass translated b-mail content
+    identityShareDispatcher.start(this.getRuntime(), {
+      contact,
+      bmail: {
+        content: {
+          from: runtime.activeIdentity,
+          fromAlias,
+          title: this.$t('_settings.identity.share.title'),
+          body: this.$t('_settings.identity.share.body', {
+            alias: fromAlias,
+            identity: runtime.activeIdentity,
+            access: this.$t(`_settings.identity.share.type.${contact.hasIdentityAccess}`),
+          }).replace(/\n/g, '<br>'),
+          attachments: [
+            {
+              fullPath: `/${this.dapp.rootEns}/settings.${getDomainName()}`,
+              type: 'url',
+            },
+            {
+              encryptionKey,
+              permission: contact.hasIdentityAccess,
+              type: 'identityAccess',
+            },
+          ],
+        },
+      },
     });
   }
 
@@ -120,9 +153,16 @@ export default class IdentitySidePanelComponent extends mixins(EvanComponent) {
         uiSpecs: {
           type: 'v-select',
           attr: {
-            disabled: !this.isNew,
             required: true,
-            options: this.contacts,
+            options: this.contacts.map((contact: IdentityAccessContact) => ({
+              value: contact.address,
+              label: contact.displayName || contact.address,
+            })),
+          },
+          input: (address: string) => {
+            if (address) {
+              this.show(this.contacts.find((contact) => contact.address === address));
+            }
           },
         },
       },
@@ -133,13 +173,13 @@ export default class IdentitySidePanelComponent extends mixins(EvanComponent) {
   }
 
   /**
-   * Update the permissions object to match the identityAccess param.
+   * Update the permissions object to match the hasIdentityAccess param.
    */
   setupPermissions(): void {
     this.permissions = {
       identity: {
-        read: this.contact.identityAccess === 'read' || this.contact.identityAccess === 'write',
-        readWrite: this.contact.identityAccess === 'write',
+        read: this.contact.hasIdentityAccess === 'read' || this.contact.hasIdentityAccess === 'write',
+        readWrite: this.contact.hasIdentityAccess === 'write',
       },
     };
   }
@@ -147,13 +187,13 @@ export default class IdentitySidePanelComponent extends mixins(EvanComponent) {
   /**
    * Move the side-panel in.
    */
-  show(contact: Contact): void {
-    this.originalContact = contact || { };
+  show(contact: IdentityAccessContact): void {
+    this.originalContact = contact || { } as IdentityAccessContact;
     this.contact = { ...this.originalContact };
     this.isNew = !contact;
     this.setupForm();
     this.setupPermissions();
-    this.$refs.sidePanel.show();
+    (this.$refs.sidePanel as SwipePanelComponentClass).show();
   }
 
   /**
@@ -161,9 +201,9 @@ export default class IdentitySidePanelComponent extends mixins(EvanComponent) {
    *
    * @param      {PermissionsInterface}  permissions  latest permission confugration
    */
-  updatePermissions(event: PermissionsInterface): void {
-    const idPerm = event.permissions.identity;
-    const originPerm = this.originalContact.identityAccess;
+  updatePermissions({ permissions }: { permissions: PermissionsInterface }): void {
+    const idPerm = permissions.identity;
+    const originPerm = this.originalContact.hasIdentityAccess;
 
     // do not allow to remove read permissions
     // eslint-disable-next-line no-nested-ternary
@@ -172,7 +212,7 @@ export default class IdentitySidePanelComponent extends mixins(EvanComponent) {
       resolvedPerm = 'read';
     }
 
-    this.contact.identityAccess = resolvedPerm;
+    this.contact.hasIdentityAccess = resolvedPerm;
     this.setupPermissions();
   }
 }

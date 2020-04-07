@@ -73,6 +73,7 @@ export interface EvanVueOptionsInterface {
  */
 export interface EvanFormControlUISpecs {
   attr?: {
+    disabled?: boolean;
     error?: string;
     hint?: boolean | string | (() => boolean | string);
     id?: string;
@@ -84,8 +85,9 @@ export interface EvanFormControlUISpecs {
     size?: number;
     type?: string;
   };
-  type?: string;
+  input?: (($event: any) => void);
   prohibited?: boolean;
+  type?: string;
 }
 
 /**

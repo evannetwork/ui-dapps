@@ -30,6 +30,14 @@
       "dispatcher": {
         "share": "Identitätszugriff erteilen..."
       },
+      "share": {
+        "body": "Ihnen wurde \"{access}\" Zugriff auf die Identität von {fromAlias} (identity) erteilt. Nutzen Sie den nachfolgenden Link, um die Referenz in Ihrem Profil abzuspeichern und im Namen dieser Identität zu interagieren.",
+        "title": "Identitätszugriff",
+        "type": {
+          "read": "lesender",
+          "write": "schreibender und lesender"
+        }
+      },
       "side-panel": {
         "cancel": "Abbrechen",
         "form": {
