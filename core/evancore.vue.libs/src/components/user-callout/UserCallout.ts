@@ -18,7 +18,6 @@
 */
 
 import Component, { mixins } from 'vue-class-component';
-// import { Prop } from 'vue-property-decorator';
 import EvanComponent from '../../component';
 
 interface Account {
@@ -35,7 +34,6 @@ interface Account {
  */
 @Component
 export default class UserCallout extends mixins(EvanComponent) {
-  // TODO make it a prop in next branch
   accounts: Account[] = [{
     id: '0x000',
     displayName: 'Test Account',
@@ -46,13 +44,13 @@ export default class UserCallout extends mixins(EvanComponent) {
 
   isChangingRuntime = false;
 
-  async switchAccount(id: string) {
+  async switchAccount(id: string): Promise<void> {
     console.log('id', id);
     this.show = false;
     this.isChangingRuntime = true;
 
     await new Promise((resolve) => {
-      setTimeout(resolve, 3000);
+      setTimeout(resolve, 2000);
     });
 
     this.isChangingRuntime = false;

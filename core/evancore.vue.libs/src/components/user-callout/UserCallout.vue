@@ -22,7 +22,7 @@
     <div
       class="callout"
       :class="{ active: show }"
-      :style="{ 'z-index': isChangingRuntime ? 1000 : 1001 }"
+      :style="{ 'z-index': isChangingRuntime ? 998 : 999 }"
     >
       <div
         class="active-account"
@@ -111,7 +111,7 @@
       blur="0"
       variant="dark"
       opacity="0.5"
-      z-index="1000"
+      z-index="998"
       no-center
       fixed
       no-wrap
@@ -135,7 +135,9 @@
             Cancel
           </b-button>
         </div>
+
         <div
+          v-else
           class="close-overlay"
           @click="show = false"
         />
