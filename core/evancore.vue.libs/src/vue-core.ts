@@ -22,6 +22,7 @@ import VueMoment from 'vue-moment';
 import VueToasted from 'vue-toasted';
 import Vuex, { Store } from 'vuex';
 import vuexI18n from 'vuex-i18n';
+import { OverlayPlugin } from 'bootstrap-vue';
 
 // setup moment locales
 import moment from 'moment';
@@ -206,6 +207,8 @@ export async function initializeVue(initOptions: EvanVueOptionsInterface): Promi
     duration: 3000,
     position: 'bottom-right',
   });
+
+  Vue.use(OverlayPlugin);
 
   const vue = new Vue({
     el: options.container,
