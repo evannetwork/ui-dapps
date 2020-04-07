@@ -22,7 +22,6 @@
     <div
       class="callout"
       :class="{ active: show }"
-      :style="{ 'z-index': isChangingRuntime ? 998 : 999 }"
     >
       <div
         class="active-account"
@@ -111,7 +110,7 @@
       blur="0"
       variant="dark"
       opacity="0.5"
-      z-index="998"
+      :z-index="isChangingRuntime ? 999 : 998"
       no-center
       fixed
       no-wrap
