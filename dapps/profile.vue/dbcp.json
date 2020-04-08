@@ -6,7 +6,8 @@
         "bootstrap.vue.libs": "^2.1.0",
         "countries.libs": "^1.1.0",
         "evancore.vue.libs": "^2.0.0",
-        "lib.digital-twin": "^3.0.0"
+        "lib.digital-twin": "^3.0.0",
+        "validate.vee.libs": "^3.2.5"
       },
       "entrypoint": "profile.vue.js",
       "files": [

@@ -23,7 +23,9 @@
       class="callout"
       :class="{ active: show }"
     >
+      <evan-loading v-if="isChangingRuntime" />
       <div
+        v-else
         class="active-account"
         style="width:100%; height:64px"
       >
@@ -49,6 +51,8 @@
 
       <evan-button
         class="callout-button account-settings"
+        :href="`#/${dapp.rootEns}/settings.${dapp.domainName}/identity`"
+        @click="show = false"
       >
         {{ $t('_evan.user-callout.account-settings') }}
         <div class="mx-auto" />
@@ -56,22 +60,27 @@
           class="mdi mdi-settings-outline"
           style="font-size: 18px"
         />
+        <evan-tooltip placement="right">
+          {{ $t('_evan.coming-soon') }}
+        </evan-tooltip>
       </evan-button>
 
       <!-- Switch Account -->
-      <template v-if="accounts">
+      <template v-if="accounts.length">
         <div class="switch">
           {{ $t('_evan.user-callout.switch-account') }}
         </div>
 
         <a
           v-for="account in accounts"
-          :key="account.id"
+          :key="account"
           class="d-block switch-account"
+          @click="switchIdentity(account)"
         >
           <evan-profile-preview
             size="sm-plus"
-            :address="$store.state.runtime.activeIdentity"
+            :address="account"
+            :disable-link="true"
           />
         </a>
 
@@ -87,6 +96,9 @@
           class="mdi mdi-plus"
           style="font-size: 18px"
         />
+        <evan-tooltip placement="right">
+          {{ $t('_evan.coming-soon') }}
+        </evan-tooltip>
       </evan-button>
 
       <evan-button
@@ -105,11 +117,11 @@
     <evan-logout ref="logout" />
 
     <b-overlay
-      :show="show"
+      :show="show || isChangingRuntime"
       blur="0"
       variant="dark"
       opacity="0.5"
-      z-index="1000"
+      :z-index="isChangingRuntime ? 999 : 998"
       no-center
       fixed
       no-wrap
@@ -117,6 +129,18 @@
     >
       <template #overlay>
         <div
+          v-if="isChangingRuntime"
+          class="switching-identity"
+        >
+          <div>
+            <p>
+              {{ $t('_evan.switching-identity') }}
+            </p>
+          </div>
+        </div>
+
+        <div
+          v-else
           class="close-overlay"
           @click="show = false"
         />

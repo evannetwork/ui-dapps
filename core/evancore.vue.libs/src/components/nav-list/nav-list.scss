@@ -44,7 +44,6 @@
       padding-left: 22px;
 
       cursor: pointer;
-      transition: background-color 0.5s ease-out, color 0.5s ease-out;
       text-decoration: none;
 
       border: none;
@@ -53,6 +52,7 @@
 
       &, * {
         color: cssVar('gray-900');
+        transition: background-color 0.3s ease-out, color 0.5s ease-out;
       }
 
       &.active {

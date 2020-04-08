@@ -185,6 +185,8 @@
     "validation": {
       "required": "Dieses Feld wird benötigt",
       "url": "Geben Sie eine gültige URL ein"
-    }
+    },
+    "coming-soon": "Bald verfügbar",
+    "switching-identity": "Wechsle Identität ..."
   }
 }

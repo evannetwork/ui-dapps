@@ -229,7 +229,7 @@ $sidebar-item-width: 40px;
         left: 30px;
 
         .mask {
-          border: 3px solid cssVar('white');
+          outline: 3px solid cssVar('white');
           box-shadow: 0 8px 16px rgba(0, 0, 0, 0.16);
         }
       }

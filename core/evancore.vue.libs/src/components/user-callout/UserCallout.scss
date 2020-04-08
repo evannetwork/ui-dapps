@@ -25,13 +25,12 @@
   flex-direction: column;
   background-color: white;
   width: 250px;
-  z-index: 1001;
+  z-index: 999;
   transition: transform 0.3s ease-in-out;
 
   &.active {
     transform: translateY(calc(-100% + 61px));
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    // z-index: 1001;
   }
 
   .callout-button {
@@ -49,16 +48,34 @@
     outline: none;
     background-color: white;
 
-    &, * {
+    &, i.mdi {
       color: cssVar('gray-900');
+      transition: color 0.5s ease-out;
     }
 
     &:hover {
-      &, * {
+      &, i.mdi {
         color: cssVar('primary') !important;
         border: 0;
         background-color: inherit !important;
       }
+    }
+  }
+}
+
+.switching-identity {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+
+  & > div {
+    background: cssVar('white');
+    padding: 16px;
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.12);
+    * {
+      margin: 0;
     }
   }
 }
