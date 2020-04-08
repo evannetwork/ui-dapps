@@ -201,7 +201,6 @@ export default class IdentitySidePanelComponent extends mixins(EvanComponent) {
     const originPerm = this.originalContact.hasIdentityAccess;
 
     // do not allow to remove read permissions
-    // eslint-disable-next-line no-nested-ternary
     let resolvedPerm: string|boolean = false;
     if (idPerm.readWrite) {
       resolvedPerm = 'readWrite';
