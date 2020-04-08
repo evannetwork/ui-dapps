@@ -54,8 +54,7 @@ $sidebar-item-width: 40px;
 
       width: $sidebar-width;
       min-width: $sidebar-width;
-      padding: 32px 0;
-      padding-bottom: 7px;
+      padding: 44px 0;
 
       .sidebar-header {
         display: none;
@@ -72,10 +71,6 @@ $sidebar-item-width: 40px;
       ul.nav {
         align-items: center;
 
-        &.bottom-nav {
-          height: 100%;
-        }
-
         & > li {
           display: flex;
           justify-content: center;
@@ -90,7 +85,7 @@ $sidebar-item-width: 40px;
     }
 
     .dapp-wrapper-sidebar-2-wrapper {
-      padding: 32px 0;
+      padding: 44px 0;
     }
 
     .dapp-wrapper-sidebar-2 {
@@ -245,7 +240,8 @@ $sidebar-item-width: 40px;
   }
 
 
-  @media(min-width: 992px) { // lg breakpoint
+  @media(min-width: 992px) {
+    // lg breakpoint
     #dapp-wrapper-sidebar-right {
       .evan-swipe-panel {
         height: calc(100vh - 64px);

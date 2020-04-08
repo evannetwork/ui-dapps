@@ -16,29 +16,19 @@
   Fifth Floor, Boston, MA, 02110-1301 USA, or download the license from
   the following URL: https://evan.network/license/
 */
+// import evan libs
+import { RouteRegistrationInterface } from '@evan.network/ui-vue-core';
 
-<template>
-  <div class="evan-content-container">
-    <!-- TODO: Use proper DID -->
-    <detail-overview-general
-      v-if="twin"
-      class="mb-3"
-      :did="did"
-      :is-owner="$store.state.twin.isOwner"
-      :owner-name="twin.ownerName"
-      :owner-address="twin.ownerAddress"
-      :created-at="twin.createdAt"
-    />
+import AccountSettingsComponent from './components/account/account.vue';
+import IdentitySettingsComponent from './components/identity/identity.vue';
+import BrowserSettingsComponent from './components/browser/browser.vue';
 
-    <detail-overview-transactions
-      class="mt-5"
-      :transactions="transactions"
-    />
-  </div>
-</template>
+// map them to element names, so they can be used within templates
+const routeRegistration: Array<RouteRegistrationInterface> = [
+  { path: '', redirect: { name: 'settings-identity' } },
+  { path: 'account', name: 'settings-account', component: AccountSettingsComponent },
+  { path: 'browser', name: 'settings-browser', component: BrowserSettingsComponent },
+  { path: 'identity', name: 'settings-identity', component: IdentitySettingsComponent },
+];
 
-<script lang="ts">
-import DetailOverviewComponent from './DetailOverview';
-
-export default DetailOverviewComponent;
-</script>
+export default routeRegistration;

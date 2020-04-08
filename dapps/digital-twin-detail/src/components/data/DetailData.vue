@@ -22,8 +22,6 @@
     <div class="sidenav">
       <evan-nav-list
         :entries="navItems"
-        :show-logout="false"
-        :show-profile="false"
       />
     </div>
 

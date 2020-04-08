@@ -84,9 +84,14 @@
                   </a>
                 </li>
               </ul>
-              <ul class="nav top-nav">
+              <ul
+                v-for="nav in Object.keys(routes.left)"
+                :key="nav"
+                class="nav"
+                :class="`nav-left-${nav}`"
+              >
                 <li
-                  v-for="route in routes.topLeft"
+                  v-for="route in routes.left[nav]"
                   :key="route.path"
                 >
                   <a
@@ -101,35 +106,6 @@
                     </evan-tooltip>
                   </a>
                 </li>
-              </ul>
-              <ul class="nav bottom-nav">
-                <ul class="nav">
-                  <li
-                    v-for="(route, index) in routes.centerLeft"
-                    :key="route.path"
-                    :style="{ order: (index + 1) * 10 }"
-                  >
-                    <a
-                      :id="`evan-dapp-${ (route.path || route.id).split('.')[0] }`"
-                      :class="{ active: route.path && $route.path.startsWith(route.fullPath) }"
-                      :href="route.path ? `${ dapp.fullUrl }/${ route.path }` : null"
-                      @click="routeActivated(route)"
-                    >
-                      <i
-                        class="position-relative"
-                        :class="route.icon"
-                      >
-                        <span
-                          v-if="route.path.startsWith('mailbox.vue') && userInfo.newMailCount > 0"
-                          class="notification-dot"
-                        />
-                      </i>
-                      <evan-tooltip :placement="'right'">
-                        {{ route.title | translate }}
-                      </evan-tooltip>
-                    </a>
-                  </li>
-                </ul>
               </ul>
             </slot>
           </div>
@@ -213,7 +189,7 @@
         <div class="mx-auto" />
         <ul class="nav">
           <li
-            v-for="route in routes.bottomRight"
+            v-for="route in routes.bottom.right"
             :key="route.path"
             @click="route.action && route.action()"
           >

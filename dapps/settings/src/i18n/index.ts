@@ -17,28 +17,8 @@
   the following URL: https://evan.network/license/
 */
 
-<template>
-  <div class="evan-content-container">
-    <!-- TODO: Use proper DID -->
-    <detail-overview-general
-      v-if="twin"
-      class="mb-3"
-      :did="did"
-      :is-owner="$store.state.twin.isOwner"
-      :owner-name="twin.ownerName"
-      :owner-address="twin.ownerAddress"
-      :created-at="twin.createdAt"
-    />
+import de from './de.json';
+import en from './en.json';
 
-    <detail-overview-transactions
-      class="mt-5"
-      :transactions="transactions"
-    />
-  </div>
-</template>
-
-<script lang="ts">
-import DetailOverviewComponent from './DetailOverview';
-
-export default DetailOverviewComponent;
-</script>
+// map all langugages
+export default { de, en };

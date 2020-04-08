@@ -22,19 +22,11 @@
     <evan-dapp-wrapper>
       <template v-slot:content>
         <evan-dapp-wrapper-level-2 ref="level2Wrapper">
-          <div class="sidenav">
-            <div class="sidenav-header pt-3 pb-3">
-              <i class="sidenav-header-icon mdi mdi-cube-outline" />
-              <h4 class="sidenav-header-heading">
-                {{ '_assets.my-assets' | translate }}
-              </h4>
-            </div>
-            <evan-nav-list
-              :entries="navItems"
-              :show-logout="false"
-              :show-profile="false"
-            />
-          </div>
+          <evan-nav-list
+            :entries="navItems"
+            header-icon="cube-outline"
+            header-text="_assets.my-assets"
+          />
         </evan-dapp-wrapper-level-2>
         <transition
           name="fade"
@@ -60,21 +52,6 @@ export default AssetsComponent;
 /deep/ {
   .dapp-wrapper-body .dapp-wrapper-content {
     overflow-y: hidden !important;
-  }
-}
-
-.evan-nav-list {
-  height: auto;
-}
-.sidenav-header {
-  text-align: center;
-  .sidenav-header-heading {
-    font-size: 12px;
-    font-weight: bold;
-  }
-  .sidenav-header-icon {
-    font-size: 4rem;
-    color: cssVar('gray-900');
   }
 }
 </style>

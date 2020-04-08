@@ -17,28 +17,32 @@
   the following URL: https://evan.network/license/
 */
 
-<template>
-  <div class="evan-content-container">
-    <!-- TODO: Use proper DID -->
-    <detail-overview-general
-      v-if="twin"
-      class="mb-3"
-      :did="did"
-      :is-owner="$store.state.twin.isOwner"
-      :owner-name="twin.ownerName"
-      :owner-address="twin.ownerAddress"
-      :created-at="twin.createdAt"
-    />
+// vue imports
+import Component, { mixins } from 'vue-class-component';
 
-    <detail-overview-transactions
-      class="mt-5"
-      :transactions="transactions"
-    />
-  </div>
-</template>
+// evan.network imports
+import { EvanComponent, NavEntryInterface } from '@evan.network/ui-vue-core';
 
-<script lang="ts">
-import DetailOverviewComponent from './DetailOverview';
-
-export default DetailOverviewComponent;
-</script>
+@Component({ })
+export default class RootComponent extends mixins(EvanComponent) {
+  navEntries: NavEntryInterface[] = [
+    {
+      icon: 'mdi mdi-account-group-outline',
+      id: 'nav-entry-identity-users',
+      text: '_settings.routes.identity',
+      to: { name: 'settings-identity' },
+    },
+    {
+      icon: 'mdi mdi-shield-account-outline',
+      id: 'nav-entry-account-settings',
+      text: '_settings.routes.account',
+      to: { name: 'settings-account' },
+    },
+    {
+      icon: 'mdi mdi-monitor',
+      id: 'nav-entry-browser',
+      text: '_settings.routes.browser',
+      to: { name: 'settings-browser' },
+    },
+  ];
+}

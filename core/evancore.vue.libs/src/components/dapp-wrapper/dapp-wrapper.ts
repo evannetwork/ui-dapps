@@ -230,28 +230,7 @@ export default class DAppWrapperComponent extends mixins(EvanComponent) {
   /**
    * routes that should be displayed in the sidepanel, if no sidebar slot is given
    */
-  routes: { [type: string]: Array<DAppWrapperRouteInterface> } = null;
-
-  /**
-   * Returns the i18n title key for the active route.
-   *
-   * @return     {string}  active route i18n or route path
-   */
-  get activeRouteTitle(): string {
-    const allRoutes = [
-      ...this.routes.topLeft,
-      ...this.routes.centerLeft,
-      ...this.routes.bottomRight,
-    ];
-
-    for (let i = 0; i < allRoutes.length; i += 1) {
-      if (this.$route.path.startsWith(allRoutes[i].fullPath)) {
-        return allRoutes[i].title;
-      }
-    }
-
-    return this.$route.path;
-  }
+  routes: { [category: string]: { [type: string]: Array<DAppWrapperRouteInterface> } } = null;
 
   /**
    * Triggered when the a root sidebar navigation was clicked. If the route already activated, show
@@ -627,55 +606,67 @@ export default class DAppWrapperComponent extends mixins(EvanComponent) {
    */
   setRoutes(): void {
     this.$set(this, 'routes', {
-      topLeft: [
-        {
-          icon: 'mdi mdi-apps',
-          path: `favorites.vue.${domainName}`,
-          title: `${i18nPref}.favorites`,
-        },
-      ],
-      centerLeft: [
-        {
-          icon: 'mdi mdi-cube-outline',
-          path: `assets.${domainName}`,
-          title: `${i18nPref}.assets`,
-        },
-        {
-          icon: 'mdi mdi-account-outline',
-          path: `profile.vue.${domainName}/${session.activeIdentity}`,
-          title: `${i18nPref}.profile`,
-        },
-        {
-          icon: 'mdi mdi-credit-card-outline',
-          path: `profile.vue.${domainName}/wallet`,
-          title: `${i18nPref}.wallet`,
-        },
-        {
-          icon: 'mdi mdi-bell-outline rotate-45',
-          path: `mailbox.vue.${domainName}`,
-          title: `${i18nPref}.actions`,
-        },
-      ],
-      bottomRight: [
-        {
-          icon: 'mdi mdi-help-circle-outline',
-          path: `help.vue.${domainName}`,
-          title: `${i18nPref}.help`,
-        },
-        {
-          action: () => (this.$refs.queuePanel as any).show(),
-          icon: 'mdi mdi-sync',
-          id: 'synchronization',
-          title: `${i18nPref}.synchronization`,
-        },
-      ],
+      left: {
+        top: [
+          {
+            icon: 'mdi mdi-apps',
+            path: `favorites.vue.${domainName}`,
+            title: `${i18nPref}.favorites`,
+          },
+        ],
+        center: [
+          {
+            icon: 'mdi mdi-cube-outline',
+            path: `assets.${domainName}`,
+            title: `${i18nPref}.assets`,
+          },
+          {
+            icon: 'mdi mdi-account-outline',
+            path: `profile.vue.${domainName}/${session.activeIdentity}`,
+            title: `${i18nPref}.profile`,
+          },
+          {
+            icon: 'mdi mdi-credit-card-outline',
+            path: `profile.vue.${domainName}/wallet`,
+            title: `${i18nPref}.wallet`,
+          },
+          {
+            icon: 'mdi mdi-bell-outline rotate-45',
+            path: `mailbox.vue.${domainName}`,
+            title: `${i18nPref}.actions`,
+          },
+        ],
+        bottom: [
+          {
+            icon: 'mdi mdi-settings-outline',
+            path: `settings.${domainName}`,
+            title: `${i18nPref}.settings`,
+          },
+        ],
+      },
+      bottom: {
+        right: [
+          {
+            icon: 'mdi mdi-help-circle-outline',
+            path: `help.vue.${domainName}`,
+            title: `${i18nPref}.help`,
+          },
+          {
+            action: () => (this.$refs.queuePanel as any).show(),
+            icon: 'mdi mdi-sync',
+            id: 'synchronization',
+            title: `${i18nPref}.synchronization`,
+          },
+        ],
+      },
     });
 
     // create fullPath for current routes to get correct active state
     [
-      ...this.routes.topLeft,
-      ...this.routes.centerLeft,
-      ...this.routes.bottomRight,
+      ...this.routes.left.top,
+      ...this.routes.left.center,
+      ...this.routes.left.bottom,
+      ...this.routes.bottom.right,
     ].forEach((route) => {
       route.fullPath = `${this.dapp.baseHash}/${route.path}`; // eslint-disable-line no-param-reassign
     });

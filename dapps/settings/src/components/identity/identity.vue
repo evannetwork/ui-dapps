@@ -18,27 +18,13 @@
 */
 
 <template>
-  <div class="evan-content-container">
-    <!-- TODO: Use proper DID -->
-    <detail-overview-general
-      v-if="twin"
-      class="mb-3"
-      :did="did"
-      :is-owner="$store.state.twin.isOwner"
-      :owner-name="twin.ownerName"
-      :owner-address="twin.ownerAddress"
-      :created-at="twin.createdAt"
-    />
-
-    <detail-overview-transactions
-      class="mt-5"
-      :transactions="transactions"
-    />
+  <div>
+    identity config
   </div>
 </template>
 
 <script lang="ts">
-import DetailOverviewComponent from './DetailOverview';
+import Component from './identity.ts';
 
-export default DetailOverviewComponent;
+export default Component;
 </script>

@@ -18,27 +18,31 @@
 */
 
 <template>
-  <div class="evan-content-container">
-    <!-- TODO: Use proper DID -->
-    <detail-overview-general
-      v-if="twin"
-      class="mb-3"
-      :did="did"
-      :is-owner="$store.state.twin.isOwner"
-      :owner-name="twin.ownerName"
-      :owner-address="twin.ownerAddress"
-      :created-at="twin.createdAt"
-    />
-
-    <detail-overview-transactions
-      class="mt-5"
-      :transactions="transactions"
-    />
+  <div class="evan theme-evan">
+    <evan-dapp-wrapper
+      :routes="[ ]"
+    >
+      <template v-slot:content>
+        <evan-dapp-wrapper-level-2>
+          <evan-nav-list
+            :entries="navEntries"
+            header-icon="settings-outline"
+            header-text="_settings.header"
+          />
+        </evan-dapp-wrapper-level-2>
+        <transition
+          name="fade"
+          mode="out-in"
+        >
+          <router-view />
+        </transition>
+      </template>
+    </evan-dapp-wrapper>
   </div>
 </template>
 
 <script lang="ts">
-import DetailOverviewComponent from './DetailOverview';
+import Component from './root.ts';
 
-export default DetailOverviewComponent;
+export default Component;
 </script>

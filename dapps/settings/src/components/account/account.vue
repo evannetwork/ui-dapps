@@ -19,26 +19,34 @@
 
 <template>
   <div class="evan-content-container">
-    <!-- TODO: Use proper DID -->
-    <detail-overview-general
-      v-if="twin"
-      class="mb-3"
-      :did="did"
-      :is-owner="$store.state.twin.isOwner"
-      :owner-name="twin.ownerName"
-      :owner-address="twin.ownerAddress"
-      :created-at="twin.createdAt"
-    />
+    <div
+      class="white-box mt-5"
+    >
+      <h3 class="mb-5 d-block">
+        {{ $t('_settings.account.security-info') }}
+      </h3>
 
-    <detail-overview-transactions
-      class="mt-5"
-      :transactions="transactions"
-    />
+      <div class="d-flex justify-content-center mt-3">
+        <evan-button
+          class="mr-3"
+          type="danger"
+          @click="exportPrivateKey()"
+        >
+          {{ $t('_settings.account.private-key.title') }}
+        </evan-button>
+        <evan-button
+          type="danger"
+          @click="exportEncryptionKey()"
+        >
+          {{ $t('_settings.account.encryption-key.title') }}
+        </evan-button>
+      </div>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
-import DetailOverviewComponent from './DetailOverview';
+import Component from './account.ts';
 
-export default DetailOverviewComponent;
+export default Component;
 </script>
