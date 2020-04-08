@@ -64,6 +64,10 @@ export default class ProfilePreviewComponent extends mixins(EvanComponent) {
    */
   @Prop() accountDetails: any; // TODO: needs proper type/interface
 
+  @Prop() href;
+
+  @Prop({ default: false }) disableLink: boolean;
+
   /**
    * Show loading symbol
    */
@@ -100,6 +104,17 @@ export default class ProfilePreviewComponent extends mixins(EvanComponent) {
     if (this.userInfo && this.$attrs.src) {
       Object.assign(this.userInfo, this.$attrs, { pictureSrc: this.$attrs.src });
     }
+  }
+
+  /**
+   * Use href watcher, this context is not available in default value.
+   */
+  @Watch('href') onHrefChange(): void {
+    this.href = typeof this.href === 'undefined' ? [
+      this.$store.state.dapp.baseUrl,
+      this.$store.state.rootEns,
+      `profile.vue.${this.$store.state.domainName}/${this.address}/detail`,
+    ].join('/') : this.href;
   }
 
   /**

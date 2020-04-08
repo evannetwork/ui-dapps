@@ -24,6 +24,7 @@
       "title": "Your browser is not supported"
     },
     "cancel": "Cancel",
+    "coming-soon": "Coming soon",
     "dapp-wrapper": {
       "all-messages": "All messages",
       "dispatcher-status": {
@@ -168,6 +169,7 @@
       "selectContact": "Select contact to share with",
       "update": "Share data"
     },
+    "switching-identity": "Switching identity ...",
     "transaction_costs_hint": "This will cause transaction fees.",
     "under-development": {
       "desc": "The area shown is currently under construction and will be available soon.",
@@ -179,10 +181,6 @@
       "switch-account": "Switch to another Identity",
       "user-account": "User Identity"
     },
-    "view-profile": "View Identity",
-    "welcome-to-evan": "Welcome to the evan.network",
-    "write": "write",
-    "yes": "Yes",
     "validation": {
       "required": "This field is required",
       "url": "Enter a valid URL"
