@@ -7,7 +7,7 @@
       "files": [
         "validate.vee.libs.js"
       ],
-      "origin": "QmdLmScDuwuYWyVtqdJAz2NQXZSRcDHgmnFRes1rTXKk16",
+      "origin": "QmRJRRcjfwspwQjbuRC3gkAsqVEHfeKFbFzXQY9jttDKef",
       "primaryColor": "",
       "secondaryColor": "#f9f9ff",
       "standalone": false,
@@ -32,6 +32,7 @@
     ],
     "version": "3.2.5",
     "versions": {
+      "3.2.5": "QmccN2NBzLuGETouMULc3zziLm22Z7fRnjNpu64Gkxke9V"
     }
   }
 }

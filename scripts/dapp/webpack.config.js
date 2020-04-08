@@ -159,7 +159,7 @@ module.exports = function getWebpackConfig(
   };
 
   if (prodMode) {
-    webpackConfig.devtool = '#source-map';
+    webpackConfig.devtool = false;
     // http://vue-loader.vuejs.org/en/workflow/production.html
     webpackConfig.plugins = (webpackConfig.plugins || []).concat([
       new webpack.DefinePlugin({
@@ -170,7 +170,7 @@ module.exports = function getWebpackConfig(
       new UglifyJsPlugin({
         exclude: /(node_modules)/,
         parallel: true,
-        sourceMap: true,
+        sourceMap: false,
         test: /\.js($|\?)/i,
         uglifyOptions: {
           output: {

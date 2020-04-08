@@ -9,7 +9,7 @@
       "files": [
         "bootstrap.vue.libs.js"
       ],
-      "origin": "QmU9DaHCuMEXe8DHd1UoCVD5tvuKvRJnGQKwEtg2jkZbHE",
+      "origin": "QmZRHxafSh3GK7VfTFWi7zqEuUEMbWw8PjEfHZronSQTKi",
       "primaryColor": "",
       "secondaryColor": "#f9f9ff",
       "standalone": false,
@@ -34,7 +34,8 @@
     ],
     "version": "2.9.0",
     "versions": {
-      "2.1.0": "QmXyNGT6W2EFmDVoC195nz6heFYknwhRrUqkjCCd5cjoAB"
+      "2.1.0": "QmXyNGT6W2EFmDVoC195nz6heFYknwhRrUqkjCCd5cjoAB",
+      "2.9.0": "QmbqEzZtnSUiKBc9E27dqdLRnK6UCHTubax5yZs3YbmWvV"
     }
   }
 }
