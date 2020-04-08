@@ -23,7 +23,7 @@
       class="white-box mt-5"
     >
       <h3 class="mb-5 d-block">
-        {{ '_settings.account.security-info' | translate }}
+        {{ $t('_settings.account.security-info') }}
       </h3>
 
       <div class="d-flex justify-content-center mt-3">
@@ -32,13 +32,13 @@
           type="danger"
           @click="exportPrivateKey()"
         >
-          {{ '_settings.account.private-key.title' | translate }}
+          {{ $t('_settings.account.private-key.title') }}
         </evan-button>
         <evan-button
           type="danger"
           @click="exportEncryptionKey()"
         >
-          {{ '_settings.account.encryption-key.title' | translate }}
+          {{ $t('_settings.account.encryption-key.title') }}
         </evan-button>
       </div>
     </div>

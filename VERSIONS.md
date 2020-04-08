@@ -24,8 +24,8 @@
 
 ### Fixes
 - Last transactions for twins created by identities are now appearing
+- fix old-dapp-browser `createDefaultRuntime` without initial created core runtime
 - fix profile design
-
 
 ### Deprecations
 

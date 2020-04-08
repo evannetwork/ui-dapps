@@ -85,7 +85,7 @@
                 </li>
               </ul>
               <ul
-                v-for="(nav) in Object.keys(routes.left)"
+                v-for="nav in Object.keys(routes.left)"
                 :key="nav"
                 class="nav"
                 :class="`nav-left-${nav}`"
