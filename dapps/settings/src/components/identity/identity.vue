@@ -21,7 +21,7 @@
   <div class="evan-content-container">
     <evan-loading v-if="loading" />
     <template v-else-if="!isIdentityUsed">
-      <h3>{{ '_settings.identity.not-support' | translate }}</h3>
+      <h3>{{ $t('_settings.identity.not-support') }}</h3>
     </template>
     <template v-else>
       <evan-searchbox
@@ -30,7 +30,7 @@
         :debounce-time="250"
         @keyup="$set(table, 'filter', $refs.searchBox.searchTerm)"
       >
-        <span>{{ '_settings.routes.identity' | translate }}</span>
+        <span>{{ $t('_settings.routes.identity') }}</span>
       </evan-searchbox>
 
       <identity-sidepanel
@@ -81,10 +81,10 @@
 
         <!-- Empty slots -->
         <template v-slot:empty>
-          <span>{{ '_settings.identity.table.empty.text' | translate }}</span>
+          <span>{{ $t('_settings.identity.table.empty.text') }}</span>
         </template>
         <template v-slot:emptyfiltered>
-          <span>{{ '_settings.identity.table.empty.filtered' | translate }}</span>
+          <span>{{ $t('_settings.identity.table.empty.filtered') }}</span>
         </template>
       </evan-table>
     </template>

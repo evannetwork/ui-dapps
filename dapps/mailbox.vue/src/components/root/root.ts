@@ -189,7 +189,7 @@ export default class MailboxComponent extends mixins(EvanComponent) {
     const runtime = (<any> this).getRuntime();
 
     // load the contacts for the current user, so we can display correct contact alias
-    delete runtime.profile.trees[runtime.profile.treeLabels.addressBook];
+    await runtime.profile.loadForAccount(runtime.profile.treeLabels.addressBook);
     this.addressBook = (await runtime.profile.getAddressBook()).profile;
   }
 }

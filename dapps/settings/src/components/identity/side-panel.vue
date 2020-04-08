@@ -37,7 +37,13 @@
       :title="$t('_settings.identity.side-panel.title')"
     >
       <evan-loading v-if="loading" />
-      <div v-else>
+      <div v-else-if="form">
+        <p
+          v-if="isNew"
+          class="my-3"
+        >
+          {{ $t('_settings.identity.side-panel.select-contact') }}
+        </p>
         <evan-form
           ref="form"
           :editable="canEdit"
@@ -46,22 +52,59 @@
           :only-form="true"
         />
 
-        <evan-permissions
-          :permissions="permissions"
-          :contract-id="address"
-          :update-permissions="updatePermissions"
-          :i18n-scope="'_settings.identity.side-panel.perm'"
-        />
+        <p
+          v-if="isNew && contact.address"
+          class="my-3"
+        >
+          {{ $t('_settings.identity.side-panel.define-perm-for', {alias: contact.displayName}) }}
+        </p>
+
+        <div class="d-flex">
+          <div class="d-flex align-items-end">
+            {{ $t('_settings.identity.side-panel.perm.name') }}
+          </div>
+          <div class="mx-auto" />
+          <div class="d-flex">
+            <div class="mr-3">
+              <small class="font-italic">{{ $t('_settings.identity.side-panel.perm.read') }}</small>
+              <evan-checkbox
+                class="mb-0"
+                :value="permissions.read"
+                :disabled="originalContact.hasIdentityAccess === 'read' || originalContact.hasIdentityAccess === 'readWrite'"
+                @input="updatePermissions($event, permissions.readWrite)"
+              />
+            </div>
+            <div>
+              <small class="font-italic">{{ $t('_settings.identity.side-panel.perm.readWrite') }}</small>
+              <evan-checkbox
+                class="mb-0"
+                :value="permissions.readWrite"
+                :disabled="originalContact.hasIdentityAccess === 'readWrite'"
+                @input="updatePermissions(permissions.read, $event)"
+              />
+            </div>
+          </div>
+        </div>
+
+        <p class="mt-5">
+          <i class="mdi mdi-alert-circle-outline mr-2" />
+          <span v-if="isNew">
+            {{ $t('_settings.identity.side-panel.transaction-cost.add') }}
+          </span>
+          <span v-else>
+            {{ $t('_settings.identity.side-panel.transaction-cost.edit') }}
+          </span>
+        </p>
       </div>
 
       <template v-slot:footer>
         <div
-          v-if="!loading"
+          v-if="!loading && form"
           class="d-flex"
         >
           <evan-button
             type="secondary"
-            :label="'_settings.identity.side-panel.cancel' | translate"
+            :label="$t('_settings.identity.side-panel.cancel')"
             @click="hide"
           />
           <evan-button
@@ -69,7 +112,7 @@
             native-type="submit"
             class="ml-3 flex-grow-1"
             :disabled="!form.isValid || !hasChanged()"
-            :label="'_settings.identity.side-panel.submit' | translate"
+            :label="$t('_settings.identity.side-panel.submit')"
             @click="save"
           />
         </div>

@@ -26,18 +26,19 @@
       <evan-loading v-if="isChangingRuntime" />
       <div
         v-else
-        class="active-account"
+        class="active-identity"
         style="width:100%; height:64px"
+        @click="show = !show"
       >
         <evan-profile-preview
           :address="$store.state.runtime.activeIdentity"
+          :disable-link="true"
         />
       </div>
 
       <evan-button
         class="toggle-button btn-sm"
         type="icon"
-        @click="show = !show"
       >
         <i
           class="mdi"
@@ -50,11 +51,11 @@
       </div>
 
       <evan-button
-        class="callout-button account-settings"
+        class="callout-button identity-settings"
         :href="`#/${dapp.rootEns}/settings.${dapp.domainName}/identity`"
         @click="show = false"
       >
-        {{ $t('_evan.user-callout.account-settings') }}
+        {{ $t('_evan.user-callout.identity-settings') }}
         <div class="mx-auto" />
         <i
           class="mdi mdi-settings-outline"
@@ -65,21 +66,21 @@
         </evan-tooltip>
       </evan-button>
 
-      <!-- Switch Account -->
-      <template v-if="accounts.length">
+      <!-- Switch identity -->
+      <template v-if="identities.length">
         <div class="switch">
-          {{ $t('_evan.user-callout.switch-account') }}
+          {{ $t('_evan.user-callout.switch-identity') }}
         </div>
 
         <a
-          v-for="account in accounts"
-          :key="account"
-          class="d-block switch-account"
-          @click="switchIdentity(account)"
+          v-for="identity in identities"
+          :key="identity"
+          class="d-block switch-identity"
+          @click="switchIdentity(identity)"
         >
           <evan-profile-preview
             size="sm-plus"
-            :address="account"
+            :address="identity"
             :disable-link="true"
           />
         </a>
@@ -90,7 +91,7 @@
       </template>
 
       <evan-button class="callout-button">
-        {{ $t('_evan.user-callout.create-new-account') }}
+        {{ $t('_evan.user-callout.create-new-identity') }}
         <div class="mx-auto" />
         <i
           class="mdi mdi-plus"

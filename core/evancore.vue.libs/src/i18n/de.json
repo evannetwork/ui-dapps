@@ -176,10 +176,10 @@
       "title": "In Entwicklung"
     },
     "user-callout": {
-      "account-settings": "Identitätseinstellungen",
-      "create-new-account": "Identität hinzufügen",
-      "switch-account": "Zu einer anderen Identität wechseln",
-      "user-account": "Identität"
+      "identity-settings": "Identitätseinstellungen",
+      "create-new-identity": "Identität hinzufügen",
+      "switch-identity": "Zu einer anderen Identität wechseln",
+      "user-identity": "Identität"
     },
     "validation": {
       "required": "Dieses Feld wird benötigt",

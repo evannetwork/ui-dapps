@@ -176,10 +176,10 @@
       "title": "Under construction"
     },
     "user-callout": {
-      "account-settings": "Identity Settings",
-      "create-new-account": "Add new Identity",
-      "switch-account": "Switch to another Identity",
-      "user-account": "User Identity"
+      "identity-settings": "Identity Settings",
+      "create-new-identity": "Add new Identity",
+      "switch-identity": "Switch to another Identity",
+      "user-identity": "User Identity"
     },
     "validation": {
       "required": "This field is required",

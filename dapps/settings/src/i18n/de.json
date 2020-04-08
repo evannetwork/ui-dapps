@@ -27,20 +27,21 @@
     },
     "header": "Settings",
     "identity": {
-      "not-support": "Sie sind aktuell mit einem alten, nicht identitätsbasierenden, Profil angemeldet. Die Nutzerverwaltung für Identititäten wird nur für aktuelle Profile unterstützt.",
       "dispatcher": {
         "share": "Identitätszugriff erteilen..."
       },
+      "not-support": "Sie sind aktuell mit einem alten, nicht identitätsbasierenden, Profil angemeldet. Die Nutzerverwaltung für Identititäten wird nur für aktuelle Profile unterstützt.",
       "share": {
-        "body": "Ihnen wurde \"{access}\" Zugriff auf die Identität von {fromAlias} (identity) erteilt. Nutzen Sie den nachfolgenden Link, um die Referenz in Ihrem Profil abzuspeichern und im Namen dieser Identität zu interagieren.",
+        "body": "Ihnen wurde \"{access}\" Zugriff auf die Identität von {alias} ({identity}) erteilt. Nutzen Sie den nachfolgenden Link, um die Referenz in Ihrem Profil abzuspeichern und im Namen dieser Identität zu interagieren.",
         "title": "Identitätszugriff",
         "type": {
           "read": "lesender",
-          "write": "schreibender und lesender"
+          "readWrite": "schreibender und lesender"
         }
       },
       "side-panel": {
         "cancel": "Abbrechen",
+        "define-perm-for": "Legen Sie dich Berechtigungen für {alias} fest.",
         "form": {
           "address": {
             "error": "Bitte wählen Sie einen Kontakt aus, um Zugriffsrechte zu vergeben.",
@@ -53,10 +54,17 @@
           }
         },
         "perm": {
-          "name": "Identitiätszugriff"
+          "name": "Identitiätszugriff",
+          "read": "lesen",
+          "readWrite": "schreiben"
         },
+        "select-contact": "Wáhlen Sie einen Kontakt aus, um diesen auf Ihre Identität zu berechtigen.",
         "submit": "Speichern",
-        "title": "Identitätsberechtigung"
+        "title": "Identitätsberechtigung",
+        "transaction-cost": {
+          "add": "Hinzufügen kostet Transaktionskosten.",
+          "edit": "Editieren kostet Transaktionskosten."
+        }
       },
       "table": {
         "columns": {

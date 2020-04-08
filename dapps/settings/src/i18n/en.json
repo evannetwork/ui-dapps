@@ -32,11 +32,11 @@
         "share": "Granting access to identity..."
       },
       "share": {
-        "body": "You have been granted \"{access}\" access to the identity of {fromAlias} (identity). Use the link below to save the reference in your profile to interact on behalf of this identity.",
+        "body": "You have been granted \"{access}\" access to the identity of {alias} ({identity}). Use the link below to save the reference in your profile to interact on behalf of this identity.",
         "title": "Identity access",
         "type": {
           "read": "read",
-          "write": "read and write"
+          "readWrite": "read and write"
         }
       },
       "side-panel": {
@@ -53,10 +53,18 @@
           }
         },
         "perm": {
-          "name": "Identity access"
+          "name": "Identity access",
+          "read": "read",
+          "readWrite": "write"
         },
         "submit": "Save",
-        "title": "Identity permissions"
+        "title": "Identity permissions",
+        "define-perm-for": "Define the permissions for {alias}.",
+        "transaction-cost": {
+          "add": "Adding will cause transaction fees.",
+          "edit": "Editing will cause transaction fees."
+        },
+        "select-contact": "Select Contact to send a request for managing your identity"
       },
       "table": {
         "columns": {

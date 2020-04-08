@@ -119,7 +119,7 @@ export default class IdentitySettingsComponent extends mixins(EvanComponent) {
    */
   async created(): Promise<void> {
     this.runtime = session.identityRuntime;
-    this.isIdentityUsed = this.runtime.runtimeConfig.isIdentityUsed;
+    this.isIdentityUsed = this.runtime.runtimeConfig.useIdentity;
 
     // don't allow this ui for profiles without useIdentity
     if (!this.isIdentityUsed) {
@@ -135,7 +135,8 @@ export default class IdentitySettingsComponent extends mixins(EvanComponent) {
     this.identityShareDispatcherClear = identityShareDispatcher.watch(async ($event) => {
       if ($event.detail.status === 'finished' || $event.detail.status === 'deleted') {
         this.loading = true;
-        await this.loadContacts();
+        await this.runtime.profile.loadForAccount(this.runtime.profile.treeLabels.addressBook);
+        this.contacts = await this.loadContacts();
         this.loading = false;
       }
 

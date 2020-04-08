@@ -62,7 +62,7 @@ export default class IdentitySidePanelComponent extends mixins(EvanComponent) {
   /**
    * permssions to pass into the evan-permissions component
    */
-  permissions: PermissionsInterface;
+  permissions = { read: false, readWrite: false };
 
   /**
    * show loading until owner was loaded
@@ -118,6 +118,7 @@ export default class IdentitySidePanelComponent extends mixins(EvanComponent) {
       ...this.form.getFormData(),
     };
 
+    this.hide();
     // start identity invite dispatcher and pass translated b-mail content
     const fromAlias = await profileUtils.getUserAlias(runtime);
     identityShareDispatcher.start(this.getRuntime(), {
@@ -132,8 +133,6 @@ export default class IdentitySidePanelComponent extends mixins(EvanComponent) {
         }).replace(/\n/g, '<br>'),
       },
     });
-
-    this.hide();
   }
 
   /**
@@ -172,10 +171,8 @@ export default class IdentitySidePanelComponent extends mixins(EvanComponent) {
    */
   setupPermissions(): void {
     this.permissions = {
-      identity: {
-        read: this.contact.hasIdentityAccess === 'read' || this.contact.hasIdentityAccess === 'readWrite',
-        readWrite: this.contact.hasIdentityAccess === 'readWrite',
-      },
+      read: this.contact.hasIdentityAccess === 'read' || this.contact.hasIdentityAccess === 'readWrite',
+      readWrite: this.contact.hasIdentityAccess === 'readWrite',
     };
   }
 
@@ -193,26 +190,15 @@ export default class IdentitySidePanelComponent extends mixins(EvanComponent) {
 
   /**
    * Write permission changes to current contact
-   *
-   * @param      {PermissionsInterface}  permissions  latest permission confugration
    */
-  updatePermissions({ permissions }: { permissions: PermissionsInterface }): void {
-    const idPerm = permissions.identity;
-    const originPerm = this.originalContact.hasIdentityAccess;
+  updatePermissions(read: boolean, write: boolean): void {
+    this.permissions.read = read;
+    this.permissions.readWrite = write;
 
-    // do not allow to remove read permissions
-    let resolvedPerm: string|boolean = false;
-    if (idPerm.readWrite) {
-      resolvedPerm = 'readWrite';
-    } else if (idPerm.read) {
-      resolvedPerm = 'read';
+    if (write) {
+      this.contact.hasIdentityAccess = 'readWrite';
+    } else if (read) {
+      this.contact.hasIdentityAccess = 'read';
     }
-
-    if (!resolvedPerm && (originPerm === 'read' || originPerm === 'readWrite')) {
-      resolvedPerm = 'read';
-    }
-
-    this.contact.hasIdentityAccess = resolvedPerm;
-    this.setupPermissions();
   }
 }

@@ -30,13 +30,28 @@ import EvanComponent from '../../component';
  */
 @Component
 export default class UserCallout extends mixins(EvanComponent) {
-  accounts: string[] = [];
+  identities: string[] = [];
 
   show = false;
 
   isChangingRuntime = false;
 
+  // clear event handlers
+  clearIdentityCalloutWatch: () => void;
+
+  beforeDestroy(): void {
+    this.clearIdentityCalloutWatch();
+  }
+
   async created(): Promise<void> {
+    // be able to open the user callout programmatically
+    const watch = (): void => {
+      this.show = true;
+    };
+    this.clearIdentityCalloutWatch = (): void => window.removeEventListener('open-identity-callout', watch);
+    window.addEventListener('open-identity-callout', watch);
+
+    // load identities
     const accessibleIdentities = await session.accountRuntime.profile.getIdentityAccessList() || {};
     const addresses = Object
       .keys(accessibleIdentities)
@@ -47,7 +62,7 @@ export default class UserCallout extends mixins(EvanComponent) {
       addresses.push(session.accountIdentity);
     }
 
-    this.accounts = addresses;
+    this.identities = addresses;
   }
 
   async switchIdentity(id: string): Promise<void> {

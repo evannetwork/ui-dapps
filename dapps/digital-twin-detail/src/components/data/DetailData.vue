@@ -48,7 +48,7 @@ export default DetailDataComponent;
   height: calc(100vh - 128px);
   position: sticky;
   top: 0;
-  margin: 32px 0 32px 8px;
+  margin: 42px 0 42px 8px;
   overflow-y: auto;
 
   .evan-nav-list {

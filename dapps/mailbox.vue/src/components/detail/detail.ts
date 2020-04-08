@@ -171,6 +171,9 @@ export default class DetailComponent extends mixins(EvanComponent) {
             `profile.vue.${domainName}`,
             `${this.mail.from}`,
           ].join('/');
+        } else if (attachment.type === 'identityAccess') {
+          window.dispatchEvent(new CustomEvent('open-identity-callout', { }));
+          return;
         }
       }
 

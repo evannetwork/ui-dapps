@@ -42,6 +42,11 @@ export default {
         'modal-body': 'Wollen Sie die Verifikationen bestätigen?',
         new: 'Verifikation(en) bestätigen',
       },
+      identityAccess: {
+        accepted: 'Identität wechseln',
+        'modal-body': 'Wollen Sie diesem Identitätszugang wirklich speichern?',
+        new: 'Identitätszugang speichern',
+      },
     },
     breadcrumbs: {
       received: 'Eingehende Nachrichten',
