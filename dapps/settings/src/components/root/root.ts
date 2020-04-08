@@ -23,7 +23,7 @@ import Component, { mixins } from 'vue-class-component';
 // evan.network imports
 import { EvanComponent, NavEntryInterface } from '@evan.network/ui-vue-core';
 
-@Component({ })
+@Component
 export default class RootComponent extends mixins(EvanComponent) {
   navEntries: NavEntryInterface[] = [
     {

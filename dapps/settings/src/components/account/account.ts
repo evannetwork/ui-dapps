@@ -17,14 +17,11 @@
   the following URL: https://evan.network/license/
 */
 
-// vue imports
 import Component, { mixins } from 'vue-class-component';
-
-// evan.network imports
 import { EvanComponent } from '@evan.network/ui-vue-core';
 import { session, lightwallet } from '@evan.network/ui-session';
 
-@Component({ })
+@Component
 export default class AccountSettingsComponent extends mixins(EvanComponent) {
   // TODO refactor to (renderless) vue component
   copyToClipboard(text: string, toastText: string): void {

@@ -46,7 +46,7 @@
 </template>
 
 <script lang="ts">
-import Component from './account.ts';
+import Component from './account';
 
 export default Component;
 </script>

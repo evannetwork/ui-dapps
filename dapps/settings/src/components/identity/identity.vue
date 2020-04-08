@@ -18,13 +18,81 @@
 */
 
 <template>
-  <div>
-    identity config
+  <div class="evan-content-container">
+    <evan-loading v-if="loading" />
+    <template v-else-if="!isIdentityUsed">
+      <h3>{{ '_settings.identity.not-support' | translate }}</h3>
+    </template>
+    <template v-else>
+      <evan-searchbox
+        id="searchBox"
+        ref="searchBox"
+        :debounce-time="250"
+        @keyup="$set(table, 'filter', $refs.searchBox.searchTerm)"
+      >
+        <span>{{ '_settings.routes.identity' | translate }}</span>
+      </evan-searchbox>
+
+      <identity-sidepanel
+        ref="identitySidepanel"
+        :contacts="contacts"
+      />
+
+      <evan-table
+        class="clickable-rows"
+        primary-key="address"
+        :items="permittedContacts"
+        :fields="table.columns"
+        :filter="table.filter"
+        :filter-included-fields="table.filterBy"
+        :show-empty="true"
+        :show-scrollbar="true"
+        :sticky-header="'calc(100vh - 85px)'"
+        :tbody-transition-props="{ name: 'list', mode: 'out-in' }"
+        @row-clicked="$refs.identitySidepanel.show($event)"
+      >
+        <template v-slot:cell(displayName)="contact">
+          {{
+            contact.item.displayName || contact.item.address
+          }}
+        </template>
+        <template v-slot:cell(note)="contact">
+          {{
+            contact.item.note
+          }}
+        </template>
+        <template v-slot:cell(icon)="contact">
+          <i
+            class="table-icon"
+            :class="contact.item.icon"
+          />
+        </template>
+        <template v-slot:cell(grantedAt)="contact">
+          {{ contact.item.grantedAt | moment('L') }}
+        </template>
+        <template v-slot:cell(actions)="contact">
+          <evan-loading
+            v-if="loadingStates[contact.item.address]"
+          />
+        </template>
+        <template v-slot:table-caption>
+          <div class="table-spacer" />
+        </template>
+
+        <!-- Empty slots -->
+        <template v-slot:empty>
+          <span>{{ '_settings.identity.table.empty.text' | translate }}</span>
+        </template>
+        <template v-slot:emptyfiltered>
+          <span>{{ '_settings.identity.table.empty.filtered' | translate }}</span>
+        </template>
+      </evan-table>
+    </template>
   </div>
 </template>
 
 <script lang="ts">
-import Component from './identity.ts';
+import Component from './identity';
 
 export default Component;
 </script>

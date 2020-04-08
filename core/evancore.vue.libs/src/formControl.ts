@@ -118,7 +118,8 @@ export default class EvanFormControl {
     this.controlValidate = validate;
     this.form = form;
     this.name = name;
-    this.uiSpecs = uiSpecs;
+    this.uiSpecs = uiSpecs || { };
+    this.uiSpecs.attr = this.uiSpecs.attr || { };
     this.value = value;
     this.vueInstance = vueInstance;
   }

@@ -25,7 +25,6 @@ import translations from './i18n';
 import routes from './routes';
 import components from './components';
 
-// export dispatchers
 export * from './dispatchers';
 
 /**

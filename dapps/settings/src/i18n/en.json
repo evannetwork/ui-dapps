@@ -27,8 +27,47 @@
     },
     "header": "Settings",
     "identity": {
+      "not-support": "You are currently logged in with an old, non-identity-based profile. User management for identities is only supported for current profiles.",
       "dispatcher": {
         "share": "Granting access to identity..."
+      },
+      "share": {
+        "body": "You have been granted \"{access}\" access to the identity of {fromAlias} (identity). Use the link below to save the reference in your profile to interact on behalf of this identity.",
+        "title": "Identity access",
+        "type": {
+          "read": "read",
+          "write": "read and write"
+        }
+      },
+      "side-panel": {
+        "cancel": "Cancel",
+        "form": {
+          "address": {
+            "error": "Please select a contact to grant access to.",
+            "label": "Contact",
+            "placeholder": "Contact to grant access to."
+          },
+          "note": {
+            "label": "Note / Role",
+            "placeholder": "Admin / Procurement / User XYZ"
+          }
+        },
+        "perm": {
+          "name": "Identity access"
+        },
+        "submit": "Save",
+        "title": "Identity permissions"
+      },
+      "table": {
+        "columns": {
+          "grantedAt": "Access granted",
+          "name": "Name",
+          "note": "Note / Role"
+        },
+        "empty": {
+          "filtered": "No results found with the current filter.",
+          "text": "No contacts are yet authorized to interact via your identity."
+        }
       }
     },
     "routes": {

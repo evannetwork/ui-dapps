@@ -18,6 +18,7 @@
 */
 // map the original vue path to bootstrap.vue.libs
 import { getDomainName, System } from '@evan.network/ui-dapp-browser';
+import 'bootstrap-vue/dist/bootstrap-vue.css';
 
 System.map['bootstrap-vue'] = `bootstrap.vue.libs.${getDomainName()}!dapp-content`;
 

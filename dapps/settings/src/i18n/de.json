@@ -27,8 +27,47 @@
     },
     "header": "Settings",
     "identity": {
+      "not-support": "Sie sind aktuell mit einem alten, nicht identitätsbasierenden, Profil angemeldet. Die Nutzerverwaltung für Identititäten wird nur für aktuelle Profile unterstützt.",
       "dispatcher": {
         "share": "Identitätszugriff erteilen..."
+      },
+      "share": {
+        "body": "Ihnen wurde \"{access}\" Zugriff auf die Identität von {fromAlias} (identity) erteilt. Nutzen Sie den nachfolgenden Link, um die Referenz in Ihrem Profil abzuspeichern und im Namen dieser Identität zu interagieren.",
+        "title": "Identitätszugriff",
+        "type": {
+          "read": "lesender",
+          "write": "schreibender und lesender"
+        }
+      },
+      "side-panel": {
+        "cancel": "Abbrechen",
+        "form": {
+          "address": {
+            "error": "Bitte wählen Sie einen Kontakt aus, um Zugriffsrechte zu vergeben.",
+            "label": "Kontakt",
+            "placeholder": "Berechtigungen vergeben an"
+          },
+          "note": {
+            "label": "Notiz / Rolle",
+            "placeholder": "Admin / Beschaffung / Nutzer XYZ"
+          }
+        },
+        "perm": {
+          "name": "Identitiätszugriff"
+        },
+        "submit": "Speichern",
+        "title": "Identitätsberechtigung"
+      },
+      "table": {
+        "columns": {
+          "grantedAt": "Zugriff erteilt",
+          "name": "Name",
+          "note": "Notiz / Rolle"
+        },
+        "empty": {
+          "filtered": "Keine Ergebnisse mit dem aktuellen Filter gefunden.",
+          "text": "Es sind noch keine Kontakte berechtigt, über Ihre Identität zu interagieren."
+        }
       }
     },
     "routes": {

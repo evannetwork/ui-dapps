@@ -66,19 +66,19 @@
             <slot :name="`form-control-${ controlName }`">
               <component
                 :is="getControlComponentName(controlName)"
-                :id="form[controlName].uiSpecs && form[controlName].uiSpecs.attr ? form[controlName].uiSpecs.attr.id : null"
+                :id="form[controlName].uiSpecs.attr.id || null"
                 v-model="form[controlName].value"
-                :disabled="!editable || isLoading || (form[controlName].uiSpecs && form[controlName].uiSpecs.prohibited === true)"
+                :disabled="!editable || isLoading || form[controlName].uiSpecs.prohibited === true || form[controlName].uiSpecs.attr.disabled"
                 :error="(onlyForm || editMode && !onlyForm) ? getTranslation(form[controlName], 'error') : false"
                 :hint="getTranslation(form[controlName], 'hint')"
                 :label="getTranslation(form[controlName], 'label')"
                 :placeholder="getTranslation(form[controlName], 'placeholder')"
                 :stacked="stacked"
-                :prohibited="form[controlName].uiSpecs && form[controlName].uiSpecs.prohibited"
-                :required="form[controlName].uiSpecs && form[controlName].uiSpecs.attr ? form[controlName].uiSpecs.attr.required : false"
-                v-bind="form[controlName].uiSpecs && form[controlName].uiSpecs.attr ? form[controlName].uiSpecs.attr : { }"
+                :prohibited="form[controlName].uiSpecs.prohibited"
+                :required="!!form[controlName].uiSpecs.attr.required"
+                v-bind="form[controlName].uiSpecs.attr"
                 @blur="form[controlName].setDirty()"
-                @input="form[controlName].uiSpecs && form[controlName].uiSpecs.input ? form[controlName].uiSpecs.input($event) : null"
+                @input="form[controlName].uiSpecs.input ? form[controlName].uiSpecs.input($event) : null"
               />
             </slot>
           </template>

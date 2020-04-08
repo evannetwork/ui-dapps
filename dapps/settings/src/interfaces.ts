@@ -17,29 +17,14 @@
   the following URL: https://evan.network/license/
 */
 
-import * as dappBrowser from '@evan.network/ui-dapp-browser';
-import { Dispatcher, DispatcherInstance } from '@evan.network/ui';
+import { profileUtils } from '@evan.network/ui';
 
-import { IdentityAccessContact } from '../../interfaces';
-
-const dispatcher = new Dispatcher(
-  `settings.${dappBrowser.getDomainName()}`,
-  'identityShareDispatcher',
-  40 * 1000,
-  '_settings.identity.dispatcher.share',
-);
-
-dispatcher
-  .step(async (
-    instance: DispatcherInstance,
-    { contact, bmail }: { contact: IdentityAccessContact; bmail: { title: string; body: string; fromAlias: string } },
-  ) => {
-    await instance.runtime.identity.grantAccess(
-      contact.address,
-      contact.hasIdentityAccess,
-      bmail,
-      contact.note,
-    );
-  });
-
-export default dispatcher;
+export interface IdentityAccessContact {
+  address: string;
+  displayName: string;
+  granted: string;
+  hasIdentityAccess: string | boolean;
+  icon: string;
+  note: string;
+  type: profileUtils.ProfileType;
+}

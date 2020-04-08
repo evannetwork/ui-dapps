@@ -7,7 +7,8 @@
       },
       "entrypoint": "bootstrap.vue.libs.js",
       "files": [
-        "bootstrap.vue.libs.js"
+        "bootstrap.vue.libs.js",
+        "bootstrap.vue.libs.css"
       ],
       "origin": "QmZRHxafSh3GK7VfTFWi7zqEuUEMbWw8PjEfHZronSQTKi",
       "primaryColor": "",
