@@ -46,7 +46,8 @@
       .image-placeholder {
         width: $size;
         height: $size;
-        border-radius: 50%;
+        // Disable deprecated user type
+        // border-radius: 50%;
       }
 
       +.verification-icon {

@@ -126,8 +126,6 @@
 
               <evan-nav-list
                 :entries="navItems"
-                :show-logout="false"
-                :show-profile="false"
               />
             </div>
           </evan-dapp-wrapper-level-2>

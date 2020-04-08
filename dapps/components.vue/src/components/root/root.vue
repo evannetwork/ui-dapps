@@ -21,29 +21,33 @@
   <div class="evan theme-evan">
     <evan-dapp-wrapper
       :routes="[ ]"
-      :bottomRoutes="[ ]"
-      createRuntime="false">
+      :bottom-routes="[ ]"
+      create-runtime="false"
+    >
       <template v-slot:content>
         <evan-dapp-wrapper-level-2
-          ref="level2Wrapper">
+          ref="level2Wrapper"
+        >
           <template v-slot:content>
             <div style="width: 300px">
               <evan-nav-list
-                :entries="navEntries">
-                <template v-slot:header>
-                  <h6 class="text-uppercase font-weight-semibold m-4">
-                    {{ '_comp.components' | translate }}
-                  </h6>
-                </template>
-              </evan-nav-list>
+                :entries="navEntries"
+                header-icon="view-compact-outline"
+                header-text="_comp.components"
+              />
             </div>
           </template>
         </evan-dapp-wrapper-level-2>
-        <transition name="fade" mode="out-in">
+        <transition
+          name="fade"
+          mode="out-in"
+        >
           <div class="container py-3">
-            <h1 class="text-uppercase">{{ $route.name }}</h1>
+            <h1 class="text-uppercase">
+              {{ $route.name }}
+            </h1>
 
-            <router-view></router-view>
+            <router-view />
           </div>
         </transition>
       </template>
@@ -52,6 +56,7 @@
 </template>
 
 <script lang="ts">
-  import Component from './root';
-  export default Component;
+import Component from './root';
+
+export default Component;
 </script>

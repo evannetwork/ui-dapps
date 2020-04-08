@@ -10,7 +10,6 @@
       "detail": "Identity",
       "did": "Decentralized ID",
       "logout": "Logout",
-      "settings": "Settings",
       "sharings": "Sharings",
       "verifications": "Verifications",
       "wallet": "Wallet"
@@ -156,14 +155,14 @@
       "delegates-empty": "No Delegates specified",
       "delegates-title": "Delegates",
       "description": "With Decentralized Identities (DID) one can identify himself uniquely, globally and independently of the network or platform. It's possible to define, who is allowed to make changes to this identity (controller) and who receives authorization to act on behalf of it (delegates). Exporting this document enables the sharing of information offline.",
+      "did": "DID",
       "did-format-error": "Format: did: ...",
       "did-title": "Decentralized ID",
-      "did": "DID",
       "empty-service-endpoints": "No Service Endpoints specified",
       "export-document": "Export Document",
+      "id": "ID",
       "id-placeholder": "DID",
       "id-unique-error": "ID must be unique",
-      "id": "ID",
       "no-delegate-options": "No valid contact available",
       "note": "Note",
       "required-error": "Field is required",
@@ -194,32 +193,7 @@
       "registration": "Registration data"
     },
     "not-permitted-view": "You do not have permission to view this data for the selected Identity.",
-    "security-info": {
-      "encryption-key": {
-        "exported": "Exported Encryption Key and copied to clipboard",
-        "title": "Export Encryption Key"
-      },
-      "private-key": {
-        "exported": "Exported Private Key and copied to clipboard",
-        "title": "Export Private Key"
-      },
-      "title": "Sicherheitsinformationen"
-    },
-    "settings": {
-      "desc": "Settings",
-      "dev-domain": {
-        "desc": "With this configuration the ending \".evan\" is replaced by the given address. With this logic it is possible to use applications on different domains simultaneously for test purposes (e.g.: myapp.test.evan).",
-        "title": "Applications from test-domain"
-      },
-      "developer-mode": "Developer Mode",
-      "language": "Language",
-      "languages": {
-        "browser": "Browser-Language",
-        "de": "German",
-        "en": "English"
-      },
-      "reload-hint": "Please reload the application if you have changed the language settings."
-    },
+    "profile": "Profile",
     "sharing": {
       "description": "To share your identity information with other partners, first select the appropriate contact and then the information to share. Click on \"Share data\".",
       "description-no-contacts": "Identity information can be shared with other partners after you have established a secure connection to their evan.network identity. Go to the contact overview and invite your partners via email or identity ID to share your data trustfully.",

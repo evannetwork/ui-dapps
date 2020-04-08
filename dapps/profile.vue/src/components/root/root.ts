@@ -234,11 +234,6 @@ export default class ProfileRootComponent extends mixins(EvanComponent) {
         icon: 'mdi mdi-share-variant',
         key: 'sharings',
       },
-      null,
-      {
-        icon: 'mdi mdi-settings',
-        key: 'settings',
-      },
     ]
       .filter((entry) => !entry || !this.isAccessDenied(entry.key))
       .map((entry) => (entry ? {

@@ -1,5 +1,5 @@
 <template>
-  <div class="content-card">
+  <div class="evan-content-card">
     <h2 class="card-heading">
       {{ '_twin-detail.overview.transactions-title' | translate }}
     </h2>
@@ -35,19 +35,3 @@ import DetailOverviewTransactionsComponent from './DetailOverviewTransactions';
 
 export default DetailOverviewTransactionsComponent;
 </script>
-
-<style lang="scss" scoped>
-@import '~@evan.network/ui/src/style/utils';
-
-.content-card {
-  background: white;
-  border-radius: 4px;
-  width: 604px;
-  padding: 24px 24px;
-
-  .card-heading {
-    font-size: 18px;
-    font-weight: bold;
-  }
-}
-</style>

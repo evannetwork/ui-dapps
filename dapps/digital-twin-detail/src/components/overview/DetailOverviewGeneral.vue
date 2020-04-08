@@ -1,5 +1,5 @@
 <template>
-  <div class="content-card">
+  <div class="evan-content-card">
     <h2 class="card-heading mb-3">
       {{ '_twin-detail.overview.general-title' | translate }}
     </h2>
@@ -76,17 +76,6 @@ export default DetailOverviewGeneralComponent;
 </script>
 
 <style lang="scss" scoped>
-.content-card {
-  background: white;
-  border-radius: 4px;
-  width: 604px;
-  padding: 24px 24px;
-
-  .card-heading {
-    font-size: 18px;
-    font-weight: bold;
-  }
-}
 .property {
   font-weight: 600;
 }

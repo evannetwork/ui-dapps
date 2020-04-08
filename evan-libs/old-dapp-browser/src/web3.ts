@@ -44,10 +44,10 @@ export function getWeb3Constructor(): any {
  * @param      {string}  url     url for the web socket connection
  * @return     {any}     web3 instance
  */
-export function getWeb3Instance(url: string): any {
+export function getWeb3Instance(url: string, Web3 = evanGlobals.CoreBundle.Web3): any {
   try {
     if (!web3) {
-      const provider = new evanGlobals.CoreBundle.Web3.providers.WebsocketProvider(
+      const provider = new Web3.providers.WebsocketProvider(
         url,
         {
           clientConfig: {
@@ -73,7 +73,7 @@ export function getWeb3Instance(url: string): any {
         }, provider.reconnectDelay);
       };
 
-      web3 = new evanGlobals.CoreBundle.Web3(provider, null, { transactionConfirmationBlocks: 1 });
+      web3 = new Web3(provider, null, { transactionConfirmationBlocks: 1 });
       setInterval(() => {
         web3.eth.getBlockNumber();
       }, 5000)

@@ -27,7 +27,6 @@ import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
 import AccountRootComponent from './components/root/accountRoot.vue';
 import ProfileDetailComponent from './components/profile/profile.vue';
-import ProfileSettingsComponent from './components/settings/settings.vue';
 import VerificationsComponent from './components/verifications/overview/overview.vue';
 import ProfileSharingsComponent from './components/sharings/sharings.vue';
 import ProfileWalletComponent from './components/wallet/wallet.vue';
@@ -58,7 +57,6 @@ const routeRegistration: Array<RouteRegistrationInterface> = [
     children: [
       { path: '', redirect: { path: './detail' } },
       { name: 'detail', path: 'detail', component: ProfileDetailComponent },
-      { name: 'settings', path: 'settings', component: ProfileSettingsComponent },
       { name: 'sharings', path: 'sharings', component: ProfileSharingsComponent },
       { name: 'verifications', path: 'verifications', component: VerificationsComponent },
       { name: 'did', path: 'did', component: DIDComponent },

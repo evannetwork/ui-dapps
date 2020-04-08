@@ -19,47 +19,47 @@
 
 /* tslint:disable */
 export default {
-  "_mailbox": {
-    "add": "Nachricht senden",
-    "attachments": {
-      "commKey": {
-        "accepted": "Show contact",
-        "modal-body": "Do you really want to add this contact?",
-        "new": "Accept contact request"
+  _mailbox: {
+    mailbox: 'Notifications',
+    add: 'Nachricht senden',
+    attachments: {
+      commKey: {
+        accepted: 'Show contact',
+        'modal-body': 'Do you really want to add this contact?',
+        new: 'Accept contact request',
       },
-      "continue": "continue",
-      "contract": {
-        "accepted": "Open contract",
-        "modal-body": "Do you really want to accept this contract?",
-        "new": "Accept contract invitation"
+      continue: 'continue',
+      contract: {
+        accepted: 'Open contract',
+        'modal-body': 'Do you really want to accept this contract?',
+        new: 'Accept contract invitation',
       },
-      "keys": {
-        "accepted": "Open target",
-        "modal-body": "Do you really want to store the keys?",
-        "new": "Store keys in profile"
+      keys: {
+        accepted: 'Open target',
+        'modal-body': 'Do you really want to store the keys?',
+        new: 'Store keys in profile',
       },
-      "url": {
-        "accepted": "Open Attachment"
+      url: {
+        accepted: 'Open Attachment',
       },
-      "verifications": {
-        "accepted": "Open target",
-        "modal-body": "You want to confirm the verifications?",
-        "new": "Confirm verification(s)"
-      }
+      verifications: {
+        accepted: 'Open target',
+        'modal-body': 'You want to confirm the verifications?',
+        new: 'Confirm verification(s)',
+      },
     },
-    "breadcrumbs": {
-      "received": "Incoming Messages",
-      "sent": "Outgoing Messages"
+    breadcrumbs: {
+      received: 'Incoming Messages',
+      sent: 'Outgoing Messages',
     },
-    "detail": "Message Details",
-    "dispatcher": {
-      "attachment": "Contact/Contract sync"
+    detail: 'Message Details',
+    dispatcher: {
+      attachment: 'Contact/Contract sync',
     },
-    "load-more": "Load More...",
-    "mailbox": "Messages",
-    "received": "Received",
-    "sent": "Sent",
-    "to": "to"
-  }
-}
-/* tslint:enable */;
+    'load-more': 'Load More...',
+    mailbox: 'Messages',
+    received: 'Received',
+    sent: 'Sent',
+    to: 'to',
+  },
+};

@@ -18,7 +18,7 @@
 */
 
 <template>
-  <div class="d-flex">
+  <div class="evan-content-container">
     <!-- TODO: Use proper DID -->
     <detail-overview-general
       v-if="twin"
@@ -31,6 +31,7 @@
     />
 
     <detail-overview-transactions
+      class="mt-5"
       :transactions="transactions"
     />
   </div>

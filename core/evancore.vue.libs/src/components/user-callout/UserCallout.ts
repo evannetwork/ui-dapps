@@ -18,14 +18,9 @@
 */
 
 import Component, { mixins } from 'vue-class-component';
-// import { Prop } from 'vue-property-decorator';
-import EvanComponent from '../../component';
+import { session } from '@evan.network/ui-session';
 
-interface Account {
-  id: string;
-  displayName: string;
-  type: string;
-}
+import EvanComponent from '../../component';
 
 /**
  * Shows the callout element when extending the profile in bottom nav
@@ -35,12 +30,30 @@ interface Account {
  */
 @Component
 export default class UserCallout extends mixins(EvanComponent) {
-  // TODO make it a prop in next branch
-  accounts: Account[] = [{
-    id: '0x000',
-    displayName: 'Test Account',
-    type: this.$t('_evan.user-callout.user-account'),
-  }]
+  accounts: string[] = [];
 
   show = false;
+
+  isChangingRuntime = false;
+
+  async created(): Promise<void> {
+    const accessibleIdentities = await session.accountRuntime.profile.getIdentityAccessList() || {};
+    const addresses = Object
+      .keys(accessibleIdentities)
+      .filter((address: string) => address.length === 42 && address !== session.activeIdentity);
+
+    // Add the initial identity to the list
+    if (session.activeIdentity !== session.accountIdentity) {
+      addresses.push(session.accountIdentity);
+    }
+
+    this.accounts = addresses;
+  }
+
+  async switchIdentity(id: string): Promise<void> {
+    this.isChangingRuntime = true;
+    this.show = false;
+
+    session.changeActiveIdentity(id);
+  }
 }
