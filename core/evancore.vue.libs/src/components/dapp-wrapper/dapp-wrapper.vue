@@ -189,7 +189,7 @@
         <div class="mx-auto" />
         <ul class="nav">
           <li
-            v-for="route in routes.bottomRight"
+            v-for="route in routes.bottom.right"
             :key="route.path"
             @click="route.action && route.action()"
           >
