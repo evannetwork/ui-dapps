@@ -109,7 +109,7 @@ export default class IdentitySettingsComponent extends mixins(EvanComponent) {
   /**
    * Clear identity share dispatcher watcher in beforeDestroy
    */
-  identityShareDispatcherClear: Function;
+  identityShareDispatcherClear: () => void;
 
   beforeDestroy(): void {
     this.identityShareDispatcherClear();
