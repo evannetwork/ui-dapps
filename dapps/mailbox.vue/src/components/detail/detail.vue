@@ -19,8 +19,8 @@
 
 <template>
   <div class="container-wide">
-    <div class="white-box border-smooth rounded">
-      <evan-loading v-if="loading"></evan-loading>
+    <div class="white-box w-100">
+      <evan-loading v-if="loading" />
       <template v-if="!loading">
         <div class="d-flex pl-3 pr-3 pt-4 pb-4 border-bottom align-items-center">
           <h4 class="m-0">
@@ -41,20 +41,24 @@
                 <span v-if="addressBook[mail.to]"> ({{ mail.to }})</span>
               </p>
             </div>
-            <span class="mx-auto"></span>
+            <span class="mx-auto" />
             <span>{{ mail.sent | moment('from') }}</span>
           </div>
 
           <div class="mt-4 mb-4 p-3 border bg-level-2">
             <span
-              v-html="mail.body">
-            </span>
+              v-html="mail.body"
+            />
           </div>
 
-          <div v-if="mail.attachments" class="pt-3 text-center">
+          <div
+            v-if="mail.attachments"
+            class="pt-3 text-center"
+          >
             <template
               v-for="(attachment, index) in mail.attachments"
-              v-if="!attachment.unkown">
+              v-if="!attachment.unkown"
+            >
               <evan-modal ref="attachmentModal">
                 <template v-slot:header>
                   <h5 class="modal-title">
@@ -63,22 +67,28 @@
                 </template>
                 <template v-slot:body>
                   <p class="text-left">
-                    {{ `_mailbox.attachments.${ attachment.type }.modal-body`  | translate }}
+                    {{ `_mailbox.attachments.${ attachment.type }.modal-body` | translate }}
                   </p>
                 </template>
                 <template v-slot:footer>
-                  <button type="button" class="btn btn-primary  font-weight-normal"
-                    @click="acceptAttachment(attachment, mail, index, $refs.attachmentModal[index]);">
+                  <button
+                    type="button"
+                    class="btn btn-primary  font-weight-normal"
+                    @click="acceptAttachment(attachment, mail, index, $refs.attachmentModal[index]);"
+                  >
                     {{ `_mailbox.attachments.continue` | translate }}
                   </button>
                 </template>
               </evan-modal>
-              <button class="btn  btn-primary"
+              <button
+                class="btn  btn-primary"
                 :disabled="acceptingAttachment || attachment.disabled"
-                @click="openAttachment(attachment, index, $refs.attachmentModal[index])">
-                <div class="spinner-border spinner-border-sm text-light mr-3"
-                  v-if="acceptingAttachment">
-                </div>
+                @click="openAttachment(attachment, index, $refs.attachmentModal[index])"
+              >
+                <div
+                  v-if="acceptingAttachment"
+                  class="spinner-border spinner-border-sm text-light mr-3"
+                />
                 {{ `_mailbox.attachments.${ attachment.type }.${ attachment.status }` | translate }}
               </button>
             </template>
@@ -90,7 +100,7 @@
 </template>
 
 <script lang="ts">
-  import Component from './detail.ts';
-  export default Component;
-</script>
+import Component from './detail.ts';
 
+export default Component;
+</script>

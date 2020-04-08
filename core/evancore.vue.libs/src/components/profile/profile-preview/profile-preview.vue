@@ -37,12 +37,13 @@
         @changed="userInfo.picture.files[0] = $event; startEditing();"
       />
       <div
-        v-if="size === 'default' || size === 'sm'"
+        v-if="size === 'default' || size === 'sm' || size === 'sm-plus'"
         class="d-flex flex-column justify-content-center ml-3 info"
       >
         <a
           class="force-oneline account-name"
           :href="`${ dapp.baseUrl }/${ dapp.rootEns }/profile.vue.${ dapp.domainName }/${ address }/detail`"
+          @click="disableLink ? $event.preventDefault(): null"
         >
           <b>
             {{ userInfo.accountName }}

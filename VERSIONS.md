@@ -12,6 +12,9 @@
   - add `olddappbrowser.evan` dapp, to enable backwards compatibility
   - `digital-twin-detail`
     - add address to twin detail
+  - add `settings` dapp
+    - includes private / encryption key export
+    - includes browser settings
 - core
   - add new sidebar / bottom bar design with active identity display
 - add DID Document section to profile DApp
@@ -22,7 +25,7 @@
 ### Fixes
 - Last transactions for twins created by identities are now appearing
 - fix old-dapp-browser `createDefaultRuntime` without initial created core runtime
-
+- fix profile design
 
 ### Deprecations
 

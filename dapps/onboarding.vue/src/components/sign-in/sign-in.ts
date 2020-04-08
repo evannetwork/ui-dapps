@@ -106,9 +106,6 @@ export default class SignIn extends mixins(EvanComponent) {
       this.activeStep = 1;
       this.activeSteps.push(1);
       this.accountId = accountId;
-
-      // set autofocus on password input
-      this.$nextTick(() => (this.$refs.password as any).focus());
     }
 
     this.checking = false;

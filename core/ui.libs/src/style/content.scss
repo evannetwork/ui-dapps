@@ -38,8 +38,8 @@
 
   .evan-content-container {
     max-width: 850px;
-    margin-left: auto;
     margin-right: auto;
+    margin-left: auto;
     padding: 32px 16px;
   }
 
@@ -74,7 +74,7 @@
 
   .fullscreen {
     position: fixed;
-    z-index: 999;
+    z-index: 1001;
     top: 0;
     right: 0;
     bottom: 0;
@@ -87,29 +87,18 @@
     padding: 30px 3%;
   }
 
-  .white-box {
-    background-color: cssVar('white');
+  .white-box, .evan-content-card {
+    width: 564px;
+    width: 100%;
+    padding: 24px 24px;
 
-    .header, .footer {
-      display: flex;
-      align-items: center;
+    border-radius: 4px;
+    background: white;
 
-      height: 64px;
-      padding: 0 1.5rem;
-    }
+    .card-heading, & > h1, & > h2, & > h3, & > h4, & > h5, & > h6 {
+      font-size: 16px;
 
-    .header {
-      border-bottom: 1px solid cssVar('border-color-2');
-    }
-
-    .content {
-      padding: 1.5rem;
-    }
-
-    .footer {
-      justify-content: flex-end;
-
-      border-top: 1px solid cssVar('border-color-2');
+      text-transform: uppercase;
     }
   }
 

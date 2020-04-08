@@ -91,13 +91,6 @@ export default class BccHelper {
     const options = inputOptions;
     const useIdentity = await BccHelper.isIdentityUsed(accountId, identity);
 
-    /**
-     * TODO: Use identity encryption key here! Keep in mind: When onboarding a new account, identity
-     * is created within the blockchain-core/onboarding createOfflineProfile function. If we want to
-     * use the identity for encryption key generation salting, we need to split these functions or
-     * the blockchain-core must force this specific key generation.
-     */
-
     // get account hash for easy access within keyConfig
     const accountHash = soliditySha3(accountId);
     const runtimeConfig = {
