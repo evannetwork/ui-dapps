@@ -23,7 +23,7 @@ export interface IdentityAccessContact {
   address: string;
   displayName: string;
   granted: string;
-  hasIdentityAccess: string|boolean;
+  hasIdentityAccess: string | boolean;
   icon: string;
   note: string;
   type: profileUtils.ProfileType;
