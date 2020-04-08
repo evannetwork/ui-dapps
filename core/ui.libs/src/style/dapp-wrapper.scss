@@ -180,6 +180,7 @@ $sidebar-item-width: 40px;
           }
 
           &.active {
+            border-radius: 3px;
             transition: 0.3s ease-out background-color, 0.3s ease-out color;
 
             background-color: cssVar('white');
