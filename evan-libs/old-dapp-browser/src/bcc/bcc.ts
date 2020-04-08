@@ -356,9 +356,8 @@ async function createDefaultRuntime(
   dfs?: any,
   options?: any,
 ) {
-  const coreRuntime = coreRuntimes[CoreBundle.instanceId];
   // fill web3 per default with the core runtime web3
-  web3 = web3 || coreRuntime.web3;
+  web3 = web3 || getWeb3Instance(config.web3Provider, CoreBundle.Web3);
   const soliditySha3 = web3.utils.soliditySha3;
 
   // get accounthash for easy acces within keyConfig
@@ -379,7 +378,13 @@ async function createDefaultRuntime(
   // create the new runtime
   const runtime = await CoreBundle.createDefaultRuntime(
     web3,
-    dfs || coreRuntime.dfs,
+    dfs || new CoreBundle.Ipfs({
+      web3,
+      dfsConfig: ipfs.ipfsConfig,
+      cache: ipfs.getIpfsCache ? ipfs.getIpfsCache() : ipfs.ipfsConfig.ipfsCache,
+      logLog: CoreBundle.logLog,
+      logLogLevel: CoreBundle.logLogLevel,
+    }),
     runtimeConfig,
     options,
   );
