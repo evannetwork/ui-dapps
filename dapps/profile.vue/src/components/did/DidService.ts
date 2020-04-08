@@ -3,6 +3,8 @@ import { Dispatcher, DispatcherInstance } from '@evan.network/ui';
 import { getDomainName } from '@evan.network/ui-vue-core';
 import { ServiceEndpoint, Delegate } from './DidInterfaces';
 
+const PUB_KEY_TYPE = 'Secp256k1VerificationKey2018';
+
 /**
  * Handles logic for fetching and persisting DID documents
  */
@@ -40,31 +42,47 @@ export class DidService {
    * Returns the delegates excluding the owner entry
    * @param didDocument specified did document
    */
-  // eslint-disable-next-line class-methods-use-this
-  async getDelegates(didDocument: DidDocument): Promise<Delegate[]> {
-    // regex to remove #key suffixes
-    const regex = /([#])(key-)(\d)+/;
+  static getDelegates(didDocument: DidDocument): Delegate[] {
+    const keyIds = didDocument.publicKey.map((key) => key.id);
 
-    return Promise.all(didDocument.authentication
-      // Filter out owner
-      .filter((auth) => auth !== DidService.getOwner(didDocument))
-      .map((auth) => auth.replace(regex, ''))
-      .map(async (did) => ({
-        did,
-        // Currently not using the note
-        // note: await profileUtils.getUserAlias(this.runtime, await this.runtime.did.convertDidToIdentity(did)),
-      })));
+    return didDocument.authentication
+      .filter((auth) => keyIds.includes(auth))
+      .map((key) => didDocument.publicKey.find((entry) => entry.id === key))
+      // Filter out "owner"
+      .filter((delegate) => delegate.controller !== didDocument.id);
   }
 
-  static updateDelegates(didDoc: DidDocument, delegates: Delegate[]): DidDocument {
-    // Preserve the owner
-    const ownerEntry = DidService.getOwner(didDoc);
-    const newDoc = didDoc;
-    newDoc.authentication = [
-      ownerEntry,
-      ...delegates.map((delegate) => delegate.did),
-    ];
-    return newDoc;
+  /**
+   * Enhances a DID Document with given delegates
+   * @param newDelegates Array of DIDs to be added as delegate
+   * @param didDoc DID Document to be enhanced
+   */
+  async updateDelegates(newDelegates: string[], didDoc: DidDocument): Promise<DidDocument> {
+    const delegateKeys = DidService.getDelegates(didDoc).map((delegate) => delegate.id);
+
+    // DidDoc without delegates
+    const cleanDidDoc = {
+      ...didDoc,
+      publicKey: didDoc.publicKey.filter((key) => !delegateKeys.includes(key.id)),
+      authentication: didDoc.authentication.filter((auth) => !auth.includes('#delegate-')),
+    };
+
+    return {
+      ...cleanDidDoc,
+      publicKey: [
+        ...cleanDidDoc.publicKey,
+        ...await Promise.all(newDelegates.map(async (did, idx) => ({
+          id: `${cleanDidDoc.id}#delegate-${idx}`,
+          type: PUB_KEY_TYPE,
+          controller: did,
+          ethereumAddress: await this.getAccountForDid(did),
+        }))),
+      ],
+      authentication: [
+        ...cleanDidDoc.authentication,
+        ...newDelegates.map((_, idx) => `${cleanDidDoc.id}#delegate-${idx}`),
+      ],
+    };
   }
 
   // eslint-disable-next-line class-methods-use-this
@@ -72,6 +90,7 @@ export class DidService {
     if (!didDocument.service) {
       return [];
     }
+
     return didDocument.service.map((endpoint) => ({
       id: endpoint.id,
       type: endpoint.type,
@@ -79,6 +98,11 @@ export class DidService {
     }));
   }
 
+  /**
+   * Writes given service endpoints to the DID Document
+   * @param didDoc DID Document to be enhanced
+   * @param endpoints Service Endpoints to add
+   */
   static updateServiceEndpoints(didDoc: DidDocument, endpoints: ServiceEndpoint[]): DidDocument {
     return {
       ...didDoc,
@@ -91,7 +115,7 @@ export class DidService {
   }
 
   /**
-   * TODO: Currently we don't implement controller logic. Return empty array
+   * Currently we don't implement controller logic. Return empty array
    * @param didDoc
    */
   // eslint-disable-next-line class-methods-use-this
@@ -104,8 +128,17 @@ export class DidService {
    * @param didDoc DID Document to get the owner for
    */
   static getOwner(didDoc: DidDocument): string {
-    return didDoc.authentication.find((item) => didDoc.publicKey
-      .map((key) => key.id).includes(item));
+    return didDoc.id;
+  }
+
+  /**
+   * Helper to convert DID to account id
+   * @param did DID
+   */
+  async getAccountForDid(did: string): Promise<string> {
+    const identity = await this.runtime.did.convertDidToIdentity(did);
+
+    return this.runtime.verifications.getOwnerAddressForIdentity(identity);
   }
 
   /**

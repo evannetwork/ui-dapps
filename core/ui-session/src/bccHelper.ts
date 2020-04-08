@@ -91,13 +91,6 @@ export default class BccHelper {
     const options = inputOptions;
     const useIdentity = await BccHelper.isIdentityUsed(accountId, identity);
 
-    /**
-     * TODO: Use identity encryption key here! Keep in mind: When onboarding a new account, identity
-     * is created within the blockchain-core/onboarding createOfflineProfile function. If we want to
-     * use the identity for encryption key generation salting, we need to split these functions or
-     * the blockchain-core must force this specific key generation.
-     */
-
     // get account hash for easy access within keyConfig
     const accountHash = soliditySha3(accountId);
     const runtimeConfig = {
@@ -254,9 +247,10 @@ export default class BccHelper {
          const isCorrect = !!targetPrivateKey; */
       if (runtime.profile) {
         // directly overwrite the latest encryption key for this account
-        await EvanlightWallet.overwriteVaultEncryptionKey(
-          accountId,
-          EvanlightWallet.getEncryptionKeyFromPassword(encryptionSalt, password),
+        await EvanlightWallet.overwriteVaultEncryptionKey(accountId, encryptionKey);
+        runtime.logger.log(
+          `Decrypt ${accountId} with encryptionSalt ${encryptionSalt}`,
+          'info',
         );
       }
 
@@ -265,12 +259,15 @@ export default class BccHelper {
 
     let checks: Function[];
     if (useIdentity) {
-      /* 1. Check for new identity logic
-         TODO: use account identity salting! (passwordCheck(accountIdentity)) */
-      checks = [(): Promise<boolean> => passwordCheck(accountId)];
+      checks = [
+        // 1. check for password salted with account id
+        (): Promise<boolean> => passwordCheck(accountIdentity),
+        // 2. check for password salted with identity
+        (): Promise<boolean> => passwordCheck(accountId),
+      ];
     } else {
       checks = [
-        // 2. check for password salting with account id
+        // 2. check for password salted with account id
         (): Promise<boolean> => passwordCheck(accountId),
         // 3. support very old passwords
         (): Promise<boolean> => passwordCheck(''),

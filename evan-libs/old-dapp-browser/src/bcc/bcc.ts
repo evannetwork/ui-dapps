@@ -17,7 +17,7 @@
   the following URL: https://evan.network/license/
 */
 
-import { lightwallet } from '@evan.network/ui-session';
+import { lightwallet, bccHelper } from '@evan.network/ui-session';
 import { ipfs } from '@evan.network/ui-dapp-browser';
 
 import { config } from '../config';
@@ -330,42 +330,7 @@ async function getProfileForAccount(CoreBundle: any, accountId: string) {
  */
 async function isAccountPasswordValid(CoreBundle: any, accountId: string, password: string,
   encryptionSalt = accountId) {
-  const profile = await getProfileForAccount(CoreBundle, accountId);
-
-  // set the keys for the temporary profile using the password input, so we can try to get the
-  // private key
-  profile.ipld.keyProvider.setKeysForAccount(
-    accountId,
-    lightwallet.getEncryptionKeyFromPassword(encryptionSalt, password)
-  );
-
-
-  let targetPrivateKey;
-  try {
-    targetPrivateKey = await profile.getContactKey(
-      accountId,
-      'dataKey'
-    );
-  } catch (ex) { }
-
-  // if the private key for this account could be loaded, the password is valid
-  if (targetPrivateKey) {
-    return true;
-  } else {
-    // TODO: remove duplicated check, when old profiles without accountId salt are gone
-    if (encryptionSalt && await isAccountPasswordValid(CoreBundle, accountId, password, '')) {
-      // WARNING: for old accounts: overwrite current encryption key, to use the key without a
-      // accountId
-      await lightwallet.overwriteVaultEncryptionKey(
-        accountId,
-        lightwallet.getEncryptionKeyFromPassword('', password)
-      );
-
-      return true;
-    } else {
-      return false;
-    }
-  }
+  return bccHelper.setEncryptionKeyForAccount(accountId, password);
 }
 
 /**

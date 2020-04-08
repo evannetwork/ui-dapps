@@ -20,6 +20,7 @@
 - add DID Document section to profile DApp
 - libs
   - add `vee-validate` as dapp library (`validate.vee.libs`)
+- use identity for profile encryption salting
 
 ### Fixes
 - Last transactions for twins created by identities are now appearing

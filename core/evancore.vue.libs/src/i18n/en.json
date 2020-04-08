@@ -24,6 +24,7 @@
       "title": "Your browser is not supported"
     },
     "cancel": "Cancel",
+    "coming-soon": "Coming soon",
     "dapp-wrapper": {
       "all-messages": "All messages",
       "dispatcher-status": {
@@ -168,10 +169,17 @@
       "selectContact": "Select contact to share with",
       "update": "Share data"
     },
+    "switching-identity": "Switching identity ...",
     "transaction_costs_hint": "This will cause transaction fees.",
     "under-development": {
       "desc": "The area shown is currently under construction and will be available soon.",
       "title": "Under construction"
+    },
+    "user-callout": {
+      "account-settings": "Identity Settings",
+      "create-new-account": "Add new Identity",
+      "switch-account": "Switch to another Identity",
+      "user-account": "User Identity"
     },
     "validation": {
       "required": "This field is required",
