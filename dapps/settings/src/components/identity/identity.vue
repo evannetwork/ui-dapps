@@ -20,7 +20,7 @@
 <template>
   <div class="evan-content-container">
     <evan-loading v-if="loading" />
-    <template v-else-if="!useIdentity">
+    <template v-else-if="!isIdentityUsed">
       <h3>{{ '_settings.identity.not-support' | translate }}</h3>
     </template>
     <template v-else>
@@ -67,8 +67,8 @@
             :class="contact.item.icon"
           />
         </template>
-        <template v-slot:cell(granted)="contact">
-          {{ contact.item.granted | moment('L') }}
+        <template v-slot:cell(grantedAt)="contact">
+          {{ contact.item.grantedAt | moment('L') }}
         </template>
         <template v-slot:cell(actions)="contact">
           <evan-loading

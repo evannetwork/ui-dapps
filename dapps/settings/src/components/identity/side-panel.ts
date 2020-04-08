@@ -48,7 +48,7 @@ export default class IdentitySidePanelComponent extends mixins(EvanComponent) {
   canEdit = false;
 
   /**
-   * Current selected contact. Will be set by the sow function
+   * Current selected contact. Will be set by the show function
    */
   contact: IdentityAccessContact = null;
 
@@ -133,7 +133,7 @@ export default class IdentitySidePanelComponent extends mixins(EvanComponent) {
       },
     });
 
-    this.hie();
+    this.hide();
   }
 
   /**
@@ -173,8 +173,8 @@ export default class IdentitySidePanelComponent extends mixins(EvanComponent) {
   setupPermissions(): void {
     this.permissions = {
       identity: {
-        read: this.contact.hasIdentityAccess === 'read' || this.contact.hasIdentityAccess === 'write',
-        readWrite: this.contact.hasIdentityAccess === 'write',
+        read: this.contact.hasIdentityAccess === 'read' || this.contact.hasIdentityAccess === 'readWrite',
+        readWrite: this.contact.hasIdentityAccess === 'readWrite',
       },
     };
   }
@@ -202,8 +202,14 @@ export default class IdentitySidePanelComponent extends mixins(EvanComponent) {
 
     // do not allow to remove read permissions
     // eslint-disable-next-line no-nested-ternary
-    let resolvedPerm = idPerm.readWrite ? 'write' : idPerm.read ? 'read' : false;
-    if (!resolvedPerm && (originPerm === 'read' || originPerm === 'write')) {
+    let resolvedPerm: string|boolean = false;
+    if (idPerm.readWrite) {
+      resolvedPerm = 'readWrite';
+    } else if (idPerm.read) {
+      resolvedPerm = 'read';
+    }
+
+    if (!resolvedPerm && (originPerm === 'read' || originPerm === 'readWrite')) {
       resolvedPerm = 'read';
     }
 

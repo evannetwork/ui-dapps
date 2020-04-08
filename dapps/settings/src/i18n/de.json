@@ -43,7 +43,7 @@
         "cancel": "Abbrechen",
         "form": {
           "address": {
-            "error": "Please select a contact to grant access to.",
+            "error": "Bitte wählen Sie einen Kontakt aus, um Zugriffsrechte zu vergeben.",
             "label": "Kontakt",
             "placeholder": "Berechtigungen vergeben an"
           },
@@ -60,13 +60,13 @@
       },
       "table": {
         "columns": {
-          "granted": "Zugriff erteilt",
+          "grantedAt": "Zugriff erteilt",
           "name": "Name",
           "note": "Notiz / Rolle"
         },
         "empty": {
           "filtered": "Keine Ergebnisse mit dem aktuellen Filter gefunden.",
-          "text": "Es sind noch keine Identitäten berechtigt, über Ihre Identität zu interagieren."
+          "text": "Es sind noch keine Kontakte berechtigt, über Ihre Identität zu interagieren."
         }
       }
     },

@@ -34,16 +34,6 @@ export default class IdentitySettingsComponent extends mixins(EvanComponent) {
   contacts: IdentityAccessContact[] = null;
 
   /**
-   * Contacts filtered with identity access
-   */
-  permittedContacts: IdentityAccessContact[] = null;
-
-  /**
-   * Is the current user allowed to grant access?
-   */
-  enableAccessGranting = false;
-
-  /**
    * Contacts that getting currently permissions
    */
   loadingStates = { };
@@ -82,8 +72,8 @@ export default class IdentitySettingsComponent extends mixins(EvanComponent) {
         tdClass: 'truncate',
       },
       {
-        key: 'granted',
-        label: this.$t('_settings.identity.table.columns.granted'),
+        key: 'grantedAt',
+        label: this.$t('_settings.identity.table.columns.grantedAt'),
         sortable: true,
         thClass: 'th-date',
       },
@@ -104,12 +94,21 @@ export default class IdentitySettingsComponent extends mixins(EvanComponent) {
     filter: '',
   }
 
-  useIdentity = false;
+  isIdentityUsed = false;
 
   /**
    * Clear identity share dispatcher watcher in beforeDestroy
    */
   identityShareDispatcherClear: () => void;
+
+  /**
+   * Filter all contacts for hasIdentityAccess
+   */
+  get permittedContacts(): void {
+    return this.contacts.filter(
+      (contact) => contact.hasIdentityAccess || this.loadingStates[contact.address],
+    );
+  }
 
   beforeDestroy(): void {
     this.identityShareDispatcherClear();
@@ -120,10 +119,10 @@ export default class IdentitySettingsComponent extends mixins(EvanComponent) {
    */
   async created(): Promise<void> {
     this.runtime = session.identityRuntime;
-    this.useIdentity = this.runtime.runtimeConfig.useIdentity;
+    this.isIdentityUsed = this.runtime.runtimeConfig.isIdentityUsed;
 
     // don't allow this ui for profiles without useIdentity
-    if (!this.useIdentity) {
+    if (!this.isIdentityUsed) {
       this.loading = false;
       return;
     }
@@ -131,7 +130,6 @@ export default class IdentitySettingsComponent extends mixins(EvanComponent) {
     // load contacts, check for loading dispatchers and filter out permitted contacts
     this.contacts = await this.loadContacts();
     this.loadingStates = await this.getLoadingStates();
-    this.permittedContacts = this.getPermittedContacts();
 
     // watch for changes
     this.identityShareDispatcherClear = identityShareDispatcher.watch(async ($event) => {
@@ -142,7 +140,6 @@ export default class IdentitySettingsComponent extends mixins(EvanComponent) {
       }
 
       this.loadingStates = await this.getLoadingStates();
-      this.permittedContacts = this.getPermittedContacts();
     });
 
     this.loading = false;
@@ -169,7 +166,8 @@ export default class IdentitySettingsComponent extends mixins(EvanComponent) {
         return {
           address: contactAddress,
           displayName,
-          granted: contact.identityAccessGranted ? new Date(parseInt(contact.identityAccessGranted, 10)) : '',
+          grantedAt: contact.identityAccessGranted
+            ? new Date(parseInt(contact.identityAccessGranted, 10)) : '',
           icon: profileUtils.getProfileTypeIcon(type),
           hasIdentityAccess: contact.hasIdentityAccess || false,
           note: contact.identityAccessNote || '',
@@ -191,14 +189,5 @@ export default class IdentitySettingsComponent extends mixins(EvanComponent) {
 
     // update table data and display also the contacts that are in loading progress
     return loadingStates;
-  }
-
-  /**
-   * Filter all contacts for hasIdentityAccess filter and sets the permittedContacts array.
-   */
-  getPermittedContacts(): void {
-    return this.contacts.filter(
-      (contact) => contact.hasIdentityAccess || this.loadingStates[contact.address],
-    );
   }
 }
