@@ -21,7 +21,7 @@
   <div class="evan-content-container">
     <div class="white-box mt-5">
       <h3 class="mb-5 d-block">
-        {{ `_settings.browser.language` | translate }}
+        {{ $t(`_settings.browser.language`) }}
       </h3>
       <select
         id="language"
@@ -31,23 +31,23 @@
         @change="languageChanged()"
       >
         <option value="">
-          {{ '_settings.browser.languages.browser' | translate }}
+          {{ $t('_settings.browser.languages.browser') }}
         </option>
         <option value="de">
-          {{ '_settings.browser.languages.de' | translate }}
+          {{ $t('_settings.browser.languages.de') }}
         </option>
         <option value="en">
-          {{ '_settings.browser.languages.en' | translate }}
+          {{ $t('_settings.browser.languages.en') }}
         </option>
       </select>
       <span class="text-muted small">
-        {{ '_settings.browser.reload-hint' | translate }}
+        {{ $t('_settings.browser.reload-hint') }}
       </span>
     </div>
 
     <div class="white-box mt-5">
       <h3 class="mb-5 d-block">
-        {{ '_settings.browser.developer-mode' | translate }}
+        {{ $t('_settings.browser.developer-mode') }}
       </h3>
       <evan-form-control-checkbox
         id="devMode"
@@ -59,7 +59,7 @@
 
       <template v-if="devMode">
         <b>
-          {{ `_settings.browser.dev-domain.title` | translate }}
+          {{ $t(`_settings.browser.dev-domain.title`) }}
         </b>
         <div class="d-flex align-items-center mt-3">
           <div>
@@ -76,14 +76,14 @@
               ref="devDomain"
               v-model="devDomain"
               class="form-control"
-              :placeholder="`_settings.browser.dev-domain.desc` | translate"
+              :placeholder="$t(`_settings.browser.dev-domain.desc`)"
               :disabled="!devDomainEnabled"
               @change="devDomainChanged()"
             >
           </div>
         </div>
         <span class="text-muted small">
-          {{ '_settings.browser.dev-domain.desc' | translate }}
+          {{ $t('_settings.browser.dev-domain.desc') }}
         </span>
       </template>
     </div>

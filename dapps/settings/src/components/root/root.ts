@@ -27,21 +27,18 @@ import { EvanComponent, NavEntryInterface } from '@evan.network/ui-vue-core';
 export default class RootComponent extends mixins(EvanComponent) {
   navEntries: NavEntryInterface[] = [
     {
-      disabled: false,
       icon: 'mdi mdi-account-group-outline',
       id: 'nav-entry-identity-users',
       text: '_settings.routes.identity',
       to: { name: 'settings-identity' },
     },
     {
-      disabled: false,
       icon: 'mdi mdi-shield-account-outline',
       id: 'nav-entry-account-settings',
       text: '_settings.routes.account',
       to: { name: 'settings-account' },
     },
     {
-      disabled: false,
       icon: 'mdi mdi-monitor',
       id: 'nav-entry-browser',
       text: '_settings.routes.browser',
