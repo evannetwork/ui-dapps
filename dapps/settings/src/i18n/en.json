@@ -32,7 +32,7 @@
         "share": "Granting access to identity..."
       },
       "share": {
-        "body": "You got \"{access}\" access to the identity of {fromAlias} (identity). Use the link below to save the reference in your profile to be able, to interact on behalf of this identity.",
+        "body": "You have been granted \"{access}\" access to the identity of {fromAlias} (identity). Use the link below to save the reference in your profile to interact on behalf of this identity.",
         "title": "Identity access",
         "type": {
           "read": "read",
