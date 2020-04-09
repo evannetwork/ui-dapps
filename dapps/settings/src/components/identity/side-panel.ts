@@ -74,6 +74,11 @@ export default class IdentitySidePanelComponent extends mixins(EvanComponent) {
   isNew = false;
 
   /**
+   * Disable save button until dispatcher is started 
+   */
+  startingDispatcher = false;
+
+  /**
    * Load identity specific data
    */
   async created(): Promise<void> {
@@ -104,6 +109,7 @@ export default class IdentitySidePanelComponent extends mixins(EvanComponent) {
     this.contact = null;
     this.form = null;
     this.originalContact = null;
+    this.startingDispatcher = false;
     (this.$refs.sidePanel as SwipePanelComponentClass).hide();
   }
 
@@ -111,9 +117,8 @@ export default class IdentitySidePanelComponent extends mixins(EvanComponent) {
    * Remove the access for a specific user.
    */
   async removeAccess(): Promise<void> {
-    this.hide();
-
     const runtime = this.getRuntime();
+    this.startingDispatcher = true;
     const fromAlias = await profileUtils.getUserAlias(runtime);
 
     // start identity remove dispatcher and pass translated b-mail content
@@ -128,15 +133,16 @@ export default class IdentitySidePanelComponent extends mixins(EvanComponent) {
         }).replace(/\n/g, '<br>'),
       },
     });
+
+    this.hide();
   }
 
   /**
    * Save the current specification
    */
   async save(): Promise<void> {
-    this.hide();
-
     const runtime = this.getRuntime();
+    this.startingDispatcher = true;
     const fromAlias = await profileUtils.getUserAlias(runtime);
 
     // start identity invite dispatcher and pass translated b-mail content
@@ -155,6 +161,8 @@ export default class IdentitySidePanelComponent extends mixins(EvanComponent) {
         }).replace(/\n/g, '<br>'),
       },
     });
+
+    this.hide();
   }
 
   /**
@@ -204,7 +212,7 @@ export default class IdentitySidePanelComponent extends mixins(EvanComponent) {
   show(contact: IdentityAccessContact): void {
     this.originalContact = contact || { } as IdentityAccessContact;
     this.contact = { ...this.originalContact };
-    this.isNew = !contact;
+    this.isNew = !this.contact.hasIdentityAccess;
     this.setupForm();
     this.setupPermissions();
     (this.$refs.sidePanel as SwipePanelComponentClass).show();

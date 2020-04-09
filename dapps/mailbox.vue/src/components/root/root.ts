@@ -151,7 +151,8 @@ export default class MailboxComponent extends mixins(EvanComponent) {
           return mail;
         }
       })
-      .filter((mail) => !!mail);
+      .filter((mail) => !!mail)
+      .sort((mail) => mail.sent);
 
     // apply them to the original array
     category.mails = category.mails.concat(mailArray);

@@ -31,9 +31,9 @@
     </div>
     <template v-else>
       <input
+        :id="id"
         :checked="value"
         :disabled="disabled"
-        :id="id"
         class="form-control"
         type="checkbox"
         v-bind="$attrs"

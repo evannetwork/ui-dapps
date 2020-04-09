@@ -18,7 +18,7 @@
 */
 
 <template>
-  <div class="container-wide">
+  <div class="evan-content-container">
     <div class="white-box w-100">
       <evan-loading v-if="loading" />
       <template v-if="!loading">

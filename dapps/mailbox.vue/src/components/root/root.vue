@@ -43,7 +43,7 @@
                 v-if="!loading"
                 class="container-wide"
               >
-                <div class="white-box border-smooth rounded">
+                <div class="white-box">
                   <div class="table-scroll-container">
                     <table class="evan-table no-wrap hover w-100">
                       <thead>

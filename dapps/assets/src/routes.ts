@@ -20,44 +20,37 @@
 import { RouteConfig } from 'vue-router';
 import { getDomainName } from '@evan.network/ui-dapp-browser';
 import { DAppLoaderComponent } from '@evan.network/ui-vue-core';
-import AssetsComponent from './components/Assets.vue';
 import DataContainer from './components/DataContainer.vue';
 import DigitalTwinsComponent from './components/digitaltwins/DigitalTwins.vue';
 import ContactsComponent from './components/contacts/Contacts.vue';
 
 // map them to element names, so they can be used within templates
 const routeRegistration: Array<RouteConfig> = [
+  { path: '', redirect: 'digitaltwins' },
   {
-    path: '',
-    component: AssetsComponent,
+    path: 'digitaltwins',
+    component: DataContainer,
     children: [
-      { path: '', redirect: 'digitaltwins' },
       {
-        path: 'digitaltwins',
-        component: DataContainer,
-        children: [
-          {
-            path: '',
-            name: 'digitaltwins',
-            component: DigitalTwinsComponent,
-            meta: { type: 'twins' },
-          },
-          {
-            path: 'search/:query',
-            name: 'digitaltwins-search',
-            props: true,
-            component: DigitalTwinsComponent,
-            meta: { type: 'twins' },
-          },
-        ],
+        path: '',
+        name: 'digitaltwins',
+        component: DigitalTwinsComponent,
+        meta: { type: 'twins' },
       },
       {
-        path: `detail.digital-twin.${getDomainName()}/:id`,
-        component: DAppLoaderComponent,
+        path: 'search/:query',
+        name: 'digitaltwins-search',
+        props: true,
+        component: DigitalTwinsComponent,
+        meta: { type: 'twins' },
       },
-      { name: 'contacts', path: 'contacts', component: ContactsComponent },
     ],
   },
+  {
+    path: `detail.digital-twin.${getDomainName()}/:id`,
+    component: DAppLoaderComponent,
+  },
+  { name: 'contacts', path: 'contacts', component: ContactsComponent },
 ];
 
 export default routeRegistration;
