@@ -222,7 +222,9 @@ export default class ProfileRootComponent extends mixins(EvanComponent) {
         key: 'detail',
       },
       {
-        disabled: !(await this.getRuntime().verifications.isIdentity(this.$route.params.address)),
+        disabled: !(await this.getRuntime().verifications.isIdentity(
+          this.$store.state.profileDApp.address,
+        )),
         icon: 'mdi mdi-identifier',
         key: 'did',
       },

@@ -18,7 +18,10 @@
 */
 
 <template>
-  <div class="checkbox">
+  <div
+    class="checkbox"
+    @click="onClick()"
+  >
     <div
       v-if="prohibited"
       class="prohibited"
@@ -32,7 +35,6 @@
         type="checkbox"
         v-bind="$attrs"
         :checked="value"
-        @input="$emit('input', $event.target.checked)"
       >
       <label :for="id" />
     </template>

@@ -38,4 +38,12 @@ export default class CheckboxComponent extends mixins(EvanComponent) {
   }) id: string;
 
   @Prop({ default: false }) prohibited: boolean;
+
+  /**
+   * Handle overlapping checkbox label click and send corret formular events.
+   */
+  onClick(): void {
+    this.value = !this.value;
+    this.$emit('input', this.value);
+  }
 }

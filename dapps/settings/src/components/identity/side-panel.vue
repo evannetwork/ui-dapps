@@ -70,18 +70,20 @@
               <evan-checkbox
                 class="mb-0"
                 :value="permissions.read"
-                :disabled="originalContact.hasIdentityAccess === 'read' || originalContact.hasIdentityAccess === 'readWrite'"
                 @input="updatePermissions($event, permissions.readWrite)"
               />
+              <!--
+                :disabled="originalContact.hasIdentityAccess === 'read' || originalContact.hasIdentityAccess === 'readWrite'" -->
             </div>
             <div>
               <small class="font-italic">{{ $t('_settings.identity.side-panel.perm.readWrite') }}</small>
               <evan-checkbox
                 class="mb-0"
                 :value="permissions.readWrite"
-                :disabled="originalContact.hasIdentityAccess === 'readWrite'"
                 @input="updatePermissions(permissions.read, $event)"
               />
+              <!--
+                :disabled="originalContact.hasIdentityAccess === 'readWrite'" -->
             </div>
           </div>
         </div>
