@@ -111,7 +111,9 @@ export default class IdentitySettingsComponent extends mixins(EvanComponent) {
   }
 
   beforeDestroy(): void {
-    this.dispatcherWatchClear();
+    if (this.dispatcherWatchClear) {
+      this.dispatcherWatchClear();
+    }
   }
 
   /**
@@ -127,10 +129,6 @@ export default class IdentitySettingsComponent extends mixins(EvanComponent) {
       return;
     }
 
-    // load contacts, check for loading dispatchers and filter out permitted contacts
-    this.contacts = await this.loadContacts();
-    this.loadingStates = await this.getLoadingStates();
-
     // watch for changes
     this.dispatcherWatchClear = Dispatcher.watch(async ($event) => {
       if ($event.detail.status === 'finished' || $event.detail.status === 'deleted') {
@@ -142,6 +140,11 @@ export default class IdentitySettingsComponent extends mixins(EvanComponent) {
 
       this.loadingStates = await this.getLoadingStates();
     }, `settings.${this.dapp.domainName}`);
+
+
+    // load contacts, check for loading dispatchers and filter out permitted contacts
+    this.contacts = await this.loadContacts();
+    this.loadingStates = await this.getLoadingStates();
 
     this.loading = false;
   }
