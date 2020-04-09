@@ -350,7 +350,7 @@ export default class EvanSession {
             { executor },
           );
           // use default runtime or create the on behalf of identity runtime
-          if (EvanSession.accountIdentity === activeIdentity) {
+          if (!activeIdentity || EvanSession.accountIdentity === activeIdentity) {
             EvanSession.identityRuntime = EvanSession.accountRuntime;
           } else {
             EvanSession.identityRuntime = await getRuntimeForIdentity(
