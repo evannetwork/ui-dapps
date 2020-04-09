@@ -43,7 +43,7 @@
   // use separated nav-entries, so we can apply custom entries at the bottom and at the top,
   // without using my-auto
   .nav-entries {
-    flex: 1;
+    background-color: cssVar('bg-level-3');
 
     a, button {
       font-size: 14px;
@@ -63,9 +63,10 @@
       outline: none;
       background-color: white;
 
+      transition: all 0.3s ease-out;
+
       &, * {
         color: cssVar('gray-900');
-        transition: background-color 0.3s ease-out, color 0.5s ease-out;
       }
 
       i {
@@ -73,8 +74,8 @@
       }
 
       &.active {
-        border-top: 1px solid cssVar('primary');
-        border-bottom: 1px solid cssVar('primary');
+        box-shadow: 0px 0px 16px -4px cssVar('primary');
+        margin: 4px 0;
 
         &, * {
           color: cssVar('primary');
