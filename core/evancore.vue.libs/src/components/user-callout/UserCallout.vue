@@ -62,9 +62,6 @@
           class="mdi mdi-settings-outline"
           style="font-size: 18px"
         />
-        <evan-tooltip placement="right">
-          {{ $t('_evan.coming-soon') }}
-        </evan-tooltip>
       </evan-button>
 
       <!-- Switch identity -->
