@@ -29,9 +29,10 @@
     "identity": {
       "not-support": "You are currently logged in with an old, non-identity-based profile. User management for identities is only supported for current profiles.",
       "dispatcher": {
-        "share": "Granting access to identity..."
+        "grant-access": "Granting access to identity...",
+        "remove-access": "Remove Permissions for identity..."
       },
-      "share": {
+      "grant-access": {
         "body": "You have been granted \"{access}\" access to the identity of {alias} ({identity}). Use the link below to save the reference in your profile to interact on behalf of this identity.",
         "title": "Identity access",
         "type": {
@@ -39,7 +40,17 @@
           "readWrite": "read and write"
         }
       },
+      "remove-access": {
+        "body": "They were given reading and writing access to the identity of {alias} {identity}}. Use the following link to delete the reference in your profile.",
+        "title": "Identity access revoked"
+      },
       "side-panel": {
+        "delete-modal": {
+          "confirm": "Remove",
+          "description": "Do you really want to revoke the permissions for this user? The write permissions will be removed and he will receive a request to delete the encryption key for your identity.",
+          "title": "Remove Permissions"
+        },
+        "remove-button": "Remove Permissions",
         "cancel": "Cancel",
         "form": {
           "address": {

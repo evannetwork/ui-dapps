@@ -19,12 +19,12 @@
 
 import Component, { mixins } from 'vue-class-component';
 import { EvanComponent } from '@evan.network/ui-vue-core';
-import { profileUtils, DispatcherInstance } from '@evan.network/ui';
+import { profileUtils, Dispatcher, DispatcherInstance } from '@evan.network/ui';
 import { Runtime } from '@evan.network/api-blockchain-core';
 import { session } from '@evan.network/ui-session';
 
 import { IdentityAccessContact } from '../../interfaces';
-import { identityShareDispatcher } from '../../dispatchers';
+import { identityAccessDispatcher } from '../../dispatchers';
 
 @Component
 export default class IdentitySettingsComponent extends mixins(EvanComponent) {
@@ -99,7 +99,7 @@ export default class IdentitySettingsComponent extends mixins(EvanComponent) {
   /**
    * Clear identity share dispatcher watcher in beforeDestroy
    */
-  identityShareDispatcherClear: () => void;
+  dispatcherWatchClear: () => void;
 
   /**
    * Filter all contacts for hasIdentityAccess
@@ -111,7 +111,7 @@ export default class IdentitySettingsComponent extends mixins(EvanComponent) {
   }
 
   beforeDestroy(): void {
-    this.identityShareDispatcherClear();
+    this.dispatcherWatchClear();
   }
 
   /**
@@ -132,7 +132,7 @@ export default class IdentitySettingsComponent extends mixins(EvanComponent) {
     this.loadingStates = await this.getLoadingStates();
 
     // watch for changes
-    this.identityShareDispatcherClear = identityShareDispatcher.watch(async ($event) => {
+    this.dispatcherWatchClear = Dispatcher.watch(async ($event) => {
       if ($event.detail.status === 'finished' || $event.detail.status === 'deleted') {
         this.loading = true;
         await this.runtime.profile.loadForAccount(this.runtime.profile.treeLabels.addressBook);
@@ -141,7 +141,7 @@ export default class IdentitySettingsComponent extends mixins(EvanComponent) {
       }
 
       this.loadingStates = await this.getLoadingStates();
-    });
+    }, `settings.${this.dapp.domainName}`);
 
     this.loading = false;
   }
@@ -181,7 +181,7 @@ export default class IdentitySettingsComponent extends mixins(EvanComponent) {
    * Load latest dispatcher instances and check which identities currently gets access.
    */
   async getLoadingStates(): Promise<void> {
-    const instances = await identityShareDispatcher.getInstances(this.runtime, true) as DispatcherInstance[];
+    const instances = await identityAccessDispatcher.getInstances(this.runtime, true) as DispatcherInstance[];
     const loadingStates = { };
 
     instances.forEach((instance: DispatcherInstance) => {

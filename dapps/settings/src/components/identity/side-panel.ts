@@ -23,7 +23,6 @@ import {
   EvanComponent,
   EvanForm,
   EvanFormControl,
-  PermissionsInterface,
   SwipePanelComponentClass,
 } from '@evan.network/ui-vue-core';
 import { session } from '@evan.network/ui-session';
@@ -31,7 +30,7 @@ import { profileUtils } from '@evan.network/ui';
 import { lodash } from '@evan.network/api-blockchain-core';
 
 import { IdentityAccessContact } from '../../interfaces';
-import { identityShareDispatcher } from '../../dispatchers';
+import { identityAccessDispatcher, identityAccessRemoveDispatcher } from '../../dispatchers';
 
 interface IdentityForm extends EvanForm {
   address: EvanFormControl;
@@ -109,27 +108,50 @@ export default class IdentitySidePanelComponent extends mixins(EvanComponent) {
   }
 
   /**
+   * Remove the access for a specific user.
+   */
+  async removeAccess(): Promise<void> {
+    this.hide();
+
+    const runtime = this.getRuntime();
+    const fromAlias = await profileUtils.getUserAlias(runtime);
+
+    // start identity remove dispatcher and pass translated b-mail content
+    identityAccessRemoveDispatcher.start(runtime, {
+      address: this.contact.address,
+      bmail: {
+        fromAlias,
+        title: this.$t('_settings.identity.remove-access.title'),
+        body: this.$t('_settings.identity.remove-access.body', {
+          alias: fromAlias,
+          identity: runtime.activeIdentity,
+        }).replace(/\n/g, '<br>'),
+      },
+    });
+  }
+
+  /**
    * Save the current specification
    */
   async save(): Promise<void> {
-    const runtime = this.getRuntime();
-    const contact = {
-      ...this.contact,
-      ...this.form.getFormData(),
-    };
-
     this.hide();
-    // start identity invite dispatcher and pass translated b-mail content
+
+    const runtime = this.getRuntime();
     const fromAlias = await profileUtils.getUserAlias(runtime);
-    identityShareDispatcher.start(this.getRuntime(), {
-      contact,
+
+    // start identity invite dispatcher and pass translated b-mail content
+    identityAccessDispatcher.start(runtime, {
+      contact: {
+        ...this.contact,
+        ...this.form.getFormData(),
+      },
       bmail: {
         fromAlias,
-        title: this.$t('_settings.identity.share.title'),
-        body: this.$t('_settings.identity.share.body', {
+        title: this.$t('_settings.identity.grant-access.title'),
+        body: this.$t('_settings.identity.grant-access.body', {
           alias: fromAlias,
           identity: runtime.activeIdentity,
-          access: this.$t(`_settings.identity.share.type.${contact.hasIdentityAccess}`),
+          access: this.$t(`_settings.identity.grant-access.type.${this.contact.hasIdentityAccess}`),
         }).replace(/\n/g, '<br>'),
       },
     });
@@ -192,8 +214,15 @@ export default class IdentitySidePanelComponent extends mixins(EvanComponent) {
    * Write permission changes to current contact
    */
   updatePermissions(read: boolean, write: boolean): void {
-    this.permissions.read = read;
-    this.permissions.readWrite = write;
+    const beforeRead = this.permissions.read;
+
+    if (beforeRead && !read) {
+      this.permissions.read = false;
+      this.permissions.readWrite = false;
+    } else {
+      this.permissions.read = read || write;
+      this.permissions.readWrite = write;
+    }
 
     if (write) {
       this.contact.hasIdentityAccess = 'readWrite';

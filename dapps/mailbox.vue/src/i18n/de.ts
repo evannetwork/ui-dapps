@@ -47,6 +47,11 @@ export default {
         'modal-body': 'Wollen Sie diesem Identitätszugang wirklich speichern?',
         new: 'Identitätszugang speichern',
       },
+      identityAccessRemove: {
+        accepted: 'Identität wechseln',
+        'modal-body': 'Wollen Sie diesem Identitätszugang wirklich entfernen?',
+        new: 'Identitätszugang entfernen',
+      },
     },
     breadcrumbs: {
       received: 'Eingehende Nachrichten',

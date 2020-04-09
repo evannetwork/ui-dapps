@@ -70,33 +70,62 @@
               <evan-checkbox
                 class="mb-0"
                 :value="permissions.read"
+                :disabled="originalContact.hasIdentityAccess === 'read' || originalContact.hasIdentityAccess === 'readWrite'"
                 @input="updatePermissions($event, permissions.readWrite)"
               />
-              <!--
-                :disabled="originalContact.hasIdentityAccess === 'read' || originalContact.hasIdentityAccess === 'readWrite'" -->
             </div>
             <div>
               <small class="font-italic">{{ $t('_settings.identity.side-panel.perm.readWrite') }}</small>
               <evan-checkbox
                 class="mb-0"
                 :value="permissions.readWrite"
+                :disabled="originalContact.hasIdentityAccess === 'readWrite'"
                 @input="updatePermissions(permissions.read, $event)"
               />
-              <!--
-                :disabled="originalContact.hasIdentityAccess === 'readWrite'" -->
             </div>
           </div>
         </div>
 
-        <p class="mt-5">
-          <i class="mdi mdi-alert-circle-outline mr-2" />
-          <span v-if="isNew">
-            {{ $t('_settings.identity.side-panel.transaction-cost.add') }}
-          </span>
-          <span v-else>
-            {{ $t('_settings.identity.side-panel.transaction-cost.edit') }}
-          </span>
-        </p>
+        <template v-if="canEdit">
+          <p class="mt-5">
+            <i class="mdi mdi-alert-circle-outline mr-2" />
+            <span v-if="isNew">
+              {{ $t('_settings.identity.side-panel.transaction-cost.add') }}
+            </span>
+            <span v-else>
+              {{ $t('_settings.identity.side-panel.transaction-cost.edit') }}
+            </span>
+          </p>
+
+          <template v-if="!isNew">
+            <evan-button
+              type="danger-outline"
+              class="btn-block"
+              @click="$refs.deleteModal.show()"
+            >
+              {{ $t('_settings.identity.side-panel.remove-button') }}
+            </evan-button>
+
+            <evan-modal ref="deleteModal">
+              <template v-slot:header>
+                <h5 class="modal-title">
+                  {{ $t('_settings.identity.side-panel.delete-modal.title') }}
+                </h5>
+              </template>
+              <template v-slot:body>
+                <p>{{ $t('_settings.identity.side-panel.delete-modal.description') }}</p>
+              </template>
+              <template v-slot:footer>
+                <evan-button
+                  type="danger"
+                  @click="removeAccess(contact)"
+                >
+                  {{ $t('_settings.identity.side-panel.delete-modal.confirm') }}
+                </evan-button>
+              </template>
+            </evan-modal>
+          </template>
+        </template>
       </div>
 
       <template v-slot:footer>

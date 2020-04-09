@@ -66,28 +66,32 @@ export default class MailboxComponent extends mixins(EvanComponent) {
    */
   hashChangeWatcher: any;
 
+  initialized = false;
+
   /**
    * Mails are load after the user logged in and runtime was set up by the dapp-wrapper
    */
-  async created() {
+  async initialize(): Promise<void> {
     this.navEntries = [
       { key: 'received', icon: 'mdi mdi-email-outline' },
       { key: 'sent', icon: 'mdi mdi-send' },
     ]
       .map((entry) => (entry ? {
         id: `nav-entry-${entry.key}`,
-        to: entry.key,
+        to: `/${this.dapp.rootEns}/mailbox.vue.${this.dapp.domainName}/${entry.key}`,
         text: `_mailbox.breadcrumbs.${entry.key}`,
         icon: entry.icon,
       } : null));
 
     // watch for saving updates
-    this.hashChangeWatcher = (async () => {
+    this.hashChangeWatcher = (async (...args) => {
       if (this.activeCategory !== this.$route.params.category) {
         this.activeCategory = this.$route.params.category;
         await this.loadMails();
       }
     });
+
+    this.initialized = true;
 
     // add the hash change listener
     window.addEventListener('hashchange', this.hashChangeWatcher);
@@ -108,7 +112,7 @@ export default class MailboxComponent extends mixins(EvanComponent) {
    */
   async loadMails(reload?: boolean, mailsToReach = 10) {
     // quick usage
-    const runtime = (<any> this).getRuntime();
+    const runtime = this.getRuntime();
 
     // set initial mail object or force mailbox reload on clicking reloading button
     if (!this.mailCategories || reload || !this.addressBook) {
@@ -172,7 +176,7 @@ export default class MailboxComponent extends mixins(EvanComponent) {
    * @param      {any}  mail    mail object
    */
   openMailDetail(mail: any) {
-    (<any> this).evanNavigate(`${this.activeCategory}/detail/${mail.address}`);
+    this.evanNavigate(`${this.activeCategory}/detail/${mail.address}`);
 
     // set the mail read and save it into the local store
     if (this.readMails.indexOf(mail.address) === -1) {
@@ -186,7 +190,7 @@ export default class MailboxComponent extends mixins(EvanComponent) {
    * load the addressbook for the current user
    */
   async loadAddressBook() {
-    const runtime = (<any> this).getRuntime();
+    const runtime = this.getRuntime();
 
     // load the contacts for the current user, so we can display correct contact alias
     await runtime.profile.loadForAccount(runtime.profile.treeLabels.addressBook);

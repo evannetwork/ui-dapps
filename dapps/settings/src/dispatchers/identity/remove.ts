@@ -16,38 +16,27 @@
   Fifth Floor, Boston, MA, 02110-1301 USA, or download the license from
   the following URL: https://evan.network/license/
 */
-import Component, { mixins } from 'vue-class-component';
-import { Prop } from 'vue-property-decorator';
 
-import EvanComponent from '../../../component';
+import * as dappBrowser from '@evan.network/ui-dapp-browser';
+import { Dispatcher, DispatcherInstance } from '@evan.network/ui';
 
-/**
- * Base component for input element.
- *
- * @class         CheckboxComponent
- * @selector      evan-checkbox
- */
-@Component({})
-export default class CheckboxComponent extends mixins(EvanComponent) {
-  @Prop({
-    type: Boolean,
-  }) value: boolean;
+const dispatcher = new Dispatcher(
+  `settings.${dappBrowser.getDomainName()}`,
+  'identityAccessRemoveDispatcher',
+  40 * 1000,
+  '_settings.identity.dispatcher.remove-access',
+);
 
-  @Prop({
-    type: String,
-  }) id: string;
+dispatcher
+  .step(async (
+    instance: DispatcherInstance,
+    { address, bmail }: { address: string; bmail: { title: string; body: string; fromAlias: string } },
+  ) => {
+    await instance.runtime.identity.removeAccess(
+      address,
+      'readWrite',
+      bmail,
+    );
+  });
 
-  @Prop({ default: false }) disabled: boolean;
-
-  @Prop({ default: false }) prohibited: boolean;
-
-  /**
-   * Handle overlapping checkbox label click and send corret formular events.
-   */
-  onClick(): void {
-    if (!this.disabled || this.prohibited) {
-      this.value = !this.value;
-      this.$emit('input', this.value);
-    }
-  }
-}
+export default dispatcher;

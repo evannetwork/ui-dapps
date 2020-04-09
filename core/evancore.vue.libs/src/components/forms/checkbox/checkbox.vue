@@ -20,6 +20,7 @@
 <template>
   <div
     class="checkbox"
+    :class="{ 'disabled': disabled }"
     @click="onClick()"
   >
     <div
@@ -30,11 +31,12 @@
     </div>
     <template v-else>
       <input
+        :checked="value"
+        :disabled="disabled"
         :id="id"
         class="form-control"
         type="checkbox"
         v-bind="$attrs"
-        :checked="value"
       >
       <label :for="id" />
     </template>

@@ -17,8 +17,10 @@
   the following URL: https://evan.network/license/
 */
 
-import identityShareDispatcher from './identity/share';
+import identityAccessRemoveDispatcher from './identity/remove';
+import identityAccessDispatcher from './identity/grant';
 
 export {
-  identityShareDispatcher,
+  identityAccessDispatcher,
+  identityAccessRemoveDispatcher,
 };

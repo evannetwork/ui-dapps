@@ -52,6 +52,11 @@ export default {
         'modal-body': 'Do you really want to save this identity access?',
         new: 'Save identity access',
       },
+      identityAccessRemove: {
+        accepted: 'Switch identity',
+        'modal-body': 'Do you really want to remove this identity access?',
+        new: 'Remove identity access',
+      },
     },
     breadcrumbs: {
       received: 'Incoming Messages',

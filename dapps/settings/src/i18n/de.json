@@ -28,10 +28,11 @@
     "header": "Settings",
     "identity": {
       "dispatcher": {
-        "share": "Identitätszugriff erteilen..."
+        "grant-access": "Identitätszugriff erteilen...",
+        "remove-access": "Identitätszugriff entziehen..."
       },
       "not-support": "Sie sind aktuell mit einem alten, nicht identitätsbasierenden, Profil angemeldet. Die Nutzerverwaltung für Identititäten wird nur für aktuelle Profile unterstützt.",
-      "share": {
+      "grant-access": {
         "body": "Ihnen wurde \"{access}\" Zugriff auf die Identität von {alias} ({identity}) erteilt. Nutzen Sie den nachfolgenden Link, um die Referenz in Ihrem Profil abzuspeichern und im Namen dieser Identität zu interagieren.",
         "title": "Identitätszugriff",
         "type": {
@@ -39,9 +40,18 @@
           "readWrite": "schreibender und lesender"
         }
       },
+      "remove-access": {
+        "body": "Ihnen wurde lesender und schreibender Zugriff auf die Identität von {alias} ({identity}) entzogen. Nutzen Sie den nachfolgenden Link, um die Referenz in Ihrem Profil löschen.",
+        "title": "Identitätszugriff entzogen"
+      },
       "side-panel": {
         "cancel": "Abbrechen",
         "define-perm-for": "Legen Sie dich Berechtigungen für {alias} fest.",
+        "delete-modal": {
+          "confirm": "Entziehen",
+          "description": "Wollen Sie die Berechtigungen für diesen Nutzer wirklich entziehen? Die Schreibrechte werden entfernt und er erhält eine Anfrage den Verschlüsselungsschlüssel für Ihre Identität zu löschen.",
+          "title": "Berechtigung entziehen"
+        },
         "form": {
           "address": {
             "error": "Bitte wählen Sie einen Kontakt aus, um Zugriffsrechte zu vergeben.",
@@ -58,6 +68,7 @@
           "read": "lesen",
           "readWrite": "schreiben"
         },
+        "remove-button": "Berechtigung entziehen",
         "select-contact": "Wáhlen Sie einen Kontakt aus, um diesen auf Ihre Identität zu berechtigen.",
         "submit": "Speichern",
         "title": "Identitätsberechtigung",

@@ -4,6 +4,10 @@
   width: 24px;
   position: relative;
 
+  &.disabled {
+    opacity: 0.5;
+  }
+
   label {
     width: 24px;
     height: 24px;
