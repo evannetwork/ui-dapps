@@ -79,3 +79,7 @@
     font-weight: bold;
   }
 }
+
+/deep/ .dropdown-toggle-no-caret::after {
+  display: none !important;
+}
