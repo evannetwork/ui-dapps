@@ -66,7 +66,8 @@ dispatcher
 
       await runtime.profile.storeForAccount(runtime.profile.treeLabels.addressBook);
     } else if (data.attachment.type === 'identityAccess') {
-      await runtime.profile.setIdentityAccess();
+      await runtime.profile.setIdentityAccess(data.mail.from, data.attachment.encryptionKey);
+      await runtime.profile.storeForAccount(runtime.profile.treeLabels.addressBook);
     } else if (data.attachment.type === 'verifications') {
       // eslint-disable-next-line no-restricted-syntax
       for (const key of data.attachment.keys) {

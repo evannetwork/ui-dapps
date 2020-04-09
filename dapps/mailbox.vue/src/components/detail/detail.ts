@@ -73,7 +73,7 @@ export default class DetailComponent extends mixins(EvanComponent) {
           case 'identityAccess': {
             // check if the commKey was already added
             const accessList = await runtime.profile.getIdentityAccessList();
-            accepted = !!accessList[this.mail.from];
+            accepted = accessList[this.mail.from]?.identityAccess;
 
             break;
           }

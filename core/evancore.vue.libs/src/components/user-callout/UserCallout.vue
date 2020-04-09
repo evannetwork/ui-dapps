@@ -39,6 +39,7 @@
       <evan-button
         class="toggle-button btn-sm"
         type="icon"
+        @click="show = !show"
       >
         <i
           class="mdi"
