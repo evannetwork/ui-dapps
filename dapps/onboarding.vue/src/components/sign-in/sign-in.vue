@@ -75,7 +75,7 @@
           </div>
 
           <div class="text-center mt-5">
-            <span>{{ '_onboarding.sign-in.not-signed-up' | translate }}</span>
+            <span class="mr-1">{{ '_onboarding.sign-in.not-signed-up' | translate }}</span>
             <router-link :to="{ name: 'sign-up', query: $route.query}">
               {{ '_onboarding.sign-up.create-profile.title' | translate }}
             </router-link>
