@@ -130,7 +130,7 @@ export default class SendEveComponent extends mixins(EvanComponent) {
 
     // setup currents users balance and define the gas fee to send eve
     const gasFee = 0.001;
-    this.currBalance = await bccHelper.getBalance(this.runtime.activeIdentity);
+    this.currBalance = await bccHelper.getBalance(this.runtime.activeAccount);
 
     // setup formular
     const { web3 } = this.runtime;
