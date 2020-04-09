@@ -142,7 +142,7 @@
             type="primary"
             native-type="submit"
             class="ml-3 flex-grow-1"
-            :disabled="!form.isValid || !hasChanged()"
+            :disabled="!form.isValid || !hasChanged() || startingDispatcher"
             :is-loading="startingDispatcher"
             :label="$t('_settings.identity.side-panel.submit')"
             @click="save"

@@ -26,7 +26,7 @@ import ContactsComponent from './components/contacts/Contacts.vue';
 
 // map them to element names, so they can be used within templates
 const routeRegistration: Array<RouteConfig> = [
-  { path: '', redirect: 'digitaltwins' },
+  { path: '', redirect: { name: 'digitaltwins' } },
   {
     path: 'digitaltwins',
     component: DataContainer,
