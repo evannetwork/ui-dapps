@@ -109,6 +109,13 @@ const getCategoryDAppDirs = (category) => {
   return dappDirs.filter((dappDir) => dappDir.indexOf(categoryPath) !== -1);
 };
 
+const logError = (error) => {
+  const wrapper = '\n\t==================================================';
+  const out = error.split('\n').map((line) => `\t|\t ${line}`).join('\n');
+
+  return `${wrapper}\n${out}${wrapper}`;
+};
+
 /**
  * Show the current wachting status
  */
@@ -153,7 +160,11 @@ const logServing = () => {
         ? `(${status.duration}s / ${status.lastDuration}s)`
         : `(${status.duration}s)`;
       let statusMsg;
-      if (serves[dappName].rebuild) {
+
+      if (serves[dappName].error) {
+        statusMsg = ` ${logDAppName} ⚠️    ${timeLog} ${logError(serves[dappName].error)}`;
+        clearInterval(logLoop);
+      } else if (serves[dappName].rebuild) {
         statusMsg = ` ${logDAppName} »»»»»» ${timeLog}`;
       } else if (serves[dappName].loading) {
         statusMsg = ` ${logDAppName} »»»   ${timeLog}`;
@@ -323,6 +334,7 @@ gulp.task('dapps-build', async (cb) => {
         buildDappPromises.push(() => buildDApp(dappDir));
       } catch (ex) {
         console.error(ex);
+        clearInterval(logLoop);
       }
     });
   });
