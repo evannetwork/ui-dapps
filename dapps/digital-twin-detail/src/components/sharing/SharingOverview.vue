@@ -18,7 +18,7 @@
 */
 
 <template>
-  <div>
+  <div class="evan-content-container">
     <div
       v-if="!$store.state.twin.isOwner"
       class="text-center d-flex flex-column justify-content-center align-items-center vh-100"

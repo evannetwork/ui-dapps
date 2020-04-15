@@ -19,6 +19,7 @@
 
 import Component, { mixins } from 'vue-class-component';
 import { session } from '@evan.network/ui-session';
+import { Dispatcher } from '@evan.network/ui';
 
 import EvanComponent from '../../component';
 
@@ -30,13 +31,50 @@ import EvanComponent from '../../component';
  */
 @Component
 export default class UserCallout extends mixins(EvanComponent) {
-  accounts: string[] = [];
+  identities: string[] = [];
 
   show = false;
 
   isChangingRuntime = false;
 
+  // clear event handler for toggling identity callout
+  clearIdentityCalloutWatch: () => void;
+
+  // clear event handler for toggling identity callout
+  clearMailboxWatch: Function;
+
+  beforeDestroy(): void {
+    this.clearIdentityCalloutWatch();
+    this.clearMailboxWatch();
+  }
+
   async created(): Promise<void> {
+    // be able to open the user callout programmatically
+    const watch = (): void => {
+      this.show = true;
+    };
+    this.clearIdentityCalloutWatch = (): void => window.removeEventListener('open-identity-callout', watch);
+    window.addEventListener('open-identity-callout', watch);
+
+    // check for mailbox attachment dispatchers and reload identities when something has changed
+    this.clearMailboxWatch = Dispatcher.watch(($event) => {
+      if ($event.detail.status === 'finished' || $event.detail.status === 'deleted') {
+        const { data } = $event.detail.instance;
+        if (data?.attachment?.type === 'identityAccess'
+          || data?.attachment?.type === 'identityAccessRemove') {
+          this.loadIdentities();
+        }
+      }
+    }, `mailbox.vue.${this.dapp.domainName}`, 'attachmentDispatcher');
+
+    await this.loadIdentities();
+  }
+
+  /**
+   * Load the permitted identities for the current identity.
+   */
+  async loadIdentities(): Promise<void> {
+    // load identities
     const accessibleIdentities = await session.accountRuntime.profile.getIdentityAccessList() || {};
     const addresses = Object
       .keys(accessibleIdentities)
@@ -47,7 +85,7 @@ export default class UserCallout extends mixins(EvanComponent) {
       addresses.push(session.accountIdentity);
     }
 
-    this.accounts = addresses;
+    this.identities = addresses;
   }
 
   async switchIdentity(id: string): Promise<void> {

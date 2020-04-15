@@ -18,7 +18,11 @@
 */
 
 <template>
-  <div class="checkbox">
+  <div
+    class="checkbox"
+    :class="{ 'disabled': disabled }"
+    @click="onClick()"
+  >
     <div
       v-if="prohibited"
       class="prohibited"
@@ -28,11 +32,11 @@
     <template v-else>
       <input
         :id="id"
+        :checked="value"
+        :disabled="disabled"
         class="form-control"
         type="checkbox"
         v-bind="$attrs"
-        :checked="value"
-        @input="$emit('input', $event.target.checked)"
       >
       <label :for="id" />
     </template>

@@ -73,7 +73,19 @@ export default class DetailComponent extends mixins(EvanComponent) {
           case 'identityAccess': {
             // check if the commKey was already added
             const accessList = await runtime.profile.getIdentityAccessList();
-            accepted = !!accessList[this.mail.from];
+            accepted = accessList[this.mail.from]?.identityAccess;
+
+            break;
+          }
+          case 'identityAccessRemove': {
+            // check if the commKey was already added
+            const accessList = await runtime.profile.getIdentityAccessList();
+            accepted = !(accessList[this.mail.from] && accessList[this.mail.from].identityAccess);
+
+            if (accepted) {
+              // eslint-disable-next-line no-param-reassign
+              attachment.unkown = true;
+            }
 
             break;
           }
@@ -171,6 +183,10 @@ export default class DetailComponent extends mixins(EvanComponent) {
             `profile.vue.${domainName}`,
             `${this.mail.from}`,
           ].join('/');
+        } else if (attachment.type === 'identityAccess'
+          || attachment.type === 'identityAccessRemove') {
+          window.dispatchEvent(new CustomEvent('open-identity-callout', { }));
+          return;
         }
       }
 

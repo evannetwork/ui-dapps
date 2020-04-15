@@ -39,28 +39,5 @@ export default DetailDataComponent;
 </script>
 
 <style lang="scss" scoped>
-@import '~@evan.network/ui/src/style/utils';
-
-.sidenav {
-  width: 250px;
-  margin-left: 2px;
-  height: calc(100vh - 63px);
-  overflow-y: auto;
-  padding-top: 40px;
-  padding-bottom: 40px;
-  position: sticky;
-  top: 0;
-  background-color: transparent;
-
-  .evan-nav-list {
-    border: 2px solid var(--evan-bg-level-2);
-    background: white;
-    .nav-entries {
-      a {
-        font-weight: 600;
-        font-size: 12px;
-      }
-    }
-  }
-}
+  @import './DetailData.scss'
 </style>

@@ -20,7 +20,7 @@
 <template>
   <div class="evan-content-container">
     <div
-      class="white-box mt-5"
+      class="white-box mb-5"
     >
       <h3 class="mb-5 d-block">
         {{ $t('_settings.account.security-info') }}

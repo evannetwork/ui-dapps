@@ -10,7 +10,7 @@
         "settings.js",
         "settings.css"
       ],
-      "origin": "Qmd5gvb5WRuP985vyWcrXuWiMBQKapuDdGnzbYVCMwVwin",
+      "origin": "QmUT3a5Lxmv1PE8BfWfAs9pPvw7bsQp7MTUrzoyA3DCieg",
       "primaryColor": "#b66e74",
       "secondaryColor": "#edeada",
       "type": "cached-dapp"
@@ -36,6 +36,7 @@
     ],
     "version": "1.0.0",
     "versions": {
+      "1.0.0": "QmR4bwTUUEwi81roj6Rta65kwa3Z7zSKyVSuV5y9SU3off"
     }
   }
 }

@@ -25,7 +25,7 @@ import AddComponent from './components/add/add.vue';
 const routeRegistration: Array<RouteRegistrationInterface> = [
   { path: '', redirect: { path: 'received' } },
   { name: 'add', path: 'add', component: AddComponent },
-  { name: 'mail-category', path: ':category', },
+  { name: 'mail-category', path: ':category' },
   { name: 'detail', path: 'detail/:mailAddress', component: DetailComponent },
   { name: 'detailInCategory', path: ':category/detail/:mailAddress', component: DetailComponent },
   { path: 'detail', component: DetailComponent },
@@ -33,4 +33,3 @@ const routeRegistration: Array<RouteRegistrationInterface> = [
 ];
 
 export default routeRegistration;
-

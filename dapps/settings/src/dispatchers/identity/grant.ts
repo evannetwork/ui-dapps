@@ -24,9 +24,9 @@ import { IdentityAccessContact } from '../../interfaces';
 
 const dispatcher = new Dispatcher(
   `settings.${dappBrowser.getDomainName()}`,
-  'identityShareDispatcher',
+  'identityAccessDispatcher',
   40 * 1000,
-  '_settings.identity.dispatcher.share',
+  '_settings.identity.dispatcher.grant-access',
 );
 
 dispatcher

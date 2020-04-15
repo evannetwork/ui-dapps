@@ -20,7 +20,6 @@
 <template>
   <div class="evan theme-evan">
     <evan-dapp-wrapper
-      :routes="[ ]"
       @loggedin="initialize()"
     >
       <template v-slot:content>

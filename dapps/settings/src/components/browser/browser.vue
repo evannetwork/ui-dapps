@@ -19,7 +19,7 @@
 
 <template>
   <div class="evan-content-container">
-    <div class="white-box mt-5">
+    <div class="white-box mb-5">
       <h3 class="mb-5 d-block">
         {{ $t(`_settings.browser.language`) }}
       </h3>
@@ -45,7 +45,7 @@
       </span>
     </div>
 
-    <div class="white-box mt-5">
+    <div class="white-box mb-5">
       <h3 class="mb-5 d-block">
         {{ $t('_settings.browser.developer-mode') }}
       </h3>
