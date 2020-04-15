@@ -19,7 +19,10 @@
 
 <template>
   <div class="evan-nav-list">
-    <slot name="header">
+    <slot
+      v-if="showHeader"
+      name="header"
+    >
       <div class="navlist-header">
         <i
           v-if="headerIcon"

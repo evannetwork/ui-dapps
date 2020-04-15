@@ -58,13 +58,13 @@
       font-size: 10px;
       color: cssVar('gray-900');
     }
-  }
-}
 
-/deep/ .twin-avatar .profile-picture {
-  --size: 96px;
-  margin-left: auto;
-  margin-right: auto;
+    /deep/ .twin-avatar .profile-picture {
+      --size: 96px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
 }
 
 /deep/ .content-card {
