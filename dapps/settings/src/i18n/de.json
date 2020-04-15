@@ -73,8 +73,8 @@
         "submit": "Speichern",
         "title": "Identitätsberechtigung",
         "transaction-cost": {
-          "add": "Hinzufügen kostet Transaktionskosten.",
-          "edit": "Editieren kostet Transaktionskosten."
+          "add": "Hinzufügen verursacht Transaktionskosten.",
+          "edit": "Editieren verursacht Transaktionskosten."
         }
       },
       "table": {
