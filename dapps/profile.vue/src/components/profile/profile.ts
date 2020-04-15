@@ -82,6 +82,13 @@ export default class ProfileDetailComponent extends mixins(EvanComponent) {
    */
   permissionsEditor = null;
 
+  get isUpdateDisabled(): boolean {
+    return this.isLoading()
+      || !this.selectedSharedContacts
+      || this.permissionsEditor?.isLoading
+      || !this.permissionsEditor.permissionsChanged;
+  }
+
   /**
    * Load the mail details
    */
