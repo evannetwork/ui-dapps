@@ -86,7 +86,7 @@ export default class ProfileDetailComponent extends mixins(EvanComponent) {
     return this.isLoading()
       || !this.selectedSharedContacts
       || this.permissionsEditor?.isLoading
-      || !this.permissionsEditor.permissionsChanged;
+      || !this.permissionsEditor?.permissionsChanged;
   }
 
   /**
