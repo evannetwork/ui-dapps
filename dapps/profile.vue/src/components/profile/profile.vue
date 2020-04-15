@@ -55,7 +55,7 @@
             v-if="userInfo.profileType === 'user'"
             class="text-center"
           >
-            <template v-if="this.isLoading()">
+            <template v-if="isLoading()">
               <evan-loading />
               <h5>{{ '_profile.dispatchers.profile-update' | translate }}</h5>
             </template>
@@ -100,7 +100,10 @@
             </template>
           </div>
           <template v-if="userInfo.profileType === 'company'">
-            <profile-permission-wrapper entry-name="contact" class="mt-5 bg-level-1 p-5">
+            <profile-permission-wrapper
+              entry-name="contact"
+              class="mt-5 bg-level-1 p-5"
+            >
               <profile-company-contact :address="address" />
             </profile-permission-wrapper>
             <profile-permission-wrapper
@@ -118,7 +121,7 @@
             <profile-device-detail :address="address" />
           </profile-permission-wrapper>
         </div>
-        </div>
+      </div>
       <evan-swipe-panel
         v-if="userInfo"
         ref="shareSidebar"

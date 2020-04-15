@@ -41,6 +41,11 @@ export default class NavListComponent extends mixins(EvanComponent) {
   @Prop() entries: Array<NavEntryInterface>;
 
   /**
+   * Flag to show or hide the header
+   */
+  @Prop({ default: true }) showHeader: boolean;
+
+  /**
    * Material icon classes
    */
   @Prop() headerIcon: string;

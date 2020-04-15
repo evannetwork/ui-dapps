@@ -22,6 +22,7 @@
     <div class="sidenav">
       <evan-nav-list
         :entries="navItems"
+        :show-header="false"
       />
     </div>
 
@@ -42,16 +43,18 @@ export default DetailDataComponent;
 
 .sidenav {
   width: 250px;
-  background: white;
-  border: 2px solid cssVar('bg-level-2');
-  margin-left: 3px;
-  height: calc(100vh - 128px);
+  margin-left: 2px;
+  height: calc(100vh - 63px);
+  overflow-y: auto;
+  padding-top: 40px;
+  padding-bottom: 40px;
   position: sticky;
   top: 0;
-  margin: 32px 0 32px 8px;
-  overflow-y: auto;
+  background-color: transparent;
 
   .evan-nav-list {
+    border: 2px solid var(--evan-bg-level-2);
+    background: white;
     .nav-entries {
       a {
         font-weight: 600;
