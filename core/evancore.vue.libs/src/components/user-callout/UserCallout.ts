@@ -18,6 +18,7 @@
 */
 
 import Component, { mixins } from 'vue-class-component';
+import { Watch } from 'vue-property-decorator';
 import { session } from '@evan.network/ui-session';
 import { Dispatcher } from '@evan.network/ui';
 
@@ -33,8 +34,6 @@ import EvanComponent from '../../component';
 export default class UserCallout extends mixins(EvanComponent) {
   identities: string[] = [];
 
-  show = false;
-
   isChangingRuntime = false;
 
   // clear event handler for toggling identity callout
@@ -43,19 +42,20 @@ export default class UserCallout extends mixins(EvanComponent) {
   // clear event handler for toggling identity callout
   clearMailboxWatch: Function;
 
+  get show(): boolean {
+    return this.$store.state.uiState.isOpenIdentityCallout;
+  }
+
+  set show(isOpen: boolean) {
+    this.$store.commit('setIdentityCalloutOpenState', isOpen);
+  }
+
   beforeDestroy(): void {
     this.clearIdentityCalloutWatch();
     this.clearMailboxWatch();
   }
 
   async created(): Promise<void> {
-    // be able to open the user callout programmatically
-    const watch = (): void => {
-      this.show = true;
-    };
-    this.clearIdentityCalloutWatch = (): void => window.removeEventListener('open-identity-callout', watch);
-    window.addEventListener('open-identity-callout', watch);
-
     // check for mailbox attachment dispatchers and reload identities when something has changed
     this.clearMailboxWatch = Dispatcher.watch(($event) => {
       if ($event.detail.status === 'finished' || $event.detail.status === 'deleted') {

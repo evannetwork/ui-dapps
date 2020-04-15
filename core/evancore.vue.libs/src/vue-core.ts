@@ -20,10 +20,10 @@
 // import vue libs
 import VueMoment from 'vue-moment';
 import VueToasted from 'vue-toasted';
-import Vuex, { Store } from 'vuex';
+import Vuex, { Store, MutationTree } from 'vuex';
 import vuexI18n from 'vuex-i18n';
 import { DropdownPlugin, TablePlugin, OverlayPlugin } from 'bootstrap-vue';
-
+import createMutationsSharer from 'vuex-shared-mutations';
 // setup moment locales
 import moment from 'moment';
 
@@ -37,6 +37,7 @@ import { ComponentRegistrationInterface, EvanVueOptionsInterface } from './inter
 import { getDomainName } from './utils';
 import { initializeRouting } from './routing';
 import { EvanState } from './EvanComponentInterface';
+import CustomStrategy from './CustomVuexShareStrategy';
 
 /**
  * Registers the components within Vue. If a name is specified, register it also as component, not
@@ -135,7 +136,7 @@ export async function initializeVue(initOptions: EvanVueOptionsInterface): Promi
     document.body.appendChild(options.container);
   }
 
-  // initialize Vuex and setup vue core components
+  // setup vue core components
   registerComponents(Vue, evanComponents);
   // register custom components
   registerComponents(Vue, options.components);
@@ -151,6 +152,7 @@ export async function initializeVue(initOptions: EvanVueOptionsInterface): Promi
 
   // initialize VueX
   Vue.use(Vuex);
+
   const store: Store<EvanState> = new Vuex.Store<EvanState>({
     state: {
       options,
@@ -161,6 +163,7 @@ export async function initializeVue(initOptions: EvanVueOptionsInterface): Promi
           selectedSharedContacts: null,
         },
         swipePanel: '',
+        isOpenIdentityCallout: false,
       },
       isLoggedin: false,
       ...options.state,
@@ -177,7 +180,16 @@ export async function initializeVue(initOptions: EvanVueOptionsInterface): Promi
       setLoginState(state: EvanState, isLoggedin: boolean): void {
         state.isLoggedin = isLoggedin;
       },
-    },
+      setIdentityCalloutOpenState(state: EvanState, isOpen: boolean): void {
+        state.uiState.isOpenIdentityCallout = isOpen;
+      },
+    } as MutationTree<EvanState>,
+    plugins: [createMutationsSharer({
+      predicate: ['setIdentityCalloutOpenState', 'setLoginState'],
+      strategy: new CustomStrategy({
+        key: 'evan-shared-storage', // TODO: use different key for prod/dev/local
+      }),
+    })],
   });
 
   // use defined or browser language
@@ -245,6 +257,4 @@ export async function initializeVue(initOptions: EvanVueOptionsInterface): Promi
   /* register event handlers, so multiple vue instance and removed dom elements will be destroyed
      correctly */
   registerEventHandlers(vue);
-
-  return vue;
 }

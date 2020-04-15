@@ -13,6 +13,7 @@ export interface EvanState {
       selectedSharedContacts: any;
     };
     swipePanel: string;
+    isOpenIdentityCallout: boolean;
   };
   isLoggedin: boolean;
   uiLibBaseUrl: string;

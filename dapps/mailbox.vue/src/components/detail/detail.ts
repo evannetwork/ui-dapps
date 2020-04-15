@@ -185,7 +185,7 @@ export default class DetailComponent extends mixins(EvanComponent) {
           ].join('/');
         } else if (attachment.type === 'identityAccess'
           || attachment.type === 'identityAccessRemove') {
-          window.dispatchEvent(new CustomEvent('open-identity-callout', { }));
+          this.$store.commit('setIdentityCalloutOpenState', true);
           return;
         }
       }
