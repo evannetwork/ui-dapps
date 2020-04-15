@@ -29,8 +29,8 @@
     "identity": {
       "not-support": "You are currently logged in with an old, non-identity-based profile. User management for identities is only supported for current profiles.",
       "dispatcher": {
-        "grant-access": "Granting access to identity...",
-        "remove-access": "Remove Permissions for identity..."
+        "grant-access": "Granting access to identity ...",
+        "remove-access": "Removing permissions for identity ..."
       },
       "grant-access": {
         "body": "You have been granted \"{access}\" access to the identity of {alias} ({identity}). Use the link below to save the reference in your profile to interact on behalf of this identity.",
@@ -41,7 +41,7 @@
         }
       },
       "remove-access": {
-        "body": "They were given reading and writing access to the identity of {alias} {identity}}. Use the following link to delete the reference in your profile.",
+        "body": "Your access to the identity of {alias} {identity}} has been revoked. Use the following link to delete the reference in your profile.",
         "title": "Identity access revoked"
       },
       "side-panel": {
@@ -75,7 +75,7 @@
           "add": "Adding will cause transaction fees.",
           "edit": "Editing will cause transaction fees."
         },
-        "select-contact": "Select Contact to send a request for managing your identity"
+        "select-contact": "Select a contact which may manage your identity"
       },
       "table": {
         "columns": {
