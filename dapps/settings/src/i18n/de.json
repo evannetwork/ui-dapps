@@ -27,7 +27,7 @@
     },
     "header": "Einstellungen",
     "identity": {
-      "description": "In der folgenden Tabelle können Sie Kontakte hinzufügen oder entfernen, denen der Zugriff auf die aktuelle Identität gewährt. Diese sind beispielsweise befugt auf alle Daten zuzugreifen, Informationen zu editieren, Daten freizugeben oder Transaktionen durchzuführen.",
+      "description": "In der folgenden Tabelle können Sie Kontakte hinzufügen oder entfernen, denen der Zugriff auf die aktuelle Identität gewährt wird. Diese sind beispielsweise befugt auf alle Daten zuzugreifen, Informationen zu editieren, Daten freizugeben oder Transaktionen durchzuführen.",
       "dispatcher": {
         "grant-access": "Identitätszugriff erteilen ...",
         "remove-access": "Identitätszugriff entziehen ..."
