@@ -9,7 +9,7 @@
         "exported": "Exported Private Key and copied to clipboard",
         "title": "Export Private Key"
       },
-      "security-info": "Sicherheitsinformationen"
+      "security-info": "Security information"
     },
     "browser": {
       "dev-domain": {
@@ -27,6 +27,7 @@
     },
     "header": "Settings",
     "identity": {
+      "description": "In the following table, you can add or remove contacts that have access to the current identity. For example, they are authorized to access all data, edit information, share data, or perform transactions.",
       "not-support": "You are currently logged in with an old, non-identity-based profile. User management for identities is only supported for current profiles.",
       "dispatcher": {
         "grant-access": "Granting access to identity ...",
@@ -92,7 +93,7 @@
     "routes": {
       "account": "Account",
       "browser": "Browser",
-      "identity": "User Management"
+      "identity": "Identity Management"
     }
   }
 }

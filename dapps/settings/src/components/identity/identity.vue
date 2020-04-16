@@ -38,6 +38,8 @@
         :contacts="contacts"
       />
 
+      <p>{{ $t('_settings.identity.description') }}</p>
+
       <evan-table
         class="clickable-rows"
         primary-key="address"
