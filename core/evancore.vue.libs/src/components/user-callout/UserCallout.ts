@@ -18,7 +18,6 @@
 */
 
 import Component, { mixins } from 'vue-class-component';
-import { Watch } from 'vue-property-decorator';
 import { session } from '@evan.network/ui-session';
 import { Dispatcher } from '@evan.network/ui';
 

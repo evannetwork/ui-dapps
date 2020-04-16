@@ -27,10 +27,7 @@
  * @see: https://github.com/xanf/vuex-shared-mutations/blob/master/src/strategies/localStorage.js
  */
 const DEFAULT_KEY = 'vuex-shared-mutations';
-const globalObj = (typeof window !== 'undefined'
-  ? window
-  : global) as any;
-
+const DEFAULT_EVENT_NAME = 'vuex-updated-event';
 const MAX_LENGTH = 4 * 1024; // max message length
 let messageCounter = 1;
 
@@ -41,9 +38,8 @@ function splitMessage(message): string[] {
 }
 
 interface Options {
-  window?: Window;
-  localStorage?: any;
   key?: string;
+  eventName?: string;
 }
 
 export default class LocalStorageStrategy {
@@ -51,34 +47,25 @@ export default class LocalStorageStrategy {
 
   messageBuffer = [];
 
-  window = null;
-
-  storage = null;
+  storage: Storage = null;
 
   options: Options = {};
 
-  eventName: 'vuex-updated-event';
-
   constructor(options: Options = {}) {
-    const windowImpl = options.window || globalObj.window;
-    const localStorageImpl = options.localStorage || globalObj.localStorage;
     if (
-      !LocalStorageStrategy.available({
-        window: windowImpl,
-        localStorage: localStorageImpl,
-      })
+      !LocalStorageStrategy.available()
     ) {
       throw new Error('Strategy unavailable');
     }
 
-    this.uniqueId = `${Date.now()}-${Math.random()}`;
-    this.messageBuffer = [];
-    this.window = windowImpl;
-    this.storage = localStorageImpl;
     this.options = {
       key: DEFAULT_KEY,
+      eventName: DEFAULT_EVENT_NAME,
       ...options,
     };
+    this.uniqueId = `${Date.now()}-${Math.random()}`;
+    this.messageBuffer = [];
+    this.storage = localStorage;
   }
 
   /**
@@ -86,19 +73,14 @@ export default class LocalStorageStrategy {
    *
    * @param param0
    */
-  static available(
-    { window: windowImpl, localStorage: localStorageImpl } = {
-      window: globalObj?.window,
-      localStorage: globalObj?.localStorage,
-    },
-  ): boolean {
-    if (!windowImpl || !localStorageImpl) {
+  static available(): boolean {
+    if (!window || !localStorage) {
       return false;
     }
 
     try {
-      localStorageImpl.setItem('vuex-shared-mutations-test-key', Date.now());
-      localStorageImpl.removeItem('vuex-shared-mutations-test-key');
+      localStorage.setItem('vuex-shared-mutations-test-key', `${Date.now()}`);
+      localStorage.removeItem('vuex-shared-mutations-test-key');
       return true;
     } catch (e) {
       return false;
@@ -115,7 +97,7 @@ export default class LocalStorageStrategy {
       return false;
     }
 
-    const message = this.window.JSON.parse(event.newValue);
+    const message = JSON.parse(event.newValue);
     if (message.author === this.uniqueId) {
       return false;
     }
@@ -123,7 +105,7 @@ export default class LocalStorageStrategy {
     this.messageBuffer.push(message.messagePart);
 
     if (this.messageBuffer.length === message.total) {
-      const mutation = this.window.JSON.parse(this.messageBuffer.join(''));
+      const mutation = JSON.parse(this.messageBuffer.join(''));
       this.messageBuffer = [];
       fn(mutation);
     }
@@ -138,9 +120,9 @@ export default class LocalStorageStrategy {
    *
    * @param fn
    */
-  addEventListener(fn: Function): boolean {
-    this.window.addEventListener(this.eventName, (e: StorageEvent) => this.handleEvent(e, fn));
-    return this.window.addEventListener('storage', (e: StorageEvent) => this.handleEvent(e, fn));
+  addEventListener(fn: Function): void {
+    window.addEventListener(this.options.eventName, (e: StorageEvent) => this.handleEvent(e, fn));
+    window.addEventListener('storage', (e: StorageEvent) => this.handleEvent(e, fn));
   }
 
   /**
@@ -149,7 +131,7 @@ export default class LocalStorageStrategy {
    * @param message
    */
   share(message: object): void {
-    const rawMessage = this.window.JSON.stringify(message);
+    const rawMessage = JSON.stringify(message);
     const messageParts = splitMessage(rawMessage);
     messageParts.forEach((m, idx) => {
       messageCounter += 1;
@@ -168,7 +150,7 @@ export default class LocalStorageStrategy {
       );
 
       // manually dispatch event so it also gets fired in same window, since storage Events do fire only on other window
-      dispatchEvent(new StorageEvent(this.eventName, {
+      dispatchEvent(new StorageEvent(this.options.eventName, {
         newValue: payload,
         key,
       }));
