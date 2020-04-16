@@ -158,9 +158,7 @@
             <evan-button
               type="primary"
               :label="$t('_evan.sharing.update')"
-              :disabled="!permissionsEditor.permissionsChanged
-                || $store.state.dispatcher.curr.running.shareProfileDispatcher
-                || !selectedSharedContacts"
+              :disabled="isUpdateDisabled"
               class="btn-block"
               @click="permissionsEditor.writePermissions()"
             />
