@@ -9,7 +9,7 @@
         "exported": "Private-Key in die Zwischenablage kopiert",
         "title": "Private Key kopieren"
       },
-      "security-info": "Security Information"
+      "security-info": "Sicherheitsinformationen"
     },
     "browser": {
       "dev-domain": {
@@ -25,8 +25,9 @@
       },
       "reload-hint": "Bitte laden Sie die Anwendung neu, wenn Sie die Spracheinstellungen geändert haben."
     },
-    "header": "Settings",
+    "header": "Einstellungen",
     "identity": {
+      "description": "In der folgenden Tabelle können Sie Kontakte hinzufügen oder entfernen, denen der Zugriff auf die aktuelle Identität gewährt. Diese sind beispielsweise befugt auf alle Daten zuzugreifen, Informationen zu editieren, Daten freizugeben oder Transaktionen durchzuführen.",
       "dispatcher": {
         "grant-access": "Identitätszugriff erteilen ...",
         "remove-access": "Identitätszugriff entziehen ..."
@@ -92,7 +93,7 @@
     "routes": {
       "account": "Account",
       "browser": "Browser",
-      "identity": "User Management"
+      "identity": "Identitätsmanagement"
     }
   }
 }
