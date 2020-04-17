@@ -23,7 +23,6 @@ const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
-const VueTemplateCompiler = require('vue-template-compiler');
 const webpack = require('webpack');
 
 const getExternals = require('./webpack.externals');
@@ -82,21 +81,8 @@ module.exports = function getWebpackConfig(
                  other preprocessors should work out of the box, no loader config like this necessary. */
               scss: ['vue-style-loader', 'css-loader', 'sass-loader'],
             },
-            // Vue template compiler does not have the possiblity to ignore of all spaces in tags.
-            // Use a custom compile function to be able to remove all spaces.
-            // (https://github.com/vuejs/vue/issues/3934)
-            compiler: {
-              ...VueTemplateCompiler,
-              compile: (template, options) => {
-                const parsed = template.replace(
-                  />[^<]+</g,
-                  (substring) => substring.replace(/\r?\n\s*/g, ''),
-                );
-                return VueTemplateCompiler.compile(parsed, options);
-              },
-            },
             compilerOptions: {
-              preserveWhitespace: false,
+              whitespace: 'condense',
             },
           },
         },
