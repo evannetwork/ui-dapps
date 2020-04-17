@@ -52,7 +52,9 @@
       display: flex;
       align-items: center;
 
-      height: 70px;
+      height: 48px;
+      min-height: 48px;
+      max-height: 48px;
       padding-left: 22px;
 
       cursor: pointer;
@@ -76,7 +78,7 @@
 
       &.active {
         margin: 3px 0;
-        box-shadow: 230px 0px 3px 3px cssVar('bg-level-3'), 10px 3px 3px -3px cssVar('primary'), 0px -59px 3px -14px cssVar('primary');
+        box-shadow: 230px 0px 3px 3px cssVar('bg-level-3'), 10px 3px 3px -3px cssVar('primary'), 0px -36px 3px -15px cssVar('primary');
         z-index: 10;
 
         &, * {
