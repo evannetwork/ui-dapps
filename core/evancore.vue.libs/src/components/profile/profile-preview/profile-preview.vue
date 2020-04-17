@@ -45,9 +45,7 @@
           :href="`${ dapp.baseUrl }/${ dapp.rootEns }/profile.vue.${ dapp.domainName }/${ address }/detail`"
           @click="disableLink ? $event.preventDefault(): null"
         >
-          <b>
-            {{ userInfo.accountName }}
-          </b>
+          {{ userInfo.accountName }}
         </a>
         <small class="profile-type">
           {{ `_evan.profile.types.${ userInfo.profileType }` | translate }}

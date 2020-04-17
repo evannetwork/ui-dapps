@@ -33,6 +33,8 @@
         <evan-profile-preview
           :address="$store.state.runtime.activeIdentity"
           :disable-link="true"
+          size="sm-plus"
+          class="callout-profile-preview main"
         />
       </div>
 
@@ -77,7 +79,7 @@
           @click="switchIdentity(identity)"
         >
           <evan-profile-preview
-            size="sm-plus"
+            size="sm"
             :address="identity"
             :disable-link="true"
           />
@@ -108,7 +110,6 @@
         <div class="mx-auto" />
         <i
           class="mdi mdi-power"
-          style="font-size: 18px"
         />
       </evan-button>
     </div>
