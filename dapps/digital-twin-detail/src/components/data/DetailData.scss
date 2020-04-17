@@ -2,7 +2,7 @@
 
 .sidenav {
   width: 240px;
-  height: calc(100vh - 63px);
+  height: calc(100vh - 64px);
   overflow-y: auto;
   padding-top: 40px;
   padding-bottom: 40px;
@@ -12,6 +12,7 @@
 
   .evan-nav-list {
     border-left: 3px solid var(--evan-bg-level-2);
+    margin-left: 3px;
     background: white;
     .nav-entries {
       a {

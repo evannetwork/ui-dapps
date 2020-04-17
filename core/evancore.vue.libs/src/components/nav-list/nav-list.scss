@@ -21,7 +21,6 @@
 
 .evan-nav-list {
   height: 100%;
-  padding-bottom: 1px;
 
   .navlist-header {
     margin: 32px 0;
@@ -44,6 +43,8 @@
   // without using my-auto
   .nav-entries {
     background-color: cssVar('bg-level-3');
+    overflow: hidden;
+    z-index: 0;
 
     a, button {
       font-size: 14px;
@@ -63,7 +64,8 @@
       outline: none;
       background-color: white;
 
-      transition: all 0.3s ease-in-out;
+      transition: margin 0.3s ease-in-out;
+      z-index: 20;
 
       &, * {
         color: cssVar('gray-900');
@@ -74,8 +76,9 @@
       }
 
       &.active {
-        box-shadow: 230px 0px 3px 3px cssVar('bg-level-2'), 10px 0px 3px 0px cssVar('primary'), -220px 0 3px 3px cssVar('bg-level-2');
-        margin-bottom: 3px;
+        margin: 3px 0;
+        box-shadow: 230px 0px 3px 3px cssVar('bg-level-3'), 10px 3px 3px -3px cssVar('primary'), 0px -59px 3px -14px cssVar('primary');
+        z-index: 10;
 
         &, * {
           color: cssVar('primary');
@@ -105,6 +108,11 @@
           color: cssVar('gray-500');
         }
       }
+    }
+
+    button:first-of-type {
+      margin-top: 0;
+      box-shadow: 230px 0px 3px 3px cssVar('bg-level-3'), 10px 3px 3px -3px cssVar('primary');
     }
   }
 }
