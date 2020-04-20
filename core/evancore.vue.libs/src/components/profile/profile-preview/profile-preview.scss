@@ -24,6 +24,16 @@
     min-width: 0;
   }
 
+  a.account-name {
+    text-overflow: ellipsis;
+    max-width: 100%;
+    color: cssVar('text-color');
+    font-weight: 600;
+    &:hover {
+      text-decoration: none;
+    }
+  }
+
   &.default {
     .account-name {
       font-size: 24px;

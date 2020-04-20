@@ -46,10 +46,10 @@
               <h3 class="print-only mt-5">
                 {{ '_evan.mnemonic-export.recovery-key' | translate }}
               </h3>
-              <p class="hyphen-auto pre-wrap text-justify">
+              <p class="hyphen-auto pre-line text-justify">
                 {{ '_evan.mnemonic-export.description' | translate }}
               </p>
-              <p class="hyphen-auto pre-wrap text-justify bold no-print">
+              <p class="hyphen-auto pre-line text-justify bold no-print">
                 {{ '_evan.mnemonic-export.print-or-store' | translate }}
               </p>
               <p

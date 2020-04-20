@@ -48,11 +48,12 @@
           icon="mdi mdi-plus"
           highlight="true"
           :title="'_profile.verifications.notary.request-notary-verification' | translate"
+          @click="$refs.requestNotary.show();"
         >
           <template v-slot:actions>
             <evan-button
-              @click="$refs.requestNotary.show();"
               type="secondary"
+              @click.stop.prevent="$refs.requestNotary.show();"
             >
               {{ '_profile.verifications.notary.request.request-ident' | translate }}
             </evan-button>
@@ -60,7 +61,7 @@
               type="link"
               size="sm"
               class="d-block  mt-1 text-muted"
-              @click="$refs.orgInfo.show();"
+              @click.stop.prevent="$refs.orgInfo.show();"
             >
               {{ '_profile.verifications.notary.learn-more' | translate }}
             </evan-button>
@@ -112,6 +113,7 @@
       </template>
       <notary-verification-card
         v-for="(requestId) in requests"
+        :key="requestId"
         :address="address"
         :request-id="requestId"
       />
