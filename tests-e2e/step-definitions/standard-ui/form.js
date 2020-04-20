@@ -143,7 +143,7 @@ When('I click on vue checkbox control with id {string}',
   async (id) => {
     client.useXpath();
 
-    const selector = `//*[@id="${id}"]/following-sibling::label[@for="${id}"]`;
+    const selector = `//*[@id="${id}"]/following-sibling::label`;
     await client.expect.element(selector).to.be.visible;
     await client.click(selector);
 

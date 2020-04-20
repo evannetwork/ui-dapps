@@ -74,7 +74,7 @@ export default class IdentitySidePanelComponent extends mixins(EvanComponent) {
   isNew = false;
 
   /**
-   * Disable save button until dispatcher is started 
+   * Disable save button until dispatcher is started
    */
   startingDispatcher = false;
 
@@ -177,6 +177,7 @@ export default class IdentitySidePanelComponent extends mixins(EvanComponent) {
         uiSpecs: {
           type: 'v-select',
           attr: {
+            id: 'identity-contact-select',
             required: true,
             options: this.contacts.map((contact: IdentityAccessContact) => ({
               value: contact.address,

@@ -5,14 +5,13 @@ import { flatMap } from 'lodash';
 const getSelector = (label) => {
   // support also the .input-wrapper element around the input
   const inputSelectors = [
-    'div/*[contains(@class, "v-select")]',
+    'div/*[contains(@class, "vs__search")]',
   ];
 
   return flatMap(inputSelectors, (inputSelector) => [
     `//label[normalize-space(text()) = "${label}"]/preceding-sibling::${inputSelector}`,
     `//label[normalize-space(text()) = "${label}"]/following-sibling::${inputSelector}`,
-    `//label/*[normalize-space(text()) = "${label}"]/parent::*/preceding-sibling::${inputSelector}`,
-    `//label/*[normalize-space(text()) = "${label}"]/parent::*/following-sibling::${inputSelector}`,
+    `//label[contains(., "${label}")]/parent::*//${inputSelector}`,
   ]).join('|');
 };
 

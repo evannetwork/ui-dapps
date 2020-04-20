@@ -86,7 +86,7 @@ DApps for wrapping UI framework specific libraries (vue, d3, vuex, ...).
 yarn build
 ```
 
-- start an development server [locally](http://localhost:3000/dev.html) and watch for changes within DApps
+- start an development server [locally](http://localhost:3000) and watch for changes within DApps
 
 ```bash
 yarn serve
