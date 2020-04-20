@@ -43,20 +43,15 @@
                 class="evan-logo print-only"
                 :src="`${ $store.state.uiBaseUrl }/assets/evan-logo-dark-half.svg`"
               >
-              <!-- eslint-disable vue/no-v-html -->
-              <h3
-                class="print-only mt-5"
-                v-html="$t('_evan.mnemonic-export.recovery-key')"
-              />
-              <p
-                class="hyphen-auto pre-wrap text-justify"
-                v-html="$t('_evan.mnemonic-export.description')"
-              />
-              <p
-                class="hyphen-auto pre-wrap text-justify bold no-print"
-                v-html="$t('_evan.mnemonic-export.print-or-store')"
-              />
-              <!-- eslint-enable vue/no-v-html -->
+              <h3 class="print-only mt-5">
+                {{ '_evan.mnemonic-export.recovery-key' | translate }}
+              </h3>
+              <p class="hyphen-auto pre-line text-justify">
+                {{ '_evan.mnemonic-export.description' | translate }}
+              </p>
+              <p class="hyphen-auto pre-line text-justify bold no-print">
+                {{ '_evan.mnemonic-export.print-or-store' | translate }}
+              </p>
               <p
                 class="mt-5 d-flex no-print align-items-center justify-content-between"
                 style="min-height: 40px;"
