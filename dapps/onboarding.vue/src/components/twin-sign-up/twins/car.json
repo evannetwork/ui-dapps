@@ -165,7 +165,7 @@
               "properties": {
                 "color": {
                   "label": "Color",
-                  "placeholder": "read, green, blue"
+                  "placeholder": "red, green, blue"
                 },
                 "doors": {
                   "label": "Number of doors",

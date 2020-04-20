@@ -133,7 +133,7 @@
                 },
                 "model": {
                   "label": "Modell",
-                  "placeholder": "Audi A6, BMW X3, Rentault Megane"
+                  "placeholder": "Audi A6, BMW X3, Renault Megane"
                 },
                 "power": {
                   "label": "Leistung",
@@ -177,7 +177,7 @@
               "properties": {
                 "color": {
                   "label": "Color",
-                  "placeholder": "read, green, blue"
+                  "placeholder": "red, green, blue"
                 },
                 "doors": {
                   "label": "Number of doors",
