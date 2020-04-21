@@ -29,10 +29,13 @@ import routes from './routes';
 import components from './components/registry';
 import CompanyContactForm from './components/profile/company/contact/contact.vue';
 import CompanyRegistrationForm from './components/profile/company/registration/registration.vue';
+import updateDidDocumentDispatcher from './components/did/UpdateDidDocDispatcher';
 
 export * from './components/registry';
 export * from './dispatchers/registry';
-export { translations, CompanyContactForm, CompanyRegistrationForm };
+export {
+  translations, updateDidDocumentDispatcher, CompanyContactForm, CompanyRegistrationForm,
+};
 
 
 dappBrowser.System.map['@evan.network/profile.vue'] = `profile.vue.${getDomainName()}!dapp-content`;

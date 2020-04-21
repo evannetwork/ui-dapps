@@ -2,6 +2,7 @@ import { DidDocument, Runtime } from '@evan.network/api-blockchain-core';
 import { Dispatcher, DispatcherInstance } from '@evan.network/ui';
 import { getDomainName } from '@evan.network/ui-vue-core';
 import { ServiceEndpoint, Delegate } from './DidInterfaces';
+import updateDidDocDispatcher from './UpdateDidDocDispatcher';
 
 const PUB_KEY_TYPE = 'Secp256k1VerificationKey2018';
 
@@ -19,23 +20,6 @@ export class DidService {
     const did = await this.runtime.did.convertIdentityToDid(identity);
 
     return this.runtime.did.getDidDocument(did);
-  }
-
-  /**
-   * Persist changes to DID Document
-   * @param newDidDoc updated DID Document
-   */
-  updateDidDocument(newDidDoc: DidDocument): Dispatcher {
-    const dispatcher = new Dispatcher(
-      `profile.vue.${getDomainName()}`,
-      'updateDidDocumentDispatcher',
-      60000,
-      '_profile.dispatchers.did-document-update',
-    );
-
-    return dispatcher.step(async (instance: DispatcherInstance, data) => {
-      await this.runtime.did.setDidDocument(newDidDoc.id, newDidDoc);
-    });
   }
 
   /**
@@ -144,8 +128,8 @@ export class DidService {
   /**
    * Trigger download of DID Document as JSON file.
    *
+   * @param didDoc
    * @param filename Name for the file
-   * @param text Content of the text tile
    */
   static exportDocument(didDoc: DidDocument, filename: string): void {
     const element = document.createElement('a');
