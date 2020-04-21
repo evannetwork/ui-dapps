@@ -1,8 +1,5 @@
 import { DidDocument, Runtime } from '@evan.network/api-blockchain-core';
-import { Dispatcher, DispatcherInstance } from '@evan.network/ui';
-import { getDomainName } from '@evan.network/ui-vue-core';
 import { ServiceEndpoint, Delegate } from './DidInterfaces';
-import updateDidDocDispatcher from './UpdateDidDocDispatcher';
 
 const PUB_KEY_TYPE = 'Secp256k1VerificationKey2018';
 
