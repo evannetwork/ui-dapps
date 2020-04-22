@@ -23,6 +23,7 @@ import { Runtime, DidDocument } from '@evan.network/api-blockchain-core';
 import { isEqual } from 'lodash';
 import { ServiceEndpoint } from './DidInterfaces';
 import { DidService } from './DidService';
+import updateDidDocDispatcher from './UpdateDidDocDispatcher';
 
 @Component
 export default class DIDComponent extends mixins(EvanComponent) {
@@ -126,7 +127,7 @@ export default class DIDComponent extends mixins(EvanComponent) {
     updatedDidDocument.updated = new Date().toISOString();
 
     try {
-      await this.didService.updateDidDocument(updatedDidDocument).start(this.runtime, {});
+      await updateDidDocDispatcher.start(this.runtime, updatedDidDocument);
       this.didDocument = updatedDidDocument;
     } catch (e) {
       this.runtime.logger.log('Updating DID Document failed', 'error');

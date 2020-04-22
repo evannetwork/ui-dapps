@@ -24,7 +24,6 @@
 
 .evan-swipe-panel {
   position: relative;
-  z-index: 1002;
   top: 0;
 
   width: cssVar('swipe-panel-size');
@@ -122,6 +121,7 @@
 
       &.show {
         left: calc(100% - var(--evan-swipe-panel-size));
+        z-index: 1030;
       }
     }
 
