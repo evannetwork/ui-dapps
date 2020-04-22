@@ -67,20 +67,17 @@ Given('I go to the evan.network startpage', async () => {
 });
 
 When(/I log out from vue/, async () => {
-  client.useCss();
+  loggedIn = false;
+
   const evan = testUtils.setupEvan(client);
-
-  if (loggedIn) {
-    loggedIn = false;
-
-    await client.url(`${evan.baseUrl}#/dashboard.vue.evan`);
-    await client.waitForElementPresent('#evan-dapp-profile', 10 * 1000);
-    await client.click('#evan-dapp-profile');
-    await client.waitForElementPresent('#evan-logout', 10 * 1000);
-    await client.click('#evan-logout');
-    await client.waitForElementPresent('.modal-content #submit-logout', 10 * 1000);
-    await client.click('#submit-logout');
-  }
+  const language = global.tags && global.tags.includes('@german') ? 'de' : 'en';
+  await client.execute(function setDefaults(lang) { // eslint-disable-line prefer-arrow-callback
+    window.localStorage.clear();
+    window.localStorage.setItem('evan-language', lang);
+    window.localStorage.setItem('evan-test-mode', true);
+    window.localStorage.setItem('evan-test-recaptchaId', '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI');
+    return true;
+  }, [language]);
 });
 
 Then(/I am no longer logged in to vue/, async () => {

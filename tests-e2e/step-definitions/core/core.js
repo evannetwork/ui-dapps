@@ -48,6 +48,20 @@ Then(/^I want to see an element with class "([^"]+)"$/, async (className) => {
   await client.waitForElementPresent(`.${className}`, WAIT_TIME);
 });
 
+Then(/^I want to see an element with class "([^"]+)" and text "([^"]+)"$/, async (className, text) => {
+  client.useXpath();
+  testUtils.setupEvan(client);
+
+  await client.waitForElementPresent(`//div[@class="${className}"]/*[contains(., "${text}")]`, WAIT_TIME);
+});
+
+Then(/^I not want to see an element with class "([^"]+)" and text "([^"]+)"$/, async (className, text) => {
+  client.useXpath();
+  testUtils.setupEvan(client);
+
+  await client.waitForElementNotPresent(`//div[@class="${className}"]/*[contains(., "${text}")]`, WAIT_TIME);
+});
+
 Then('I press the {string} key', async (key) => {
   client.useCss();
   await client.keys(client.Keys[key]);
@@ -59,4 +73,23 @@ Then('I press the {string} key', async (key) => {
 Then('I wait {int} seconds until loading was finished', async (waitTime) => {
   client.useCss();
   await client.waitForElementNotPresent('.evan-loading', waitTime * 1000);
+});
+
+
+Then('The element with id {string} should have attribute {string}', async (id, attribute) => {
+  client.useCss();
+  await client.expect.element(`#${id}`).to.have.attribute(attribute);
+});
+
+When('I switch to identity {string}', async (name) => {
+  client.useCss();
+  await client.waitForElementPresent('.active-identity');
+  await client.click('.active-identity');
+  await client.waitForElementPresent('.callout.active');
+  await client.pause(1000);
+  client.useXpath();
+  await client.click(`//div[@class="callout active"]//text()[normalize-space(.) = "${name}"]/../../../../..`);
+  await client.waitForElementNotPresent('//*[normalize-space(text()) = "Switching Identity ..."]');
+  await client.pause(1000);
+  await client.waitForElementPresent(`//div[@class="active-identity"]/*[contains(., "${name}")]`);
 });

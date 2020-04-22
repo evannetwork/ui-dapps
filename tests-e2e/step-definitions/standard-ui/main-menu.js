@@ -5,7 +5,7 @@ const mainMenu = {
   'Digital Twins': '#evan-dapp-digitaltwins',
   'My Assets': '#evan-dapp-assets',
   'Verification Center': '#evan-dapp-verifications',
-  Actions: '#evan-dapp-mailbox',
+  Notifications: '#evan-dapp-mailbox',
   DApps: '#evan-dapp-favorites',
   Explorer: '#evan-dapp-explorer',
   Favorites: '#evan-dapp-favorites',
@@ -19,13 +19,15 @@ const mainMenu = {
  * Click on an entry within the sidepanel
  */
 When('I click on {string} in main menu', async (entry) => {
+  client.useCss();
+
   if (!mainMenu[entry]) {
     throw new Error('Could not find entry in main menu for: ', entry);
   } else {
     const selector = mainMenu[entry];
 
     // ensure that the element is present
-    await client.expect.element(selector).to.be.present;
+    await client.waitForElementPresent(selector);
 
     // open it
     await client.click(selector);

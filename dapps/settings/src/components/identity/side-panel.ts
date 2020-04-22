@@ -193,6 +193,12 @@ export default class IdentitySidePanelComponent extends mixins(EvanComponent) {
       },
       note: {
         value: this.contact.note || '',
+        uiSpecs: {
+          type: 'v-select',
+          attr: {
+            id: 'identity-contact-note',
+          },
+        },
       },
     }) as IdentityForm);
   }
@@ -233,10 +239,12 @@ export default class IdentitySidePanelComponent extends mixins(EvanComponent) {
       this.permissions.readWrite = write;
     }
 
-    if (write) {
+    if (this.permissions.readWrite) {
       this.contact.hasIdentityAccess = 'readWrite';
-    } else if (read) {
+    } else if (this.permissions.read) {
       this.contact.hasIdentityAccess = 'read';
+    } else {
+      this.contact.hasIdentityAccess = false;
     }
   }
 }

@@ -71,7 +71,7 @@
                 id="identity-read-perm"
                 class="mb-0"
                 :value="permissions.read"
-                :disabled="originalContact.hasIdentityAccess === 'read' || originalContact.hasIdentityAccess === 'readWrite'"
+                :disabled="!canEdit || originalContact.hasIdentityAccess === 'read' || originalContact.hasIdentityAccess === 'readWrite'"
                 @input="updatePermissions($event, permissions.readWrite)"
               />
             </div>
@@ -81,7 +81,7 @@
                 id="identity-write-perm"
                 class="mb-0"
                 :value="permissions.readWrite"
-                :disabled="originalContact.hasIdentityAccess === 'readWrite'"
+                :disabled="!canEdit || originalContact.hasIdentityAccess === 'readWrite'"
                 @input="updatePermissions(permissions.read, $event)"
               />
             </div>
