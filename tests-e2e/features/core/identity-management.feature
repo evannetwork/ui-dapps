@@ -100,4 +100,4 @@ Feature: evan.network dashboard
     When I click on button "Switch identity"
     Then I want to see an element with class "callout.active"
       And I want to see an element with class "b-overlay.position-fixed"
-      And I not want to see an element with class "callout active" and text "Identity Based 1"
+      And I do not want to see an element with class "callout active" and text "Identity Based 1"

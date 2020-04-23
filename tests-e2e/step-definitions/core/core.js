@@ -55,7 +55,7 @@ Then(/^I want to see an element with class "([^"]+)" and text "([^"]+)"$/, async
   await client.waitForElementPresent(`//div[@class="${className}"]/*[contains(., "${text}")]`, WAIT_TIME);
 });
 
-Then(/^I not want to see an element with class "([^"]+)" and text "([^"]+)"$/, async (className, text) => {
+Then(/^I do not want to see an element with class "([^"]+)" and text "([^"]+)"$/, async (className, text) => {
   client.useXpath();
   testUtils.setupEvan(client);
 

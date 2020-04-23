@@ -168,3 +168,12 @@ export async function pauseHere() {
     resolve(ans);
   }));
 }
+
+export function getLanguage() {
+  // login using german language when tagged with '@german'
+  if (global.tags && global.tags.includes('@german')) {
+    return 'de';
+  }
+
+  return 'en';
+}
