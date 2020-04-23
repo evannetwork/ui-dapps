@@ -46,8 +46,8 @@ Feature: evan.network dashboard
     When I log out from vue
       And I log in to evan.network using vue with identityBased2
       And I click on "Notifications" in main menu
-    Then I want I want to see a text including "Identity access"
-      And I want I want to see a text including "a few seconds ago"
+    Then I want to see a text including "Identity access"
+      And I want to see a text including "a few seconds ago"
     When I click on an element with text including "a few seconds ago"
     Then I want to see a button "Save identity access"
     When I click on button "Save identity access"
@@ -77,7 +77,6 @@ Feature: evan.network dashboard
     Given I log in to evan.network using vue with identityBased
       And I click on "Settings" in main menu
     When I click on "Identity Management" in sub menu
-      And I click the element with class "side-panel-open"
     When I click on an element with text including "Identity Based 2"
     Then I want to see a button "Remove Permissions"
     When I click on button "Remove Permissions"
@@ -90,14 +89,14 @@ Feature: evan.network dashboard
     When I log out from vue
       And I log in to evan.network using vue with identityBased2
       And I click on "Notifications" in main menu
-    Then I want I want to see a text including "Identity access revoked"
-      And I want I want to see a text including "a few seconds ago"
+    Then I want to see a text including "Identity access revoked"
+    When I click on an element with text including "Identity access revoked"
       And I want to see a button "Remove identity access"
     When I click on button "Remove identity access"
       And I click on button "continue"
-    Then I want to see a text including "Starting Contact/Contract sync ..."
+    Then I want to see a text including "Starting Contact/Contract sync"
       And I wait for 3 seconds
-      And I want to see a text including "Contact/Contract sync ... completed"
+      And I want to see a text including "Contact/Contract sync completed"
     When I click on button "Switch identity"
     Then I want to see an element with class "callout.active"
       And I want to see an element with class "b-overlay.position-fixed"
