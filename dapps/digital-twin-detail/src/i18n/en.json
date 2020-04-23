@@ -80,6 +80,7 @@
       "transactions-title": "Last Transactions"
     },
     "sharings": {
+      "description-no-contacts": "You don't have any contacts to share your twin with.",
       "filters": {
         "all": "All",
         "company": "Companies",
