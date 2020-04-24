@@ -80,6 +80,7 @@
       "transactions-title": "Letzte Transaktionen"
     },
     "sharings": {
+      "description-no-contacts": "Sie haben keine Kontakte, um den Twin zu teilen.",
       "filters": {
         "all": "Alle",
         "company": "Unternehmen",

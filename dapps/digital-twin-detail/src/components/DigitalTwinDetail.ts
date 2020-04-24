@@ -85,6 +85,8 @@ export default class DigitalTwinDetailComponent extends mixins(EvanComponent) {
         this.loading = true;
         if (this.$store.state.twin) {
           this.$store.state.twin.stopWatchDispatchers();
+          // reset previous sharing context
+          this.$store.state.twin.sharingContext = null;
         }
 
         // initialize a new twin, but keep old reference until twin is loaded
