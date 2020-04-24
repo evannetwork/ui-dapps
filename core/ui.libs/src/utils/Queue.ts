@@ -43,7 +43,7 @@ export default class EvanQueue {
   /**
    * Promise to handle queueDB loading finish
    */
-  initializing: Promise<void>;
+  initializing: Promise<any>;
 
   /**
    * Storage name for the current user.
@@ -61,6 +61,11 @@ export default class EvanQueue {
    * @param      {number}  version  current db version
    */
   async openDB(version?: number) {
+    if (queueDB) {
+      queueDB.close();
+      await new Promise((resolve) => setTimeout(resolve, 50));
+    }
+
     return new Promise((resolve, reject) => {
       const availableDB = window.indexedDB
         || (window as any).mozIndexedDB
@@ -85,13 +90,9 @@ export default class EvanQueue {
           reject(openRequest.error);
         }
       };
-      openRequest.onsuccess = async (event) => {
-        const storeExists = Object
-          .keys(openRequest.result.objectStoreNames)
-          .map((index) => openRequest.result.objectStoreNames[index])
-          .indexOf(storageName) !== -1;
 
-        if (!storeExists) {
+      openRequest.onsuccess = async (event) => {
+        if (!this.storeExists(openRequest.result)) {
           openRequest.result.close();
           resolve(await this.openDB(openRequest.result.version + 1));
         } else {
@@ -111,14 +112,26 @@ export default class EvanQueue {
   }
 
   /**
+   * Check if a specific object store exists in the opened queue db
+   */
+  storeExists(db = queueDB): boolean {
+    return Object
+      .keys(db.objectStoreNames)
+      .map((index) => db.objectStoreNames[index])
+      .indexOf(this.storageName) !== -1;
+  }
+
+  /**
    * Creates a queueDB if missing and open all connections. Is called by the Queue interaction
    * functions itself.
    */
   async initialize(): Promise<any> {
-    if (!queueDB) {
+    if (!queueDB || !this.storeExists()) {
       if (!this.initializing) {
         try {
-          queueDB = await this.openDB();
+          this.initializing = this.openDB();
+          queueDB = await this.initializing;
+          this.initializing = null;
         } catch (ex) {
           console.error(ex);
         }
@@ -158,8 +171,8 @@ export default class EvanQueue {
   async load(dispatcherId: string): Promise<any> {
     await this.initialize();
 
+    const objectStore = this.getObjectStore('readonly');
     const entries = await new Promise((resolve, reject) => {
-      const objectStore = this.getObjectStore('readonly');
       let request;
 
       if (dispatcherId === '*') {
@@ -207,9 +220,9 @@ export default class EvanQueue {
 
     // load previous entries
     const entries = await this.load(dispatcherId);
+    const objectStore = this.getObjectStore('readwrite');
     return new Promise((resolve, reject): any => {
       // create objectStore to delete or put data
-      const objectStore = this.getObjectStore('readwrite');
       let request;
 
       // if no data was applied, delete the data

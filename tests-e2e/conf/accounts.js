@@ -52,9 +52,17 @@ module.exports = {
       mnemonic: process.env.USER_ORGANIZATION_IDENT_NON_COMPANY_MNEMONIC,
       password: process.env.USER_ORGANIZATION_IDENT_NON_COMPANY_PASSWORD,
     },
+    accountBased: {
+      mnemonic: process.env.USER_ACCOUNT_BASED_MNEMONIC,
+      password: process.env.USER_ACCOUNT_BASED_PASSWORD,
+    },
     identityBased: {
       mnemonic: process.env.USER_IDENTITY_BASED_MNEMONIC,
       password: process.env.USER_IDENTITY_BASED_PASSWORD,
+    },
+    identityBased2: {
+      mnemonic: process.env.USER_IDENTITY_BASED2_MNEMONIC,
+      password: process.env.USER_IDENTITY_BASED2_PASSWORD,
     },
   },
 };

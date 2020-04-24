@@ -74,7 +74,7 @@ export default class IdentitySidePanelComponent extends mixins(EvanComponent) {
   isNew = false;
 
   /**
-   * Disable save button until dispatcher is started 
+   * Disable save button until dispatcher is started
    */
   startingDispatcher = false;
 
@@ -177,6 +177,7 @@ export default class IdentitySidePanelComponent extends mixins(EvanComponent) {
         uiSpecs: {
           type: 'v-select',
           attr: {
+            id: 'identity-contact-select',
             required: true,
             options: this.contacts.map((contact: IdentityAccessContact) => ({
               value: contact.address,
@@ -192,6 +193,12 @@ export default class IdentitySidePanelComponent extends mixins(EvanComponent) {
       },
       note: {
         value: this.contact.note || '',
+        uiSpecs: {
+          type: 'v-select',
+          attr: {
+            id: 'identity-contact-note',
+          },
+        },
       },
     }) as IdentityForm);
   }
@@ -232,10 +239,12 @@ export default class IdentitySidePanelComponent extends mixins(EvanComponent) {
       this.permissions.readWrite = write;
     }
 
-    if (write) {
+    if (this.permissions.readWrite) {
       this.contact.hasIdentityAccess = 'readWrite';
-    } else if (read) {
+    } else if (this.permissions.read) {
       this.contact.hasIdentityAccess = 'read';
+    } else {
+      this.contact.hasIdentityAccess = false;
     }
   }
 }

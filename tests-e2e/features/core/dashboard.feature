@@ -9,7 +9,7 @@ Feature: evan.network dashboard
     Then I want to see a text including "Digital Twins"
     When I click on "Verification Center" in main menu
     Then I want to see a text including "Under construction"
-    When I click on "Actions" in main menu
+    When I click on "Notifications" in main menu
     Then I want to see a text including "Incoming Messages"
     When I click on "Synchronization" in main menu
     Then I want to see a text including "Data-Synchronization"

@@ -68,18 +68,20 @@
             <div class="mr-3">
               <small class="font-italic">{{ $t('_settings.identity.side-panel.perm.read') }}</small>
               <evan-checkbox
+                id="identity-read-perm"
                 class="mb-0"
                 :value="permissions.read"
-                :disabled="originalContact.hasIdentityAccess === 'read' || originalContact.hasIdentityAccess === 'readWrite'"
+                :disabled="!canEdit || originalContact.hasIdentityAccess === 'read' || originalContact.hasIdentityAccess === 'readWrite'"
                 @input="updatePermissions($event, permissions.readWrite)"
               />
             </div>
             <div>
               <small class="font-italic">{{ $t('_settings.identity.side-panel.perm.readWrite') }}</small>
               <evan-checkbox
+                id="identity-write-perm"
                 class="mb-0"
                 :value="permissions.readWrite"
-                :disabled="originalContact.hasIdentityAccess === 'readWrite'"
+                :disabled="!canEdit || originalContact.hasIdentityAccess === 'readWrite'"
                 @input="updatePermissions(permissions.read, $event)"
               />
             </div>

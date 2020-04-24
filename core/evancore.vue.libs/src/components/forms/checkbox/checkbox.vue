@@ -38,7 +38,7 @@
         type="checkbox"
         v-bind="$attrs"
       >
-      <label :for="id" />
+      <label />
     </template>
   </div>
 </template>

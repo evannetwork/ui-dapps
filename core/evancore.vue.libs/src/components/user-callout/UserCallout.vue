@@ -103,6 +103,7 @@
       </evan-button>
 
       <evan-button
+        id="evan-logout"
         class="callout-button"
         @click="$refs.logout.logout()"
       >
