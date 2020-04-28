@@ -27,7 +27,7 @@ import { config, getDomainName, utils } from '@evan.network/ui-dapp-browser';
 import { bccHelper, session, lightwallet } from '@evan.network/ui-session';
 
 interface ProfileFormInterface extends EvanForm {
-  accountType: EvanFormControl;
+  // accountType: EvanFormControl;
   alias: EvanFormControl;
   isValid?: boolean;
   password0: EvanFormControl;
@@ -180,19 +180,19 @@ export default class SignUp extends mixins(EvanComponent) {
   created() {
     const uiSpecs = { attr: { required: true } };
     this.profileForm = (<ProfileFormInterface> new EvanForm(this, {
-      accountType: {
-        value: 'company',
-        uiSpecs: {
-          attr: {
-            required: true,
-            options: [
-              { label: '_onboarding.sign-up.account-types.user', value: 'user' },
-              { label: '_onboarding.sign-up.account-types.company', value: 'company' },
-            ],
-          },
-          type: 'select',
-        },
-      },
+      // accountType: {
+      //   value: 'company',
+      //   uiSpecs: {
+      //     attr: {
+      //       required: true,
+      //       options: [
+      //         { label: '_onboarding.sign-up.account-types.user', value: 'user' },
+      //         { label: '_onboarding.sign-up.account-types.company', value: 'company' },
+      //       ],
+      //     },
+      //     type: 'select',
+      //   },
+      // },
       alias: {
         value: '',
         validate(vueInstance: SignUp, form: ProfileFormInterface) {
@@ -200,10 +200,23 @@ export default class SignUp extends mixins(EvanComponent) {
         },
         uiSpecs: {
           attr: {
-            hint: () => (this as any).$t(`_onboarding.sign-up.alias.hint-${this.profileForm.accountType.value}`),
+            hint: () => (this as any).$t('_onboarding.sign-up.alias.hint-company'),
             required: true,
           },
-          label: () => (this as any).$t(`_onboarding.sign-up.alias.${this.profileForm.accountType.value}`),
+          label: () => (this as any).$t('_onboarding.sign-up.alias.company'),
+        },
+      },
+      userAlias: {
+        value: '',
+        validate(vueInstance: SignUp, form: ProfileFormInterface) {
+          return this.value.length !== 0;
+        },
+        uiSpecs: {
+          attr: {
+            hint: () => (this as any).$t('_onboarding.sign-up.alias.hint-user'),
+            required: true,
+          },
+          label: () => (this as any).$t('_onboarding.sign-up.alias.user'),
         },
       },
       password0: {
@@ -467,7 +480,7 @@ export default class SignUp extends mixins(EvanComponent) {
     const userData: any = {
       accountDetails: {
         accountName: this.profileForm.alias.value,
-        profileType: this.profileForm.accountType.value,
+        // profileType: this.profileForm.accountType.value,
       },
     };
 

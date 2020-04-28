@@ -61,7 +61,7 @@
               v-if="activeStep === 1"
               class="text-center mt-3 mb-0"
             >
-              {{ '_onboarding.sign-up.steps.company.registration.desc' | translate }}
+              Hello{{ '_onboarding.sign-up.steps.company.registration.desc' | translate }}
             </p>
             <p
               v-if="activeStep === 2"
