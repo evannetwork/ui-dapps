@@ -26,8 +26,8 @@
         <evan-dapp-wrapper-level-2>
           <evan-nav-list
             :entries="navEntries"
-            header-icon="settings-outline"
-            header-text="_settings.header"
+            header-icon="credit-card-outline"
+            header-text="_wallet.routes.wallet"
           />
         </evan-dapp-wrapper-level-2>
         <transition

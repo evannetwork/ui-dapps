@@ -25,6 +25,7 @@ import WalletComponent from './components/wallet/wallet.vue';
 const routeRegistration: Array<RouteRegistrationInterface> = [
   { path: '', redirect: { name: 'wallet' } },
   { path: 'wallet', name: 'wallet', component: WalletComponent },
+  { path: 'ipfs', name: 'ipfs', component: WalletComponent },
 ];
 
 export default routeRegistration;

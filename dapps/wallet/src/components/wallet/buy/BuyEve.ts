@@ -204,7 +204,7 @@ export default class BuyEveComponent extends mixins(EvanComponent) {
   /**
    * Set the forms for the buy eve process.
    */
-  setupForms() {
+  async setupForms() {
     // setup pay form
     this.payForm = (new EvanForm(this, {
       amount: {
@@ -254,7 +254,7 @@ export default class BuyEveComponent extends mixins(EvanComponent) {
     })) as PayFormInterface;
 
     // setup contact Form and pass profile data
-    const data = this.getProfileData();
+    const data = await this.getProfileData();
     const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     this.contactForm = (new EvanForm(this, {
       name: {
@@ -360,16 +360,18 @@ export default class BuyEveComponent extends mixins(EvanComponent) {
     this.contactForm.vat.value = this.contactForm.vat.value; // eslint-disable-line no-self-assign, no-param-reassign
   }
 
-  private getProfileData() {
+  private async getProfileData() {
     const defaultProfile = {
       accountDetails: {
         accountName: '',
+        ...await this.runtime.profile.getProfileProperty('accountDetails'),
       },
       contact: {
         streetAndNumber: '',
         postalCode: '',
         city: '',
         country: 'DE',
+        ...await this.runtime.profile.getProfileProperty('contact'),
       },
     };
 
