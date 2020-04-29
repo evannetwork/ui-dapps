@@ -16,15 +16,15 @@
   Fifth Floor, Boston, MA, 02110-1301 USA, or download the license from
   the following URL: https://evan.network/license/
 */
+// import evan libs
+import { RouteRegistrationInterface } from '@evan.network/ui-vue-core';
 
-import requestIdentificationDispatcher from './notary/requestIdentification';
-import shareProfileDispatcher from './profile/share';
-import updateProfileDispatcher from './profile/update';
-import verificationAcceptDispatcher from './acceptVerification';
+import WalletComponent from './components/wallet/wallet.vue';
 
-export {
-  requestIdentificationDispatcher,
-  shareProfileDispatcher,
-  updateProfileDispatcher,
-  verificationAcceptDispatcher,
-};
+// map them to element names, so they can be used within templates
+const routeRegistration: Array<RouteRegistrationInterface> = [
+  { path: '', redirect: { name: 'wallet' } },
+  { path: 'wallet', name: 'wallet', component: WalletComponent },
+];
+
+export default routeRegistration;

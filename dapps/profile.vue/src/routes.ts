@@ -29,7 +29,6 @@ import AccountRootComponent from './components/root/accountRoot.vue';
 import ProfileDetailComponent from './components/profile/profile.vue';
 import VerificationsComponent from './components/verifications/overview/overview.vue';
 import ProfileSharingsComponent from './components/sharings/sharings.vue';
-import ProfileWalletComponent from './components/wallet/wallet.vue';
 import DIDComponent from './components/did/DID.vue';
 
 /**
@@ -48,7 +47,6 @@ const redirectToDefault = (to, childPath = 'detail'): string => [
 const routeRegistration: Array<RouteRegistrationInterface> = [
   { path: '', redirect: (to): string => redirectToDefault(to) },
   { path: 'verify', redirect: (to): string => redirectToDefault(to, 'verifications') },
-  { name: 'wallet', path: 'wallet', component: ProfileWalletComponent },
   {
     // just used for nested routing
     component: AccountRootComponent,
