@@ -29,6 +29,7 @@ import { bccHelper, session, lightwallet } from '@evan.network/ui-session';
 interface ProfileFormInterface extends EvanForm {
   accountType: EvanFormControl;
   alias: EvanFormControl;
+  companyAlias: EvanFormControl;
   isValid?: boolean;
   password0: EvanFormControl;
   password1: EvanFormControl;
@@ -422,7 +423,8 @@ export default class SignUp extends mixins(EvanComponent) {
     const userData: any = {
       accountDetails: {
         accountName: this.profileForm.alias.value,
-        // profileType: this.profileForm.accountType.value,
+        profileType: this.profileForm.accountType.value,
+        companyAlias: this.profileForm.companyAlias.value,
       },
     };
 
@@ -430,7 +432,6 @@ export default class SignUp extends mixins(EvanComponent) {
       case 'company': {
         userData.registration = this.$refs.companyRegistration.form.getFormData();
         userData.contact = this.$refs.companyContact.form.getFormData();
-
         break;
       }
     }
