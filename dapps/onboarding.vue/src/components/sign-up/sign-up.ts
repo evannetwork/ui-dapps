@@ -27,7 +27,7 @@ import { config, getDomainName, utils } from '@evan.network/ui-dapp-browser';
 import { bccHelper, session, lightwallet } from '@evan.network/ui-session';
 
 interface ProfileFormInterface extends EvanForm {
-  // accountType: EvanFormControl;
+  accountType: EvanFormControl;
   alias: EvanFormControl;
   isValid?: boolean;
   password0: EvanFormControl;
@@ -178,65 +178,7 @@ export default class SignUp extends mixins(EvanComponent) {
   }
 
   created() {
-    const uiSpecs = { attr: { required: true } };
-    this.profileForm = (<ProfileFormInterface> new EvanForm(this, {
-      // accountType: {
-      //   value: 'company',
-      //   uiSpecs: {
-      //     attr: {
-      //       required: true,
-      //       options: [
-      //         { label: '_onboarding.sign-up.account-types.user', value: 'user' },
-      //         { label: '_onboarding.sign-up.account-types.company', value: 'company' },
-      //       ],
-      //     },
-      //     type: 'select',
-      //   },
-      // },
-      alias: {
-        value: '',
-        validate(vueInstance: SignUp, form: ProfileFormInterface) {
-          return this.value.length !== 0;
-        },
-        uiSpecs: {
-          attr: {
-            hint: () => (this as any).$t('_onboarding.sign-up.alias.hint-company'),
-            required: true,
-          },
-          label: () => (this as any).$t('_onboarding.sign-up.alias.company'),
-        },
-      },
-      userAlias: {
-        value: '',
-        validate(vueInstance: SignUp, form: ProfileFormInterface) {
-          return this.value.length !== 0;
-        },
-        uiSpecs: {
-          attr: {
-            hint: () => (this as any).$t('_onboarding.sign-up.alias.hint-user'),
-            required: true,
-          },
-          label: () => (this as any).$t('_onboarding.sign-up.alias.user'),
-        },
-      },
-      password0: {
-        value: '',
-        validate(vueInstance: SignUp, form: ProfileFormInterface) {
-          if (form.password1 && form.password1.value) {
-            form.password1.validate();
-          }
-          return vueInstance.getPasswordError(0, this.form) || true;
-        },
-        uiSpecs: { attr: { hint: true, required: true, type: 'password' } },
-      },
-      password1: {
-        value: '',
-        validate(vueInstance: SignUp, form: ProfileFormInterface) {
-          return vueInstance.getPasswordError(1, this.form) || true;
-        },
-        uiSpecs: { attr: { hint: true, required: true, type: 'password' } },
-      },
-    }));
+    this.setupProfileForm();
 
     this.termsAccepted = new EvanFormControl('termsAccepted', false, this);
 
@@ -508,5 +450,88 @@ export default class SignUp extends mixins(EvanComponent) {
         return ['7.svg', '4.svg'];
       }
     }
+  }
+
+  /**
+   * Creates a new profile form according to the current user type
+   */
+  async setupProfileForm() {
+    const profileFormConfig = {
+      accountType: {
+        value: this.profileForm ? this.profileForm.accountType.value : 'company',
+        uiSpecs: {
+          attr: {
+            required: true,
+            options: [
+              { label: '_onboarding.sign-up.account-types.user', value: 'user' },
+              { label: '_onboarding.sign-up.account-types.company', value: 'company' },
+            ],
+          },
+          type: 'select',
+          input: () => this.setupProfileForm(),
+        },
+      },
+      alias: {
+        value: '',
+        validate(vueInstance: SignUp, form: ProfileFormInterface) {
+          return this.value.length !== 0;
+        },
+        uiSpecs: {
+          attr: {
+            hint: () => (this as any).$t('_onboarding.sign-up.alias.hint'),
+            required: true,
+          },
+          label: () => (this as any).$t('_onboarding.sign-up.alias.label'),
+        },
+      },
+      companyAlias: {
+        value: '',
+        validate(vueInstance: SignUp, form: ProfileFormInterface) {
+          return this.value.length !== 0;
+        },
+        uiSpecs: {
+          attr: {
+            hint: () => (this as any).$t('_onboarding.sign-up.companyAlias.hint'),
+            required: true,
+          },
+          label: () => (this as any).$t('_onboarding.sign-up.companyAlias.label'),
+        },
+      },
+      password0: {
+        value: '',
+        validate(vueInstance: SignUp, form: ProfileFormInterface) {
+          if (form.password1 && form.password1.value) {
+            form.password1.validate();
+          }
+          return vueInstance.getPasswordError(0, this.form) || true;
+        },
+        uiSpecs: { attr: { hint: true, required: true, type: 'password' } },
+      },
+      password1: {
+        value: '',
+        validate(vueInstance: SignUp, form: ProfileFormInterface) {
+          return vueInstance.getPasswordError(1, this.form) || true;
+        },
+        uiSpecs: { attr: { hint: true, required: true, type: 'password' } },
+      },
+    };
+
+    if (profileFormConfig.accountType.value !== 'company') {
+      delete profileFormConfig.companyAlias;
+    }
+
+    // if the accountType has changed, the profileForm configuration may change, but the ui won't
+    // rerender the evan-form => use hacky hide / show function
+    // if (this.profileForm) {
+    //   this.activeStep = -1;
+    // }
+
+    this.profileForm = new EvanForm(this, profileFormConfig) as ProfileFormInterface;
+
+    // show the profile form again
+    // if (this.activeStep === -1) {
+    //   await this.$nextTick();
+    //   this.activeStep = 0;
+    // }
   }
 }
