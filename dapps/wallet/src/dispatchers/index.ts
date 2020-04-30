@@ -18,7 +18,9 @@
 */
 
 import sendEveDispatcher from './sendEve';
+import openChannelDispatcher from './openChannel';
 
 export {
   sendEveDispatcher,
+  openChannelDispatcher,
 };

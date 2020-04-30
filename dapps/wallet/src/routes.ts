@@ -20,12 +20,13 @@
 import { RouteRegistrationInterface } from '@evan.network/ui-vue-core';
 
 import WalletComponent from './components/wallet/wallet.vue';
+import IpfsComponent from './components/ipfs/ipfs.vue';
 
 // map them to element names, so they can be used within templates
 const routeRegistration: Array<RouteRegistrationInterface> = [
   { path: '', redirect: { name: 'wallet' } },
   { path: 'wallet', name: 'wallet', component: WalletComponent },
-  { path: 'ipfs', name: 'ipfs', component: WalletComponent },
+  { path: 'ipfs', name: 'ipfs', component: IpfsComponent },
 ];
 
 export default routeRegistration;

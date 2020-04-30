@@ -53,6 +53,13 @@
       "try-again": "Erneut versuchen",
       "vat": "USt."
     },
+    "ipfs": {
+      "status-title": "Speicherguthaben Übersicht",
+      "available-funds": "Verfügbares Guthaben",
+      "monthly-costs": "Monatlicher Speichergebühren",
+      "stored-files": "Abgelegte Anzahl Dateien",
+      "stored-size": "Größe des genutzten Speichers"
+    },
     "routes": {
       "ipfs": "Monatliche Kosten",
       "wallet": "Wallet"

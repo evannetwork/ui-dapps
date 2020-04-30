@@ -53,6 +53,13 @@
       "try-again": "Try again",
       "vat": "VAT"
     },
+    "ipfs": {
+      "status-title": "Storage fees overview",
+      "available-funds": "Available credit",
+      "monthly-costs": "Current monthly fees",
+      "stored-files": "Number of stored files",
+      "stored-size": "Size of all stored files"
+    },
     "routes": {
       "ipfs": "Monthly costs",
       "wallet": "Wallet"
