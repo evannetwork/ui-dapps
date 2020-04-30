@@ -20,10 +20,10 @@
 <template>
   <div>
     <evan-swipe-panel
-      :hide-close-button="windowWidth >= 1200"
-      :is-open="true"
-      :mount-id="windowWidth < 1200 ? null : 'dapp-wrapper-sidebar-right'"
-      :show-backdrop="windowWidth < 1200"
+      :hide-close-button="windowWidth >= 1400"
+      :is-open="$store.state.uiState.swipePanel === 'sendEve'"
+      :mount-id="windowWidth < 1400 ? null : 'dapp-wrapper-sidebar-right'"
+      :show-backdrop="windowWidth < 1400"
       :title="'_wallet.send-eve.title' | translate"
       alignment="right"
       class="light"
