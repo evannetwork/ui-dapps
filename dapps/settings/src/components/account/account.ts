@@ -62,4 +62,40 @@ export default class AccountSettingsComponent extends mixins(EvanComponent) {
 
     this.copyToClipboard(encryptionKey, '_settings.account.encryption-key.exported');
   }
+
+  /**
+   * Export the private key for the current logged in account
+   */
+  async exportRuntimeConfig(): Promise<void> {
+    const runtime = this.getRuntime();
+    const vault = await lightwallet.loadUnlockedVault();
+    const privateKey = lightwallet.getPrivateKey(vault, session.activeAccount);
+    const encryptionKey = await lightwallet.getEncryptionKey();
+    const accountSha3 = runtime.web3.utils.soliditySha3(runtime.activeAccount);
+    const accountSha9 = runtime.web3.utils.soliditySha3(accountSha3, accountSha3);
+    const toCopy = {
+      // account map to blockchain accounts with their private key
+      accountMap: {
+        [runtime.activeAccount]: privateKey,
+      },
+      // key configuration for private data handling
+      keyConfig: {
+        [accountSha3]: encryptionKey,
+        [accountSha9]: encryptionKey,
+      },
+      // ipfs configuration for evan.network storage
+      ipfs: {
+        host: 'ipfs.test.evan.network',
+        port: '443',
+        protocol: 'https',
+      },
+      // web3 provider config (currently evan.network testcore)
+      web3Provider: 'wss://testcore.evan.network/ws',
+    };
+
+    this.copyToClipboard(
+      JSON.stringify(toCopy, null, 2),
+      '_settings.account.runtime-config.exported',
+    );
+  }
 }

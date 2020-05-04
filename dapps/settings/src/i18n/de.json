@@ -9,6 +9,10 @@
         "exported": "Private-Key in die Zwischenablage kopiert",
         "title": "Private Key kopieren"
       },
+      "runtime-config": {
+        "exported": "Runtime Konfiguration in die Zwischenablage kopiet",
+        "title": "API runtime Konfiguration kopieren"
+      },
       "security-info": "Sicherheitsinformationen"
     },
     "browser": {
