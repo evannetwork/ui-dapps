@@ -64,7 +64,7 @@ export default class AccountSettingsComponent extends mixins(EvanComponent) {
   }
 
   /**
-   * Export the private key for the current logged in account
+   * Export the runtime configuration for the current logged in account
    */
   async exportRuntimeConfig(): Promise<void> {
     const runtime = this.getRuntime();
