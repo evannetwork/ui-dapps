@@ -85,12 +85,12 @@ export default class AccountSettingsComponent extends mixins(EvanComponent) {
       },
       // ipfs configuration for evan.network storage
       ipfs: {
-        host: 'ipfs.test.evan.network',
+        host: `ipfs.${runtime.environment !== 'core' ? 'test' : ''}.evan.network`,
         port: '443',
         protocol: 'https',
       },
       // web3 provider config (currently evan.network testcore)
-      web3Provider: 'wss://testcore.evan.network/ws',
+      web3Provider: `wss://${runtime.environment !== 'core' ? 'test' : ''}core.evan.network/ws`,
     };
 
     this.copyToClipboard(
