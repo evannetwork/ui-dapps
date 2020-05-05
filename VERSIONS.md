@@ -14,6 +14,7 @@
     - add address to twin detail
   - add `settings` dapp
     - includes private / encryption key export
+    - includes runtime config export
     - includes browser settings
 - core
   - add new sidebar / bottom bar design with active identity display
