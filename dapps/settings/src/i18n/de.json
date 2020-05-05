@@ -10,7 +10,7 @@
         "title": "Private Key kopieren"
       },
       "runtime-config": {
-        "exported": "Runtime Konfiguration in die Zwischenablage kopiet",
+        "exported": "Runtime Konfiguration wurde in die Zwischenablage kopiert",
         "title": "API runtime Konfiguration kopieren"
       },
       "security-info": "Sicherheitsinformationen"
