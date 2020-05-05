@@ -53,12 +53,33 @@
       "try-again": "Erneut versuchen",
       "vat": "USt."
     },
+    "dispatchers": {
+      "ipfs-payment-channel": "EVE werden eingezahlt",
+      "send-eve": "EVEs werden gesendet"
+    },
     "ipfs": {
-      "status-title": "Speicherguthaben Übersicht",
       "available-funds": "Verfügbares Guthaben",
       "monthly-costs": "Monatlicher Speichergebühren",
+      "status-title": "Speicherguthaben Übersicht",
+      "storage-fees": {
+        "description": "Alle gespeicherten Daten werden verschlüsselt in ein verteiltes Dateisystem gespeichert und verursachen monatliche Kosten. Um die Dateneraufberwahung und das Vermeiden von ungebrauchten Dateien zu gewährleisten, wird von der von Ihnen bereitgestellten EVE Menge jeden Monat die entsprechende Summe abgebucht. Bitte gehen Sie sicher dem System genügend EVE zur Verfügung zu stellen, um Ihre Dateien dauerhaft zu speichern.",
+        "title": "Monatliche Kosten"
+      },
       "stored-files": "Abgelegte Anzahl Dateien",
-      "stored-size": "Größe des genutzten Speichers"
+      "stored-size": "Größe des genutzten Speichers",
+      "top-up": {
+        "form": {
+          "amount": {
+            "error": "Bitte geben Sie eine Zahl größer 0 ein!",
+            "error-less": "Ihr Kontostand ist zu gering! ({balance} EVE)",
+            "label": "Menge an EVE",
+            "placeholder": "Anzahl der EVE, die Sie aufladen möchten"
+          }
+        },
+        "title": "Guthaben Aufladen",
+        "top-up": "Guthaben Aufladen",
+        "topping-up": "Guthaben wir augeladen..."
+      }
     },
     "routes": {
       "ipfs": "Monatliche Kosten",

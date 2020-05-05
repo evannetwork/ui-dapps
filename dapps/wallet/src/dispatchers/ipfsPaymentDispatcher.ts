@@ -18,50 +18,39 @@
 */
 
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
-import { Dispatcher, DispatcherInstance } from '@evan.network/ui';
+import { Dispatcher, DispatcherInstance, agentUrl } from '@evan.network/ui';
 import { utils } from '@evan.network/api-blockchain-core';
 import axios from 'axios';
 
+import { getOpenChannels } from '../ipfs-utils';
 
 const dispatcher = new Dispatcher(
   `wallet.${dappBrowser.getDomainName()}`,
-  'topupChannelDispatcher',
+  'ipfsPaymentDispatcher',
   40 * 1000,
-  '_wallet.dispatchers.open-channel',
+  '_wallet.dispatchers.ipfs-payment-channel',
 );
 
-interface TopUpChannelData {
-  eve: string;
-}
-
 dispatcher
-  .step(async (instance: DispatcherInstance, data: TopUpChannelData) => {
+  .step(async (instance: DispatcherInstance, data: any) => {
     const { runtime } = instance;
-
-    // transform eve to gwei
     const eveToSend = runtime.web3.utils.toWei(data.eve, 'ether');
-    const paymentChannelAddress = await runtime.nameResolver.getAddress('payments.evan');
-    runtime.payments.setChannelManager(paymentChannelAddress);
 
-    const agentUrl = runtime.environment === 'core'
-      ? 'https://payments.evan.network'
-      : 'https://payments.test.evan.network';
+    runtime.payments.setChannelManager('0x1f49A10F38b7dfBD18597287a4880A611514F3Bf');
 
-    // try get the last open channel, otherwise create a new one
-    const availableChannels = await axios({
-      method: 'POST',
-      url: `${agentUrl}/api/smart-agents/ipfs-payments/channel/get`,
-      headers: {
-        Authorization: await utils.getSmartAgentAuthHeaders(runtime),
-      },
-    });
-
-    const openChannel = availableChannels.data.channels.filter((chan) => chan.state === 'OPEN');
+    const channels = await getOpenChannels();
     let proof;
-    let currentChannel;
-    if (openChannel.length > 0) {
+    if (channels.length === 0) {
+      // transform eve to gwei
+      channels.push(await runtime.payments.openChannel(
+        runtime.activeAccount,
+        '0x81b1e7D90E54cf7Fa7bAF2b09587E0b046aB9611',
+        eveToSend,
+      ));
+      proof = await runtime.payments.incrementBalanceAndSign(eveToSend);
+    } else {
+      const [currentChannel] = channels;
       // prepare channel for top topUp
-      [currentChannel] = openChannel;
       const { channel } = currentChannel;
       channel.account = runtime.activeAccount;
       channel.proof = {
@@ -72,18 +61,11 @@ dispatcher
       await runtime.payments.topUpChannel(eveToSend);
       const eveBn = runtime.payments.toBigNumber(eveToSend).plus(channel.deposit);
       proof = await runtime.payments.incrementBalanceAndSign(eveBn);
-    } else {
-      currentChannel = await runtime.payments.openChannel(
-        runtime.activeAccount,
-        '0x81b1e7D90E54cf7Fa7bAF2b09587E0b046aB9611',
-        eveToSend,
-      );
-      proof = await runtime.payments.incrementBalanceAndSign(eveToSend);
     }
 
     await axios({
       method: 'POST',
-      url: `${agentUrl}/api/smart-agents/ipfs-payments/channel/confirm?proof=${proof.sig}&openBlockNumber=${currentChannel.block}`,
+      url: `${agentUrl}/api/smart-agents/ipfs-payments/channel/confirm?proof=${proof.sig}&openBlockNumber=${channels[0].block}`,
       headers: {
         Authorization: await utils.getSmartAgentAuthHeaders(runtime),
       },

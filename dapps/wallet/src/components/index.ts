@@ -18,10 +18,12 @@
 */
 
 import BuyEveComponent from './wallet/buy/BuyEve.vue';
+import IpfsSidePanel from './ipfs/side-panel/side-panel.vue';
 import SendEveComponent from './wallet/send/SendEve.vue';
 import TransactionsComponent from './wallet/transactions/transactions.vue';
 
 export default [
+  { name: 'ipfs-side-panel', component: IpfsSidePanel },
   { name: 'profile-buy-eve', component: BuyEveComponent },
   { name: 'profile-send-eve', component: SendEveComponent },
   { name: 'profile-transactions', component: TransactionsComponent },

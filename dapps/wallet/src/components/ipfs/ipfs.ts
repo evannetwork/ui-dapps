@@ -20,8 +20,10 @@
 import Component, { mixins } from 'vue-class-component';
 import { EvanComponent } from '@evan.network/ui-vue-core';
 import { utils } from '@evan.network/api-blockchain-core';
+import { agentUrl } from '@evan.network/ui';
 import axios from 'axios';
-import { openChannelDispatcher, topupChannelDispatcher } from '../../dispatchers';
+
+import { ipfsPaymentDispatcher } from '../../dispatchers';
 
 @Component({})
 export default class IpfsComponent extends mixins(EvanComponent) {
@@ -67,18 +69,7 @@ export default class IpfsComponent extends mixins(EvanComponent) {
     this.channelStatus = await this.getStatus();
 
     // setup dispatcher watchers
-    this.listeners.push(openChannelDispatcher.watch(async ($event: any) => {
-      // if dispatcher was finished, reload data and reset form
-      if ($event.detail.status === 'finished' || $event.detail.status === 'deleted') {
-        // force ui to re-render
-        this.loading = true;
-        this.channelStatus = await this.getStatus();
-        this.$nextTick(() => { this.loading = false; });
-      }
-    }));
-
-    // setup dispatcher watchers
-    this.listeners.push(topupChannelDispatcher.watch(async ($event: any) => {
+    this.listeners.push(ipfsPaymentDispatcher.watch(async ($event: any) => {
       // if dispatcher was finished, reload data and reset form
       if ($event.detail.status === 'finished' || $event.detail.status === 'deleted') {
         // force ui to re-render
@@ -89,44 +80,39 @@ export default class IpfsComponent extends mixins(EvanComponent) {
     }));
   }
 
-  async openChannel(): Promise<void> {
-    const runtime = this.getRuntime();
-    openChannelDispatcher.start(runtime, {});
+  renderedOverview(): Array<any> {
+    return [
+      {
+        title: '_wallet.ipfs.available-funds',
+        icon: 'credit-card-outline',
+        value: `${this.channelStatus.fundsAvailable} EVE`,
+      },
+      {
+        title: '_wallet.ipfs.monthly-costs',
+        icon: 'calendar-month-outline',
+        value: `${this.channelStatus.monthlyPayments} EVE`,
+      },
+      {
+        title: '_wallet.ipfs.stored-files',
+        icon: 'file-sync-outline',
+        value: this.channelStatus.pinnedHashes,
+      },
+      {
+        title: '_wallet.ipfs.stored-size',
+        icon: 'file-upload-outline',
+        value: this.channelStatus.overallSize,
+      },
+    ];
   }
-
 
   async getStatus(): Promise<void> {
     const { data } = await axios({
       method: 'POST',
-      url: 'http://localhost:8080/api/smart-agents/ipfs-payments/status/get',
+      url: `${agentUrl}/api/smart-agents/ipfs-payments/status/get`,
       headers: {
         Authorization: await utils.getSmartAgentAuthHeaders(this.getRuntime()),
       },
     });
     return data;
-  }
-
-  /**
-   * Add eve to a payment channel.
-   */
-  async topupPaymentChannel(channel): Promise<void> {
-    const runtime = this.getRuntime();
-
-    const { data } = await axios({
-      method: 'POST',
-      url: 'http://localhost:8080/api/smart-agents/ipfs-payments/channel/get',
-      headers: {
-        Authorization: await utils.getSmartAgentAuthHeaders(this.getRuntime()),
-      },
-    });
-
-    const openChannel = data.channels.filter((chan) => chan.state === 'OPEN');
-    if (openChannel.length > 0) {
-      console.dir(openChannel);
-      topupChannelDispatcher.start(runtime, {
-        channel: openChannel[0],
-        eve: '0.1',
-      });
-    }
   }
 }

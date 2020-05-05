@@ -27,77 +27,56 @@
       <div class="mb-3">
         <div class="mb-1 d-flex flex-row justify-content-between">
           <div>
-            <h1>{{ $t('_wallet.ipfs.storage-fees') }}</h1>
-          </div>
-          <p>{{ $t('_wallet.ipfs.storage-fees-description') }}</p>
-        </div>
-      </div>
-
-      <div
-        id="ipfs-status"
-        class="content-card mb-3"
-      >
-        <h2 class="card-heading">
-          <i class="mr-1 mdi mdi-earth" />
-          {{ $t('_wallet.ipfs.status-title') }}
-        </h2>
-
-        <table class="mt-3 w-100">
-          <tbody>
-            <tr>
-              <td style="width: 150px">
-                {{ $t('_wallet.ipfs.available-funds') }}
-              </td>
-              <td>{{ channelStatus.fundsAvailable }}</td>
-            </tr>
-            <tr>
-              <td style="width: 150px">
-                {{ $t('_wallet.ipfs.monthly-costs') }}
-              </td>
-              <td>{{ channelStatus.monthlyPayments }}</td>
-            </tr>
-            <tr>
-              <td style="width: 150px">
-                {{ $t('_wallet.ipfs.stored-files') }}
-              </td>
-              <td>{{ channelStatus.pinnedHashes }}</td>
-            </tr>
-            <tr>
-              <td style="width: 150px">
-                {{ $t('_wallet.ipfs.stored-size') }}
-              </td>
-              <td>{{ channelStatus.overallSize }}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <div
-        id="ipfs-status"
-        class="content-card mb-3"
-      >
-        <h2 class="card-heading">
-          <i class="mr-1 mdi mdi-earth" />
-          {{ $t('_wallet.ipfs.actions-title') }}
-        </h2>
-        <div class="row">
-          <div class="col-8">
-            <evan-form-control-input
-              id="newUrl"
-              v-model="amount"
-              class="m-0"
-            />
-          </div>
-          <div class="col-4">
-            <evan-button
-              class="nav-button"
-              type="secondary"
-              :label="'Open Channel'"
-              @click="openChannel();"
-            />
+            <h1>{{ $t('_wallet.ipfs.storage-fees.title') }}</h1>
+            <p>{{ $t('_wallet.ipfs.storage-fees.description') }}</p>
           </div>
         </div>
       </div>
+
+      <evan-base-list
+        class="mt-5"
+        :data="renderedOverview()"
+      >
+        <template
+          v-slot:item="{ item }"
+          style="height: 80px;"
+        >
+          <div class="d-flex align-items-center h-100 px-3">
+            <i
+              :class="`mdi mdi-${item.icon} mr-3`"
+              style="font-size: 2rem;"
+            />
+            <div>
+              <p class="mb-0 font-weight-semibold">
+                {{ $t(item.title) }}
+              </p>
+            </div>
+            <span class="mx-auto" />
+            <span>
+              {{ item.value }}
+            </span>
+          </div>
+        </template>
+      </evan-base-list>
+
+      <div class="d-flex">
+        <div
+          v-for="(item, index) in renderedOverview()"
+          :key="item.title"
+          class="white-box text-center"
+          :class="{
+            'ml-2': index !== 0,
+          }"
+        >
+          <i
+            :class="`my-2 d-block mdi mdi-${item.icon}`"
+            style="font-size: 45px;"
+          />
+          <h3>{{ $t(item.title) }}</h3>
+          <b>{{ item.value }}</b>
+        </div>
+      </div>
+      <ipfs-side-panel />
     </div>
   </div>
 </template>
@@ -107,24 +86,3 @@ import Component from './ipfs';
 
 export default Component;
 </script>
-
-<style lang="scss" scoped>
-.wrapper {
-  padding: 64px 24px;
-}
-.content-card {
-  background: white;
-  border-radius: 4px;
-  width: 100%;
-  padding: 24px 24px;
-
-  .card-heading {
-    font-size: 18px;
-    font-weight: bold;
-  }
-}
-.action {
-  width: 48px;
-  text-align: right;
-}
-</style>

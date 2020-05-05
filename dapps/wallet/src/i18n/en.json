@@ -53,12 +53,33 @@
       "try-again": "Try again",
       "vat": "VAT"
     },
+    "dispatchers": {
+      "ipfs-payment-channel": "Topping up EVEs",
+      "send-eve": "Sending EVEs"
+    },
     "ipfs": {
-      "status-title": "Storage fees overview",
       "available-funds": "Available credit",
       "monthly-costs": "Current monthly fees",
+      "status-title": "Storage fees overview",
+      "storage-fees": {
+        "description": "All stored data is stored encrypted on a distributed file system and causes monthly costs. In order to guarantee the preservation of data and to avoid unused files, the amount of EVE you provide will be deducted each month. Please make sure to provide enough EVE to store your files permanently.",
+        "title": "Monthly Costs"
+      },
       "stored-files": "Number of stored files",
-      "stored-size": "Size of all stored files"
+      "stored-size": "Size of all stored files",
+      "top-up": {
+        "form": {
+          "amount": {
+            "error": "Please enter a number greater than 0!",
+            "error-less": "Account balance is to low! ({balance} EVE)",
+            "label": "Amount of EVE",
+            "placeholder": "EVE to top up"
+          }
+        },
+        "title": "Top-up credit",
+        "top-up": "Top-up",
+        "topping-up": "Topping-up..."
+      }
     },
     "routes": {
       "ipfs": "Monthly costs",
