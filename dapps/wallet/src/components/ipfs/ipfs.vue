@@ -80,13 +80,23 @@
           <i class="mr-1 mdi mdi-earth" />
           {{ $t('_wallet.ipfs.actions-title') }}
         </h2>
-
-        <evan-button
-          class="mt-2 nav-button"
-          type="secondary"
-          :label="'Open Channel'"
-          @click="openChannel();"
-        />
+        <div class="row">
+          <div class="col-8">
+            <evan-form-control-input
+              id="newUrl"
+              v-model="amount"
+              class="m-0"
+            />
+          </div>
+          <div class="col-4">
+            <evan-button
+              class="nav-button"
+              type="secondary"
+              :label="'Open Channel'"
+              @click="openChannel();"
+            />
+          </div>
+        </div>
       </div>
     </div>
   </div>

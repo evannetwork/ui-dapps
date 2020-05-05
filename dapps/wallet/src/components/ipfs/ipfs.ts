@@ -17,12 +17,11 @@
   the following URL: https://evan.network/license/
 */
 
-import { bccHelper } from '@evan.network/ui-session';
 import Component, { mixins } from 'vue-class-component';
 import { EvanComponent } from '@evan.network/ui-vue-core';
 import { utils } from '@evan.network/api-blockchain-core';
 import axios from 'axios';
-import { openChannelDispatcher } from '../../dispatchers';
+import { openChannelDispatcher, topupChannelDispatcher } from '../../dispatchers';
 
 @Component({})
 export default class IpfsComponent extends mixins(EvanComponent) {
@@ -49,6 +48,11 @@ export default class IpfsComponent extends mixins(EvanComponent) {
   listeners: Array<any> = [];
 
   /**
+   * amount of EVE which should be stored on the payment channel
+   */
+  amount = 0;
+
+  /**
    * Unbind window resize watcher
    */
   beforeDestroy(): void {
@@ -68,6 +72,18 @@ export default class IpfsComponent extends mixins(EvanComponent) {
       if ($event.detail.status === 'finished' || $event.detail.status === 'deleted') {
         // force ui to re-render
         this.loading = true;
+        this.channelStatus = await this.getStatus();
+        this.$nextTick(() => { this.loading = false; });
+      }
+    }));
+
+    // setup dispatcher watchers
+    this.listeners.push(topupChannelDispatcher.watch(async ($event: any) => {
+      // if dispatcher was finished, reload data and reset form
+      if ($event.detail.status === 'finished' || $event.detail.status === 'deleted') {
+        // force ui to re-render
+        this.loading = true;
+        this.channelStatus = await this.getStatus();
         this.$nextTick(() => { this.loading = false; });
       }
     }));
@@ -88,5 +104,29 @@ export default class IpfsComponent extends mixins(EvanComponent) {
       },
     });
     return data;
+  }
+
+  /**
+   * Add eve to a payment channel.
+   */
+  async topupPaymentChannel(channel): Promise<void> {
+    const runtime = this.getRuntime();
+
+    const { data } = await axios({
+      method: 'POST',
+      url: 'http://localhost:8080/api/smart-agents/ipfs-payments/channel/get',
+      headers: {
+        Authorization: await utils.getSmartAgentAuthHeaders(this.getRuntime()),
+      },
+    });
+
+    const openChannel = data.channels.filter((chan) => chan.state === 'OPEN');
+    if (openChannel.length > 0) {
+      console.dir(openChannel);
+      topupChannelDispatcher.start(runtime, {
+        channel: openChannel[0],
+        eve: '0.1',
+      });
+    }
   }
 }
