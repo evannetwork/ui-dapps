@@ -17,15 +17,19 @@
   the following URL: https://evan.network/license/
 */
 import { utils } from '@evan.network/api-blockchain-core';
-import { agentUrl } from '@evan.network/ui';
 import axios from 'axios';
 
-async function getOpenChannels(): Promise<any> {
+function getAgentUrl(environment): string {
+  return environment === 'core'
+    ? 'https://payments.evan.network' : 'https://payments.test.evan.network';
+}
+
+async function getOpenChannels(runtime): Promise<any> {
   const channelResult = await axios({
     method: 'POST',
-    url: `${agentUrl}/api/smart-agents/ipfs-payments/channel/get`,
+    url: `${getAgentUrl(runtime.environment)}/api/smart-agents/ipfs-payments/channel/get`,
     headers: {
-      Authorization: await utils.getSmartAgentAuthHeaders(this.getRuntime()),
+      Authorization: await utils.getSmartAgentAuthHeaders(runtime),
     },
   });
 
@@ -33,5 +37,6 @@ async function getOpenChannels(): Promise<any> {
 }
 
 export {
+  getAgentUrl,
   getOpenChannels,
 };

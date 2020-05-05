@@ -20,10 +20,17 @@
 import Component, { mixins } from 'vue-class-component';
 import { EvanComponent } from '@evan.network/ui-vue-core';
 import { utils } from '@evan.network/api-blockchain-core';
-import { agentUrl } from '@evan.network/ui';
 import axios from 'axios';
 
 import { ipfsPaymentDispatcher } from '../../dispatchers';
+import { getAgentUrl } from '../../ipfs-utils';
+
+interface ChannelStatus {
+  fundsAvailable: string;
+  monthlyPayments: string;
+  overallSize: string;
+  pinnedHashes: number;
+}
 
 @Component({})
 export default class IpfsComponent extends mixins(EvanComponent) {
@@ -32,7 +39,7 @@ export default class IpfsComponent extends mixins(EvanComponent) {
    */
   accountId: string = null;
 
-  channelStatus: any = {
+  channelStatus: ChannelStatus = {
     fundsAvailable: '0',
     monthlyPayments: '0',
     overallSize: '0',
@@ -85,12 +92,12 @@ export default class IpfsComponent extends mixins(EvanComponent) {
       {
         title: '_wallet.ipfs.available-funds',
         icon: 'credit-card-outline',
-        value: `${this.channelStatus.fundsAvailable} EVE`,
+        value: `${this.getReadableBalance(this.channelStatus.fundsAvailable)} EVE`,
       },
       {
         title: '_wallet.ipfs.monthly-costs',
         icon: 'calendar-month-outline',
-        value: `${this.channelStatus.monthlyPayments} EVE`,
+        value: `${this.getReadableBalance(this.channelStatus.monthlyPayments)} EVE`,
       },
       {
         title: '_wallet.ipfs.stored-files',
@@ -100,19 +107,50 @@ export default class IpfsComponent extends mixins(EvanComponent) {
       {
         title: '_wallet.ipfs.stored-size',
         icon: 'file-upload-outline',
-        value: this.channelStatus.overallSize,
+        value: this.formatBytes(this.channelStatus.overallSize, 2),
       },
     ];
   }
 
-  async getStatus(): Promise<void> {
+  /**
+   * Transform incoming bytes to a displayable version.
+   *
+   * @param      {number}  bytes     bytes that should be parsed
+   * @param      {number}  decimals  amount of decimals, that should be displayed
+   * @return     {string}  parsed displayable size
+   */
+  static formatBytes(bytes: number, decimals: number): string {
+    if (bytes === 0) {
+      return '0 Bytes';
+    }
+    const k = 1024;
+    const dm = decimals <= 0 ? 0 : decimals || 2;
+    const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return `${parseFloat((bytes / k ** i).toFixed(dm))} ${sizes[i]}`;
+  }
+
+  /**
+   * Takes a amount of eve and parse them to be readable.
+   *
+   * @param      {number}  amount  amount of eve
+   */
+  getReadableBalance(amount: number): string {
+    // load balance and parse it to 3 decimal places
+    return ((Math.floor(amount * 100000) / 100000).toFixed(5) as any).toLocaleString(this.$i18n.locale());
+  }
+
+  async getStatus(): Promise<ChannelStatus> {
     const { data } = await axios({
       method: 'POST',
-      url: `${agentUrl}/api/smart-agents/ipfs-payments/status/get`,
+      url: `${getAgentUrl(this.getRuntime().environment)}/api/smart-agents/ipfs-payments/status/get`,
       headers: {
         Authorization: await utils.getSmartAgentAuthHeaders(this.getRuntime()),
       },
     });
+
+    data.fundsAvailable = this.getRuntime().web3.utils.fromWei(data.fundsAvailable);
+    data.monthlyPayments = this.getRuntime().web3.utils.fromWei(data.monthlyPayments);
     return data;
   }
 }
