@@ -424,7 +424,7 @@ export default class SignUp extends mixins(EvanComponent) {
       accountDetails: {
         accountName: this.profileForm.alias.value,
         profileType: this.profileForm.accountType.value,
-        companyAlias: this.profileForm.companyAlias.value,
+        companyAlias: this.profileForm.companyAlias?.value,
       },
     };
 
