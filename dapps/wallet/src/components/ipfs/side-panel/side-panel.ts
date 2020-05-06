@@ -141,6 +141,6 @@ export default class TopUpComponent extends mixins(EvanComponent) {
    * Add eve to a payment channel.
    */
   topupPaymentChannel(): void {
-    ipfsPaymentDispatcher.start(this.getRuntime(), { eve: this.topupForm.amount.value });
+    ipfsPaymentDispatcher.start(this.getRuntime(), { eve: this.topupForm.amount.value.toString() });
   }
 }

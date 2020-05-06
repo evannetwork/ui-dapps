@@ -59,13 +59,13 @@
     },
     "ipfs": {
       "available-funds": "Verfügbares Guthaben",
-      "monthly-costs": "Monatlicher Speichergebühren",
+      "monthly-costs": "Monatliche Speichergebühren",
       "status-title": "Speicherguthaben Übersicht",
       "storage-fees": {
-        "description": "Alle gespeicherten Daten werden verschlüsselt in ein verteiltes Dateisystem gespeichert und verursachen monatliche Kosten. Um die Dateneraufberwahung und das Vermeiden von ungebrauchten Dateien zu gewährleisten, wird von der von Ihnen bereitgestellten EVE Menge jeden Monat die entsprechende Summe abgebucht. Bitte gehen Sie sicher dem System genügend EVE zur Verfügung zu stellen, um Ihre Dateien dauerhaft zu speichern.",
+        "description": "Alle gespeicherten Daten werden verschlüsselt in ein verteiltes Dateisystem gespeichert und verursachen monatliche Kosten. Um die Datenaufberwahung zu gewährleisten, wird von der von Ihnen bereitgestellten EVE Menge jeden Monat die entsprechende Summe abgebucht. Bitte stellen Sie sicher, dass dem System genügend EVE zur Verfügung stehen um Ihre Dateien dauerhaft zu speichern.",
         "title": "Monatliche Kosten"
       },
-      "stored-files": "Abgelegte Anzahl Dateien",
+      "stored-files": "Anzahl abgelegte Daten",
       "stored-size": "Größe des genutzten Speichers",
       "top-up": {
         "form": {
@@ -78,11 +78,11 @@
         },
         "title": "Guthaben Aufladen",
         "top-up": "Guthaben Aufladen",
-        "topping-up": "Guthaben wir augeladen..."
+        "topping-up": "Guthaben wird augeladen..."
       }
     },
     "routes": {
-      "ipfs": "Monatliche Kosten",
+      "ipfs": "Speichergeühren",
       "wallet": "Wallet"
     },
     "send-eve": {

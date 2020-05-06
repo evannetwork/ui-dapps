@@ -62,7 +62,7 @@
       "monthly-costs": "Current monthly fees",
       "status-title": "Storage fees overview",
       "storage-fees": {
-        "description": "All stored data is stored encrypted on a distributed file system and causes monthly costs. In order to guarantee the preservation of data and to avoid unused files, the amount of EVE you provide will be deducted each month. Please make sure to provide enough EVE to store your files permanently.",
+        "description": "All data is stored encrypted on a distributed file system and causes monthly costs. In order to guarantee the preservation of data and to avoid unused files, the amount of EVE you provide will be deducted each month. Please make sure to provide enough EVE to store your files permanently.",
         "title": "Monthly Costs"
       },
       "stored-files": "Number of stored files",
@@ -82,7 +82,7 @@
       }
     },
     "routes": {
-      "ipfs": "Monthly costs",
+      "ipfs": "Storage fees",
       "wallet": "Wallet"
     },
     "send-eve": {

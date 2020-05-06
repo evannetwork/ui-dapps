@@ -58,24 +58,6 @@
           </div>
         </template>
       </evan-base-list>
-
-      <div class="d-flex">
-        <div
-          v-for="(item, index) in renderedOverview()"
-          :key="item.title"
-          class="white-box text-center"
-          :class="{
-            'ml-2': index !== 0,
-          }"
-        >
-          <i
-            :class="`my-2 d-block mdi mdi-${item.icon}`"
-            style="font-size: 45px;"
-          />
-          <h3>{{ $t(item.title) }}</h3>
-          <b>{{ item.value }}</b>
-        </div>
-      </div>
       <ipfs-side-panel />
     </div>
   </div>
