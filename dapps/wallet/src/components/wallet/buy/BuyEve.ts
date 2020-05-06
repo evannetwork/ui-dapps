@@ -361,7 +361,7 @@ export default class BuyEveComponent extends mixins(EvanComponent) {
   }
 
   private async getProfileData() {
-    const defaultProfile = {
+    return {
       accountDetails: {
         accountName: '',
         ...await this.runtime.profile.getProfileProperty('accountDetails'),
@@ -374,8 +374,6 @@ export default class BuyEveComponent extends mixins(EvanComponent) {
         ...await this.runtime.profile.getProfileProperty('contact'),
       },
     };
-
-    return Object.assign(defaultProfile, this.$store.state.profileDApp.data);
   }
 
   /**

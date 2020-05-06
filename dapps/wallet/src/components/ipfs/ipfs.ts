@@ -68,6 +68,8 @@ export default class IpfsComponent extends mixins(EvanComponent) {
     this.accountId = this.getRuntime().activeAccount;
     this.channelStatus = await this.getStatus();
 
+    console.log(this.channelStatus);
+
     // setup dispatcher watchers
     this.listeners.push(ipfsPaymentDispatcher.watch(async ($event: any) => {
       // if dispatcher was finished, reload data and reset form
