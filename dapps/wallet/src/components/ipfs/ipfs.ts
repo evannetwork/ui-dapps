@@ -26,9 +26,9 @@ import { ipfsPaymentDispatcher } from '../../dispatchers';
 import { getAgentUrl } from '../../ipfs-utils';
 
 interface ChannelStatus {
-  fundsAvailable: string;
-  monthlyPayments: string;
-  overallSize: string;
+  fundsAvailable: number;
+  monthlyPayments: number;
+  overallSize: number;
   pinnedHashes: number;
 }
 
@@ -40,16 +40,16 @@ export default class IpfsComponent extends mixins(EvanComponent) {
   accountId: string = null;
 
   channelStatus: ChannelStatus = {
-    fundsAvailable: '0',
-    monthlyPayments: '0',
-    overallSize: '0',
+    fundsAvailable: 0,
+    monthlyPayments: 0,
+    overallSize: 0,
     pinnedHashes: 0,
   };
 
   /**
    * Show loading symbol
    */
-  loading = false;
+  loading = true;
 
   /**
    * Watch for dispatcher updates
@@ -75,8 +75,6 @@ export default class IpfsComponent extends mixins(EvanComponent) {
     this.accountId = this.getRuntime().activeAccount;
     this.channelStatus = await this.getStatus();
 
-    console.log(this.channelStatus);
-
     // setup dispatcher watchers
     this.listeners.push(ipfsPaymentDispatcher.watch(async ($event: any) => {
       // if dispatcher was finished, reload data and reset form
@@ -87,6 +85,8 @@ export default class IpfsComponent extends mixins(EvanComponent) {
         this.$nextTick(() => { this.loading = false; });
       }
     }));
+
+    this.loading = false;
   }
 
   renderedOverview(): Array<any> {
@@ -109,7 +109,7 @@ export default class IpfsComponent extends mixins(EvanComponent) {
       {
         title: '_wallet.ipfs.stored-size',
         icon: 'file-upload-outline',
-        value: this.formatBytes(this.channelStatus.overallSize, 2),
+        value: IpfsComponent.formatBytes(this.channelStatus.overallSize, 2),
       },
     ];
   }

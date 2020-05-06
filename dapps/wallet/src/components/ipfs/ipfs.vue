@@ -58,8 +58,8 @@
           </div>
         </template>
       </evan-base-list>
-      <ipfs-side-panel />
     </div>
+    <ipfs-side-panel />
   </div>
 </template>
 
