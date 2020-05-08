@@ -17,14 +17,39 @@
   the following URL: https://evan.network/license/
 */
 
-import requestIdentificationDispatcher from './notary/requestIdentification';
-import shareProfileDispatcher from './profile/share';
-import updateProfileDispatcher from './profile/update';
-import verificationAcceptDispatcher from './acceptVerification';
-
-export {
-  requestIdentificationDispatcher,
-  shareProfileDispatcher,
-  updateProfileDispatcher,
-  verificationAcceptDispatcher,
-};
+export default [
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        name: 'amount',
+        type: 'uint256',
+      },
+      {
+        indexed: true,
+        name: 'receiver',
+        type: 'address',
+      },
+    ],
+    name: 'AddedReceiver',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        name: 'receivers',
+        type: 'address[]',
+      },
+      {
+        indexed: false,
+        name: 'rewards',
+        type: 'uint256[]',
+      },
+    ],
+    name: 'Rewarded',
+    type: 'event',
+  },
+];

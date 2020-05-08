@@ -181,7 +181,6 @@
       "profile-type": "Identitätstyp wird geändert",
       "profile-update": "Identitätinformationen werden gespeichert",
       "request-verification": "Verifikation wird beantragt",
-      "send-eve": "EVEs werden gesendet",
       "verification-accept": "Verifikation wird angenommen"
     },
     "my-profile": "Mein Profil",
@@ -446,93 +445,6 @@
       },
       "reload": "Neu-laden",
       "title": "Alle Verifikationen"
-    },
-    "wallet": {
-      "buy-eve": {
-        "accept": {
-          "description": "Wollen Sie <b>{amount} EVE</b> kaufen?",
-          "send": "Jetzt kaufen",
-          "title": "EVE kaufen"
-        },
-        "back": "Zurück",
-        "buy": "EVE kaufen",
-        "buy-more": "Mehr EVE kaufen",
-        "continue": "Fortfahren",
-        "disclaimer": "Mit der Eingabe Ihrer IBAN und der Bestätigung dieser Zahlung ermächtigen Sie die evan GmbH und unseren Zahlungsdienstleister Stripe, Ihrer Bank Anweisungen zur Belastung Ihres Kontos und Ihrer Bank zur Belastung Ihres Kontos gemäß dieser Anweisungen zu übermitteln. Sie haben Anspruch auf eine Rückerstattung von Ihrer Bank gemäß den Bedingungen Ihrer Vereinbarung mit Ihrer Bank. Eine Rückerstattung muss innerhalb von 8 Wochen nach dem Datum der Belastung Ihres Kontos beantragt werden.",
-        "errors": {
-          "charge_failed": "Eine Zahlung kann aufgrund eines fehlgeschlagenen Zahlungs- bzw. Abbuchungsversuchs nicht ausgeführt werden. <b> Ihre Karte wurde NICHT belastet! </ b> Bitte versuchen Sie es später erneut.",
-          "invalid_customer": "Ihre Kundendaten sind ungültig. <b> Ihre Karte wurde NICHT belastet! </ b> Bitte überprüfen Sie Ihre Kundendaten und versuchen Sie es erneut.",
-          "price_not_okay": "Es ist ein Fehler im evan.network aufgetreten. <b> Ihre Karte wurde NICHT belastet! </ b> Bitte versuchen Sie es erneut.",
-          "too_many_accounts": "Es ist ein Fehler mit ihrem Account aufgetreten. <b> Ihre Karte wurde NICHT belastet! </ b> Bitte wenden Sie sich an unseren Kundensupport.",
-          "transaction_failed": "Ihre Zahlung bzw. Abbuchung war erfolgreich, aber die Transaktion ist in der Blockchain fehlgeschlagen. <b> Ihre Karte wurde belastet! </ b> Bitte wenden Sie sich an unseren Kundensupport.",
-          "unknown_state": "Es ist ein Fehler beim Bezahlvorgang aufgetreten. Bitte kontaktieren Sie unseren Kundensupport.",
-          "wallet_not_enough_funds": "Es ist ein Fehler im evan.network aufgetreten. <b> Ihre Karte wurde NICHT belastet! </ b> Bitte versuchen Sie es später erneut"
-        },
-        "payForm": {
-          "amount": {
-            "error": "Bitte geben Sie eine Zahl ein!",
-            "error-less": "Sie müssen mindestens 10 EVE kaufen!",
-            "label": "Menge an EVE (mindestens 10)",
-            "placeholder": "Anzahl der EVE, die Sie kaufen wollen."
-          },
-          "type": {
-            "card": "Kreditkarte",
-            "iban": "SEPA Abbuchung",
-            "label": "Zahlungstyp"
-          }
-        },
-        "processing-hint": "Vorgang wird bearbeitet, dies kann 3 bis 5 Minuten dauern",
-        "reverse-charge": "Steuerschuldnerschaft des Leistungsempfängers.",
-        "reverse-charge-please-check": "Bitte überprüfen Sie, ob aus diesem Kauf Steuerverpflichtungen in Ihrem Land entstehen.",
-        "stripe-element": {
-          "incomplete_number": "Unvollständige Eingabe!",
-          "invalid_iban_start": "Bitte überprüfen Sie Ihre IBAN",
-          "invalid_number": "Ungültige Kartennummer!"
-        },
-        "success": "Ihre Bestellung wurde erfolgreich ausgelöst. Sie erhalten eine Rechnung an die angegebene E-Mail-Adresse.<br><br>Der Vorgang ist abgeschlossen, sobald Sie die Rechnung erhalten. Die Gutschrift in Ihrer Wallet erfolgt in den nächsten 5 - 10 Minuten.",
-        "tax": "USt.",
-        "titles": {
-          "billing-info": "Bitte ergänzen Sie Ihre Rechnungsinformationen",
-          "buy-eve": "EVE kaufen",
-          "finished": "Fertig",
-          "processing": "In Arbeit"
-        },
-        "total-amount": "Gesamtsumme",
-        "try-again": "Erneut versuchen",
-        "vat": "USt."
-      },
-      "send-eve": {
-        "accept": {
-          "description": "Möchten Sie <b>{amount} EVE</b> an <b>{name}</b> senden?",
-          "send": "Senden",
-          "title": "EVE senden"
-        },
-        "form": {
-          "accountId": {
-            "error": "Bitte geben Sie eine korrekte Adresse ein.",
-            "label": "Identität",
-            "placeholder": "Kontakt oder Identitätsadresse"
-          },
-          "amount": {
-            "error": "Bitte geben Sie eine Zahl größer 0 ein!",
-            "error-less": "Ihr Kontostand ist zu gering! ({balance} EVE)",
-            "label": "Menge an EVE",
-            "placeholder": "Anzahl der EVE, die Sie versenden möchten."
-          }
-        },
-        "send": "Senden",
-        "title": "EVE senden"
-      },
-      "transactions": {
-        "charged-at": "aufgeladen am",
-        "credit-charged": "Guthaben aufgeladen",
-        "credit-failed-charge": "Die Aufbuchung ist leider fehlgeschlagen",
-        "credit-running-charge": "Aufbuchung noch nicht abgeschlossen",
-        "description": "Nachfolgend sind nur Ihre EVE-Käufe aufgeführt. Eine komplette Übersicht Ihrer Transaktionen finden Sie <a href='{explorerUrl}' target='_blank'>hier</a>.",
-        "empty": "Sie haben bisher noch keine EVEs gekauft",
-        "load-more": "Ältere laden",
-        "title": "EVE Käufe"
-      }
     }
   }
 }

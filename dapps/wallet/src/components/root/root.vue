@@ -17,14 +17,32 @@
   the following URL: https://evan.network/license/
 */
 
-import requestIdentificationDispatcher from './notary/requestIdentification';
-import shareProfileDispatcher from './profile/share';
-import updateProfileDispatcher from './profile/update';
-import verificationAcceptDispatcher from './acceptVerification';
+<template>
+  <div class="evan theme-evan">
+    <evan-dapp-wrapper
+      :routes="[ ]"
+    >
+      <template v-slot:content>
+        <evan-dapp-wrapper-level-2>
+          <evan-nav-list
+            :entries="navEntries"
+            header-icon="credit-card-outline"
+            header-text="_wallet.routes.wallet"
+          />
+        </evan-dapp-wrapper-level-2>
+        <transition
+          name="fade"
+          mode="out-in"
+        >
+          <router-view />
+        </transition>
+      </template>
+    </evan-dapp-wrapper>
+  </div>
+</template>
 
-export {
-  requestIdentificationDispatcher,
-  shareProfileDispatcher,
-  updateProfileDispatcher,
-  verificationAcceptDispatcher,
-};
+<script lang="ts">
+import Component from './root.ts';
+
+export default Component;
+</script>

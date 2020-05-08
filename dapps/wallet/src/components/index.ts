@@ -17,14 +17,14 @@
   the following URL: https://evan.network/license/
 */
 
-import requestIdentificationDispatcher from './notary/requestIdentification';
-import shareProfileDispatcher from './profile/share';
-import updateProfileDispatcher from './profile/update';
-import verificationAcceptDispatcher from './acceptVerification';
+import BuyEveComponent from './wallet/buy/BuyEve.vue';
+import IpfsSidePanel from './ipfs/side-panel/side-panel.vue';
+import SendEveComponent from './wallet/send/SendEve.vue';
+import TransactionsComponent from './wallet/transactions/transactions.vue';
 
-export {
-  requestIdentificationDispatcher,
-  shareProfileDispatcher,
-  updateProfileDispatcher,
-  verificationAcceptDispatcher,
-};
+export default [
+  { name: 'ipfs-side-panel', component: IpfsSidePanel },
+  { name: 'profile-buy-eve', component: BuyEveComponent },
+  { name: 'profile-send-eve', component: SendEveComponent },
+  { name: 'profile-transactions', component: TransactionsComponent },
+];

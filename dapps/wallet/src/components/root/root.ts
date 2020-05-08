@@ -17,14 +17,26 @@
   the following URL: https://evan.network/license/
 */
 
-import requestIdentificationDispatcher from './notary/requestIdentification';
-import shareProfileDispatcher from './profile/share';
-import updateProfileDispatcher from './profile/update';
-import verificationAcceptDispatcher from './acceptVerification';
+// vue imports
+import Component, { mixins } from 'vue-class-component';
 
-export {
-  requestIdentificationDispatcher,
-  shareProfileDispatcher,
-  updateProfileDispatcher,
-  verificationAcceptDispatcher,
-};
+// evan.network imports
+import { EvanComponent, NavEntryInterface } from '@evan.network/ui-vue-core';
+
+@Component
+export default class RootComponent extends mixins(EvanComponent) {
+  navEntries: NavEntryInterface[] = [
+    {
+      icon: 'mdi mdi-credit-card-outline',
+      id: 'nav-entry-wallet-wallet',
+      text: '_wallet.routes.wallet',
+      to: { name: 'wallet' },
+    },
+    {
+      icon: 'mdi mdi-calendar-month',
+      id: 'nav-entry-wallet-ipfs',
+      text: '_wallet.routes.ipfs',
+      to: { name: 'ipfs' },
+    },
+  ];
+}

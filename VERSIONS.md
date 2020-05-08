@@ -22,6 +22,9 @@
 - libs
   - add `vee-validate` as dapp library (`validate.vee.libs`)
 - use identity for profile encryption salting
+- seperate `payment.evan` dapp
+  - moved eve top up / eve sent to seperate dapp
+  - payment channel handling and status display for ipfs payment channels
 
 ### Fixes
 - Last transactions for twins created by identities are now appearing

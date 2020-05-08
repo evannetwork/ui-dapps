@@ -17,14 +17,22 @@
   the following URL: https://evan.network/license/
 */
 
-import requestIdentificationDispatcher from './notary/requestIdentification';
-import shareProfileDispatcher from './profile/share';
-import updateProfileDispatcher from './profile/update';
-import verificationAcceptDispatcher from './acceptVerification';
 
-export {
-  requestIdentificationDispatcher,
-  shareProfileDispatcher,
-  updateProfileDispatcher,
-  verificationAcceptDispatcher,
+export const stripeScriptId = 'stripeScript';
+export const stripeScriptPath = 'https://js.stripe.com/v3/';
+export const PUB_KEY = 'pk_test_kpO3T5fXA7aaftg9D0OO0w3S';
+export const STRIPE_ELEMENT_CONFIG = {
+  base: {
+    color: '#32325d',
+    fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+    fontSmoothing: 'antialiased',
+    fontSize: '16px',
+    '::placeholder': {
+      color: '#aab7c4',
+    },
+  },
+  invalid: {
+    color: '#fa755a',
+    iconColor: '#fa755a',
+  },
 };

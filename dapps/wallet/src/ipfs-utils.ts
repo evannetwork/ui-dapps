@@ -16,15 +16,27 @@
   Fifth Floor, Boston, MA, 02110-1301 USA, or download the license from
   the following URL: https://evan.network/license/
 */
+import { utils } from '@evan.network/api-blockchain-core';
+import axios from 'axios';
 
-import requestIdentificationDispatcher from './notary/requestIdentification';
-import shareProfileDispatcher from './profile/share';
-import updateProfileDispatcher from './profile/update';
-import verificationAcceptDispatcher from './acceptVerification';
+function getAgentUrl(environment): string {
+  return environment === 'core'
+    ? 'https://payments.evan.network' : 'https://payments.test.evan.network';
+}
+
+async function getOpenChannels(runtime): Promise<any> {
+  const channelResult = await axios({
+    method: 'POST',
+    url: `${getAgentUrl(runtime.environment)}/api/smart-agents/ipfs-payments/channel/get`,
+    headers: {
+      Authorization: await utils.getSmartAgentAuthHeaders(runtime),
+    },
+  });
+
+  return channelResult.data.channels.filter((chan) => chan.state === 'OPEN');
+}
 
 export {
-  requestIdentificationDispatcher,
-  shareProfileDispatcher,
-  updateProfileDispatcher,
-  verificationAcceptDispatcher,
+  getAgentUrl,
+  getOpenChannels,
 };

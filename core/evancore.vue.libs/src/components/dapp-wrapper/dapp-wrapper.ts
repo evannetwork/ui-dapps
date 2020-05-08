@@ -627,7 +627,7 @@ export default class DAppWrapperComponent extends mixins(EvanComponent) {
           },
           {
             icon: 'mdi mdi-credit-card-outline',
-            path: `profile.vue.${domainName}/wallet`,
+            path: `wallet.${domainName}`,
             title: `${i18nPref}.wallet`,
           },
           {
