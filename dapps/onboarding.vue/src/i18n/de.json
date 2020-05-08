@@ -110,12 +110,16 @@
       },
       "agree": "Akzeptieren",
       "alias": {
-        "company": "Name des Unternehmens",
         "error": "Bitte geben Sie einen Account-Namen an!",
-        "hint-company": "Der Name Ihres Unternehmens ist nur für Sie sichtbar.",
-        "hint-user": "Der Account-Name ist nur für Sie sichtbar.",
-        "placeholder": "John Doe | Beispiel Unternehmen GmbH",
-        "user": "Account-Name"
+        "hint": "Der Account-Name ist nur für Sie sichtbar.",
+        "placeholder": "John Doe",
+        "label": "Nutzername"
+      },
+      "companyAlias": {
+        "hint": "Der Name Ihres Unternehmens ist nur für Sie sichtbar.",
+        "label": "Name des Unternehmens",
+        "error": "Please enter a company name!",
+        "placeholder": "Sample Company Inc."
       },
       "already-signed-up": "Sie sind bereits registriert?",
       "cancel-riddle": "Abbrechen",

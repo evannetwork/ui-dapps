@@ -82,11 +82,20 @@ export default class IdentitySidePanelComponent extends mixins(EvanComponent) {
    * Load identity specific data
    */
   async created(): Promise<void> {
-    // load contacts for user select, load owner for enable / disable edit
-    const owner = await session.identityRuntime.verifications.getOwnerAddressForIdentity(
+    const runtime = this.getRuntime();
+    // apply the identity as key to the keyHolder contract
+    const sha3Account = runtime.nameResolver.soliditySha3(session.accountRuntime.underlyingAccount);
+    const keyHolderContract = await runtime.contractLoader.loadContract(
+      'KeyHolder',
       session.activeIdentity,
     );
-    this.canEdit = owner === session.accountRuntime.underlyingAccount;
+    // load contacts for user select, load owner for enable / disable edit
+    this.canEdit = await runtime.executor.executeContractCall(
+      keyHolderContract,
+      'keyHasPurpose',
+      sha3Account,
+      '1',
+    );
     this.loading = false;
   }
 
