@@ -13,7 +13,7 @@
         "assets.js",
         "assets.css"
       ],
-      "origin": "QmT1nFXt93xE3CPdS2P5c4UgghwKeNEQ8AZcY4Kas93mkq",
+      "origin": "QmTs4kWqTv9goWZDxC6XGhyDooWPB1kntU8LkBznwDp9gT",
       "primaryColor": "#52964b",
       "secondaryColor": "#e9f9e7",
       "type": "cached-dapp"
@@ -36,11 +36,12 @@
       "dapp",
       "evan"
     ],
-    "version": "2.0.0",
+    "version": "2.1.0",
     "versions": {
       "1.0.0": "QmUvPvZX2sSJUDCDUc16sL2SbaHvLpC8vvr8h2FowP7VQd",
       "1.1.0": "QmUFpXturPS9sE3LVR31DuN3yyBJVkg57BhnHoEyQ1DecS",
-      "2.0.0": "QmRv4rrtHYmmptPUspre8Sf5ErFaHR5tQPwxQPVdMMF39S"
+      "2.0.0": "QmRv4rrtHYmmptPUspre8Sf5ErFaHR5tQPwxQPVdMMF39S",
+      "2.1.0": "Qmcn9gcJh3Rp9s7ciXP1LfxMTz1Wsez6qUmZA4xCvKDcfX"
     }
   }
 }

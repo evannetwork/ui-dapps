@@ -7,7 +7,7 @@
       "files": [
         "dexie.libs.js"
       ],
-      "origin": "QmWCNwBF57yx1uQneQaruKSVBteKqxbE4ce9YvDQ1MgPvw",
+      "origin": "QmT8AdFaAuTYmfAjqq2LtY4842JmEPx2ebxBXZigmAxcNz",
       "primaryColor": "",
       "secondaryColor": "#f9f9ff",
       "standalone": false,
@@ -32,7 +32,7 @@
     ],
     "version": "2.0.4",
     "versions": {
-      "2.0.4": "QmVtDXmWgKeztip81exe5YjcjQEJqvFkaXnsKmScBiEZgk"
+      "2.0.4": "QmatXUqV9UsCQ1GgnTNiWerRE8rTa1pRMAXybwdXnQCQsm"
     }
   }
 }

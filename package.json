@@ -130,5 +130,5 @@
     "serve-build": "npm run link-core && gulp --gulpfile node_modules/@evan.network/ui-dapp-browser/gulp/serve.js serve --build",
     "tsc": "tsc -p "
   },
-  "version": "5.0.0"
+  "version": "5.1.0"
 }

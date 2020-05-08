@@ -7,7 +7,7 @@
       "files": [
         "countries.libs.js"
       ],
-      "origin": "QmdvJGXBuGvAcoMtrdsSy4Z33Cq6hbhA4DvpcntVPeK7pE",
+      "origin": "QmaP2kvUJcYBFEJ4XRZks2fkmVoqcEKZ3vYSq7LERRCi28",
       "primaryColor": "",
       "secondaryColor": "#f9f9ff",
       "standalone": false,
@@ -33,7 +33,7 @@
     "version": "1.1.0",
     "versions": {
       "1.0.0": "QmXmzcmMC536XBtKcLYYHib7aY6GCsXgqdc6NTt84MVmjn",
-      "1.1.0": "QmSgJt3fzFLPNyZvrm7UybLpUgpaBfoZcRM4Wx3FaYU6vs"
+      "1.1.0": "QmRBBi2W1gZG1AaVgNTEsCdDedQApCUn3mponUFpgrgLaB"
     }
   }
 }
