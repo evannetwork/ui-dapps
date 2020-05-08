@@ -10,7 +10,7 @@
         "bootstrap.vue.libs.js",
         "bootstrap.vue.libs.css"
       ],
-      "origin": "QmTH787Ga6q77RDRZ5pJcrNUJymiWTbsNGjSHiDxcvkgY6",
+      "origin": "QmPxHp8eCjubrwDQMwB8CwbBcthgmwgyE2FsM4Skewhgc6",
       "primaryColor": "",
       "secondaryColor": "#f9f9ff",
       "standalone": false,
@@ -36,7 +36,7 @@
     "version": "2.9.0",
     "versions": {
       "2.1.0": "QmXyNGT6W2EFmDVoC195nz6heFYknwhRrUqkjCCd5cjoAB",
-      "2.9.0": "QmbxBAnaiC26hphVEnG1PLETJ66eY1gC9181aavtg4SkUc"
+      "2.9.0": "QmYouaiu1R9RuFF4s3YkXRt5tjexetZWkgXBqyrguMkfyv"
     }
   }
 }

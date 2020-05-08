@@ -10,7 +10,7 @@
         "select.vue.libs.js",
         "select.vue.libs.css"
       ],
-      "origin": "Qmf39MFKsjes4dNzL6eAkUfnSgh88QkdsN3Tg6KtmwBYgg",
+      "origin": "QmP6wXDBGkU6CnJd1pFtLC3AjENwFZ6YxxAvyPAtAXjaHc",
       "primaryColor": "",
       "secondaryColor": "#f9f9ff",
       "standalone": false,
@@ -35,7 +35,7 @@
     ],
     "version": "3.2.0",
     "versions": {
-      "3.2.0": "QmavF6p42kxBL4m4TZY5hJpB6qdiDEonHBHYvgCphEghNk"
+      "3.2.0": "QmY4VK598Jx4YcESRqhsWj6MFrDfCEMXrgc7R5dGYePYLr"
     }
   }
 }

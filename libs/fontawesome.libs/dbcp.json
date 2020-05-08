@@ -8,7 +8,7 @@
         "fontawesome.libs.js",
         "fontawesome.libs.css"
       ],
-      "origin": "QmQCSfyNNS8QWZwWgoty7Uktt6Nd5tYBQbNJ3H8oRzK71w",
+      "origin": "QmY4yZSmwGzL7rmGRuGDFkR16i4sayuqwihfETaEc62Guv",
       "primaryColor": "",
       "secondaryColor": "#f9f9ff",
       "standalone": false,
@@ -33,7 +33,7 @@
     ],
     "version": "5.7.2",
     "versions": {
-      "5.7.2": "QmYnr6eNFiMSnSDDfohVQMMitNfTGmUmVbcsQACQsNPoqS"
+      "5.7.2": "QmYwRpkZrCm8dyHvL3BknqqnPp6oYaucKM4KKWychXp4aM"
     }
   }
 }

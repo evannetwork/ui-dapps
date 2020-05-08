@@ -10,7 +10,7 @@
         "wallet.js",
         "wallet.css"
       ],
-      "origin": "QmUT3a5Lxmv1PE8BfWfAs9pPvw7bsQp7MTUrzoyA3DCieg",
+      "origin": "QmXUSXuV3AmfmPkwuA1ACjBApRSza5nSU1AQyXj6oHrrD3",
       "primaryColor": "#b66e74",
       "secondaryColor": "#edeada",
       "type": "cached-dapp"
@@ -36,7 +36,7 @@
     ],
     "version": "1.0.0",
     "versions": {
-      "1.0.0": "QmR4bwTUUEwi81roj6Rta65kwa3Z7zSKyVSuV5y9SU3off"
+      "1.0.0": "QmQ869eA9fUXNmrnLoVsh3DB1cRqe4rQ1bTSkT7vQum1Fz"
     }
   }
 }

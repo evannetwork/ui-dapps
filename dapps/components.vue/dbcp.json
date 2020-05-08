@@ -9,7 +9,7 @@
       "files": [
         "components.vue.js"
       ],
-      "origin": "QmSWSw2ri7HDwAcWQcYj1x3jrdnQktKRyvGnDV4EhJM68X",
+      "origin": "QmRqoECGenjX58ThbQahrVvSqWdBbgF94hrMBYTFKuk2C5",
       "primaryColor": "#5170af",
       "secondaryColor": "#dfeaff",
       "type": "cached-dapp"
@@ -37,7 +37,7 @@
     "versions": {
       "0.0.1": "QmWmcFy7R9kSdCr8k4D2zcKZz73seeGDk9KMq8abUT34oe",
       "0.0.2": "QmWFctU7Ubuiyk5tDMbmbX5Qn67UR59g2uSrurh6PsE66w",
-      "1.0.0": "QmTG1wCnXfACgxpbdNpscZUGicGyzRzHiKqPQqcTpWbmMT"
+      "1.0.0": "QmdGXtZJcivnb3t8PA1cpbBqfTyPKJpqbmQ7NJTzi6kd1d"
     }
   }
 }
