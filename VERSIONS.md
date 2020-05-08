@@ -3,6 +3,13 @@
 
 ## Next Version
 ### Features
+
+### Fixes
+
+### Deprecations
+
+## Version 5.0.1
+### Features
 - use new `@evan.network/ui-dapp-browser`
 - use activeIdentity
 - be able to use `@evan.network/api-blockchain-core`  with identities
@@ -32,7 +39,6 @@
 - fix profile design
 - fix login for rly old profiles
 
-### Deprecations
 
 ## Version 4.0.1
 - general bug fixes and small improvements
