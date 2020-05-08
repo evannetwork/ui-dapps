@@ -1,0 +1,176 @@
+/*
+  Copyright (C) 2018-present evan GmbH.
+
+  This program is free software: you can redistribute it and/or modify it
+  under the terms of the GNU Affero General Public License, version 3,
+  as published by the Free Software Foundation.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  See the GNU Affero General Public License for more details.
+
+  You should have received a copy of the GNU Affero General Public License
+  along with this program. If not, see http://www.gnu.org/licenses/ or
+  write to the Free Software Foundation, Inc., 51 Franklin Street,
+  Fifth Floor, Boston, MA, 02110-1301 USA, or download the license from
+  the following URL: https://evan.network/license/
+*/
+
+@import '~@evan.network/ui/src/style/utils';
+
+.callout {
+  position: fixed;
+  z-index: 999;
+
+  display: flex;
+  flex-direction: column;
+
+  width: 250px;
+
+  transition: transform 0.3s ease-in-out;
+
+  background-color: white;
+
+  &.active {
+    transform: translateY(calc(-100% + 61px));
+
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  }
+
+  .callout-button {
+    font-size: 12px;
+    font-weight: 600;
+
+    display: flex;
+    align-items: center;
+
+    height: 56px;
+    padding-right: 24px;
+    padding-left: 24px;
+
+    border: none;
+    outline: none;
+    background-color: white;
+
+    &, i.mdi {
+      transition: color 0.5s ease-out;
+
+      color: cssVar('gray-900');
+    }
+
+    .mdi.mdi-settings-outline {
+      transition: color 0.5s ease-out, transform ease-in-out 0.5s;
+    }
+
+    i.mdi.mdi-power {
+      font-size: 18px;
+    }
+
+    &:hover {
+      &, i.mdi {
+        color: cssVar('primary');
+        border: 0;
+        background-color: inherit !important;
+      }
+      & i.mdi.mdi-power {
+        color: cssVar(danger);
+      }
+      .mdi-settings-outline {
+        transform: rotate(180deg);
+      }
+    }
+  }
+
+  .callout-profile-preview {
+    max-width: 200px;
+  }
+}
+
+.switching-identity {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100vw;
+  height: 100vh;
+
+  & > div {
+    padding: 16px;
+
+    background: cssVar('white');
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
+    * {
+      margin: 0;
+    }
+  }
+}
+
+.close-overlay {
+  width: 100vw;
+  height: 100vh;
+}
+
+.toggle-button {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+}
+
+.divider-wrapper {
+  padding: 4px 24px;
+  .divider {
+    width: 100%;
+    margin: 0 !important;
+
+    border-top: 1px solid cssVar('gray-300') !important;
+  }
+}
+
+.active-identity {
+  /deep/ .profile-picture {
+    position: relative !important;
+    left: initial !important;
+
+    margin-left: 24px;
+  }
+}
+
+.switch-identity {
+  padding-top: 8px;
+  padding-bottom: 8px;
+
+  cursor: pointer;
+
+  color: cssVar('text-color') !important;
+
+  &:hover {
+    text-decoration: none !important;
+  }
+
+  /deep/ .profile-picture {
+    position: relative !important;
+    bottom: initial !important;
+    left: initial !important;
+
+    margin-left: 24px;
+  }
+}
+
+/deep/ .d-flex.flex-column.justify-content-center.ml-3.info {
+  margin-left: 16px !important;
+}
+
+.identity-settings {
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12);
+}
+
+.switch {
+  font-size: 9px;
+
+  padding: 4px;
+
+  text-align: center;
+
+  background: cssVar('gray-200');
+}

@@ -26,8 +26,8 @@
           "submit": "Eintrag hinzufügen",
           "title": "Eintrag hinzufügen"
         },
-        "count-out-of-total": "{count} von {total}",
         "count-entries": "{count} Einträge",
+        "count-out-of-total": "{count} von {total}",
         "list-item-detail": {
           "close": "Schließen",
           "title": "Detail"
@@ -67,6 +67,8 @@
       "verifications": "Verifikationen"
     },
     "overview": {
+      "contract-address": "Vertragsadresse",
+      "copied": "Text kopiert",
       "created-at": "Erstellt am",
       "date": "Datum",
       "did": "Decentralized ID",
@@ -74,11 +76,11 @@
       "general-title": "Allgemein",
       "initiator": "Initiator",
       "overview-title": "Übersicht",
-      "copied": "Text kopiert",
       "owner": "Besitzer",
       "transactions-title": "Letzte Transaktionen"
     },
     "sharings": {
+      "description-no-contacts": "Sie haben keine Kontakte, um den Twin zu teilen.",
       "filters": {
         "all": "Alle",
         "company": "Unternehmen",

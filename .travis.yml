@@ -35,6 +35,10 @@ jobs:
       env: TESTPATTERN=features/assets/digital-twin-edit.feature NIGHTWATCH_ENV=chrome
     - name: firefox/assets/digital-twin-edit
       env: TESTPATTERN=features/assets/digital-twin-edit.feature NIGHTWATCH_ENV=firefox
+    - name: chrome/identity-management
+      env: TESTPATTERN=features/core/identity-management.feature NIGHTWATCH_ENV=chrome
+    - name: firefox/identity-management
+      env: TESTPATTERN=features/core/identity-management.feature NIGHTWATCH_ENV=firefox
     #- name: chrome/sharing
     #  env: TESTPATTERN=features/core/sharing.feature NIGHTWATCH_ENV=chrome
 

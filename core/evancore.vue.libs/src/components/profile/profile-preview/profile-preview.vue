@@ -37,16 +37,15 @@
         @changed="userInfo.picture.files[0] = $event; startEditing();"
       />
       <div
-        v-if="size === 'default' || size === 'sm'"
+        v-if="size === 'default' || size === 'sm' || size === 'sm-plus'"
         class="d-flex flex-column justify-content-center ml-3 info"
       >
         <a
           class="force-oneline account-name"
           :href="`${ dapp.baseUrl }/${ dapp.rootEns }/profile.vue.${ dapp.domainName }/${ address }/detail`"
+          @click="disableLink ? $event.preventDefault(): null"
         >
-          <b class="text-dark">
-            {{ userInfo.accountName }}
-          </b>
+          {{ userInfo.accountName }}
         </a>
         <small class="profile-type">
           {{ `_evan.profile.types.${ userInfo.profileType }` | translate }}
@@ -82,6 +81,7 @@
             v-model="userInfo.accountName"
             type="text"
             :placeholder="'_evan.profile.account-name' | translate"
+            :error="userInfo.accountName.length > 100 ? '_evan.profile.account-name-max-error' : false"
           />
           <div class="d-flex justify-content-end">
             <evan-button
@@ -92,7 +92,7 @@
             />
             <evan-button
               type="primary"
-              :disabled="userInfo.accountName.length === 0"
+              :disabled="userInfo.accountName.length === 0 || userInfo.accountName.length > 100"
               :label="'_evan.save' | translate"
               @click="saveEditMode"
             />

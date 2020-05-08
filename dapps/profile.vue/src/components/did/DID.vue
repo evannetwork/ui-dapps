@@ -18,31 +18,69 @@
 */
 
 <template>
-  <div class="d-flex">
+  <div>
     <evan-loading v-if="!didDocument" />
     <div
       v-else
-      class="content"
+      class="evan-content-container"
     >
       <evan-onpage-navigation
+        class="d-none d-xxl-block"
         :entries="onPageEntries"
-        scroll-container-selector=".dapp-wrapper-content"
+        scroll-container-selector=".scroll-container"
       />
 
       <div class="mb-3">
         <div class="mb-1 d-flex flex-row justify-content-between">
           <div>
-            <h1>{{ '_profile.did.did-title' | translate }} ({{ '_profile.did.did' | translate }})</h1>
+            <h1>{{ $t('_profile.did.did-title') }} ({{ $t('_profile.did.did' ) }})</h1>
             <p>
-              {{ '_profile.did.created-at' | translate }} {{ didDocument.created | moment('L') }}
-              {{ '_profile.did.updated-at' | translate }} {{ didDocument.updated | moment('L') }}
+              {{ $t('_profile.did.created-at') }} {{ didDocument.created | moment('L') }},
+              &nbsp;
+              {{ $t('_profile.did.updated-at') }} {{ didDocument.updated | moment('L') }}
             </p>
           </div>
-          <evan-button class="btn-sm">
-            {{ '_profile.did.export-document' | translate }}
-          </evan-button>
+          <div class="text-right">
+            <evan-button
+              v-if="!isEditMode"
+              class="mr-1 btn-sm"
+              :disabled="!hasEditRights"
+              @click="onEditStart"
+            >
+              {{ $t('_evan.edit') }}
+            </evan-button>
+            <template v-else>
+              <evan-button
+                class="btn-sm"
+                :disabled="isLoading"
+                @click="onEditCancel"
+              >
+                {{ $t('_evan.cancel') }}
+              </evan-button>
+              <evan-button
+                class="ml-1 btn-sm"
+                type="primary"
+                :disabled="!canSave"
+                @click="saveDidDocument"
+              >
+                {{ $t('_evan.save') }}
+              </evan-button>
+              <div class="d-flex align-items-center">
+                <i class="mdi mdi-information-outline mr-2" />
+                <span>{{ $t('_evan.transaction_costs_hint') }}</span>
+              </div>
+            </template>
+
+            <evan-button
+              v-if="!isEditMode"
+              class="btn-sm"
+              @click="exportDidDoc"
+            >
+              {{ $t('_profile.did.export-document') }}
+            </evan-button>
+          </div>
         </div>
-        <p>{{ '_profile.did.description' | translate }}</p>
+        <p>{{ $t('_profile.did.description') }}</p>
       </div>
 
       <div
@@ -51,14 +89,14 @@
       >
         <h2 class="card-heading">
           <i class="mr-1 mdi mdi-earth" />
-          {{ '_profile.did.did-title' | translate }}
+          {{ $t('_profile.did.did-title') }}
         </h2>
 
         <table class="mt-3 w-100">
           <tbody>
             <tr>
               <td style="width: 60px">
-                {{ '_profile.did.did' | translate }}
+                {{ $t('_profile.did.did') }}
               </td>
               <td>{{ didDocument.id }}</td>
               <td class="action">
@@ -77,12 +115,19 @@
       <service-endpoints
         id="service-endpoints"
         :endpoints="endpoints"
+        :is-edit-mode="isEditMode"
+        :is-loading="isLoading"
         class="mb-3"
+        @updateEndpoints="onUpdateEndpoints"
       />
 
       <delegates
         id="delegates"
         :delegates="delegates"
+        :is-edit-mode="isEditMode"
+        :is-loading="isLoading"
+        @addDelegate="onAddDelegate"
+        @deleteDelegate="onDeleteDelegate"
       />
     </div>
   </div>
@@ -95,17 +140,13 @@ export default Component;
 </script>
 
 <style lang="scss" scoped>
-.content {
-  margin-left: auto;
-  margin-right: auto;
-  padding-top: 56px;
-  padding-bottom: 56px;
-  max-width: 560px;
+.wrapper {
+  padding: 64px 24px;
 }
 .content-card {
   background: white;
   border-radius: 4px;
-  width: 560px;
+  width: 100%;
   padding: 24px 24px;
 
   .card-heading {

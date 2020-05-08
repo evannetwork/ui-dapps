@@ -1,5 +1,5 @@
 <template>
-  <div class="content-card">
+  <div class="evan-content-card">
     <h2 class="card-heading mb-3">
       {{ '_twin-detail.overview.general-title' | translate }}
     </h2>
@@ -24,6 +24,22 @@
               type="icon-secondary"
               icon="mdi mdi-content-copy"
               @click="copyToClipboard(did)"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td class="property">
+            {{ '_twin-detail.overview.contract-address' | translate }}
+          </td>
+          <td class="value">
+            {{ $route.params.twin }}
+          </td>
+          <td class="action">
+            <evan-button
+              size="sm"
+              type="icon-secondary"
+              icon="mdi mdi-content-copy"
+              @click="copyToClipboard($route.params.twin)"
             />
           </td>
         </tr>
@@ -60,17 +76,6 @@ export default DetailOverviewGeneralComponent;
 </script>
 
 <style lang="scss" scoped>
-.content-card {
-  background: white;
-  border-radius: 4px;
-  width: 604px;
-  padding: 24px 24px;
-
-  .card-heading {
-    font-size: 18px;
-    font-weight: bold;
-  }
-}
 .property {
   font-weight: 600;
 }

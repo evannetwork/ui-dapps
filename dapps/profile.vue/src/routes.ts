@@ -21,15 +21,14 @@ import {
   DAppLoaderComponent,
   RouteRegistrationInterface,
 } from '@evan.network/ui-vue-core';
+import { session } from '@evan.network/ui-session';
 
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
 import AccountRootComponent from './components/root/accountRoot.vue';
 import ProfileDetailComponent from './components/profile/profile.vue';
-import ProfileSettingsComponent from './components/settings/settings.vue';
 import VerificationsComponent from './components/verifications/overview/overview.vue';
 import ProfileSharingsComponent from './components/sharings/sharings.vue';
-import ProfileWalletComponent from './components/wallet/wallet.vue';
 import DIDComponent from './components/did/DID.vue';
 
 /**
@@ -40,7 +39,7 @@ import DIDComponent from './components/did/DID.vue';
 const redirectToDefault = (to, childPath = 'detail'): string => [
   to.path.split(`/profile.vue.${dappBrowser.getDomainName()}`)[0],
   `profile.vue.${dappBrowser.getDomainName()}`,
-  dappBrowser.core.getAccountId(),
+  session.activeIdentity,
   childPath,
 ].join('/');
 
@@ -56,9 +55,7 @@ const routeRegistration: Array<RouteRegistrationInterface> = [
     children: [
       { path: '', redirect: { path: './detail' } },
       { name: 'detail', path: 'detail', component: ProfileDetailComponent },
-      { name: 'settings', path: 'settings', component: ProfileSettingsComponent },
       { name: 'sharings', path: 'sharings', component: ProfileSharingsComponent },
-      { name: 'wallet', path: 'wallet', component: ProfileWalletComponent },
       { name: 'verifications', path: 'verifications', component: VerificationsComponent },
       { name: 'did', path: 'did', component: DIDComponent },
       { name: 'addressbook.vue', component: DAppLoaderComponent, path: `addressbook.vue.${dappBrowser.getDomainName()}` },

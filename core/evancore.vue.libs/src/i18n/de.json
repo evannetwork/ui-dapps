@@ -1,15 +1,17 @@
 {
   "_evan": {
     "_routes": {
-      "actions": "Aktionen",
+      "actions": "Benachrichtigungen",
       "assets": "Meine Assets",
       "digitaltwins": "Digitale Zwillinge",
       "explorer": "Explorer",
       "favorites": "DApps",
       "help": "Hilfe",
       "profile": "Identität",
+      "settings": "Einstellungen",
       "synchronization": "Synchronisation",
-      "verifications": "Verifikations-Center"
+      "verifications": "Verifikations-Center",
+      "wallet": "Wallet"
     },
     "address": {
       "copied": "Adresse kopiert",
@@ -22,6 +24,7 @@
       "title": "Ihr Browser wird nicht unterstützt"
     },
     "cancel": "Abbrechen",
+    "coming-soon": "Bald verfügbar",
     "dapp-wrapper": {
       "all-messages": "Alle Nachrichten",
       "dispatcher-status": {
@@ -132,6 +135,7 @@
     "please-login": "Bitte entsperren Sie Ihre Identität, um fortzufahren.",
     "profile": {
       "account-name": "Account Name",
+      "account-name-max-error": "Max. 100 Zeichen",
       "no-alias": "Kein Alias",
       "types": {
         "choose": "Identitätstyp spezifieren",
@@ -159,16 +163,27 @@
       "add-contact": "Zur Kontaktübersicht",
       "defineFor": "Setzen Sie die Zugriffsrechte für {contactName}.",
       "description": "Um Ihre Daten mit anderen Kontakten zu teilen, wählen Sie die Optionen unten und klicken Sie auf “Freigaben aktualisieren”",
-      "noPermissions": "Keine Zugriffsrechte zum Bearbeiten vorhanden.",
       "description-no-contacts": "Informationen können mit anderen Partnern geteilt werden, nachdem Sie eine sichere Verbindung zu deren evan.network Identität aufgebaut haben. Gehen Sie dazu in die Kontaktübersicht und laden Sie Ihre Partner per E-Mail oder auch per Identitäts-ID ein, um Ihre Daten vertrauensvoll zu teilen.",
+      "noPermissions": "Keine Zugriffsrechte zum Bearbeiten vorhanden.",
       "permissionsTitle": "Zugriffsrechte",
       "selectContact": "Kontakt für die Freigabe auswählen",
       "update": "Daten freigeben"
     },
+    "switching-identity": "Wechsle Identität ...",
     "transaction_costs_hint": "Es entstehen Transaktionskosten.",
     "under-development": {
       "desc": "Der dargestellte Bereich befindet sich momentan in der Entwicklung und wird bald verfügbar sein.",
       "title": "In Entwicklung"
+    },
+    "user-callout": {
+      "identity-settings": "Identitätseinstellungen",
+      "create-new-identity": "Identität hinzufügen",
+      "switch-identity": "Zu einer anderen Identität wechseln",
+      "user-identity": "Identität"
+    },
+    "validation": {
+      "required": "Dieses Feld wird benötigt",
+      "url": "Geben Sie eine gültige URL ein"
     },
     "view-profile": "Identität anzeigen",
     "welcome-to-evan": "Willkommen im evan.network",

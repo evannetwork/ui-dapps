@@ -111,7 +111,7 @@ export default class EvanVueDispatcherHandler {
    * Load latest dispatcher information.
    */
   async initialize() {
-    const queue = await new EvanQueue(this.runtime.activeAccount);
+    const queue = await new EvanQueue(this.runtime.activeIdentity);
     const dispatchers = await queue.load('*');
 
     // load all dispatcher instances for this user

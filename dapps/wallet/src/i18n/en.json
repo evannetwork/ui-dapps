@@ -1,0 +1,121 @@
+{
+  "_wallet": {
+    "buy-eve": {
+      "accept": {
+        "description": "Do you want to continue with buying <b>{amount} EVE</b>?",
+        "send": "Buy",
+        "title": "Buy EVE"
+      },
+      "back": "Back",
+      "buy": "Buy EVE",
+      "buy-more": "Buy more",
+      "continue": "Continue",
+      "disclaimer": "By entering your IBAN and confirming this payment, you authorize evan GmbH and Stripe, our payment service provider, to send instructions to your bank to debit your account and your bank to debit your account in accordance with these instructions. You are entitled to a refund from your bank in accordance with the terms of your agreement with your bank. A refund must be requested within 8 weeks of the date your account was debited.",
+      "errors": {
+        "charge_failed": "A payment cannot be completed because of a failed payment/charge attempt. <b>Your card was NOT debited!</b> Please try again later.",
+        "invalid_customer": "Your customer data is invalid. <b>Your card was NOT debited!</b> Please try again later.",
+        "price_not_okay": "An unknown error occurred on the evan.network. <b>Your card was NOT debited!</b> Please try again later.",
+        "too_many_accounts": "An unknown error occurred regarding your account. <b>Your card was NOT debited!</b> Please contact our customer support.",
+        "transaction_failed": "Your payment/charge was successful but the transaction on blockchain failed. <b>Your card was debited!</b> Please contact our customer support.",
+        "unknown_state": "An unknown error occurred during the payment process. Please contact our customer support.",
+        "wallet_not_enough_funds": "An unknown error on the evan.network. <b>Your card was NOT debited!</b> Please try again later."
+      },
+      "payForm": {
+        "amount": {
+          "error": "Please insert a correct number!",
+          "error-less": "You must by at least 10! ({balance} EVE)",
+          "label": "Amount of EVE (at least 10)",
+          "placeholder": "Enter a number"
+        },
+        "type": {
+          "card": "Credit Card",
+          "iban": "SEPA Edit",
+          "label": "Payment Type"
+        }
+      },
+      "processing-hint": "Processing payment, this may take 3 to 5 minutes",
+      "reverse-charge": "Reverse charge applies!",
+      "reverse-charge-please-check": "Please check for possibly arising tax liabilities in your country from this purchase.",
+      "stripe-element": {
+        "incomplete_number": "Incomplete input!",
+        "invalid_iban_start": "Please check your IBAN",
+        "invalid_number": "Invalid card number!"
+      },
+      "success": "Your order was successfully placed. You will receive an invoice by email. The process is completed as soon as you receive the invoice.<br><br>The amount will be credited to your wallet in the next 5 to 10 minutes.",
+      "tax": "Tax",
+      "titles": {
+        "billing-info": "Please complete your billing information",
+        "buy-eve": "Buy EVE",
+        "finished": "Finished",
+        "processing": "In progress"
+      },
+      "total-amount": "Total",
+      "try-again": "Try again",
+      "vat": "VAT"
+    },
+    "dispatchers": {
+      "ipfs-payment-channel": "Topping up EVEs",
+      "send-eve": "Sending EVEs"
+    },
+    "ipfs": {
+      "available-funds": "Available credit",
+      "monthly-costs": "Current monthly fees",
+      "status-title": "Storage fees overview",
+      "storage-fees": {
+        "description": "All data is stored encrypted on a distributed file system and causes monthly costs. In order to guarantee the preservation of data and to avoid unused files, the amount of EVE you provide will be deducted each month. Please make sure to provide enough EVE to store your files permanently.",
+        "title": "Storage fees"
+      },
+      "stored-files": "Number of stored files",
+      "stored-size": "Size of all stored files",
+      "top-up": {
+        "form": {
+          "amount": {
+            "error": "Please enter a number greater than 0!",
+            "error-less": "Account balance is to low! ({balance} EVE)",
+            "label": "Amount of EVE",
+            "placeholder": "EVE to top up"
+          }
+        },
+        "title": "Top-up credit",
+        "top-up": "Top-up",
+        "topping-up": "Topping-up..."
+      }
+    },
+    "routes": {
+      "ipfs": "Storage fees",
+      "wallet": "Wallet"
+    },
+    "send-eve": {
+      "accept": {
+        "description": "Do you want to continue with sending <b>{amount} EVE</b> to <b>{name}</b>?",
+        "send": "Send",
+        "title": "Send EVE"
+      },
+      "form": {
+        "accountId": {
+          "error": "You must insert a valid address.",
+          "label": "Identity",
+          "placeholder": "Contact or identity address"
+        },
+        "amount": {
+          "error": "Please enter a number greater than 0!",
+          "error-less": "Account balance is to low! ({balance} EVE)",
+          "label": "Amount of EVE",
+          "placeholder": "EVE to send"
+        }
+      },
+      "send": "Send",
+      "title": "Send EVE"
+    },
+    "transactions": {
+      "charged-at": "charged at",
+      "credit-charged": "Credit recharged",
+      "credit-failed-charge": "The charging has failed unfortunately",
+      "credit-running-charge": "Charging credit card not completed yet",
+      "description": "Only credit recharges are listed below. A complete overview of the transactions can be found <a href='{explorerUrl}' target='_blank'>here</a>.",
+      "empty": "No credit recharges have yet been carried out.",
+      "load-more": "Load more",
+      "title": "Credit recharged"
+    }
+  }
+}

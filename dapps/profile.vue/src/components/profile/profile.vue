@@ -18,44 +18,33 @@
 */
 
 <template>
-  <div class="profile-detail p-xxl-11 p-xl-6 p-3">
+  <div class="profile-detail evan-content-container">
     <evan-loading v-if="loading" />
     <template v-else>
-      <div class="row profile-row">
-        <div class="col left-col mb-3">
-          <profile-permission-wrapper entry-name="accountDetails">
-            <div class="d-flex align-items-center">
-              <evan-profile-preview
-                ref="profilePreview"
-                class="w-100"
-                size="lg"
-                :account-details="userInfo"
-                :address="address"
-                :editable="true"
-                @update="userInfo = $event"
-                @save="saveUserInfo"
-              />
-              <div class="mx-auto" />
-              <evan-button
-                v-if="$store.state.runtime && $route.params.address === $store.state.runtime.activeAccount"
-                class="d-flex"
-                type="secondary"
-                size="sm"
-                @click="() => $store.commit('toggleSidePanel', 'sharing')"
-              >
-                {{ '_evan.share' | translate }}
-              </evan-button>
-            </div>
-          </profile-permission-wrapper>
-        </div>
-        <div class="col right-col d-flex justify-content-center">
-          <evan-wallet-card
+      <profile-permission-wrapper entry-name="accountDetails">
+        <div class="d-flex align-items-center">
+          <evan-profile-preview
+            ref="profilePreview"
+            class="w-100"
+            size="lg"
             :account-details="userInfo"
-            :address="$route.params.address"
-            :href="$store.state.profileDApp.isMyProfile ? undefined : null"
+            :address="address"
+            :editable="true"
+            @update="userInfo = $event"
+            @save="saveUserInfo"
           />
+          <div class="mx-auto" />
+          <evan-button
+            v-if="$store.state.runtime && $route.params.address === $store.state.runtime.activeIdentity"
+            class="d-flex"
+            type="secondary"
+            size="sm"
+            @click="() => $store.commit('toggleSidePanel', 'sharing')"
+          >
+            {{ '_evan.share' | translate }}
+          </evan-button>
         </div>
-      </div>
+      </profile-permission-wrapper>
 
       <div
         v-if="userInfo"
@@ -66,7 +55,7 @@
             v-if="userInfo.profileType === 'user'"
             class="text-center"
           >
-            <template v-if="this.isLoading()">
+            <template v-if="isLoading()">
               <evan-loading />
               <h5>{{ '_profile.dispatchers.profile-update' | translate }}</h5>
             </template>
@@ -111,12 +100,15 @@
             </template>
           </div>
           <template v-if="userInfo.profileType === 'company'">
-            <profile-permission-wrapper entry-name="contact">
+            <profile-permission-wrapper
+              entry-name="contact"
+              class="mt-5 bg-level-1 p-5"
+            >
               <profile-company-contact :address="address" />
             </profile-permission-wrapper>
             <profile-permission-wrapper
               v-if="$store.state.profileDApp.data.contact && $store.state.profileDApp.data.contact.country === 'DE'"
-              class="mt-5"
+              class="mt-5 bg-level-1 p-5"
               entry-name="registration"
             >
               <profile-company-registration :address="address" />
@@ -128,34 +120,6 @@
           >
             <profile-device-detail :address="address" />
           </profile-permission-wrapper>
-        </div>
-        <div class="col right-col">
-          <template v-if="verificationCount === 0">
-            <evan-card
-              v-if="$store.state.profileDApp.isMyProfile"
-              class="mt-3"
-              icon="mdi mdi-plus"
-              highlight="true"
-              :href="`${ dapp.fullUrl }/${ address }/verifications`"
-              :title="'_profile.verifications.add' | translate"
-            />
-            <div
-              v-else
-              class="mt-5 text-center"
-            >
-              <h5 class="font-weight-semibold">
-                {{ '_profile.verifications.empty' | translate }}
-              </h5>
-            </div>
-          </template>
-
-          <div :class="{ 'd-none': verificationCount === 0 }">
-            <notary-verification
-              ref="notaryVerifications"
-              :address="address"
-              @loaded="setVerificationCount()"
-            />
-          </div>
         </div>
       </div>
       <evan-swipe-panel
@@ -194,9 +158,7 @@
             <evan-button
               type="primary"
               :label="$t('_evan.sharing.update')"
-              :disabled="!permissionsEditor.permissionsChanged
-                || $store.state.dispatcher.curr.running.shareProfileDispatcher
-                || !selectedSharedContacts"
+              :disabled="isUpdateDisabled"
               class="btn-block"
               @click="permissionsEditor.writePermissions()"
             />

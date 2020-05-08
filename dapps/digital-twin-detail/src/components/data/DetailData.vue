@@ -22,12 +22,11 @@
     <div class="sidenav">
       <evan-nav-list
         :entries="navItems"
-        :show-logout="false"
-        :show-profile="false"
+        :show-header="false"
       />
     </div>
 
-    <div class="content">
+    <div class="evan-content-container">
       <router-view :key="$route.params.container" />
     </div>
   </div>
@@ -40,31 +39,5 @@ export default DetailDataComponent;
 </script>
 
 <style lang="scss" scoped>
-@import '~@evan.network/ui/src/style/utils';
-
-.sidenav {
-  width: 250px;
-  background: white;
-  border: 2px solid cssVar('bg-level-2');
-  margin-left: 3px;
-  height: 100vh;
-  position: sticky;
-  top: 0;
-  overflow-y: auto;
-
-  .evan-nav-list {
-    .nav-entries {
-      a {
-        font-weight: 600;
-        font-size: 12px;
-      }
-    }
-  }
-}
-
-.content {
-  margin-left: auto;
-  margin-right: auto;
-  padding-top: 56px;
-}
+  @import './DetailData.scss'
 </style>

@@ -41,14 +41,19 @@ export default class NavListComponent extends mixins(EvanComponent) {
   @Prop() entries: Array<NavEntryInterface>;
 
   /**
-   * Shows the profile display in the top of the nav-list
+   * Flag to show or hide the header
    */
-  @Prop({ default: true }) showProfile: boolean;
+  @Prop({ default: true }) showHeader: boolean;
 
   /**
-   * Shows the logout button at the bottom of the nav list
+   * Material icon classes
    */
-  @Prop({ default: true }) showLogout: boolean;
+  @Prop() headerIcon: string;
+
+  /**
+   * Text that should be displayed
+   */
+  @Prop() headerText: string;
 
   // eslint-disable-next-line class-methods-use-this
   onClick(entry: NavEntryInterface, route: Route): void {

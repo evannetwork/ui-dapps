@@ -64,6 +64,10 @@ export default class ProfilePreviewComponent extends mixins(EvanComponent) {
    */
   @Prop() accountDetails: any; // TODO: needs proper type/interface
 
+  @Prop() href;
+
+  @Prop({ default: false }) disableLink: boolean;
+
   /**
    * Show loading symbol
    */
@@ -96,8 +100,21 @@ export default class ProfilePreviewComponent extends mixins(EvanComponent) {
    */
   profile: bcc.Profile = null;
 
-  @Watch('$attrs') onChildChanged(val: UserInfoInterface, oldVal: UserInfoInterface): void {
-    Object.assign(this.userInfo, this.$attrs, { pictureSrc: this.$attrs.src });
+  @Watch('$attrs') onChildChanged(): void {
+    if (this.userInfo && this.$attrs.src) {
+      Object.assign(this.userInfo, this.$attrs, { pictureSrc: this.$attrs.src });
+    }
+  }
+
+  /**
+   * Use href watcher, this context is not available in default value.
+   */
+  @Watch('href') onHrefChange(): void {
+    this.href = typeof this.href === 'undefined' ? [
+      this.$store.state.dapp.baseUrl,
+      this.$store.state.rootEns,
+      `profile.vue.${this.$store.state.domainName}/${this.address}/detail`,
+    ].join('/') : this.href;
   }
 
   /**
@@ -106,7 +123,7 @@ export default class ProfilePreviewComponent extends mixins(EvanComponent) {
   async created(): Promise<void> {
     const runtime = this.getRuntime() as any;
     this.profile = new bcc.Profile({
-      accountId: runtime.activeAccount,
+      accountId: runtime.activeIdentity,
       profileOwner: this.address,
       ...runtime,
     });
@@ -159,7 +176,7 @@ export default class ProfilePreviewComponent extends mixins(EvanComponent) {
    * Can the edit modee be used?
    */
   canEdit(): boolean {
-    return this.editable && this.size === 'lg' && this.address === this.$store.state.runtime.activeAccount;
+    return this.editable && this.size === 'lg' && this.address === this.$store.state.runtime.activeIdentity;
   }
 
   /**

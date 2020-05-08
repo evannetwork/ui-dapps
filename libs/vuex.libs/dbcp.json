@@ -9,7 +9,7 @@
       "files": [
         "vuex.libs.js"
       ],
-      "origin": "QmQbt9QcVyim8dch7bcpQ1UFKypzZEZY8SdRCBwdyW3dEH",
+      "origin": "QmNP8a9DosoSaQtjyK9jFJ3t51SVmb17fu9K2mzzvEJS8D",
       "primaryColor": "",
       "secondaryColor": "#f9f9ff",
       "standalone": false,
@@ -34,7 +34,7 @@
     ],
     "version": "3.1.0",
     "versions": {
-      "3.1.0": "QmPUUcmy4AcDZ3U4w8M5LTfKiimfd3aGyKq77hVVg4BA6S"
+      "3.1.0": "QmRZpHbEFeFSoHBFbBpX7Bi1VakDjxynq6zuxSazvAR9Nb"
     }
   }
 }

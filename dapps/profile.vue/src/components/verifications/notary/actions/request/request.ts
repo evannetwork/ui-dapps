@@ -127,10 +127,14 @@ export default class IdentNotaryRequestComponent extends mixins(EvanComponent) {
   sending = false;
 
   /**
+   * Show a loading symbol, until profile data was loaded
+   */
+  loadingCompanyData = false;
+
+  /**
    * show formular or accept view
    */
   status = -1;
-
 
   /**
    * Steps for requesting notary verification.
@@ -172,6 +176,11 @@ export default class IdentNotaryRequestComponent extends mixins(EvanComponent) {
         value: '',
         validate(vueInstance: IdentNotaryRequestComponent, form: RequestFormIdentInterface) {
           return this.value.length !== 0;
+        },
+        uiSpecs: {
+          attr: {
+            required: true,
+          },
         },
       },
       department: {
@@ -301,6 +310,7 @@ export default class IdentNotaryRequestComponent extends mixins(EvanComponent) {
    * Load currents users company data and checks, if some information are missing.
    */
   async loadCompanyData(): Promise<void> {
+    this.loadingCompanyData = true;
     const { $store } = this as any;
     // wait until profile was reloaded
     await $store.state.loadingProfile;
@@ -320,6 +330,7 @@ export default class IdentNotaryRequestComponent extends mixins(EvanComponent) {
         }
       });
     });
+    this.loadingCompanyData = false;
   }
 
   /**
@@ -347,8 +358,8 @@ export default class IdentNotaryRequestComponent extends mixins(EvanComponent) {
       organizationCity: this.companyData.contact.city,
       organizationContact: this.requestForm.contact.value,
       organizationCountry: this.companyData.contact.country,
-      organizationEvanId: bccUtils.getDidFromAddress(runtime, runtime.activeAccount),
-      accountId: runtime.activeAccount,
+      organizationEvanId: await bccUtils.getDidFromAddress(runtime, runtime.activeIdentity),
+      accountId: runtime.activeIdentity,
       court: this.companyData.registration.court,
       organizationRegistration: `${this.companyData.registration.register} ${this.companyData.registration.registerNumber}`,
       organizationName: await profileUtils.getUserAlias(

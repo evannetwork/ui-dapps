@@ -12,7 +12,7 @@
           "title": "Login im evan.network"
         },
         "1": {
-          "desc": "",
+          "desc": "Die Absicherung Ihrer Daten ist uns sehr wichtig. Daher ist der Login-Prozess zweigeteilt. Bitte geben Sie Ihr Passwort ein, um Ihr Profil zu entsperren und mit Ihrer Arbeit fortzufahren.<br><br><b>Bitte beachten:</b> Aus Sicherheitsgründen, müssen Sie ihr Passwort nach jedem neu laden der Seite erneut eingeben. Somit bleiben Sie vollständig \"Self-Sovereign\" und Herr Ihrer Daten.",
           "title": "Willkommen im evan.network"
         }
       },
@@ -67,6 +67,7 @@
     },
     "invalid-mnemonic-integrity": "Die Zusammensetzung der Wörter Ihres Wiederherstellungs-Schlüssels ist inkorrekt. Bitte überprüfen Sie Ihre Eingabe.",
     "invalid-mnemonic-words-incorrect": "Eines oder mehrere der angegebenen Wörter ist nicht erlaubt in Wiederherstellungsschlüsseln. Bitte überprüfen Sie Ihre Eingabe.",
+    "login": "Einloggen",
     "mail-invitation-accepted": {
       "body": "Guten Tag, <br>der Benutzer mit der Email Adresse {userEmail} hat Ihre Einladung in das evan.network angenommen und ist nun verfügbar unter dem Namen: {{ userAlias }}.<br><br> Ihr evan.network Team",
       "subject": "Nutzer hat Ihre Anfrage angenommen",
@@ -93,7 +94,7 @@
       "next": "Weiter",
       "no-profile": "Keine Identität gefunden",
       "no-profile-desc": "Im Zusammenhang mit diesem Wiederherstellungsschlüssel existiert keine evan.network Identität.",
-      "not-signed-up": "Sie haben noch keinen Account? <a href=\"#/dashboard.vue.evan/onboarding.vue.evan/sign-up\">Account erstellen</a>",
+      "not-signed-up": "Sie haben noch keinen Account?",
       "recovery-key": "Wiederherstellungsschlüssel",
       "title": "Einloggen",
       "welcome": "Kontaktanfrage",
@@ -109,14 +110,18 @@
       },
       "agree": "Akzeptieren",
       "alias": {
-        "company": "Name des Unternehmens",
         "error": "Bitte geben Sie einen Account-Namen an!",
-        "hint-company": "Der Name Ihres Unternehmens ist nur für Sie sichtbar.",
-        "hint-user": "Der Account-Name ist nur für Sie sichtbar.",
-        "placeholder": "John Doe | Beispiel Unternehmen GmbH",
-        "user": "Account-Name"
+        "hint": "Der Account-Name ist nur für Sie sichtbar.",
+        "placeholder": "John Doe",
+        "label": "Nutzername"
       },
-      "already-signed-up": "Sie sind bereits registriert? <a href=\"#/dashboard.vue.evan/onboarding.vue.evan/sign-in\">Login</a>",
+      "companyAlias": {
+        "hint": "Der Name Ihres Unternehmens ist nur für Sie sichtbar.",
+        "label": "Name des Unternehmens",
+        "error": "Please enter a company name!",
+        "placeholder": "Sample Company Inc."
+      },
+      "already-signed-up": "Sie sind bereits registriert?",
       "cancel-riddle": "Abbrechen",
       "create-account": "Erstellen Sie Ihren Account",
       "create-profile": {

@@ -1,93 +1,145 @@
-import { ServiceEndpoint, DidDocumentTemplate, Delegate } from './DidInterfaces';
+import { DidDocument, Runtime } from '@evan.network/api-blockchain-core';
+import { ServiceEndpoint, Delegate } from './DidInterfaces';
 
-// TODO remove this
-const TEST_DID_DOC: DidDocumentTemplate = {
-  '@context': 'https://w3id.org/did/v1',
-  id: 'did:evan:testcore:0x96da854df34f5dcd25793b75e170b3d8c63a95ad',
-  publicKey: [
-    {
-      id: 'did:evan:testcore:0x96da854df34f5dcd25793b75e170b3d8c63a95ad#key-1',
-      type: 'Secp256k1VerificationKey2018',
-      controller: 'did:evan:testcore:0x96da854df34f5dcd25793b75e170b3d8c63a95ad',
-      ethereumAddress: '0x001de828935e8c7e4cb56fe610495cae63fb2612',
-    },
-  ],
-  authentication: [
-    'did:evan:testcore:0x96da854df34f5dcd25793b75e170b3d8c63a95ad#key-1',
-    // mock delegate
-    'did:evan:testcore:0x96da854df34f5dcd25793b75e170b3d8c63a95ae#key-2',
-  ],
-  created: '2020-02-17T09:14:25.915Z',
-  updated: '2020-02-17T09:14:25.915Z',
-  proof: {
-    type: 'EcdsaPublicKeySecp256k1',
-    created: '2020-02-17T09:14:25.933Z',
-    proofPurpose: 'assertionMethod',
-    verificationMethod: 'did:evan:testcore:0x96da854df34f5dcd25793b75e170b3d8c63a95ad#key-1',
-    jws: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NkstUiJ9.eyJpYXQiOjE1ODE5MzA4NjUsImRpZERvY3VtZW50Ijp7IkBjb250ZXh0IjoiaHR0cHM6Ly93M2lkLm9yZy9kaWQvdjEiLCJpZCI6ImRpZDpldmFuOnRlc3Rjb3JlOjB4OTZkYTg1NGRmMzRmNWRjZDI1NzkzYjc1ZTE3MGIzZDhjNjNhOTVhZCIsInB1YmxpY0tleSI6W3siaWQiOiJkaWQ6ZXZhbjp0ZXN0Y29yZToweDk2ZGE4NTRkZjM0ZjVkY2QyNTc5M2I3NWUxNzBiM2Q4YzYzYTk1YWQja2V5LTEiLCJ0eXBlIjoiU2VjcDI1NmsxVmVyaWZpY2F0aW9uS2V5MjAxOCIsIm93bmVyIjoiZGlkOmV2YW46dGVzdGNvcmU6MHg5NmRhODU0ZGYzNGY1ZGNkMjU3OTNiNzVlMTcwYjNkOGM2M2E5NWFkIiwiZXRoZXJldW1BZGRyZXNzIjoiMHgwMDFkZTgyODkzNWU4YzdlNGNiNTZmZTYxMDQ5NWNhZTYzZmIyNjEyIn1dLCJhdXRoZW50aWNhdGlvbiI6WyJkaWQ6ZXZhbjp0ZXN0Y29yZToweDk2ZGE4NTRkZjM0ZjVkY2QyNTc5M2I3NWUxNzBiM2Q4YzYzYTk1YWQja2V5LTEiXSwiY3JlYXRlZCI6IjIwMjAtMDItMTdUMDk6MTQ6MjUuOTE1WiIsInVwZGF0ZWQiOiIyMDIwLTAyLTE3VDA5OjE0OjI1LjkxNVoifSwiaXNzIjoiZGlkOmV2YW46dGVzdGNvcmU6MHg5NmRhODU0ZGYzNGY1ZGNkMjU3OTNiNzVlMTcwYjNkOGM2M2E5NWFkIn0.yBMpk9cQikhHv3MEEXr4w3po9AZWLRtqhbW7iQ0L0e0Ylxkg5R4z9niOXuVpwueVjNP-tCNOa5HBCIJqnDts6wA',
-  },
-  service: [{
-    serviceEndpoint: 'http:/dsadsadasdasdsadassda',
-    id: 'MOCK ID',
-    type: 'MOCK TYPE',
-  }],
-};
+const PUB_KEY_TYPE = 'Secp256k1VerificationKey2018';
 
 /**
  * Handles logic for fetching and persisting DID documents
  */
 export class DidService {
+  runtime: Runtime;
+
+  constructor(runtime: Runtime) {
+    this.runtime = runtime;
+  }
+
+  async fetchDidDocument(identity: string): Promise<DidDocument> {
+    const did = await this.runtime.did.convertIdentityToDid(identity);
+
+    return this.runtime.did.getDidDocument(did);
+  }
+
   /**
-   * TODO: handle profiles without created did?
+   * Returns the delegates excluding the owner entry
+   * @param didDocument specified did document
    */
-  static async fetchDidDocument(): Promise<DidDocumentTemplate> {
-    // this.runtime = this.getRuntime();
+  static getDelegates(didDocument: DidDocument): Delegate[] {
+    const keyIds = didDocument.publicKey.map((key) => key.id);
 
-    // console.log(this.runtime.nameResolver.config);
-
-    // const didInstance = new Did(this.runtime as DidOptions);
-
-    /* console.log('didInstance', didInstance);
-       const did = await didInstance.convertIdentityToDid(this.runtime.activeIdentity); */
-
-    /* console.log('did', did);
-       this.didDocument = await didInstance.getDidDocument(did);
-       // this.didDocument = await this.runtime.did.getDidDocument(did); */
-
-    // console.log('didDocument', this.didDocument);
-
-    return Promise.resolve(TEST_DID_DOC);
+    return didDocument.authentication
+      .filter((auth) => keyIds.includes(auth))
+      .map((key) => didDocument.publicKey.find((entry) => entry.id === key))
+      // Filter out "owner"
+      .filter((delegate) => delegate.controller !== didDocument.id);
   }
 
-  static async getDelegates(didDocument: DidDocumentTemplate): Promise<Delegate[]> {
-    // regex to remove #key suffixes
-    const regex = /([#])(key-)(\d)+/;
+  /**
+   * Enhances a DID Document with given delegates
+   * @param newDelegates Array of DIDs to be added as delegate
+   * @param didDoc DID Document to be enhanced
+   */
+  async updateDelegates(newDelegates: string[], didDoc: DidDocument): Promise<DidDocument> {
+    const delegateKeys = DidService.getDelegates(didDoc).map((delegate) => delegate.id);
 
-    return Promise.all(didDocument.authentication
-      .map((item) => item.replace(regex, ''))
-      .filter((item) => item !== didDocument.id)
-      .map(async (delegateId) => ({
-        did: delegateId,
-        /* TODO getUserAlias doesn't handle DIDs yet
-           note: await profileUtils.getUserAlias(this.getRuntime(), delegateId), */
-        note: await Promise.resolve('MOCK NOTE'),
-      })));
+    // DidDoc without delegates
+    const cleanDidDoc = {
+      ...didDoc,
+      publicKey: didDoc.publicKey.filter((key) => !delegateKeys.includes(key.id)),
+      authentication: didDoc.authentication.filter((auth) => !auth.includes('#delegate-')),
+    };
+
+    return {
+      ...cleanDidDoc,
+      publicKey: [
+        ...cleanDidDoc.publicKey,
+        ...await Promise.all(newDelegates.map(async (did, idx) => ({
+          id: `${cleanDidDoc.id}#delegate-${idx}`,
+          type: PUB_KEY_TYPE,
+          controller: did,
+          ethereumAddress: await this.getAccountForDid(did),
+        }))),
+      ],
+      authentication: [
+        ...cleanDidDoc.authentication,
+        ...newDelegates.map((_, idx) => `${cleanDidDoc.id}#delegate-${idx}`),
+      ],
+    };
   }
 
-  static saveDelegates(delegates: Delegate[]): void {
-    // TODO logic
-    console.log('Updating delegates...', delegates);
-  }
+  // eslint-disable-next-line class-methods-use-this
+  getServiceEndpoints(didDocument: DidDocument): ServiceEndpoint[] {
+    if (!didDocument.service) {
+      return [];
+    }
 
-  static async getServiceEndpoints(didDocument: DidDocumentTemplate): Promise<ServiceEndpoint[]> {
     return didDocument.service.map((endpoint) => ({
-      label: endpoint.id,
+      id: endpoint.id,
+      type: endpoint.type,
       url: endpoint.serviceEndpoint,
     }));
   }
 
-  static saveServiceEndpoints(endpoints: ServiceEndpoint[]): void {
-    // TODO logic
-    console.log('Updating endpoints...', endpoints);
+  /**
+   * Writes given service endpoints to the DID Document
+   * @param didDoc DID Document to be enhanced
+   * @param endpoints Service Endpoints to add
+   */
+  static updateServiceEndpoints(didDoc: DidDocument, endpoints: ServiceEndpoint[]): DidDocument {
+    return {
+      ...didDoc,
+      service: endpoints.map((endpoint) => ({
+        id: endpoint.id,
+        type: endpoint.type,
+        serviceEndpoint: endpoint.url,
+      })),
+    };
+  }
+
+  /**
+   * Currently we don't implement controller logic. Return empty array
+   * @param didDoc
+   */
+  // eslint-disable-next-line class-methods-use-this
+  getControllers(didDoc: DidDocument): any[] {
+    return [];
+  }
+
+  /**
+   * Return owner DID for a specific DID Document
+   * @param didDoc DID Document to get the owner for
+   */
+  static getOwner(didDoc: DidDocument): string {
+    return didDoc.id;
+  }
+
+  /**
+   * Helper to convert DID to account id
+   * @param did DID
+   */
+  async getAccountForDid(did: string): Promise<string> {
+    const identity = await this.runtime.did.convertDidToIdentity(did);
+
+    return this.runtime.verifications.getOwnerAddressForIdentity(identity);
+  }
+
+  /**
+   * Trigger download of DID Document as JSON file.
+   *
+   * @param didDoc
+   * @param filename Name for the file
+   */
+  static exportDocument(didDoc: DidDocument, filename: string): void {
+    const element = document.createElement('a');
+    const text = JSON.stringify(didDoc, null, 2);
+
+    element.setAttribute(
+      'href',
+      `data:text/json;charset=utf-8,${encodeURIComponent(text)}`,
+    );
+    element.setAttribute('download', filename);
+    element.style.display = 'none';
+    document.body.appendChild(element);
+    element.click();
+    document.body.removeChild(element);
   }
 }

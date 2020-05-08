@@ -16,33 +16,12 @@
 
 @import '~@evan.network/ui/src/style/utils';
 
-.pre-wrap {
-  white-space: pre-wrap;
+.pre-line {
+  white-space: pre-line;
 }
 
 .hyphen-auto {
   hyphens: auto;
-}
-
-.notification-bar {
-  .hint-banner {
-    line-height: 25px;
-
-    position: absolute;
-    bottom: 0;
-
-    cursor: pointer;
-
-    background: cssVar('primary-color');
-
-    & i:first-of-type {
-      float: left;
-    }
-
-    & i:last-of-type {
-      float: right;
-    }
-  }
 }
 
 .mnemonics {

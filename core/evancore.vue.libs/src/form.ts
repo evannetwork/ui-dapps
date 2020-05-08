@@ -18,7 +18,7 @@
 */
 
 import Vue from 'vue';
-import { bccHelper } from '@evan.network/ui-dapp-browser';
+import { web3Helper } from '@evan.network/ui-session';
 
 import EvanFormControl from './formControl';
 import { EvanFormControlOptions } from './interfaces';
@@ -65,7 +65,7 @@ export default class EvanForm {
    * @return     {boolean}  true / false
    */
   static validEthAddress(address: string): boolean {
-    return bccHelper.getCoreRuntime().web3.utils.isAddress(address);
+    return web3Helper.getWeb3Instance().utils.isAddress(address);
   }
 
   /**

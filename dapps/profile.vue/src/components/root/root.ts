@@ -24,7 +24,7 @@ import { Watch } from 'vue-property-decorator';
 // evan.network imports
 import * as bcc from '@evan.network/api-blockchain-core';
 import { DispatcherInstance } from '@evan.network/ui';
-import { EvanComponent } from '@evan.network/ui-vue-core';
+import { EvanComponent, NavEntryInterface } from '@evan.network/ui-vue-core';
 
 import * as dispatchers from '../../dispatchers/registry';
 import { getPermissionSortFilter } from '../utils/shareSortFilters';
@@ -39,7 +39,13 @@ export default class ProfileRootComponent extends mixins(EvanComponent) {
   /**
    * navEntries for top navigation
    */
-  navEntries: Array<any> = [];
+  navEntries: NavEntryInterface[] = [];
+
+  /**
+   * Nav entries that are visible by others
+   */
+  // TODO: add verification to public nav entries, when verifications are public visible
+  publicNavEntries = ['detail', 'did'];
 
   /**
    * Watch for dispatcher updates
@@ -73,6 +79,16 @@ export default class ProfileRootComponent extends mixins(EvanComponent) {
   }
 
   /**
+   * Check if a route name is accessable by others.
+   *
+   * @return     {boolean}  True if access denied, False otherwise.
+   */
+  isAccessDenied(routeName: string): boolean {
+    return !this.$store.state.profileDApp.isMyProfile
+      && !this.publicNavEntries.includes(routeName);
+  }
+
+  /**
    * Setup navigation structure
    */
   async initialize(forceReload?: boolean): Promise<void> {
@@ -83,7 +99,7 @@ export default class ProfileRootComponent extends mixins(EvanComponent) {
 
     this.$store.state.loadingProfile = this.setupProfile();
     await this.$store.state.loadingProfile;
-    this.setNavEntries();
+    await this.setNavEntries();
 
     this.loading = false;
   }
@@ -92,19 +108,19 @@ export default class ProfileRootComponent extends mixins(EvanComponent) {
    * Load currents profiles data.
    */
   async setupProfile(): Promise<void> {
-    const { address } = this.$route.params;
     const runtime = this.getRuntime();
-    const { activeAccount } = runtime;
+    const address = this.$route.params.address || runtime.activeIdentity;
+    const { activeIdentity } = runtime;
     const profile = new bcc.Profile({
-      accountId: runtime.activeAccount,
+      accountId: runtime.activeIdentity,
       profileOwner: address,
       ...runtime,
     } as bcc.ProfileOptions);
     const profileDApp: any = {
-      activeAccount,
+      activeIdentity,
       address,
       data: { },
-      isMyProfile: address === activeAccount,
+      isMyProfile: address === activeIdentity,
       permissions: { read: [], readWrite: [] },
       profile,
     };
@@ -123,7 +139,7 @@ export default class ProfileRootComponent extends mixins(EvanComponent) {
     if (profile.profileContainer && profileDApp.description && profileDApp.description.dataSchema) {
       // load permissions
       const { readWrite, read } = await profile.profileContainer.getContainerShareConfigForAccount(
-        activeAccount,
+        activeIdentity,
       );
       profileDApp.permissions = {
         read: (read || []).concat(readWrite || []),
@@ -199,39 +215,36 @@ export default class ProfileRootComponent extends mixins(EvanComponent) {
   /**
    * Applies the navigation entries for the current opened profile.
    */
-  setNavEntries(): void {
+  async setNavEntries(): Promise<void> {
     this.navEntries = [
       {
-        key: 'detail',
         icon: 'mdi mdi-account-outline',
+        key: 'detail',
       },
       {
-        key: 'did',
+        disabled: !(await this.getRuntime().verifications.isIdentity(
+          this.$store.state.profileDApp.address,
+        )),
         icon: 'mdi mdi-identifier',
+        key: 'did',
       },
       {
-        key: 'wallet',
-        icon: 'mdi mdi-wallet-outline',
-      },
-      {
-        key: 'verifications',
         icon: 'mdi mdi-check-decagram',
+        key: 'verifications',
       },
       {
-        key: 'sharings',
         icon: 'mdi mdi-share-variant',
+        key: 'sharings',
       },
-      null,
-      {
-        key: 'settings',
-        icon: 'mdi mdi-settings',
-      },
-    ].map((entry) => (entry ? {
-      id: `nav-entry-${entry.key}`,
-      text: `_profile.breadcrumbs.${entry.key.split('/')[0]}`,
-      to: entry.key,
-      icon: entry.icon,
-    } : null));
+    ]
+      .filter((entry) => !entry || !this.isAccessDenied(entry.key))
+      .map((entry) => (entry ? {
+        disabled: entry.disabled,
+        icon: entry.icon,
+        id: `nav-entry-${entry.key}`,
+        text: `_profile.breadcrumbs.${entry.key.split('/')[0]}`,
+        to: entry.key,
+      } : null));
 
     // remove sharings from old profiles
     if (!this.$store.state.profileDApp.profile.profileContainer || !this.$store.state.profileDApp.description) {

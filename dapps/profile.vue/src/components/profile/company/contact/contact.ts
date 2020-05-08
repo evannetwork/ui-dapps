@@ -152,10 +152,13 @@ export default class CompanyContactForm extends mixins(EvanComponent) {
       },
       postalCode: {
         value: contactData.postalCode || '',
-        validate: (vueInstance, form, control: EvanFormControl): boolean|string => (
-          // check postcode validity only in germany
-          vueInstance.required.indexOf('postalCode') === -1
-            || (form.country.value === 'DE' ? /^\d{5}$/.test(control.value) : true)),
+        validate: (vueInstance, form, control: EvanFormControl): boolean|string => {
+          if (control.value) {
+            return (form.country.value === 'DE' ? /^\d{5}$/.test(control.value) : true);
+          }
+
+          return vueInstance.required.indexOf('postalCode') === -1;
+        },
         uiSpecs: {
           type: 'input',
           attr: {

@@ -22,50 +22,28 @@
     <div class="mb-3 d-flex flex-row justify-content-between align-items-center">
       <h2>
         <i class="mr-1 mdi mdi-earth" />
-        {{ '_profile.did.delegates-title' | translate }}
+        {{ $t('_profile.did.delegates-title') }}
       </h2>
-      <evan-button
-        v-if="!isEditMode"
-        class="btn-sm"
-        @click="onEditStart"
-      >
-        {{ '_evan.edit' | translate }}
-      </evan-button>
     </div>
-    <p>{{ '_profile.did.delegates-desc' | translate }}</p>
+    <p>{{ $t('_profile.did.delegates-desc') }}</p>
+
+    <evan-loading v-if="isLoading" />
 
     <evan-table
+      v-else
       class="simple"
+      :show-empty="!isEditMode"
       :fields="columns"
       :items="delegates"
     >
-      <template v-slot:empty>
-        {{ '_profile.did.empty-delegates' }}
+      <template #cell(did)="data">
+        {{ data.item }}
       </template>
 
-      <template
-        v-if="isEditMode"
-        v-slot:cell(label)="data"
-      >
-        <evan-form-control-input
-          class="clean-input"
-          :value="data.item.label"
-        />
-      </template>
-
-      <template
-        v-if="isEditMode"
-        v-slot:cell(url)="data"
-      >
-        <evan-form-control-input
-          class="clean-input"
-          :value="data.item.url"
-        />
-      </template>
-
-      <template v-slot:cell(action)="data">
+      <template #cell(action)="data">
         <evan-button
           v-show="isEditMode"
+          class="btn-sm"
           type="icon-secondary"
           icon="mdi mdi-trash-can-outline"
           @click="deleteDelegate(data.index)"
@@ -74,7 +52,7 @@
 
       <template
         v-if="isEditMode"
-        v-slot:bottom-row
+        #bottom-row
       >
         <b-td colspan="3">
           <!-- $props and $attr binding with evan-form-control-v-select isn't ideal.
@@ -82,37 +60,22 @@
           <evan-v-select
             class="m-0"
             :value="null"
-            :options="contacts"
-            :placeholder="'_profile.did.choose-contact' | translate"
+            :options="filteredContacts"
+            :placeholder="$t('_profile.did.choose-contact')"
             :clear-search-on-select="true"
             @input="onSelectContact"
-          />
+          >
+            <template #no-options>
+              {{ $t('_profile.did.no-delegate-options') }}
+            </template>
+          </evan-v-select>
         </b-td>
       </template>
-    </evan-table>
 
-    <div
-      v-if="isEditMode"
-      class="d-flex mt-3 align-items-center justify-content-between"
-    >
-      <div class="d-flex align-items-center">
-        <i class="mdi mdi-information-outline mr-2" />
-        <span>{{ '_evan.transaction_costs_hint' | translate }}</span>
-      </div>
-      <div>
-        <evan-button @click="onEditCancel">
-          {{ '_evan.cancel' | translate }}
-        </evan-button>
-        <evan-button
-          class="ml-1"
-          type="primary"
-          :disabled="!hasChanges"
-          @click="saveDelegates"
-        >
-          {{ '_evan.save' | translate }}
-        </evan-button>
-      </div>
-    </div>
+      <template #empty>
+        <span>{{ $t('_profile.did.delegates-empty') }}</span>
+      </template>
+    </evan-table>
   </div>
 </template>
 
@@ -126,7 +89,6 @@ export default Component;
 .content-card {
   background: white;
   border-radius: 4px;
-  width: 560px;
   padding: 24px 24px;
 }
 </style>

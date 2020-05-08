@@ -80,6 +80,13 @@ export default class DataContainerComponent extends mixins(EvanComponent) {
     this.hasError = false;
     this.searchTerm = searchTerm;
 
+    // Necessary for proper routing. Otherwise collision with detail dapp
+    if (searchTerm && this.$route.params.query !== searchTerm) {
+      this.$router.replace({ name: 'digitaltwins-search', params: { query: searchTerm } });
+    } else {
+      this.$router.push({ path: 'digitaltwins' });
+    }
+
     try {
       const { result, total } = await this.search.query(this.type, {
         searchTerm,
@@ -96,13 +103,6 @@ export default class DataContainerComponent extends mixins(EvanComponent) {
     }
 
     this.isLoading = false;
-
-    // Necessary for proper routing. Otherwise collision with detail dapp
-    if (searchTerm && this.$route.params.query !== searchTerm) {
-      this.$router.replace({ name: 'digitaltwins-search', params: { query: searchTerm } });
-    } else {
-      this.$router.push({ path: 'digitaltwins' });
-    }
   }
 
   async fetchMore(sorting = {}): Promise<void> {

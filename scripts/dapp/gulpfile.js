@@ -33,7 +33,7 @@ gulp.task('build', async function () {
   // load the dapp dbcp
   const dbcp = require(`${ dappDir }/dbcp.json`);
   const dappConfig = dbcp.public.dapp;
-  const runtimeFolder = `../../node_modules/@evan.network/ui-dapp-browser/runtime/external/${dbcp.public.name}`;
+  const runtimeFolder = `../../node_modules/@evan.network/ui-dapp-browser/dist/dapps/${dbcp.public.name}`;
 
   const distSources = [
     `${ dappDir }/dist/**/*`,

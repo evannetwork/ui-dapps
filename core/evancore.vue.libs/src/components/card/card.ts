@@ -18,13 +18,10 @@
 */
 
 // vue imports
-import Vue from 'vue';
 import Component, { mixins } from 'vue-class-component';
 import { Prop } from 'vue-property-decorator';
 
 // evan.network imports
-import * as bcc from '@evan.network/api-blockchain-core';
-import * as dappBrowser from '@evan.network/ui-dapp-browser';
 import EvanComponent from '../../component';
 
 /**
@@ -36,7 +33,7 @@ export default class CardComponent extends mixins(EvanComponent) {
    * Card type that should be used (transparent, outline, filled)
    */
   @Prop({
-    default: 'filled'
+    default: 'filled',
   }) type: string;
 
   /**

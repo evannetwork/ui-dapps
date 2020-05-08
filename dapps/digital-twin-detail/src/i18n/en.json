@@ -26,8 +26,8 @@
           "submit": "Add Entry",
           "title": "Add an Entry"
         },
-        "count-out-of-total": "{count} out of {total}",
         "count-entries": "{count} Entries",
+        "count-out-of-total": "{count} out of {total}",
         "list-item-detail": {
           "close": "Close",
           "title": "Detail"
@@ -67,6 +67,8 @@
       "verifications": "Verifications"
     },
     "overview": {
+      "contract-address": "Contract address",
+      "copied": "Text copied",
       "created-at": "Created at",
       "date": "Date",
       "did": "Decentralized ID",
@@ -75,10 +77,10 @@
       "initiator": "Initiator",
       "overview-title": "Overview",
       "owner": "Owner",
-      "copied": "Text copied",
       "transactions-title": "Last Transactions"
     },
     "sharings": {
+      "description-no-contacts": "You don't have any contacts to share your twin with.",
       "filters": {
         "all": "All",
         "company": "Companies",

@@ -22,16 +22,11 @@
     <evan-dapp-wrapper>
       <template v-slot:content>
         <evan-loading v-if="loading" />
-        <template v-else-if="hasError">
-          <div class="p-5 text-center">
-            <h3 class="mb-5">
-              {{ '_twin-detail.generic-error' | translate }}
-            </h3>
-            <evan-failed />
-          </div>
-        </template>
         <template v-else>
-          <digital-twin-interactions ref="twinInteractions" />
+          <digital-twin-interactions
+            v-if="!hasError"
+            ref="twinInteractions"
+          />
           <evan-dapp-wrapper-level-2 ref="level2Wrapper">
             <div class="sidenav">
               <div class="sidenav-header">
@@ -43,51 +38,53 @@
                   />
                   <div class="flex-grow-1" />
                   <!-- Favorite Handling -->
-                  <evan-loading
-                    v-if="$store.state.twin.dispatcherStates.favorite"
-                    classes="icon-replacer"
-                  />
-                  <evan-button
-                    v-else-if="!$store.state.twin.favorite"
-                    type="icon-secondary"
-                    icon="mdi mdi-star-outline"
-                    @click="$store.state.twin.addAsFavorite()"
-                  />
-                  <evan-button
-                    v-else
-                    type="icon-secondary"
-                    icon="mdi mdi-star"
-                    @click="$store.state.twin.removeFromFavorites()"
-                  />
+                  <template v-if="!hasError">
+                    <evan-loading
+                      v-if="$store.state.twin.dispatcherStates.favorite"
+                      classes="icon-replacer"
+                    />
+                    <evan-button
+                      v-else-if="!$store.state.twin.favorite"
+                      type="icon-secondary"
+                      icon="mdi mdi-star-outline"
+                      @click="$store.state.twin.addAsFavorite()"
+                    />
+                    <evan-button
+                      v-else
+                      type="icon-secondary"
+                      icon="mdi mdi-star"
+                      @click="$store.state.twin.removeFromFavorites()"
+                    />
 
-                  <b-dropdown
-                    variant="link"
-                    toggle-class="text-decoration-none"
-                    no-caret
-                  >
-                    <template v-slot:button-content>
-                      <evan-button
-                        :type="'icon-secondary'"
-                        icon="mdi mdi-dots-vertical"
-                      />
-                    </template>
-                    <b-dropdown-item
-                      @click="$refs.twinInteractions.duplicateTwin()"
+                    <b-dropdown
+                      variant="link"
+                      toggle-class="text-decoration-none"
+                      no-caret
                     >
-                      {{ '_twin-detail.data.context-menu.duplicate-twin' | translate }}
-                    </b-dropdown-item>
-                    <b-dropdown-item
-                      @click="$refs.twinInteractions.exportTemplate()"
-                    >
-                      {{ '_twin-detail.data.context-menu.export-template' | translate }}
-                    </b-dropdown-item>
-                    <b-dropdown-item
-                      v-if="$store.state.twin.isOwner"
-                      @click="$refs.deleteModal.show()"
-                    >
-                      {{ '_twin-detail.data.context-menu.delete-twin' | translate }}
-                    </b-dropdown-item>
-                  </b-dropdown>
+                      <template v-slot:button-content>
+                        <evan-button
+                          :type="'icon-secondary'"
+                          icon="mdi mdi-dots-vertical"
+                        />
+                      </template>
+                      <b-dropdown-item
+                        @click="$refs.twinInteractions.duplicateTwin()"
+                      >
+                        {{ '_twin-detail.data.context-menu.duplicate-twin' | translate }}
+                      </b-dropdown-item>
+                      <b-dropdown-item
+                        @click="$refs.twinInteractions.exportTemplate()"
+                      >
+                        {{ '_twin-detail.data.context-menu.export-template' | translate }}
+                      </b-dropdown-item>
+                      <b-dropdown-item
+                        v-if="$store.state.twin.isOwner"
+                        @click="$refs.deleteModal.show()"
+                      >
+                        {{ '_twin-detail.data.context-menu.delete-twin' | translate }}
+                      </b-dropdown-item>
+                    </b-dropdown>
+                  </template>
                 </div>
 
                 <evan-modal ref="deleteModal">
@@ -129,12 +126,22 @@
 
               <evan-nav-list
                 :entries="navItems"
-                :show-logout="false"
-                :show-profile="false"
               />
             </div>
           </evan-dapp-wrapper-level-2>
+          <template v-if="hasError">
+            <div
+              class="px-5 text-center"
+              style="margin-top: 15%;"
+            >
+              <h3 class="mb-5">
+                {{ '_twin-detail.generic-error' | translate }}
+              </h3>
+              <evan-failed />
+            </div>
+          </template>
           <transition
+            v-else
             name="fade"
             mode="out-in"
           >

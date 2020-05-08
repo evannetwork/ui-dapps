@@ -18,7 +18,7 @@
 */
 
 import { DigitalTwin, DigitalTwinOptions, Runtime } from '@evan.network/api-blockchain-core';
-import { DispatcherInstance, bccUtils, profileUtils } from '@evan.network/ui';
+import { DispatcherInstance, profileUtils } from '@evan.network/ui';
 import { EvanComponent } from '@evan.network/ui-vue-core';
 
 import * as dispatchers from './dispatchers';
@@ -47,15 +47,15 @@ class DAppTwin extends DigitalTwin {
    */
   dispatcherStates: {
     // true, if anything else is loading (includes also container loading)
-    twin: boolean;
+    twin?: boolean;
     // true when description is saved
-    description: boolean;
+    description?: boolean;
     // add / remove favorite
-    favorite: boolean;
+    favorite?: boolean;
     // adding twin to favorites
-    addFavorite: boolean;
+    addFavorite?: boolean;
     // removing twins from favorites
-    removeFavorite: boolean;
+    removeFavorite?: boolean;
   };
 
   /**
@@ -84,7 +84,7 @@ class DAppTwin extends DigitalTwin {
    * Call super and initialize new twin class.
    */
   constructor(vue: EvanComponent, runtime: Runtime, address: string) {
-    super(runtime as DigitalTwinOptions, { accountId: runtime.activeAccount, address });
+    super(runtime as DigitalTwinOptions, { accountId: runtime.activeIdentity, address });
     this.containerContracts = { };
     this.baseConstructor(vue, runtime, address);
   }
@@ -166,7 +166,7 @@ class DAppTwin extends DigitalTwin {
 
   async setSharingContext(): Promise<void> {
     const [contacts, bMailContent] = await Promise.all([
-      bccUtils.getContacts(this.runtime),
+      profileUtils.getContacts(this.runtime),
       SharingUtils.getTwinShareBMail(this.vue),
     ]);
 

@@ -1,0 +1,24 @@
+@import '~@evan.network/ui/src/style/utils';
+
+.sidenav {
+  width: 240px;
+  height: calc(100vh - 64px);
+  overflow-y: auto;
+  padding-top: 40px;
+  padding-bottom: 40px;
+  position: fixed;
+  top: 0;
+  overflow-y: auto;
+
+  .evan-nav-list {
+    border-left: 3px solid var(--evan-bg-level-2);
+    margin-left: 3px;
+    background: white;
+    .nav-entries {
+      a {
+        font-weight: 600;
+        font-size: 12px;
+      }
+    }
+  }
+}

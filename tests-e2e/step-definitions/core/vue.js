@@ -3,8 +3,6 @@ import { Given, When, Then } from 'cucumber';
 
 import * as testUtils from '../../test-utils/test-utils.js';
 
-let loggedIn = false;
-
 Given(/^I log in to evan.network using vue( with )?(\w+)?$/, async (customPart, accountName) => {
   const evan = testUtils.setupEvan(client);
 
@@ -14,9 +12,6 @@ Given(/^I log in to evan.network using vue( with )?(\w+)?$/, async (customPart, 
   const user = evan.accounts[accountName || 'default'] || evan.accounts.default;
   await client.url(`${evan.baseUrl}#/dashboard.vue.evan`);
 
-  // login using german language when tagged with '@german'
-  const language = global.tags && global.tags.includes('@german') ? 'de' : 'en';
-
   client.execute(function setDefaults(lang) { // eslint-disable-line prefer-arrow-callback
     window.localStorage.setItem('evan-vault', '');
     window.localStorage.setItem('evan-test-mode', true);
@@ -24,7 +19,7 @@ Given(/^I log in to evan.network using vue( with )?(\w+)?$/, async (customPart, 
     window.localStorage.setItem('evan-language', lang);
     window.localStorage.setItem('evan-test-recaptchaId', '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI');
     return true;
-  }, [language], function (result) {
+  }, [testUtils.getLanguage()], function (result) {
     this.assert.ok(result.value);
   });
 
@@ -44,16 +39,11 @@ Given(/^I log in to evan.network using vue( with )?(\w+)?$/, async (customPart, 
   await client.click('.btn.btn-primary:not([disabled])');
 
   await client.waitForElementNotPresent('.evan-loading', 3 * 1000);
-
-  loggedIn = true;
 });
 
 Given('I go to the evan.network startpage', async () => {
   client.useCss();
   const evan = testUtils.setupEvan(client);
-
-  // login using german language when tagged with '@german'
-  const language = global.tags && global.tags.includes('@german') ? 'de' : 'en';
 
   await client.url(`${evan.baseUrl}#/dashboard.vue.evan`);
   await client.execute(function setDefaults(lang) { // eslint-disable-line prefer-arrow-callback
@@ -61,26 +51,19 @@ Given('I go to the evan.network startpage', async () => {
     window.localStorage.setItem('evan-test-mode', true);
     window.localStorage.setItem('evan-test-recaptchaId', '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI');
     return true;
-  }, [language]);
+  }, [testUtils.getLanguage()]);
   await client.waitForElementNotPresent('#evan-initial-loading', 60 * 1000);
   await client.waitForElementVisible('#onboarding\\.vue\\.evan', 60 * 1000);
 });
 
 When(/I log out from vue/, async () => {
-  client.useCss();
-  const evan = testUtils.setupEvan(client);
-
-  if (loggedIn) {
-    loggedIn = false;
-
-    await client.url(`${evan.baseUrl}#/dashboard.vue.evan`);
-    await client.waitForElementPresent('#evan-dapp-profile', 10 * 1000);
-    await client.click('#evan-dapp-profile');
-    await client.waitForElementPresent('#evan-logout', 10 * 1000);
-    await client.click('#evan-logout');
-    await client.waitForElementPresent('.modal-content #submit-logout', 10 * 1000);
-    await client.click('#submit-logout');
-  }
+  await client.execute(function setDefaults(lang) { // eslint-disable-line prefer-arrow-callback
+    window.localStorage.clear();
+    window.localStorage.setItem('evan-language', lang);
+    window.localStorage.setItem('evan-test-mode', true);
+    window.localStorage.setItem('evan-test-recaptchaId', '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI');
+    return true;
+  }, [testUtils.getLanguage()]);
 });
 
 Then(/I am no longer logged in to vue/, async () => {

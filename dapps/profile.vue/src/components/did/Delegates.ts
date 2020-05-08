@@ -19,17 +19,16 @@
 
 import Component, { mixins } from 'vue-class-component';
 import { EvanComponent, EvanTableColumn, ContactInterface } from '@evan.network/ui-vue-core';
-import { bccUtils } from '@evan.network/ui';
-import { isEqual } from 'lodash';
+import { profileUtils, bccUtils } from '@evan.network/ui';
 import { Prop } from 'vue-property-decorator';
-import { DidService } from './DidService';
-import { Delegate } from './DidInterfaces';
 
 @Component
 export default class DelegatesComponent extends mixins(EvanComponent) {
-  @Prop() delegates: Delegate[];
+  @Prop() delegates: string[];
 
-  isEditMode = false;
+  @Prop() isEditMode;
+
+  @Prop() isLoading;
 
   contacts: ContactInterface[] = [];
 
@@ -37,10 +36,7 @@ export default class DelegatesComponent extends mixins(EvanComponent) {
     {
       key: 'did',
       label: this.$t('_profile.did.did'),
-    },
-    {
-      key: 'note',
-      label: this.$t('_profile.did.note'),
+      tdClass: 'truncate',
     },
     {
       key: 'action',
@@ -49,58 +45,27 @@ export default class DelegatesComponent extends mixins(EvanComponent) {
     },
   ]
 
-
-  previousData: Delegate[] = [];
-
-  async mounted(): Promise<void> {
-    this.contacts = await bccUtils.getContacts(this.getRuntime());
+  async created(): Promise<void> {
+    this.contacts = await profileUtils.getContacts(this.getRuntime());
+    // Attach DID instead of accountId / identity
+    this.contacts = await Promise.all(this.contacts.map(async (contact) => ({
+      label: contact.label,
+      value: await bccUtils.getDidFromAddress(this.getRuntime(), contact.value),
+    })));
   }
 
   /**
-   * Temporarily add contact to delegates
-   * @param contact selected contact
+   * Filter out already set delegates
    */
-  async onSelectContact(contact: ContactInterface): Promise<void> {
-    this.delegates = [...this.delegates, {
-      did: contact.value,
-      note: contact.label,
-    }];
+  get filteredContacts(): ContactInterface[] {
+    return this.contacts.filter((contact) => !this.delegates.includes(contact.value));
   }
 
-  saveDelegates(): void {
-    DidService.saveDelegates(this.delegates);
-    this.isEditMode = false;
+  onSelectContact(contact: ContactInterface): void {
+    this.$emit('addDelegate', contact.value);
   }
 
-  /**
-   * Removes the selected delegate temporarily
-   * @param index row index of the item to be removed
-   */
   deleteDelegate(index: number): void {
-    this.delegates = this.delegates.filter((_, i) => i !== index);
-  }
-
-  /**
-   * Enable edit mode and save current data
-   */
-  onEditStart(): void {
-    this.previousData = this.delegates;
-    this.isEditMode = true;
-  }
-
-  /**
-   * Disable edit mode and recover previous data
-   */
-  onEditCancel(): void {
-    this.delegates = this.previousData;
-    this.isEditMode = false;
-  }
-
-  /**
-   * Checks for any real change made
-   */
-  get hasChanges(): boolean {
-    // deep object comparison
-    return !isEqual(this.previousData, this.delegates);
+    this.$emit('deleteDelegate', index);
   }
 }

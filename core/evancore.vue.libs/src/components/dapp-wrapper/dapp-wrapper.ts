@@ -23,6 +23,7 @@ import { Prop } from 'vue-property-decorator';
 // evan.network imports
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
+import { session, lightwallet, bccHelper } from '@evan.network/ui-session';
 import {
   profileUtils, EvanQueue, Dispatcher, DispatcherInstance,
 } from '@evan.network/ui';
@@ -72,63 +73,6 @@ export default class DAppWrapperComponent extends mixins(EvanComponent) {
       return `${this.$store.state.uiLibBaseUrl}/assets/evan-logo-small.svg`;
     },
   }) brandSmall: string;
-
-  /**
-   * routes that should be displayed in the sidepanel, if no sidebar slot is given
-   */
-  @Prop({
-    type: Array,
-    default(): DAppWrapperRouteInterface[] {
-      return [
-        {
-          icon: 'mdi mdi-apps',
-          path: `favorites.vue.${domainName}`,
-          title: `${i18nPref}.favorites`,
-        },
-        {
-          icon: 'mdi mdi-cube-outline',
-          path: `digitaltwins.${domainName}`,
-          title: `${i18nPref}.digitaltwins`,
-        },
-        {
-          icon: 'mdi mdi-cube-outline',
-          path: `assets.${domainName}`,
-          title: `${i18nPref}.assets`,
-        },
-        {
-          icon: 'mdi mdi-checkbox-marked-circle-outline',
-          path: `verifications.vue.${domainName}`,
-          title: `${i18nPref}.verifications`,
-        },
-      ];
-    },
-  }) routes: Array<DAppWrapperRouteInterface>;
-
-  /**
-   * organized like the normal routes, but displayed smaller on the bottom of the nav
-   */
-  @Prop({
-    type: Array,
-    default(): DAppWrapperRouteInterface[] {
-      return [
-        {
-          icon: 'mdi mdi-format-list-checks',
-          path: `mailbox.vue.${domainName}`,
-          title: `${i18nPref}.actions`,
-        },
-        {
-          icon: 'mdi mdi-help-circle-outline',
-          path: `help.vue.${domainName}`,
-          title: `${i18nPref}.help`,
-        },
-        {
-          icon: 'mdi mdi-account-outline',
-          path: `profile.vue.${domainName}`,
-          title: `${i18nPref}.profile`,
-        },
-      ];
-    },
-  }) bottomRoutes: Array<DAppWrapperRouteInterface>;
 
   /**
    * base url of the vue component that uses the dapp-wrapper (e.g.: dashboard.evan)
@@ -201,6 +145,12 @@ export default class DAppWrapperComponent extends mixins(EvanComponent) {
   onboarding: Function|boolean = false;
 
   /**
+   * Function for unsubscribing from session changes, so the ui is able to react for account /
+   * identity switches.
+   */
+  stopSessionWatcher: Function;
+
+  /**
    * Watch for hash updates when the user is on the onboarding screen. Wait for the user to finished
    * the process.
    */
@@ -210,7 +160,7 @@ export default class DAppWrapperComponent extends mixins(EvanComponent) {
    * current user information
    */
   userInfo = {
-    address: dappBrowser.core.activeAccount(), // TODO: wording "address" vs "accountId" in different components
+    address: '', // TODO: wording "address" vs "accountId" in different components
     addressBook: {} as any, // TODO: resolve any
     alias: '',
     loading: false,
@@ -278,23 +228,9 @@ export default class DAppWrapperComponent extends mixins(EvanComponent) {
   dispatcherHandler: EvanVueDispatcherHandler = null;
 
   /**
-   * Returns the i18n title key for the active route.
-   *
-   * @return     {string}  active route i18n or route path
+   * routes that should be displayed in the sidepanel, if no sidebar slot is given
    */
-  get activeRouteTitle(): string {
-    if (this.routes) {
-      const allRoutes = [].concat(this.routes, this.bottomRoutes || []);
-
-      for (let i = 0; i < allRoutes.length; i += 1) {
-        if (this.$route.path.startsWith(allRoutes[i].fullPath)) {
-          return allRoutes[i].title;
-        }
-      }
-    }
-
-    return this.$route.path;
-  }
+  routes: { [category: string]: { [type: string]: Array<DAppWrapperRouteInterface> } } = null;
 
   /**
    * Triggered when the a root sidebar navigation was clicked. If the route already activated, show
@@ -310,15 +246,7 @@ export default class DAppWrapperComponent extends mixins(EvanComponent) {
    * Initialize the core runtime for the evan network.
    */
   async created(): Promise<any> {
-    // disable sidebar, when no routes are defined
-    if (!this.routes || this.routes.length === 0) {
-      this.enableSidebar = false;
-    }
-
-    // create fullPath for current routes to get correct active state
-    [...(this.routes || []), ...(this.bottomRoutes || [])].forEach((route) => {
-      route.fullPath = `${this.dapp.baseHash}/${route.path}`; // eslint-disable-line no-param-reassign
-    });
+    this.setRoutes();
 
     // check if the current browser is allowed
     if (dappBrowser.utils.browserName === 'Firefox' && dappBrowser.utils.isPrivateMode) {
@@ -373,6 +301,10 @@ export default class DAppWrapperComponent extends mixins(EvanComponent) {
     if (this.dispatcherHandler) {
       this.dispatcherHandler.destroy();
     }
+    // stop the ui session and runtime updates
+    if (this.stopSessionWatcher) {
+      this.stopSessionWatcher();
+    }
     // unbind dapp-wrapper-sidebar level handlers
     window.removeEventListener('dapp-wrapper-sidebar-2-enable', this.sidebar2EnableWatcher);
     window.removeEventListener('dapp-wrapper-sidebar-2-disable', this.sidebar2DisableWatcher);
@@ -402,117 +334,94 @@ export default class DAppWrapperComponent extends mixins(EvanComponent) {
    * runtimes
    */
   async handleLoginOnboarding(): Promise<void> {
-    // check for logged in account and if its onboarded
-    const activeAccount = dappBrowser.core.activeAccount();
-    let loggedIn = false;
-    let isOnboarded = false;
+    this.stopSessionWatcher = await session.start(async (action: string): Promise<string> => {
+      let result;
 
-    // check if a user is already logged in, if yes, navigate to the signed in route
-    if (activeAccount && window.localStorage['evan-vault']) {
-      loggedIn = true;
+      switch (action) {
+        case 'onboarding': {
+          await new Promise((resolve) => {
+            this.loading = false;
+            this.onboarding = true;
 
-      try {
-        isOnboarded = await dappBrowser.bccHelper.isAccountOnboarded(activeAccount);
-      } catch (ex) {
-        // user isn't onboarded
-      }
-    }
+            // if the watcher was already bound, remove it!
+            if (this.hashChangeWatcher) {
+              window.removeEventListener('hashchange', this.hashChangeWatcher);
+            }
 
-    if (!isOnboarded || !loggedIn) {
-      this.loading = false;
-      this.onboarding = true;
+            // set the hash change watcher, so we can check that the user finished the onboarding process
+            this.hashChangeWatcher = (): void => {
+              if (window.location.hash.indexOf(`onboarding.vue.${this.domainName}`) === -1) {
+                // recheck login and onboarding
+                resolve();
+              }
+            };
 
-      // if the watcher was already bound, remove it!
-      if (this.hashChangeWatcher) {
-        window.removeEventListener('hashchange', this.hashChangeWatcher);
-      }
+            // add the hash change listener
+            window.addEventListener('hashchange', this.hashChangeWatcher);
 
-      // set the hash change watcher, so we can check that the user finished the onboarding process
-      this.hashChangeWatcher = (): void => {
-        if (window.location.hash.indexOf(`onboarding.vue.${this.domainName}`) === -1) {
-          // recheck login and onboarding
-          this.handleLoginOnboarding();
+            if (this.$route.path.indexOf(`/onboarding.vue.${this.domainName}`) === -1) {
+              /* navigate to the onboarding and apply the current hash as origin, so the onboarding can
+                 navigate back their */
+              this.$router.push({
+                path: `${this.dapp.baseHash}/onboarding.vue.${this.domainName}`,
+                query: {
+                  origin: this.$route.path,
+                  ...this.$route.query,
+                },
+              });
+            }
+          });
+
+          break;
         }
-      };
+        case 'password': {
+          result = await new Promise((resolve) => {
+            this.loading = false;
+            this.userInfo.address = session.activeAccount;
+            this.login = (password: string): void => {
+              // if the user has logged in, reenable loading circle
+              this.login = null;
+              this.loading = true;
+              resolve(password);
+            };
+          });
 
-      // add the hash change listener
-      window.addEventListener('hashchange', this.hashChangeWatcher);
+          break;
+        }
+        case 'runtimeUpdate': {
+          this.loading = true;
+          this.$store.state.runtime = session.identityRuntime; // TODO: remove runtime from $store, check old dapps
 
-      if (this.$route.path.indexOf(`/onboarding.vue.${this.domainName}`) === -1) {
-        /* navigate to the onboarding and apply the current hash as origin, so the onboarding can
-           navigate back their */
-        this.$router.push({
-          path: `${this.dapp.baseHash}/onboarding.vue.${this.domainName}`,
-          query: {
-            origin: this.$route.path,
-            ...this.$route.query,
-          },
-        });
-      }
-    } else {
-      this.onboarding = false;
+          /* create and register a vue dispatcher handler, so applications can easily access dispatcher data
+             from vuex store */
+          if (this.dispatcherHandler) {
+            this.dispatcherHandler.destroy();
+          }
+          this.dispatcherHandler = new EvanVueDispatcherHandler(this);
+          await this.dispatcherHandler.initialize();
 
-      let encryptionKey; let privateKey; let
-        executor;
-
-      // if agent-executor is passed to the dapp-browser, do not try to unlock the current vault
-      const provider = dappBrowser.core.getCurrentProvider();
-      if (provider !== 'agent-executor') {
-        // set the password function
-        dappBrowser.lightwallet.setPasswordFunction(() => new Promise((resolve) => {
+          // send logged in event
+          this.setRoutes();
+          this.$emit('loggedin', this.$store.state.runtime);
+          this.onboarding = false;
           this.loading = false;
-          this.login = (password: string): void => resolve(password);
-        }));
+          this.login = false;
+          this.isLoggedin = true;
 
-        // unlock the profile directly
-        const vault = await dappBrowser.lightwallet.loadUnlockedVault();
-        encryptionKey = vault.encryptionKey;
-        privateKey = dappBrowser.lightwallet.getPrivateKey(vault, activeAccount);
-      } else {
-        const agentExecutor = await dappBrowser.core.getAgentExecutor();
-        const coreRuntime = dappBrowser.bccHelper.getCoreRuntime();
-
-        encryptionKey = agentExecutor.key;
-        executor = new bcc.ExecutorAgent({
-          agentUrl: agentExecutor.agentUrl,
-          config: {},
-          contractLoader: coreRuntime.contractLoader,
-          logLog: bcc.logLog,
-          logLogLevel: bcc.logLogLevel,
-          signer: coreRuntime.signer,
-          token: agentExecutor.token,
-          web3: coreRuntime.web3,
-        });
+          // load the user infos like alias, mails, dispatchers ...
+          if (this.topLevel) {
+            await this.loadUserSpecific();
+            window.localStorage.setItem('evan-alias', this.userInfo.alias);
+          }
+          break;
+        }
+        default: {
+          // uknown event type?
+        }
       }
 
-      // setup runtime and save it to the axios store
-      this.$store.state.runtime = await dappBrowser.bccHelper.createDefaultRuntime(
-        bcc,
-        activeAccount,
-        encryptionKey,
-        privateKey,
-        JSON.parse(JSON.stringify(dappBrowser.config)),
-        null,
-        null,
-        { executor },
-      );
-      /* create and register a vue dispatcher handler, so applications can easily access dispatcher data
-         from vuex store */
-      this.dispatcherHandler = new EvanVueDispatcherHandler(this);
-      await this.dispatcherHandler.initialize();
-
-      // send logged in event
-      this.$emit('loggedin', this.$store.state.runtime);
-      this.loading = false;
-      this.login = false;
-      this.isLoggedin = true;
-
-      // load the user infos like alias, mails, dispatchers ...
-      if (this.topLevel) {
-        await this.loadUserSpecific();
-        window.localStorage.setItem('evan-alias', this.userInfo.alias);
-      }
-    }
+      return result;
+    }, this.topLevel);
   }
 
   /**
@@ -520,7 +429,7 @@ export default class DAppWrapperComponent extends mixins(EvanComponent) {
    */
   async loadUserSpecific(): Promise<void> {
     this.userInfo.loading = true;
-    this.userInfo.address = dappBrowser.core.activeAccount();
+    this.userInfo.address = session.activeAccount;
 
     // load alias from addressbook
     this.userInfo.addressBook = await this.$store.state.runtime.profile.getAddressBook();
@@ -693,6 +602,77 @@ export default class DAppWrapperComponent extends mixins(EvanComponent) {
   }
 
   /**
+   * Update routes and enforce rerendering
+   */
+  setRoutes(): void {
+    this.$set(this, 'routes', {
+      left: {
+        top: [
+          {
+            icon: 'mdi mdi-apps',
+            path: `favorites.vue.${domainName}`,
+            title: `${i18nPref}.favorites`,
+          },
+        ],
+        center: [
+          {
+            icon: 'mdi mdi-cube-outline',
+            path: `assets.${domainName}`,
+            title: `${i18nPref}.assets`,
+          },
+          {
+            icon: 'mdi mdi-account-outline',
+            path: `profile.vue.${domainName}/${session.activeIdentity}`,
+            title: `${i18nPref}.profile`,
+          },
+          {
+            icon: 'mdi mdi-credit-card-outline',
+            path: `wallet.${domainName}`,
+            title: `${i18nPref}.wallet`,
+          },
+          {
+            icon: 'mdi mdi-bell-outline rotate-45',
+            path: `mailbox.vue.${domainName}`,
+            title: `${i18nPref}.actions`,
+          },
+        ],
+        bottom: [
+          {
+            icon: 'mdi mdi-settings-outline',
+            path: `settings.${domainName}`,
+            title: `${i18nPref}.settings`,
+          },
+        ],
+      },
+      bottom: {
+        right: [
+          {
+            icon: 'mdi mdi-help-circle-outline',
+            path: `help.vue.${domainName}`,
+            title: `${i18nPref}.help`,
+          },
+          {
+            action: () => (this.$refs.queuePanel as any).show(),
+            icon: 'mdi mdi-sync',
+            id: 'synchronization',
+            title: `${i18nPref}.synchronization`,
+          },
+        ],
+      },
+    });
+
+    // create fullPath for current routes to get correct active state
+    [
+      ...this.routes.left.top,
+      ...this.routes.left.center,
+      ...this.routes.left.bottom,
+      ...this.routes.bottom.right,
+    ].forEach((route) => {
+      route.fullPath = `${this.dapp.baseHash}/${route.path}`; // eslint-disable-line no-param-reassign
+    });
+  }
+
+  /**
    * Load the queue data
    */
   async setupQueue(): Promise<void> {
@@ -700,7 +680,7 @@ export default class DAppWrapperComponent extends mixins(EvanComponent) {
 
     // load queue for the current account and load the queue entries
     const { runtime } = this.$store.state;
-    const queue = await new EvanQueue(this.$store.state.runtime.activeAccount);
+    const queue = await new EvanQueue(this.$store.state.runtime.activeIdentity);
     const dispatchers = await queue.load('*');
 
     // load all dispatcher instances for this user

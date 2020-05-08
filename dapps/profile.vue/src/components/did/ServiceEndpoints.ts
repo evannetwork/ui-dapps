@@ -19,28 +19,47 @@
 
 import Component, { mixins } from 'vue-class-component';
 import { EvanComponent, EvanTableColumn } from '@evan.network/ui-vue-core';
-import { isEqual } from 'lodash';
 import { Prop } from 'vue-property-decorator';
-import { DidService } from './DidService';
+import { ValidationProvider, ValidationObserver, extend } from 'vee-validate';
+import { required, excluded } from 'vee-validate/dist/rules';
+import { ServiceEndpoint } from './DidInterfaces';
 
-@Component
+@Component({
+  components: {
+    ValidationProvider,
+    ValidationObserver,
+  },
+})
 export default class ServiceEndpointsComponent extends mixins(EvanComponent) {
-  @Prop() endpoints: { label: string; url: string }[];
+  @Prop() isEditMode;
 
-  isEditMode = false;
+  @Prop() isLoading;
 
-  newUrl = '';
+  @Prop() endpoints: ServiceEndpoint[];
 
-  newLabel = '';
+  formKey = 'initial';
+
+  newId: string = null;
+
+  newType: string = null;
+
+  newUrl: string = null;
 
   columns: EvanTableColumn[] = [
     {
-      key: 'label',
-      label: this.$t('_profile.did.label'),
+      key: 'id',
+      label: this.$t('_profile.did.id'),
+      tdClass: 'truncate',
+    },
+    {
+      key: 'type',
+      label: this.$t('_profile.did.type'),
+      tdClass: 'truncate',
     },
     {
       key: 'url',
-      label: 'URL',
+      label: this.$t('_profile.did.url'),
+      tdClass: 'truncate',
     },
     {
       key: 'action',
@@ -49,22 +68,31 @@ export default class ServiceEndpointsComponent extends mixins(EvanComponent) {
     },
   ]
 
-  previousData = [];
+  get endpointIds(): string[] {
+    return this.endpoints.map((endpoint) => endpoint.id);
+  }
 
-  /**
-   * Temporarily add new entry to row  and add new empty row
-   */
-  addEndpointRow(): void {
-    if (!this.newLabel || !this.newUrl) {
-      return;
-    }
+  created(): void {
+    this.setupValidation();
+  }
 
-    this.endpoints = [...this.endpoints, {
-      label: this.newLabel,
-      url: this.newUrl,
-    }];
-    this.newLabel = '';
-    this.newUrl = '';
+  onSubmitRow(): void {
+    const newEndpoints: ServiceEndpoint[] = [
+      ...this.endpoints,
+      {
+        id: this.newId,
+        type: this.newType,
+        url: this.newUrl,
+      },
+    ];
+
+    this.newId = null;
+    this.newType = null;
+    this.newUrl = null;
+    // Workaround to reset to non-dirty inputs
+    this.formKey = new Date().toISOString();
+
+    this.$emit('updateEndpoints', newEndpoints);
   }
 
   /**
@@ -72,42 +100,41 @@ export default class ServiceEndpointsComponent extends mixins(EvanComponent) {
    * @param index row index of the item to be removed
    */
   deleteEndpoint(index: number): void {
-    this.endpoints = this.endpoints.filter((_, i) => i !== index);
-  }
+    const newEndpoints = this.endpoints.filter((_, idx) => idx !== index);
 
-  saveEndpoints(): void {
-    this.addEndpointRow();
-
-    DidService.saveServiceEndpoints(this.endpoints);
-
-    this.isEditMode = false;
+    this.$emit('updateEndpoints', newEndpoints);
   }
 
   /**
-   * Enable edit mode and save current data
+   * Set up used validation rules
    */
-  onEditStart(): void {
-    this.previousData = this.endpoints;
-    this.isEditMode = true;
-  }
+  setupValidation(): void {
+    extend('required', {
+      ...required,
+      message: this.$t('_evan.validation.required'),
+    });
 
-  /**
-   * Disable edit mode and recover previous data
-   */
-  onEditCancel(): void {
-    this.endpoints = this.previousData;
-    this.isEditMode = false;
-  }
+    extend('url', {
+      validate: (value: string) => {
+        try {
+          // Validate against RFC 3986
+          return !!new URL(value);
+        } catch (e) {
+          return false;
+        }
+      },
+      message: this.$t('_evan.validation.url'),
+    });
 
-  /**
-   * Checks for any real change made
-   */
-  get hasChanges(): boolean {
-    // check for filled new row
-    if (this.newLabel && this.newUrl) {
-      return true;
-    }
-    // otherwise deep object comparison
-    return !isEqual(this.previousData, this.endpoints);
+    extend('excluded', {
+      ...excluded,
+      message: this.$t('_profile.did.id-unique-error'),
+    });
+
+    extend('startsWith', {
+      validate: (value: string, args: { term: string }) => value.startsWith(args.term),
+      message: this.$t('_profile.did.did-format-error'),
+      params: ['term'],
+    });
   }
 }

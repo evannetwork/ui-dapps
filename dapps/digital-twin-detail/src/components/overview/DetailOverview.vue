@@ -18,23 +18,22 @@
 */
 
 <template>
-  <div class="d-flex">
-    <div class="content">
-      <!-- TODO: Use proper DID -->
-      <detail-overview-general
-        v-if="twin"
-        class="mb-3"
-        :did="did"
-        :is-owner="$store.state.twin.isOwner"
-        :owner-name="twin.ownerName"
-        :owner-address="twin.ownerAddress"
-        :created-at="twin.createdAt"
-      />
+  <div class="evan-content-container">
+    <!-- TODO: Use proper DID -->
+    <detail-overview-general
+      v-if="twin"
+      class="mb-3"
+      :did="did"
+      :is-owner="$store.state.twin.isOwner"
+      :owner-name="twin.ownerName"
+      :owner-address="twin.ownerAddress"
+      :created-at="twin.createdAt"
+    />
 
-      <detail-overview-transactions
-        :transactions="transactions"
-      />
-    </div>
+    <detail-overview-transactions
+      class="mt-5"
+      :transactions="transactions"
+    />
   </div>
 </template>
 
@@ -43,11 +42,3 @@ import DetailOverviewComponent from './DetailOverview';
 
 export default DetailOverviewComponent;
 </script>
-
-<style lang="scss" scoped>
-.content {
-  margin-left: auto;
-  margin-right: auto;
-  padding-top: 56px;
-}
-</style>

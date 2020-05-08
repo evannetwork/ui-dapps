@@ -21,7 +21,18 @@
 
 .evan-nav-list {
   height: 100%;
-  padding-bottom: 1px;
+
+  .navlist-header {
+    margin: 32px 0;
+
+    text-align: center;
+
+    .navlist-header-icon {
+      font-size: 6rem;
+
+      color: cssVar('gray-900');
+    }
+  }
 
   &, .nav-entries {
     display: flex;
@@ -31,35 +42,47 @@
   // use separated nav-entries, so we can apply custom entries at the bottom and at the top,
   // without using my-auto
   .nav-entries {
-    flex: 1;
+    background-color: cssVar('bg-level-3');
+    overflow: hidden;
+    z-index: 0;
 
     a, button {
-      font-size: 15px;
       font-weight: 600;
 
       display: flex;
       align-items: center;
 
-      height: 70px;
+      height: 48px;
+      min-height: 48px;
+      max-height: 48px;
       padding-left: 22px;
 
       cursor: pointer;
-      transition: background-color 0.5s ease-out, color 0.5s ease-out;
       text-decoration: none;
+      text-transform: uppercase;
 
       border: none;
       outline: none;
       background-color: white;
 
+      transition: margin 0.3s ease-in-out;
+      z-index: 20;
+
       &, * {
         color: cssVar('gray-900');
       }
 
+      i {
+        font-size: 24px;
+      }
+
       &.active {
-        background-color: cssVar('bg-level-2');
+        margin: 3px 0;
+        box-shadow: 230px 0px 3px 3px cssVar('bg-level-3'), 10px 3px 3px -3px cssVar('primary'), 0px -36px 3px -15px cssVar('primary');
+        z-index: 10;
 
         &, * {
-          color: cssVar('dark');
+          color: cssVar('primary');
         }
       };
 

@@ -12,7 +12,7 @@
           "title": "Login to the evan.network"
         },
         "1": {
-          "desc": "",
+          "desc": "Your data security is very important to us. Therefore, the login process consists of two parts. Please insert your password, to unlock your profile and continue with your work.<br><br><b>Please note:</b> For security reasons, you must re-enter your password after each page load. In this way you remain completely self sovereign and master of your data.",
           "title": "Welcome to the evan.network"
         }
       },
@@ -67,6 +67,7 @@
     },
     "invalid-mnemonic-integrity": "The composition of the words in your recovery key is incorrect. Please check your input.",
     "invalid-mnemonic-words-incorrect": "One or more of the given words is not allowed in recovery keys. Please check your input.",
+    "login": "Login",
     "mail-invitation-accepted": {
       "body": "Hello, <br>the user with the email address {userEmail} accepted your invitation to the evan.network and is now available under that name: {userAlias}.<br><br> Your evan.network Team",
       "subject": "User has accepted your request",
@@ -93,7 +94,7 @@
       "next": "Next",
       "no-profile": "No identity found",
       "no-profile-desc": "There is no evan.network identity associated with this recovery key.",
-      "not-signed-up": "You don't have an account yet? <a href=\"#/dashboard.vue.evan/onboarding.vue.evan/sign-up\">Sign Up</a>",
+      "not-signed-up": "You don't have an account yet?",
       "recovery-key": "Recovery Key",
       "title": "Log in",
       "welcome": "Contact request",
@@ -109,14 +110,18 @@
       },
       "agree": "Agree",
       "alias": {
-        "company": "Name of the company",
         "error": "Please enter a account name!",
-        "hint-company": "The name of your company is only visible to you.",
-        "hint-user": "The account name is only visible to you.",
-        "placeholder": "John Doe | Sample Company Inc.",
-        "user": "Account name"
+        "hint": "The account name is only visible to you.",
+        "placeholder": "John Doe",
+        "label": "Account name"
       },
-      "already-signed-up": "You are already signed up? <a href=\"#/dashboard.vue.evan/onboarding.vue.evan/sign-in\">Login</a>",
+      "companyAlias": {
+        "hint": "The name of your company is only visible to you.",
+        "label": "Name of the company",
+        "error": "Please enter a company name!",
+        "placeholder": "Sample Company Inc."
+      },
+      "already-signed-up": "You are already signed up?",
       "cancel-riddle": "Cancel",
       "create-account": "Create your account",
       "create-profile": {

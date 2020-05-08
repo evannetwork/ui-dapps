@@ -20,13 +20,13 @@
 // vue imports
 import axios from 'axios';
 import Component, { mixins } from 'vue-class-component';
-import Vue from 'vue';
 import { Prop } from 'vue-property-decorator';
 
 // evan.network imports
 import { EvanComponent, getDomainName } from '@evan.network/ui-vue-core';
 import * as bcc from '@evan.network/api-blockchain-core';
-import * as dappBrowser from '@evan.network/ui-dapp-browser';
+import { utils } from '@evan.network/ui-dapp-browser';
+import { bccHelper, session, lightwallet } from '@evan.network/ui-session';
 import { agentUrl } from '@evan.network/ui';
 
 @Component({ })
@@ -80,22 +80,22 @@ export default class AcceptContact extends mixins(EvanComponent) {
       this.loading = true;
 
       // unlock the profile directly
-      const vault = await dappBrowser.lightwallet.loadUnlockedVault();
-      const activeAccount = dappBrowser.lightwallet.getPrimaryAccount(vault);
+      const vault = await lightwallet.loadUnlockedVault();
+      const activeAccount = lightwallet.getPrimaryAccount(vault);
 
-      // setup runtime and save it to the axios store
-      this.$store.state.runtime = await dappBrowser.bccHelper.createDefaultRuntime(
-        bcc,
+      // setup runtime and save it to the vuex store
+      this.$store.state.runtime = await bccHelper.createRuntime(
         activeAccount,
+        null,
         vault.encryptionKey,
-        dappBrowser.lightwallet.getPrivateKey(vault, activeAccount),
+        lightwallet.getPrivateKey(vault, activeAccount),
       );
 
       this.loading = false;
     }
 
     this.runtime = this.$store.state.runtime;
-    this.accountId = dappBrowser.core.activeAccount();
+    this.accountId = session.activeAccount;
     this.inviteeAddress = this.$route.query.inviteeAddress;
 
     if (this.inviteeAddress || this.$props.loadAlias) {
@@ -130,16 +130,18 @@ export default class AcceptContact extends mixins(EvanComponent) {
       // trigger smart agent to pay out credit eves
       await axios.post(`${agentUrl}/api/smart-agents/onboarding/accept`, {
         invitationId: this.$route.query.onboardingID,
-        accountId: this.runtime.activeAccount,
+        accountId: this.runtime.activeIdentity,
       });
-
 
       // load my address book
       await this.runtime.profile.loadForAccount(this.accountId,
         this.runtime.profile.treeLabels.addressBook);
       // search for the target public key
-      const targetProfile = await dappBrowser.bccHelper.getProfileForAccount(bcc,
-        queryParams.inviteeAddress);
+      const targetProfile = new bcc.Profile({
+        ...(this.runtime as bcc.ProfileOptions),
+        profileOwner: queryParams.inviteeAddress as string,
+        accountId: queryParams.inviteeAddress as string,
+      });
       const targetPubKey = await targetProfile.getPublicKey();
       if (!targetPubKey) {
         throw new Error(`No public key found for account ${queryParams.inviteeAddress}`);
@@ -186,7 +188,7 @@ export default class AcceptContact extends mixins(EvanComponent) {
         ].join('/');
       }, 2000);
     } catch (ex) {
-      dappBrowser.utils.log(ex.message, 'error');
+      utils.log(ex.message, 'error');
       (this.$refs.acceptingError as any).show();
     }
 

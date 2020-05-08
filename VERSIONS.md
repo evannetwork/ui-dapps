@@ -8,6 +8,37 @@
 
 ### Deprecations
 
+## Version 5.0.1
+### Features
+- use new `@evan.network/ui-dapp-browser`
+- use activeIdentity
+- be able to use `@evan.network/api-blockchain-core`  with identities
+- automatic useIdentity detection
+- dapps
+  - add `ui-session` for handling logged in users
+  - add `olddappbrowser.evan` dapp, to enable backwards compatibility
+  - `digital-twin-detail`
+    - add address to twin detail
+  - add `settings` dapp
+    - includes private / encryption key export
+    - includes runtime config export
+    - includes browser settings
+- core
+  - add new sidebar / bottom bar design with active identity display
+- add DID Document section to profile DApp
+- libs
+  - add `vee-validate` as dapp library (`validate.vee.libs`)
+- use identity for profile encryption salting
+- seperate `payment.evan` dapp
+  - moved eve top up / eve sent to seperate dapp
+  - payment channel handling and status display for ipfs payment channels
+
+### Fixes
+- Last transactions for twins created by identities are now appearing
+- fix old-dapp-browser `createDefaultRuntime` without initial created core runtime
+- fix profile design
+- fix login for rly old profiles
+
 
 ## Version 4.0.1
 - general bug fixes and small improvements

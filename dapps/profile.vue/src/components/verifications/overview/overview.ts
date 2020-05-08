@@ -56,20 +56,21 @@ export default class VerificationsOverviewComponent extends mixins(EvanComponent
    */
   type = '';
 
-  async created() {
-    const runtime = (<any> this).getRuntime();
+  async created(): Promise<void> {
+    const runtime = this.getRuntime();
 
     // use url address or use runtime activeAccount as default
-    this.address = (this as any).$route.params.address || runtime.activeAccount;
+    this.address = this.$route.params.address || runtime.activeIdentity;
 
     // switch issue account
-    this.canIssue = runtime.activeAccount === '0x662fD340606B6c00C51d1915A9f66C081E412e4B';
+    // can the current account issue notary verifications and finish the request?
+    this.canIssue = runtime.activeIdentity === '0x662fD340606B6c00C51d1915A9f66C081E412e4B';
 
     // load users type
     this.type = (await runtime.dataContract.getEntry(
-      (this as any).$store.state.profileDApp.profile.profileContract,
+      this.$store.state.profileDApp.profile.profileContract,
       'accountDetails',
-      runtime.activeAccount,
+      runtime.activeIdentity,
     )).profileType;
 
     this.loading = false;

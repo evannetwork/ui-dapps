@@ -17,7 +17,7 @@
   the following URL: https://evan.network/license/
 */
 
-import { core } from '@evan.network/ui-dapp-browser';
+import { bccHelper } from '@evan.network/ui-session';
 import Component, { mixins } from 'vue-class-component';
 import { EvanComponent } from '@evan.network/ui-vue-core';
 
@@ -25,6 +25,11 @@ import { sendEveDispatcher } from '../../dispatchers/registry';
 
 @Component({})
 export default class WalletComponent extends mixins(EvanComponent) {
+  /**
+   * Current account to show the wallet for
+   */
+  accountId: string = null;
+
   /**
    * Current display mode in side panel.
    */
@@ -56,13 +61,14 @@ export default class WalletComponent extends mixins(EvanComponent) {
    * Bin window resize watcher to handle side panel state and handle send eve events.
    */
   async created(): Promise<void> {
+    this.accountId = this.getRuntime().activeAccount;
     await this.loadBalance();
 
     // setup dispatcher watchers
     this.listeners.push(sendEveDispatcher.watch(async ($event: any) => {
       // if dispatcher was finished, reload data and reset form
       if ($event.detail.status === 'finished' || $event.detail.status === 'deleted') {
-        // force ui rerender
+        // force ui to re-render
         this.loading = true;
         this.$nextTick(() => { this.loading = false; });
       }
@@ -70,7 +76,7 @@ export default class WalletComponent extends mixins(EvanComponent) {
   }
 
   async loadBalance(): Promise<void> {
-    const balance = await core.getBalance(this.getRuntime().activeAccount);
+    const balance = await bccHelper.getBalance(this.getRuntime().activeAccount);
     this.balance = parseFloat(balance.toString());
   }
 }

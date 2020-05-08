@@ -39,15 +39,9 @@ const dispatcher = new Dispatcher(
  */
 async function doKeyExchange(runtime: any, targetAcc: string, alias: string) {
   const profile = new bcc.Profile({
+    ...runtime,
     accountId: targetAcc,
-    contractLoader: runtime.contractLoader,
-    dataContract: runtime.dataContract,
-    defaultCryptoAlgo: 'aes',
-    executor: runtime.executor,
-    ipld: runtime.ipld,
-    log: runtime.logger.log,
-    nameResolver: runtime.nameResolver,
-    rightsAndRoles: runtime.rightsAndRoles,
+    profileOwner: targetAcc,
   } as bcc.ProfileOptions);
 
   const targetPubKey = await profile.getPublicKey();
@@ -80,7 +74,7 @@ dispatcher
     // create b-mail including an notaryVerificationRequest attachment
     await runtime.mailbox.sendMail({
       content: {
-        from: runtime.activeAccount,
+        from: runtime.activeIdentity,
         to: notarySmartAgentAccountId,
         title: data.mail.title,
         body: data.mail.body,
@@ -89,7 +83,7 @@ dispatcher
           ...data.requestData,
         }],
       },
-    }, runtime.activeAccount, notarySmartAgentAccountId, verificationCost);
+    }, runtime.activeIdentity, notarySmartAgentAccountId, verificationCost);
   });
 
 export default dispatcher;

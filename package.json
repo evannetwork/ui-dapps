@@ -7,7 +7,7 @@
     "@babel/runtime": "^7.3.1",
     "@evan.network/api-blockchain-core": "^2.3.0",
     "@evan.network/smart-contracts-core": "^2.1.1",
-    "@evan.network/ui-dapp-browser": "^2.8.0",
+    "@evan.network/ui-dapp-browser": "^3.0.0",
     "@fortawesome/fontawesome-free": "^5.7.2",
     "@mdi/font": "^4.5.0",
     "@types/lodash": "^4.14.149",
@@ -18,7 +18,7 @@
     "babel-plugin-lodash": "^3.3.4",
     "babelify": "^10.0.0",
     "bootstrap": "^4.3.1",
-    "bootstrap-vue": "^2.1.0",
+    "bootstrap-vue": "^2.9.0",
     "browserify": "^16.5.0",
     "cache-loader": "^4.1.0",
     "common-shakeify": "^0.4.6",
@@ -61,6 +61,7 @@
     "tslint": "^5.16.0",
     "typescript": "^3.7.4",
     "uglifyjs-webpack-plugin": "^1.2.7",
+    "vee-validate": "^3.2.5",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^2.0.0",
     "vue": "^2.5.2",
@@ -71,7 +72,7 @@
     "vue-recaptcha": "^1.1.1",
     "vue-router": "^3.0.1",
     "vue-select": "^3.2.0",
-    "vue-template-compiler": "^2.5.16",
+    "vue-template-compiler": "^2.6.11",
     "vue-toasted": "^1.1.27",
     "vue2-leaflet": "^2.0.2",
     "vuex": "^3.1.0",
@@ -81,42 +82,6 @@
     "webpack-cli": "^3.2.1"
   },
   "description": "Mono-Repo for organising evan.network dapp structure.",
-  "keywords": [
-    "javascript",
-    "typescript",
-    "API",
-    "dapp",
-    "dapp-libraries"
-  ],
-  "license": "AGPL-3.0-only",
-  "name": "@evan.network/ui-dapps",
-  "scripts": {
-    "browserify": "gulp --gulpfile scripts/gulp/browserify.js broawserify --dapp ",
-    "build": "npm run dapps-build",
-    "clear-build": "npm run link-core && rm -r ./node_modules/@evan.network/ui-dapp-browser/runtime/external/*",
-    "dapp-build": "npm run link-core && gulp --gulpfile scripts/dapps.js dapps-build --folder ",
-    "dapps-build": "npm run link-core && gulp --gulpfile scripts/dapps.js dapps-build",
-    "dapps-serve": "npm run link-core && gulp --gulpfile scripts/dapps.js dapps-serve",
-    "deploy": "node --inspect node_modules/.bin/gulp --gulpfile node_modules/@evan.network/ui-dapp-browser/gulp/deployment.js deploy --advanced --config",
-    "deploy-mainnet": "npm run deploy $(pwd)/../../dev-environment/config/bcc/mainnet.js",
-    "deploy-testnet": "npm run deploy $(pwd)/../../dev-environment/config/bcc/testnet.js",
-    "link-core": "gulp --gulpfile scripts/link-core.js link-core",
-    "serve": "npm run link-core && gulp --gulpfile scripts/dapps.js serve",
-    "serve-build": "npm run link-core && gulp --gulpfile node_modules/@evan.network/ui-dapp-browser/gulp/serve.js serve --build",
-    "tsc": "tsc -p "
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
-  "lint-staged": {
-    "*.{js,ts,vue}": [
-      "eslint --fix",
-      "git add"
-    ]
-  },
-  "version": "4.0.1",
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^2.16.0",
     "@typescript-eslint/parser": "^2.16.0",
@@ -129,5 +94,41 @@
     "lint-staged": "^9.5.0",
     "prettier": "1.19.1",
     "pretty-quick": "^2.0.1"
-  }
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "keywords": [
+    "javascript",
+    "typescript",
+    "API",
+    "dapp",
+    "dapp-libraries"
+  ],
+  "license": "AGPL-3.0-only",
+  "lint-staged": {
+    "*.{js,ts,vue}": [
+      "eslint --fix",
+      "git add"
+    ]
+  },
+  "name": "@evan.network/ui-dapps",
+  "scripts": {
+    "browserify": "gulp --gulpfile scripts/gulp/browserify.js broawserify --dapp ",
+    "build": "npm run dapps-build",
+    "clear-build": "npm run link-core && rm -r ./node_modules/@evan.network/ui-dapp-browser/dist/dapps/*",
+    "dapp-build": "npm run link-core && gulp --gulpfile scripts/dapps.js dapps-build --folder ",
+    "dapps-build": "npm run link-core && gulp --gulpfile scripts/dapps.js dapps-build",
+    "dapps-serve": "npm run link-core && gulp --gulpfile scripts/dapps.js dapps-serve",
+    "deploy": "node --inspect node_modules/.bin/gulp --gulpfile node_modules/@evan.network/ui-dapp-browser/gulp/deployment.js deploy --advanced --config",
+    "deploy-mainnet": "npm run deploy $(pwd)/../../dev-environment/config/bcc/mainnet.js",
+    "deploy-testnet": "npm run deploy $(pwd)/../../dev-environment/config/bcc/testnet.js",
+    "link-core": "gulp --gulpfile scripts/link-core.js link-core",
+    "serve": "npm run link-core && gulp --gulpfile scripts/dapps.js serve",
+    "serve-build": "npm run link-core && gulp --gulpfile node_modules/@evan.network/ui-dapp-browser/gulp/serve.js serve --build",
+    "tsc": "tsc -p "
+  },
+  "version": "5.1.0"
 }

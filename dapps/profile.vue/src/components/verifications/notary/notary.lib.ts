@@ -17,17 +17,16 @@
   the following URL: https://evan.network/license/
 */
 import * as bcc from '@evan.network/api-blockchain-core';
-import * as dappBrowser from '@evan.network/ui-dapp-browser';
+import { utils } from '@evan.network/ui-dapp-browser';
 
 import axios from 'axios';
 import { agentUrl } from '@evan.network/ui';
 
-const coreRuntime = dappBrowser.bccHelper.coreRuntimes[bcc.instanceId];
 let notarySmartAgentAccountId = '0xD2Ce53253e56C0F7AF7A4AED096AEC11e59A2024';
 let verificationCost = '200000000000000000000'; // 200 EVE
 
-if (coreRuntime.environment === 'testcore') {
-  notarySmartAgentAccountId = '0x74479766e4997F397942cc607dc59f7cE5AC70b2';
+if (utils.environment === 'testcore') {
+  notarySmartAgentAccountId = '0xa03f8849Dbbc1AEF2aD47A1444B118717043433c';
   verificationCost = '2000000000000000000'; // 2 EVE
 }
 
@@ -39,7 +38,7 @@ if (coreRuntime.environment === 'testcore') {
  * @param      {string}      requestId  identification request id
  */
 async function closeRequest(runtime: bcc.Runtime, requestId: string) {
-  const allRequests = await axios({
+  await axios({
     method: 'POST',
     url: `${agentUrl}/api/smart-agents/smart-agent-2fi/request/close`,
     headers: { Authorization: await bcc.utils.getSmartAgentAuthHeaders(runtime) },

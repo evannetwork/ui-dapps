@@ -51,10 +51,10 @@ export default class DetailComponent extends mixins(EvanComponent) {
    * Load the mail details
    */
   async created() {
-    const runtime = (<any>this).getRuntime();
+    const runtime = this.getRuntime();
 
     this.mail = (await runtime.mailbox
-      .getMail((<any>this).$route.params.mailAddress)).content;
+      .getMail(this.$route.params.mailAddress)).content;
     this.addressBook = (await runtime.profile.getAddressBook()).profile;
 
     // check the attachment status
@@ -70,10 +70,29 @@ export default class DetailComponent extends mixins(EvanComponent) {
 
             break;
           }
+          case 'identityAccess': {
+            // check if the commKey was already added
+            const accessList = await runtime.profile.getIdentityAccessList();
+            accepted = accessList[this.mail.from]?.identityAccess;
+
+            break;
+          }
+          case 'identityAccessRemove': {
+            // check if the commKey was already added
+            const accessList = await runtime.profile.getIdentityAccessList();
+            accepted = !(accessList[this.mail.from] && accessList[this.mail.from].identityAccess);
+
+            if (accepted) {
+              // eslint-disable-next-line no-param-reassign
+              attachment.unkown = true;
+            }
+
+            break;
+          }
           case 'contract': {
             accepted = !!(await runtime.profile.getBcContract(
               attachment.bc,
-              attachment.storeKey || attachment.address
+              attachment.storeKey || attachment.address,
             ));
 
             break;
@@ -97,10 +116,12 @@ export default class DetailComponent extends mixins(EvanComponent) {
             break;
           }
           default: {
+            // eslint-disable-next-line no-param-reassign
             attachment.unkown = true;
           }
         }
 
+        // eslint-disable-next-line no-param-reassign
         attachment.status = accepted ? 'accepted' : 'new';
       }));
     }
@@ -112,14 +133,14 @@ export default class DetailComponent extends mixins(EvanComponent) {
    * Triggers the attachment dispatcher and accepts the contact / contract / ...
    */
   acceptAttachment(attachment: any, mail: any, index: number, modalRef: any) {
-    const runtime = (<any>this).getRuntime();
+    const runtime = this.getRuntime();
     attachmentDispatcher.start(runtime, {
       attachment,
       mail,
     });
     this.acceptingAttachment = true;
     attachmentDispatcher.watch(($event: CustomEvent) => {
-      const instance = $event.detail.instance;
+      const { instance } = $event.detail;
 
       // when the synchronisation has finished, navigate to the correct entry
       if (instance.status === 'finished') {
@@ -141,37 +162,38 @@ export default class DetailComponent extends mixins(EvanComponent) {
       if (attachment.fullPath) {
         toOpen = attachment.fullPath;
       } else {
-        let storeKey = attachment.storeKey || attachment.address;
+        const storeKey = attachment.storeKey || attachment.address;
         if (storeKey) {
           // use storeKey as default value that should be opened
-          toOpen = `/${ storeKey }`;
+          toOpen = `/${storeKey}`;
 
           // when a bc was added, open it including the bc
           if (attachment.bc) {
-            toOpen = `/${ attachment.bc }${ toOpen }`;
+            toOpen = `/${attachment.bc}${toOpen}`;
           }
         }
       }
 
       // if no opener was found, check for the specific type default redirects
       if (!toOpen) {
-        const domainName: string = (this as any).dapp.domainName;
-        switch (attachment.type) {
-          case 'commKey': {
-            toOpen = [
-              `/dashboard.vue.${ domainName }`,
-              `profile.vue.${ domainName }`,
-              `${ this.mail.from }`
-            ].join('/');
-            break;
-          }
+        const { domainName } = (this as any).dapp;
+        if (attachment.type === 'commKey') {
+          toOpen = [
+            `/dashboard.vue.${domainName}`,
+            `profile.vue.${domainName}`,
+            `${this.mail.from}`,
+          ].join('/');
+        } else if (attachment.type === 'identityAccess'
+          || attachment.type === 'identityAccessRemove') {
+          window.dispatchEvent(new CustomEvent('open-identity-callout', { }));
+          return;
         }
       }
 
       window.location.hash = [
-        `${ toOpen }?`,
-        `mailId=${ (<any>this).$route.params.mailAddress }`,
-        `attachment=${ attachmentIndex }`
+        `${toOpen}?`,
+        `mailId=${this.$route.params.mailAddress}`,
+        `attachment=${attachmentIndex}`,
       ].join('&');
     } else {
       modalRef.show();

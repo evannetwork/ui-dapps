@@ -36,7 +36,7 @@ dispatcher
       const twinInstance = new DigitalTwin(
         instance.runtime as DigitalTwinOptions,
         {
-          accountId: instance.runtime.activeAccount,
+          accountId: instance.runtime.activeIdentity,
           address: dispatcherData.twinTemplate,
         },
       );
@@ -69,8 +69,8 @@ dispatcher
   // create the twin
   .step(async (instance: DispatcherInstance, dispatcherData: any) => {
     const twin = await DigitalTwin.create(instance.runtime as DigitalTwinOptions, {
-      accountId: instance.runtime.activeAccount,
-      containerConfig: { accountId: instance.runtime.activeAccount },
+      accountId: instance.runtime.activeIdentity,
+      containerConfig: { accountId: instance.runtime.activeIdentity },
       ...dispatcherData.twinTemplate,
     });
 

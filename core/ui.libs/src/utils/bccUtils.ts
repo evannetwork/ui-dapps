@@ -16,33 +16,8 @@
   Fifth Floor, Boston, MA, 02110-1301 USA, or download the license from
   the following URL: https://evan.network/license/
 */
+
 import { Runtime } from '@evan.network/api-blockchain-core';
-
-/**
- * Returns all contacts from current user addressbook
- *
- * @param      {any}      runtime     The runtime
- * @param      {boolean}  unfiltered  default "false", if true response containing own contact and
- *                                    test entries, as well.
- */
-export async function getContacts(
-  runtime: Runtime,
-  unfiltered = false,
-): Promise<{label: string; value: string}[]> {
-  // load the contacts for the current user, so we can display correct contact alias
-  const addressBook = (await runtime.profile.getAddressBook()).profile;
-
-  const contacts = Object.keys(addressBook).map((key) => ({
-    label: addressBook[key].alias,
-    value: key,
-  }));
-
-  if (unfiltered) {
-    return contacts;
-  }
-
-  return contacts.filter((entry) => entry.value !== runtime.activeAccount && !/@/.test(entry.value));
-}
 
 export function getDidFromIdentity(runtime: Runtime, identity: string): string {
   const infix = runtime.environment === 'testcore' ? 'testcore:' : '';
@@ -51,7 +26,13 @@ export function getDidFromIdentity(runtime: Runtime, identity: string): string {
 }
 
 export async function getDidFromAddress(runtime: Runtime, accountId: string): Promise<string> {
-  const identity = await runtime.verifications.getIdentityForAccount(accountId, true);
+  let identity = accountId;
+
+  try {
+    identity = await runtime.verifications.getIdentityForAccount(accountId, true);
+  } catch (ex) {
+    runtime.logger.log(`Tried to load identity for identity "${accountId}", ${ex.message}`, 'warning');
+  }
 
   return getDidFromIdentity(runtime, identity);
 }

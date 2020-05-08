@@ -7,9 +7,10 @@
       },
       "entrypoint": "bootstrap.vue.libs.js",
       "files": [
-        "bootstrap.vue.libs.js"
+        "bootstrap.vue.libs.js",
+        "bootstrap.vue.libs.css"
       ],
-      "origin": "QmU9DaHCuMEXe8DHd1UoCVD5tvuKvRJnGQKwEtg2jkZbHE",
+      "origin": "QmPxHp8eCjubrwDQMwB8CwbBcthgmwgyE2FsM4Skewhgc6",
       "primaryColor": "",
       "secondaryColor": "#f9f9ff",
       "standalone": false,
@@ -32,9 +33,10 @@
       "evan",
       "library"
     ],
-    "version": "2.1.0",
+    "version": "2.9.0",
     "versions": {
-      "2.1.0": "QmXyNGT6W2EFmDVoC195nz6heFYknwhRrUqkjCCd5cjoAB"
+      "2.1.0": "QmXyNGT6W2EFmDVoC195nz6heFYknwhRrUqkjCCd5cjoAB",
+      "2.9.0": "QmYouaiu1R9RuFF4s3YkXRt5tjexetZWkgXBqyrguMkfyv"
     }
   }
 }

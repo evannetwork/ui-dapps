@@ -35,7 +35,7 @@ const rootFolder = path.resolve(process.cwd(), '../..');
 /**
  * check if a folder exists, else, create it
  */
-const checkFolder = function(folder) {
+const checkFolder = function (folder) {
   try {
     fs.mkdirSync(folder);
   } catch (err) { }
@@ -47,23 +47,23 @@ const checkFolder = function(folder) {
  * @param      {string}  ens     ens path to parse
  * @return     {string}  dapp name
  */
-const parseEnsName = function(ens) {
+const parseEnsName = function (ens) {
   return ens.replace(/-/g, '');
 };
 
-gulp.task('browserify', async function(callback) {
-  const dbcp = require(`${ dappRelativePath }/dbcp.json`);
+gulp.task('browserify', async (callback) => {
+  const dbcp = require(`${dappRelativePath}/dbcp.json`);
   const outFileName = dbcp.public.dapp.entrypoint;
-  const buildFolder = `${ dappRelativePath }/dist/build`;
-  const indexFile = `${ buildFolder }/index.js`;
-  const distFolder = `${ dappRelativePath }/dist`;
-  const runtimeFolder = `${ rootFolder }/node_modules/@evan.network/ui-dapp-browser/runtime/external/${ dbcp.public.name }`;
+  const buildFolder = `${dappRelativePath}/dist/build`;
+  const indexFile = `${buildFolder}/index.js`;
+  const distFolder = `${dappRelativePath}/dist`;
+  const runtimeFolder = `${rootFolder}/node_modules/@evan.network/ui-dapp-browser/dist/dapps/${dbcp.public.name}`;
 
   // ensure dist folder exists
   checkFolder(distFolder);
 
   // build typescript
-  await runExec(`npm run tsc ${ dappRelativePath }`, rootFolder);
+  await runExec(`npm run tsc ${dappRelativePath}`, rootFolder);
 
   await new Promise((resolve, reject) => {
     const buildJob = browserify(indexFile, {
@@ -74,12 +74,12 @@ gulp.task('browserify', async function(callback) {
 
     // mark tsconfig excludes as external
     try {
-      tsConfig = require(`${ dappRelativePath }/tsconfig.json`);
+      tsConfig = require(`${dappRelativePath}/tsconfig.json`);
 
       if (tsConfig && tsConfig.exclude && Array.isArray(tsConfig.exclude)) {
         tsConfig.exclude.forEach((exclude) => buildJob.exclude(exclude));
       }
-    } catch(ex) { }
+    } catch (ex) { }
 
     buildJob
       .exclude('bcc')
@@ -88,9 +88,9 @@ gulp.task('browserify', async function(callback) {
         compact: true,
         // remove comments
         comments: false,
-        //parse all sub node_modules es5 to es6
+        // parse all sub node_modules es5 to es6
         global: true,
-        //important!
+        // important!
         ignore: [
           // underscore gets broken when we try to parse it
           /underscore/,
@@ -98,51 +98,50 @@ gulp.task('browserify', async function(callback) {
 
           // remove core-js and babel runtime,
           // https://github.com/babel/babel/issues/8731#issuecomment-426522500
-         // /[\/\\]core-js/,
-         // /@babel[\/\\]runtime/,
+          // /[\/\\]core-js/,
+          // /@babel[\/\\]runtime/,
         ],
         presets: [
-          //'@babel/env',
-          ["@babel/preset-env", { targets: { browsers: "ios >= 11" } }]
+          // '@babel/env',
+          ['@babel/preset-env', { targets: { browsers: 'ios >= 11' } }],
         ],
         plugins: [
-          //'@babel/plugin-transform-runtime',
+          // '@babel/plugin-transform-runtime',
           // include lodash plugin to pull all lodash functions and imports together and down size the
           // bundle
-          'lodash'
+          'lodash',
         ],
       })
       .plugin(commonShake, { /* options */ })
       .bundle()
       .pipe(source(outFileName))
       .pipe(buffer())
-      .pipe(sourcemaps.init({loadMaps: true}))
+      .pipe(sourcemaps.init({ loadMaps: true }))
       .pipe(sourcemaps.write('./', {
-        sourceMappingURL: function(file) {
-          return `http://localhost:3000/external/${ dbcp.public.name }/${ file.relative }.map`;
-        }
+        sourceMappingURL(file) {
+          return `http://localhost:3000/dapps/${dbcp.public.name}/${file.relative}.map`;
+        },
       }))
-      .pipe(gulp.dest(`${ distFolder }`))
+      .pipe(gulp.dest(`${distFolder}`))
       .on('end', () => {
-        const dbcpPath = path.resolve(`${ dappRelativePath }/dbcp.json`);
+        const dbcpPath = path.resolve(`${dappRelativePath}/dbcp.json`);
 
-        gulp.src([ dbcpPath ]).pipe(gulp.dest(distFolder));
+        gulp.src([dbcpPath]).pipe(gulp.dest(distFolder));
 
         const dbcp = {
-          dbcpPath: `${dbcpPath}`
+          dbcpPath: `${dbcpPath}`,
         };
 
         fs.writeFileSync(
           `${distFolder}/dbcpPath.json`,
-          JSON.stringify(dbcp)
+          JSON.stringify(dbcp),
         );
 
         resolve();
       });
-  })
-
+  });
   await new Promise((resolve, reject) => gulp
-    .src(`${ distFolder }/${ outFileName }`)
+    .src(`${distFolder}/${outFileName}`)
     .pipe(gulpReplace('if (global._babelPolyfill) {', 'if (false) {'))
     .pipe(gulpReplace('bitcore.versionGuard(global._bitcore)', 'bitcore.versionGuard()'))
     .pipe(gulpReplace('/* common-shake removed: exports.createDecipher = */ void createDecipher', 'exports.createDecipher = createDecipher'))
@@ -154,19 +153,19 @@ gulp.task('browserify', async function(callback) {
     .pipe(gulpReplace('var createBC = function () {', 'require("babel-polyfill");\nvar createBC = function () {'))
     .pipe(gulpReplace('interruptStep\ \=\ 200\;', 'interruptStep\ \=\ 2000\;'))
     .pipe(gulpReplace('"use strict";', ''))
-    .pipe(gulp.dest(`${ distFolder }`))
-    .on('end', () => resolve())
-  );
+    .pipe(gulpReplace(/\/\* common-shake removed: concatSig(.*?)\*\//g, 'concatSig$1,'))
+    .pipe(gulp.dest(`${distFolder}`))
+    .on('end', () => resolve()));
 
   await runExec('rm -r ./build', distFolder);
 
   // copy the build files into the runtimeFolder
   await new Promise((resolve, reject) => {
     gulp
-      .src(`${ distFolder }/**/*`)
+      .src(`${distFolder}/**/*`)
       .pipe(gulp.dest(runtimeFolder))
       .on('end', () => resolve());
   });
 });
 
-gulp.task('default', gulp.series([ 'browserify' ]));
+gulp.task('default', gulp.series(['browserify']));

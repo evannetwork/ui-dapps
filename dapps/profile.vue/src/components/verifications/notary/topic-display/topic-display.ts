@@ -222,7 +222,7 @@ export default class TopicDisplayComponent extends mixins(EvanComponent) {
     }));
 
     // get the issuer info, so it can be displayed
-    this.issuer = this.verification.verifications[0].details.issuer;
+    this.issuer = this.verification.verifications[0].details.issuerIdentity;
 
     // get expiration date and set options depending on it
     this.expirationDate = this.verification.verifications[0].details.expirationDate || undefined;
@@ -277,7 +277,7 @@ export default class TopicDisplayComponent extends mixins(EvanComponent) {
       const runtime: bcc.Runtime = (<any> this).getRuntime();
       const { profileDApp } = (this as any).$store.state;
       this.companyName = (await profileUtils.getUserAlias(runtime, profileDApp.address,
-        profileDApp.accountDetails)) || runtime.activeAccount;
+        profileDApp.accountDetails)) || runtime.activeIdentity;
     }
 
     (this as any).$store.commit('toggleSidePanel', this.topic);

@@ -1,0 +1,41 @@
+{
+  "public": {
+    "author": "evan GmbH",
+    "dapp": {
+      "dependencies": {
+        "bcc": "^2.17.0"
+      },
+      "entrypoint": "uisession.libs.js",
+      "files": [
+        "uisession.libs.js"
+      ],
+      "origin": "QmeY8vM83u1VemUfFV5MkJ8XP2hhWaZvhMFQU6gPzKJg7c",
+      "primaryColor": "",
+      "secondaryColor": "#f9f9ff",
+      "standalone": false,
+      "type": "cached-dapp"
+    },
+    "dbcpVersion": 2,
+    "description": "",
+    "i18n": {
+      "description": {
+        "en": ""
+      },
+      "name": {
+        "en": "uisession.libs"
+      }
+    },
+    "imgSquare": "",
+    "name": "uisession.libs",
+    "tags": [
+      "dapp",
+      "evan",
+      "library"
+    ],
+    "version": "1.1.0",
+    "versions": {
+      "1.0.0": "QmV2b3wQbmhCC4Tb5Z1gumXAot9tRhqManXjn5QcqNW8Ap",
+      "1.1.0": "Qmf5Jz4yt1CywRa3aXV48D5W4hjWkiddjhAEEdadWkFR9m"
+    }
+  }
+}

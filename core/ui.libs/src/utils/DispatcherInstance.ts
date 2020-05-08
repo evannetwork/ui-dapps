@@ -190,8 +190,7 @@ export default class DispatcherInstance {
         } catch (ex) {
           this.error = `${ex.message} (${ex.stack})`;
           this.status = 'error';
-
-          this.runtime.logger.log(ex, 'error');
+          this.runtime.logger.log(ex as any, 'error');
         }
 
         // save the queue data

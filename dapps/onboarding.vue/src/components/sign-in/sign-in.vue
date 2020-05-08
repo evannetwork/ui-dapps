@@ -74,10 +74,12 @@
             <evan-loading v-if="checking" />
           </div>
 
-          <p
-            class="text-center mt-5"
-            v-html="$t(`_onboarding.sign-in.not-signed-up`)"
-          />
+          <div class="text-center mt-5">
+            <span class="mr-1">{{ '_onboarding.sign-in.not-signed-up' | translate }}</span>
+            <router-link :to="{ name: 'sign-up', query: $route.query}">
+              {{ '_onboarding.sign-up.create-profile.title' | translate }}
+            </router-link>
+          </div>
         </div>
 
         <div

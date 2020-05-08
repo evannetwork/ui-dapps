@@ -18,11 +18,14 @@
 */
 // map the original vue path to bootstrap.vue.libs
 import { getDomainName, System } from '@evan.network/ui-dapp-browser';
-System.map['bootstrap-vue'] = `bootstrap.vue.libs.${ getDomainName() }!dapp-content`;
+import 'bootstrap-vue/dist/bootstrap-vue.css';
+
+System.map['bootstrap-vue'] = `bootstrap.vue.libs.${getDomainName()}!dapp-content`;
 
 export {
   TableLitePlugin,
   TablePlugin,
   TableSimplePlugin,
-  DropdownPlugin
+  DropdownPlugin,
+  OverlayPlugin,
 } from 'bootstrap-vue';

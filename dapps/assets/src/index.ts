@@ -20,16 +20,17 @@
 import Vue from 'vue';
 import { initializeVue } from '@evan.network/ui-vue-core';
 import { System, getDomainName } from '@evan.network/ui-dapp-browser';
-import { TablePlugin } from 'bootstrap-vue';
-import 'bootstrap-vue/dist/bootstrap-vue.css';
 
 import translations from './i18n/translations';
 import routes from './routes';
 import components from './components/registry';
 import AssetsComponent from './components/Assets.vue';
+import inviteDispatcher from './components/contacts/InviteDispatcher';
+import removeContactDispatcher from './components/contacts/RemoveContactDispatcher';
+import updateContactDispatcher from './components/contacts/UpdateContactDispatcher';
 
+export { inviteDispatcher, removeContactDispatcher, updateContactDispatcher };
 export * from './components/registry';
-export { dispatcher } from './components/contacts/InviteDispatcher';
 export { translations };
 
 System.map['@evan.network/assets'] = `assets.${getDomainName()}!dapp-content`;
@@ -49,8 +50,6 @@ export async function startDApp(
   dappEnsOrContract: string,
   dappBaseUrl: string,
 ): Promise<void> {
-  Vue.use(TablePlugin);
-
   await initializeVue({
     components,
     container,

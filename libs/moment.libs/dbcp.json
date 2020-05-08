@@ -7,7 +7,7 @@
       "files": [
         "moment.libs.js"
       ],
-      "origin": "QmVD6zqQLZQsp3xsM6xvmZ84kVfWhepZ84cvsKMXfv5gW7",
+      "origin": "QmaMbfUAT2oayvC8G7QkhA8fap7FVtREERGSZSu8FPVedF",
       "primaryColor": "",
       "secondaryColor": "#f9f9ff",
       "standalone": false,
@@ -32,7 +32,7 @@
     ],
     "version": "2.24.0",
     "versions": {
-      "2.24.0": "QmVDXPtX8xRpHHs2JdTArGyDveeXMB3pquA4F7rzy2Mz3q"
+      "2.24.0": "QmZUGGpDsaJy4V9vciDyjrz2FrLtsNQF5NvB1ugAnm4uXW"
     }
   }
 }

@@ -19,42 +19,52 @@
 
 /* tslint:disable */
 export default {
-  "_mailbox": {
-    "add": "Nachricht senden",
-    "attachments": {
-      "commKey": {
-        "accepted": "Kontakt anzeigen",
-        "modal-body": "Wollen Sie diesen Kontakt wirklich hinzufügen?",
-        "new": "Kontaktanfrage akzeptieren"
+  _mailbox: {
+    mailbox: 'Nachrichten',
+    add: 'Nachricht senden',
+    attachments: {
+      commKey: {
+        accepted: 'Kontakt anzeigen',
+        'modal-body': 'Wollen Sie diesen Kontakt wirklich hinzufügen?',
+        new: 'Kontaktanfrage akzeptieren',
       },
-      "continue": "weiter",
-      "contract": {
-        "accepted": "Vertrag öffnen",
-        "modal-body": "Wollen Sie diesen Vertrag wirklich akzeptieren?",
-        "new": "Vertragseinladung akzeptieren"
+      continue: 'weiter',
+      contract: {
+        accepted: 'Vertrag öffnen',
+        'modal-body': 'Wollen Sie diesen Vertrag wirklich akzeptieren?',
+        new: 'Vertragseinladung akzeptieren',
       },
-      "url": {
-        "accepted": "Anhang öffnen"
+      url: {
+        accepted: 'Anhang öffnen',
       },
-      "verifications": {
-        "accepted": "Ziel öffnen",
-        "modal-body": "Wollen Sie die Verifikationen bestätigen?",
-        "new": "Verifikation(en) bestätigen"
-      }
+      verifications: {
+        accepted: 'Ziel öffnen',
+        'modal-body': 'Wollen Sie die Verifikationen bestätigen?',
+        new: 'Verifikation(en) bestätigen',
+      },
+      identityAccess: {
+        accepted: 'Identität wechseln',
+        'modal-body': 'Wollen Sie diesem Identitätszugang wirklich speichern?',
+        new: 'Identitätszugang speichern',
+      },
+      identityAccessRemove: {
+        accepted: 'Identität wechseln',
+        'modal-body': 'Wollen Sie diesem Identitätszugang wirklich entfernen?',
+        new: 'Identitätszugang entfernen',
+      },
     },
-    "breadcrumbs": {
-      "received": "Eingehende Nachrichten",
-      "sent": "Ausgehende Nachrichten"
+    breadcrumbs: {
+      received: 'Eingehende Nachrichten',
+      sent: 'Ausgehende Nachrichten',
     },
-    "detail": "Nachrichtendetails",
-    "dispatcher": {
-      "attachment": "Kontakt/Vertrag sync"
+    detail: 'Nachrichtendetails',
+    dispatcher: {
+      attachment: 'Kontakt/Vertrag sync',
     },
-    "load-more": "Mehr Laden...",
-    "mailbox": "Nachrichten",
-    "received": "Empfangen",
-    "sent": "Gesendet",
-    "to": "an"
-  }
-}
-/* tslint:enable */;
+    'load-more': 'Mehr Laden...',
+    mailbox: 'Nachrichten',
+    received: 'Empfangen',
+    sent: 'Gesendet',
+    to: 'an',
+  },
+};

@@ -37,7 +37,7 @@ dispatcher
     const container = new Container(
       instance.runtime as ContainerOptions,
       {
-        accountId: instance.runtime.activeAccount,
+        accountId: instance.runtime.activeIdentity,
         address,
       },
     );

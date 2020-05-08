@@ -54,52 +54,55 @@
             v-else-if="status === 0"
             class="container"
           >
-            <p class="mt-0 mb-3">
+            <b class="d-block mt-0 mb-3">
               {{ '_profile.verifications.notary.request.requesting-account' | translate }}
-            </p>
+            </b>
 
-            <evan-profile-preview
-              size="default"
-              :editable="false"
-              :address="activeAccount"
-            />
+            <evan-loading v-if="loadingCompanyData" />
+            <div v-else>
+              <evan-profile-preview
+                size="default"
+                :editable="false"
+                :address="activeIdentity"
+              />
 
-            <template v-if="companyData.contact.country !== 'DE' || missingCompanyFields.registration.length !== 0 || missingCompanyFields.contact.length !== 0">
-              <b
-                v-if="companyData.contact.country && companyData.contact.country !== 'DE'"
-                class="d-block border p-3 mt-3"
-              >
-                {{ '_profile.verifications.notary.request.only-de' | translate }}
-              </b>
-              <template v-else>
-                <p class="mt-8 mb-3">
-                  {{ '_profile.verifications.notary.request.fill-missing' | translate }}
-                </p>
+              <template v-if="companyData.contact.country !== 'DE' || missingCompanyFields.registration.length !== 0 || missingCompanyFields.contact.length !== 0">
+                <b
+                  v-if="companyData.contact.country && companyData.contact.country !== 'DE'"
+                  class="d-block border p-3 mt-3"
+                >
+                  {{ '_profile.verifications.notary.request.only-de' | translate }}
+                </b>
+                <template v-else>
+                  <p class="mt-8 mb-3">
+                    {{ '_profile.verifications.notary.request.fill-missing' | translate }}
+                  </p>
 
-                <profile-company-registration
-                  v-if="missingCompanyFields.registration.length !== 0"
-                  :address="address"
-                  :only-edit="true"
-                  :required="requiredCompanyFields.registration"
-                />
-                <profile-company-contact
-                  v-if="missingCompanyFields.contact.length !== 0"
-                  :address="address"
-                  :only-edit="true"
-                  :required="requiredCompanyFields.contact"
-                  :restrict-countries="['DE']"
-                />
+                  <profile-company-registration
+                    v-if="missingCompanyFields.registration.length !== 0"
+                    :address="address"
+                    :only-edit="true"
+                    :required="requiredCompanyFields.registration"
+                  />
+                  <profile-company-contact
+                    v-if="missingCompanyFields.contact.length !== 0"
+                    :address="address"
+                    :only-edit="true"
+                    :required="requiredCompanyFields.contact"
+                    :restrict-countries="['DE']"
+                  />
+                </template>
               </template>
-            </template>
 
-            <evan-form
-              v-else
-              class="mb-0 mt-5"
-              :form="requestForm"
-              :i18n-scope="'_profile.verifications.notary.request'"
-              only-form="true"
-              stacked="true"
-            />
+              <evan-form
+                v-else
+                class="mb-0 mt-5"
+                :form="requestForm"
+                :i18n-scope="'_profile.verifications.notary.request'"
+                only-form="true"
+                stacked="true"
+              />
+            </div>
           </div>
 
           <!-- approval screen -->

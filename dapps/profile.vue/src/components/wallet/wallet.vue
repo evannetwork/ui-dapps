@@ -22,10 +22,10 @@
     <evan-loading v-if="loading" />
     <div
       v-else
-      class="p-xxl-11 p-xl-6 p-3"
+      class="evan-content-container"
     >
       <div class="d-flex flex-wrap justify-content-center">
-        <evan-wallet-card :address="$route.params.address" />
+        <evan-wallet-card :address="accountId" />
         <div
           class="d-flex flex-column flex-grow-1 align-items-center justify-content-center align-items-lg-end p-3"
         >

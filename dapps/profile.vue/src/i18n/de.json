@@ -10,7 +10,6 @@
       "detail": "Identität",
       "did": "Decentralized ID",
       "logout": "Ausloggen",
-      "settings": "Einstellungen",
       "sharings": "Freigaben",
       "verifications": "Verifizierungen",
       "wallet": "Wallet"
@@ -150,28 +149,41 @@
       }
     },
     "did": {
-      "created-at": "erstellt am",
       "choose-contact": "Kontakt auswählen",
-      "delegates-desc": "Im Folgenden können Delegates ausgewählt werden, die im Namen der Identität agieren dürfen. Diese sind beispielsweise befugt Informationen zu editieren, Daten freizugeben oder Transaktionen durchzuführen.",
+      "created-at": "erstellt am",
+      "delegates-desc": "Im Folgenden sind Delegates angegeben, die im Namen der Identität agieren dürfen. Diese sind beispielsweise befugt Informationen zu editieren, Daten freizugeben oder Transaktionen durchzuführen.",
+      "delegates-empty": "Keine Delegates angegeben",
       "delegates-title": "Delegates",
-      "description": "Mit Decentralized Identities (DIDs) ist es möglich sich eindeutig, global und unabhängig vom Netzwerk zu identifizeren. Weiterhin ist es möglich festzulegen, wer Änderungen durchführen darf (Controller) und wer im Namen dieser Identität handeln darf (Delegates). Durch den Export dieses Dokumentes, können die Daten auch offline für andere freigeben werden.",
-      "did-title": "Decentralized ID",
+      "description": "Mit Decentralized Identities (DIDs) ist es möglich, sich eindeutig, global und unabhängig vom Netzwerk zu identifizeren. Weiterhin ist es möglich festzulegen, wer Änderungen durchführen darf (Controller) und wer im Namen dieser Identität handeln darf (Delegates). Durch den Export dieses Dokumentes, können die Daten auch offline freigeben werden.",
       "did": "DID",
+      "did-format-error": "Format: did: ...",
+      "did-title": "Decentralized ID",
+      "empty-service-endpoints": "Keine Service Endpoints angegeben",
       "export-document": "Dokument exportieren",
-      "label": "Label",
+      "id": "ID",
+      "id-placeholder": "DID",
+      "id-unique-error": "ID muss eindeutig sein",
+      "no-delegate-options": "Kein Kontakt verfügbar",
       "note": "Notiz",
-      "service-endpoint-title": "Service Endpoints",
-      "service-endpoints-desc": "Im Folgenden können Service Endpoints festgelegt werden, die mit dieser DID assoziiert werden sollen.",
-      "updated-at": "aktualisiert am"
+      "required-error": "Feld ist erforderlich",
+      "service-endpoints-desc": "Im Folgenden sind Service Endpoints spezifizert, die mit dieser DID assoziiert werden.",
+      "service-endpoints-empty": "Kein Service Endpoints angegeben",
+      "service-endpoints-title": "Service Endpoints",
+      "type": "Type",
+      "type-placeholder": "Type",
+      "updated-at": "aktualisiert am",
+      "url": "Endpoint",
+      "url-placeholder": "URL"
     },
     "dispatchers": {
+      "did-document-update": "DID Dokument speichern",
       "profile-share": "Identitätsinformationen teilen",
       "profile-type": "Identitätstyp wird geändert",
       "profile-update": "Identitätinformationen werden gespeichert",
       "request-verification": "Verifikation wird beantragt",
-      "send-eve": "EVEs werden gesendet",
       "verification-accept": "Verifikation wird angenommen"
     },
+    "my-profile": "Mein Profil",
     "not-permitted": {
       "accountDetails": "Identitätsinformationen",
       "contact": "Kontaktdaten",
@@ -180,21 +192,7 @@
       "registration": "Registrierungsdaten"
     },
     "not-permitted-view": "Sie haben keine Rechte, diese Daten für die ausgewählte Identität anzusehen.",
-    "settings": {
-      "desc": "Einstellungen",
-      "dev-domain": {
-        "desc": "Mit dieser Konfiguration wird die Endung \".evan\" durch die angegebene Adresse ersetzt. Über diese Logik ist es möglich, Applikation auf verschiedenen Domains gleichzeitig für Testzwecke zu verwenden (z.B.: myapp.test.evan).",
-        "title": "Applikation von Test-Domain"
-      },
-      "developer-mode": "Entwicklermodus",
-      "language": "Sprache",
-      "languages": {
-        "browser": "Browser-Sprache",
-        "de": "Deutsch",
-        "en": "Englisch"
-      },
-      "reload-hint": "Bitte laden Sie die Anwendung neu, wenn Sie die Spracheinstellungen geändert haben."
-    },
+    "profile": "Profil",
     "sharing": {
       "description": "Um Ihre Identitätsdaten mit anderen Partnern zu teilen, wählen Sie zunächst den entsprechenden Kontakt sowie danach die zu teilenden Daten aus. Klicken Sie auf \"Daten freigeben\".",
       "description-no-contacts": "Identitätsinformationen können mit anderen Partnern geteilt werden, nachdem Sie eine sichere Verbindung zu deren evan.network Identität aufgebaut haben. Gehen Sie dazu in die Kontaktübersicht und laden Sie Ihre Partner per E-Mail oder auch per Identitäts-ID ein, um Ihre Daten vertrauensvoll zu teilen.",
@@ -375,7 +373,7 @@
             "body": "Hiermit beantrage Ich eine Notarielle Bestätigung für die folgenden Informationen: <ul><li>Identität: {organizationEvanId}</li><li>Account: {accountId}</li><li>Handelsregisternummer: {organizationRegistration}</li><li>Organisation: {organizationName}</li><li>Kontakt: {organizationContact}</li><li>Anschrift: {organizationStreetAddress}</li><li>Stadt: {organizationZipCode} {organizationCity} ,{organizationCountry}</li></ul>",
             "title": "Beantragung einer Notariellen Bestätigung"
           },
-          "not-enough-funds": "<i class=\"mdi mdi-alert-outline\"></i> Sie benötigen mindestens 200 EVE. Ihre Wallet hat nicht genügend EVE ({readableFunds} EVE)! <a href=\"/#/dashboard.evan/profile.evan/buy-eve\">EVE kaufen</a>",
+          "not-enough-funds": "<i class=\"mdi mdi-alert-outline\"></i> Sie benötigen mindestens 200 EVE. Ihre Wallet hat nicht genügend EVE ({readableFunds} EVE)! <a href=\"/#/dashboard.vue.evan/profile.vue.evan/wallet\">EVE kaufen</a>",
           "only-de": "Momentan wird die notarielle Verifikation nur für Unternehmen in Deutschland unterstützt.",
           "postal-address": "Anschrift",
           "proof": {
@@ -447,93 +445,6 @@
       },
       "reload": "Neu-laden",
       "title": "Alle Verifikationen"
-    },
-    "wallet": {
-      "buy-eve": {
-        "accept": {
-          "description": "Wollen Sie <b>{amount} EVE</b> kaufen?",
-          "send": "Jetzt kaufen",
-          "title": "EVE kaufen"
-        },
-        "back": "Zurück",
-        "buy": "EVE kaufen",
-        "buy-more": "Mehr EVE kaufen",
-        "continue": "Fortfahren",
-        "disclaimer": "Mit der Eingabe Ihrer IBAN und der Bestätigung dieser Zahlung ermächtigen Sie die evan GmbH und unseren Zahlungsdienstleister Stripe, Ihrer Bank Anweisungen zur Belastung Ihres Kontos und Ihrer Bank zur Belastung Ihres Kontos gemäß dieser Anweisungen zu übermitteln. Sie haben Anspruch auf eine Rückerstattung von Ihrer Bank gemäß den Bedingungen Ihrer Vereinbarung mit Ihrer Bank. Eine Rückerstattung muss innerhalb von 8 Wochen nach dem Datum der Belastung Ihres Kontos beantragt werden.",
-        "errors": {
-          "charge_failed": "Eine Zahlung kann aufgrund eines fehlgeschlagenen Zahlungs- bzw. Abbuchungsversuchs nicht ausgeführt werden. <b> Ihre Karte wurde NICHT belastet! </ b> Bitte versuchen Sie es später erneut.",
-          "invalid_customer": "Ihre Kundendaten sind ungültig. <b> Ihre Karte wurde NICHT belastet! </ b> Bitte überprüfen Sie Ihre Kundendaten und versuchen Sie es erneut.",
-          "price_not_okay": "Es ist ein Fehler im evan.network aufgetreten. <b> Ihre Karte wurde NICHT belastet! </ b> Bitte versuchen Sie es erneut.",
-          "too_many_accounts": "Es ist ein Fehler mit ihrem Account aufgetreten. <b> Ihre Karte wurde NICHT belastet! </ b> Bitte wenden Sie sich an unseren Kundensupport.",
-          "transaction_failed": "Ihre Zahlung bzw. Abbuchung war erfolgreich, aber die Transaktion ist in der Blockchain fehlgeschlagen. <b> Ihre Karte wurde belastet! </ b> Bitte wenden Sie sich an unseren Kundensupport.",
-          "unknown_state": "Es ist ein Fehler beim Bezahlvorgang aufgetreten. Bitte kontaktieren Sie unseren Kundensupport.",
-          "wallet_not_enough_funds": "Es ist ein Fehler im evan.network aufgetreten. <b> Ihre Karte wurde NICHT belastet! </ b> Bitte versuchen Sie es später erneut"
-        },
-        "payForm": {
-          "amount": {
-            "error": "Bitte geben Sie eine Zahl ein!",
-            "error-less": "Sie müssen mindestens 10 EVE kaufen!",
-            "label": "Menge an EVE (mindestens 10)",
-            "placeholder": "Anzahl der EVE, die Sie kaufen wollen."
-          },
-          "type": {
-            "card": "Kreditkarte",
-            "iban": "SEPA Abbuchung",
-            "label": "Zahlungstyp"
-          }
-        },
-        "processing-hint": "Vorgang wird bearbeitet, dies kann 3 bis 5 Minuten dauern",
-        "reverse-charge": "Steuerschuldnerschaft des Leistungsempfängers.",
-        "reverse-charge-please-check": "Bitte überprüfen Sie, ob aus diesem Kauf Steuerverpflichtungen in Ihrem Land entstehen.",
-        "stripe-element": {
-          "incomplete_number": "Unvollständige Eingabe!",
-          "invalid_iban_start": "Bitte überprüfen Sie Ihre IBAN",
-          "invalid_number": "Ungültige Kartennummer!"
-        },
-        "success": "Ihre Bestellung wurde erfolgreich ausgelöst. Sie erhalten eine Rechnung an die angegebene E-Mail-Adresse.<br><br>Der Vorgang ist abgeschlossen, sobald Sie die Rechnung erhalten. Die Gutschrift in Ihrer Wallet erfolgt in den nächsten 5 - 10 Minuten.",
-        "tax": "USt.",
-        "titles": {
-          "billing-info": "Bitte ergänzen Sie Ihre Rechnungsinformationen",
-          "buy-eve": "EVE kaufen",
-          "finished": "Fertig",
-          "processing": "In Arbeit"
-        },
-        "total-amount": "Gesamtsumme",
-        "try-again": "Erneut versuchen",
-        "vat": "USt."
-      },
-      "send-eve": {
-        "accept": {
-          "description": "Möchten Sie <b>{amount} EVE</b> an <b>{name}</b> senden?",
-          "send": "Senden",
-          "title": "EVE senden"
-        },
-        "form": {
-          "accountId": {
-            "error": "Bitte geben Sie eine korrekte Adresse ein.",
-            "label": "Identität",
-            "placeholder": "Kontakt oder Identitätsadresse"
-          },
-          "amount": {
-            "error": "Bitte geben Sie eine Zahl größer 0 ein!",
-            "error-less": "Ihr Kontostand ist zu gering! ({balance} EVE)",
-            "label": "Menge an EVE",
-            "placeholder": "Anzahl der EVE, die Sie versenden möchten."
-          }
-        },
-        "send": "Senden",
-        "title": "EVE senden"
-      },
-      "transactions": {
-        "charged-at": "aufgeladen am",
-        "credit-charged": "Guthaben aufgeladen",
-        "credit-failed-charge": "Die Aufbuchung ist leider fehlgeschlagen",
-        "credit-running-charge": "Aufbuchung noch nicht abgeschlossen",
-        "description": "Nachfolgend sind nur Ihre EVE-Käufe aufgeführt. Eine komplette Übersicht Ihrer Transaktionen finden Sie <a href='{explorerUrl}' target='_blank'>hier</a>.",
-        "empty": "Sie haben bisher noch keine EVEs gekauft",
-        "load-more": "Ältere laden",
-        "title": "EVE Käufe"
-      }
     }
   }
 }

@@ -121,13 +121,14 @@ export default class ContactsComponent extends mixins(EvanComponent) {
   async onUpdateContact(updatedContact: Contact): Promise<void> {
     await updateContactDispatcher.start(this.getRuntime(), updatedContact);
     // Optimistic updating of the contact
-    this.contacts = this.contacts.map((item: Contact) => {
-      const contact = item;
-      if (item.address === updatedContact.address) {
-        contact.alias = updatedContact.alias;
-      }
-      return contact;
-    });
+    this.contacts = this.contacts
+      .map((item: Contact) => {
+        const contact = item;
+        if (item.address === updatedContact.address) {
+          contact.alias = updatedContact.alias;
+        }
+        return contact;
+      });
   }
 
   async fetchContacts(): Promise<Contact[]> {

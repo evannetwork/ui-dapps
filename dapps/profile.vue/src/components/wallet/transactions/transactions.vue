@@ -110,6 +110,7 @@
                 </p>
                 <small class="text-muted">
                   {{ '_profile.wallet.transactions.charged-at' | translate }}
+                  &nbsp;
                   {{ item.timestamp | moment('LLL') }}
                 </small>
               </div>

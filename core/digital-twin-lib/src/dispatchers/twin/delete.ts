@@ -31,7 +31,7 @@ const twinDeleteDispatcher = new Dispatcher(
 twinDeleteDispatcher
   .step(async (instance: DispatcherInstance, data: { address: string }) => {
     const twin = new DigitalTwin(instance.runtime as DigitalTwinOptions, {
-      accountId: instance.runtime.activeAccount,
+      accountId: instance.runtime.activeIdentity,
       address: data.address,
     });
     await twin.deactivate();

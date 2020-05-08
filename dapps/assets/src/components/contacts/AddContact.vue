@@ -42,11 +42,11 @@
         :error="idOrEmailErrorMessage"
         @input="handleIdOrEmailChange"
       />
-
       <evan-form-control-input
         v-model="alias"
         :label="$t('_assets.contacts.note')"
         :placeholder="$t('_assets.contacts.note-placeholder')"
+        :error="alias.length > 100 ? '_assets.contacts.alias-max-length' : false"
         :required="true"
       />
 

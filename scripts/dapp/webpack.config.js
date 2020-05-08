@@ -24,6 +24,7 @@ const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const webpack = require('webpack');
+
 const getExternals = require('./webpack.externals');
 
 /**
@@ -80,7 +81,9 @@ module.exports = function getWebpackConfig(
                  other preprocessors should work out of the box, no loader config like this necessary. */
               scss: ['vue-style-loader', 'css-loader', 'sass-loader'],
             },
-            // other vue-loader options go here
+            compilerOptions: {
+              whitespace: 'condense',
+            },
           },
         },
         {
@@ -88,7 +91,7 @@ module.exports = function getWebpackConfig(
           use: [
             MiniCssExtractPlugin.loader, // process.env.NODE_ENV !== 'production' ? 'style-loader' : MiniCssExtractPlugin.loader,
             'css-loader', // translates css into commonJS
-            'resolve-url-loader',
+            { loader: 'resolve-url-loader', options: { removeCR: true, sourceMap: true } },
             {
               loader: 'sass-loader',
               options: {
@@ -142,7 +145,7 @@ module.exports = function getWebpackConfig(
   };
 
   if (prodMode) {
-    webpackConfig.devtool = '#source-map';
+    webpackConfig.devtool = false;
     // http://vue-loader.vuejs.org/en/workflow/production.html
     webpackConfig.plugins = (webpackConfig.plugins || []).concat([
       new webpack.DefinePlugin({
@@ -153,7 +156,7 @@ module.exports = function getWebpackConfig(
       new UglifyJsPlugin({
         exclude: /(node_modules)/,
         parallel: true,
-        sourceMap: true,
+        sourceMap: false,
         test: /\.js($|\?)/i,
         uglifyOptions: {
           output: {

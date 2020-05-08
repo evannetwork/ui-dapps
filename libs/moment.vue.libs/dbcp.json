@@ -10,7 +10,7 @@
       "files": [
         "moment.vue.libs.js"
       ],
-      "origin": "QmbyKnFQ7mLrioEH7vJFxHsikNXcWC2cLDcmP7WuikX2T9",
+      "origin": "QmY7JGYdHg79ttoe3PbuSkkWg3ygchaCtu6xecCgMY6PUH",
       "primaryColor": "",
       "secondaryColor": "#f9f9ff",
       "standalone": false,
@@ -35,7 +35,7 @@
     ],
     "version": "4.0.0",
     "versions": {
-      "4.0.0": "QmXHkymidMQLgo8FRwdyf8uGPHHbrUjBGdX6K1MWdYMPd7"
+      "4.0.0": "QmaQuc8rTUeaFS1ezaxwU1tRhxnh73uGe3jncEJ3o7GvAM"
     }
   }
 }

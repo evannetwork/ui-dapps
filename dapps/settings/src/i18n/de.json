@@ -1,0 +1,103 @@
+{
+  "_settings": {
+    "account": {
+      "encryption-key": {
+        "exported": "Encryption-Key in die Zwischenablage kopiert",
+        "title": "Encryption Key kopieren"
+      },
+      "private-key": {
+        "exported": "Private-Key in die Zwischenablage kopiert",
+        "title": "Private Key kopieren"
+      },
+      "runtime-config": {
+        "exported": "Runtime Konfiguration wurde in die Zwischenablage kopiert",
+        "title": "API runtime Konfiguration kopieren"
+      },
+      "security-info": "Sicherheitsinformationen"
+    },
+    "browser": {
+      "dev-domain": {
+        "desc": "Mit dieser Konfiguration wird die Endung \".evan\" durch die angegebene Adresse ersetzt. Über diese Logik ist es möglich, Applikation auf verschiedenen Domains gleichzeitig für Testzwecke zu verwenden (z.B.: myapp.test.evan).",
+        "title": "Applikation von Test-Domain"
+      },
+      "developer-mode": "Entwicklermodus",
+      "language": "Sprache",
+      "languages": {
+        "browser": "Browser-Sprache",
+        "de": "Deutsch",
+        "en": "Englisch"
+      },
+      "reload-hint": "Bitte laden Sie die Anwendung neu, wenn Sie die Spracheinstellungen geändert haben."
+    },
+    "header": "Einstellungen",
+    "identity": {
+      "description": "In der folgenden Tabelle können Sie Kontakte hinzufügen oder entfernen, denen der Zugriff auf die aktuelle Identität gewährt wird. Diese sind beispielsweise befugt auf alle Daten zuzugreifen, Informationen zu editieren, Daten freizugeben oder Transaktionen durchzuführen.",
+      "dispatcher": {
+        "grant-access": "Identitätszugriff erteilen ...",
+        "remove-access": "Identitätszugriff entziehen ..."
+      },
+      "not-support": "Sie sind aktuell mit einem alten, nicht identitätsbasierenden, Profil angemeldet. Die Nutzerverwaltung für Identititäten wird nur für aktuelle Profile unterstützt.",
+      "grant-access": {
+        "body": "Ihnen wurde \"{access}\" Zugriff auf die Identität von {alias} ({identity}) erteilt. Nutzen Sie den nachfolgenden Link, um die Referenz in Ihrem Profil abzuspeichern und im Namen dieser Identität zu interagieren.",
+        "title": "Identitätszugriff",
+        "type": {
+          "read": "lesender",
+          "readWrite": "schreibender und lesender"
+        }
+      },
+      "remove-access": {
+        "body": "Ihnen wurde lesender und schreibender Zugriff auf die Identität von {alias} ({identity}) entzogen. Nutzen Sie den nachfolgenden Link, um die Referenz in Ihrem Profil löschen.",
+        "title": "Identitätszugriff entzogen"
+      },
+      "side-panel": {
+        "cancel": "Abbrechen",
+        "define-perm-for": "Legen Sie die Berechtigungen für {alias} fest.",
+        "delete-modal": {
+          "confirm": "Entziehen",
+          "description": "Wollen Sie die Berechtigungen für diesen Nutzer wirklich entziehen? Die Schreibrechte werden entfernt und er erhält eine Anfrage den Verschlüsselungsschlüssel für Ihre Identität zu löschen.",
+          "title": "Berechtigung entziehen"
+        },
+        "form": {
+          "address": {
+            "error": "Bitte wählen Sie einen Kontakt aus, um Zugriffsrechte zu vergeben.",
+            "label": "Kontakt",
+            "placeholder": "Berechtigungen vergeben an"
+          },
+          "note": {
+            "label": "Notiz / Rolle",
+            "placeholder": "Admin / Beschaffung / Nutzer XYZ"
+          }
+        },
+        "perm": {
+          "name": "Identitätszugriff",
+          "read": "lesen",
+          "readWrite": "schreiben"
+        },
+        "remove-button": "Berechtigung entziehen",
+        "select-contact": "Wählen Sie einen Kontakt aus, um diesen auf Ihre Identität zu berechtigen.",
+        "submit": "Speichern",
+        "title": "Identitätsberechtigung",
+        "transaction-cost": {
+          "add": "Hinzufügen verursacht Transaktionskosten.",
+          "edit": "Editieren verursacht Transaktionskosten."
+        }
+      },
+      "table": {
+        "columns": {
+          "grantedAt": "Zugriff erteilt",
+          "name": "Name",
+          "note": "Notiz / Rolle"
+        },
+        "empty": {
+          "filtered": "Keine Ergebnisse mit dem aktuellen Filter gefunden.",
+          "text": "Es sind noch keine Kontakte berechtigt, über Ihre Identität zu interagieren."
+        }
+      }
+    },
+    "routes": {
+      "account": "Account",
+      "browser": "Browser",
+      "identity": "Identitätsmanagement"
+    }
+  }
+}

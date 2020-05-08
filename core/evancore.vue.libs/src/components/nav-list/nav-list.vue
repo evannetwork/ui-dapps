@@ -19,13 +19,24 @@
 
 <template>
   <div class="evan-nav-list">
-    <slot name="header">
-      <evan-profile-preview
-        v-if="showProfile"
-        class="p-4"
-        size="sm"
-        :address="$store.state.runtime.activeAccount"
-      />
+    <slot
+      v-if="showHeader"
+      name="header"
+    >
+      <div class="navlist-header">
+        <i
+          v-if="headerIcon"
+          class="navlist-header-icon"
+          :class="`mdi mdi-${headerIcon}`"
+        />
+
+        <h1
+          v-if="headerText"
+          class="navlist-header-heading"
+        >
+          {{ headerText | translate }}
+        </h1>
+      </div>
     </slot>
     <div class="nav-entries">
       <template v-for="(entry, index) in entries">

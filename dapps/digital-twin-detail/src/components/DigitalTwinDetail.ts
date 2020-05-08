@@ -39,12 +39,19 @@ export default class DigitalTwinDetailComponent extends mixins(EvanComponent) {
    */
   hashChangeWatcher: any;
 
+  /**
+   * Watch for delete dispatcher updates, so the search result can be refreshed
+   */
+  clearTwinDeleteWatcher: Function;
+
   navItems: NavEntryInterface[] = [];
 
   /**
    * Clear the hash change watcher
    */
   beforeDestroy(): void {
+    this.clearTwinDeleteWatcher();
+
     // clear listeners
     if (this.hashChangeWatcher) {
       window.removeEventListener('hashchange', this.hashChangeWatcher);
@@ -78,6 +85,8 @@ export default class DigitalTwinDetailComponent extends mixins(EvanComponent) {
         this.loading = true;
         if (this.$store.state.twin) {
           this.$store.state.twin.stopWatchDispatchers();
+          // reset previous sharing context
+          this.$store.state.twin.sharingContext = null;
         }
 
         // initialize a new twin, but keep old reference until twin is loaded
@@ -96,6 +105,9 @@ export default class DigitalTwinDetailComponent extends mixins(EvanComponent) {
           // handle deleted and non-DT contracts
           .catch(() => {
             this.hasError = true;
+            // fill empty twin data, so the sidepanel can be displayed, even in error mode
+            newTwin.description = { name: '...', description: '', author: '' };
+            newTwin.dispatcherStates = { };
             return null;
           });
 
@@ -111,6 +123,13 @@ export default class DigitalTwinDetailComponent extends mixins(EvanComponent) {
     // watch for hash changes, so the contract address can be simply replaced within the url
     window.addEventListener('hashchange', this.hashChangeWatcher);
 
+    this.clearTwinDeleteWatcher = twinDeleteDispatcher
+      .watch(({ detail: { status } }: CustomEvent) => {
+        if (status === 'finished') {
+          setTimeout(() => this.close());
+        }
+      });
+
     this.navItems = this.getNavItems();
   }
 
@@ -120,8 +139,6 @@ export default class DigitalTwinDetailComponent extends mixins(EvanComponent) {
     await twinDeleteDispatcher.start(this.getRuntime(), {
       address: this.$store.state.twin.contractAddress,
     });
-
-    this.close();
   }
 
   /**
@@ -134,28 +151,31 @@ export default class DigitalTwinDetailComponent extends mixins(EvanComponent) {
         text: '_twin-detail.nav-items.overview',
         icon: 'mdi mdi-view-dashboard-outline',
         to: { name: 'overview' },
+        disabled: this.hasError,
       },
       {
         text: '_twin-detail.nav-items.data',
         icon: 'mdi mdi-file-document-box-outline',
         to: { name: 'data' },
+        disabled: this.hasError,
       },
       {
         text: '_twin-detail.nav-items.verifications',
         icon: 'mdi mdi-checkbox-marked-circle-outline',
         to: { name: 'verifications' },
-        disabled: !this.$store.state.twin?.isOwner,
+        disabled: !this.$store.state.twin?.isOwner || this.hasError,
       },
       ...(this.$store.state.twin.isOwner ? [{
         text: '_twin-detail.nav-items.sharings',
         icon: 'mdi mdi-share-variant',
         to: { name: 'sharings' },
-        disabled: !this.$store.state.twin?.isOwner,
+        disabled: !this.$store.state.twin?.isOwner || this.hasError,
       }] : []),
       {
         text: '_twin-detail.nav-items.did',
         icon: 'mdi mdi-identifier',
         to: { name: 'did' },
+        disabled: this.hasError,
       },
     ];
   }

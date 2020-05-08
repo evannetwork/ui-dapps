@@ -21,7 +21,7 @@
             v-if="selectedContact"
             class="mt-6 mb-0"
           >
-            {{ $t('_evan.sharing.defineFor', { contactName: selectedUsername }) }}
+            {{ $t('_evan.sharing.defineFor', { contactName: getShortName(selectedUsername) }) }}
           </p>
 
           <div

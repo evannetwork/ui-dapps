@@ -4,25 +4,26 @@
     "dapp": {
       "dependencies": {
         "axios.vue.libs": "^0.18.0",
-        "bcc": "^2.17.0",
+        "bootstrap.vue.libs": "^2.9.0",
         "i18n.vuex.libs": "1.11.0",
+        "lodash.libs": "4.17.15",
         "moment.libs": "^2.0.0",
         "moment.vue.libs": "4.0.0",
         "qrcodejs.libs": "^1.0.0",
         "router.vue.libs": "^2.5.0",
         "select.vue.libs": "^3.2.0",
         "toasted.vue.libs": "^1.1.27",
-        "ui.libs": "^1.10.0",
+        "ui.libs": "^2.0.0",
+        "uisession.libs": "^1.0.0",
         "vue.libs": "^2.5.0",
-        "vuex.libs": "3.1.0",
-        "lodash.libs": "4.17.15"
+        "vuex.libs": "3.1.0"
       },
       "entrypoint": "evancore.vue.libs.js",
       "files": [
         "evancore.vue.libs.js",
         "evancore.vue.libs.css"
       ],
-      "origin": "QmVSP5xe5ob8RvfjPBwdfuSCeHzmSbVhJCCfnjFssXc7oA",
+      "origin": "QmY9QZHYpZzNF8ffCUKefBmN6ydd4989Chr2aHbeReA3Jq",
       "primaryColor": "",
       "secondaryColor": "#f9f9ff",
       "standalone": false,
@@ -45,10 +46,11 @@
       "evan",
       "library"
     ],
-    "version": "1.10.0",
+    "version": "2.1.0",
     "versions": {
       "1.0.0": "Qme8X3BUpiEpmsQkNR11C89HMeDnzbdVkSR3def4pSteUZ",
       "1.1.0": "QmU5gbcwomosnsbG826GgM1Y6qs8RQ2qh2HybzZKMg42oU",
+      "1.10.0": "QmPw9De1hWPVBwMtepujU2ccRvaQ7hr5qMkXvrLvVaGTDd",
       "1.2.0": "QmRxeqtAbERJB8iP44Mj4u7HQVMqs3ySLhcqCSFUKQxvBC",
       "1.2.1": "QmRHLBDhAjizcQzW8Fuwd4AL12aSxeKhFTpFiVT4oTCL5k",
       "1.2.2": "QmWjw3G41cRsrhq7XoWyoZov9EhumAy5Yun6TnWJCfvihJ",
@@ -61,7 +63,8 @@
       "1.7.0": "Qmc2UaDBLgZDAmXD5rguaufaL6w7kUuRRkx1c2NcwDZL6F",
       "1.8.0": "QmPvoqmRqGeFHwHGZfN8HWNwvByNzkMV6DFnY81wZipkcb",
       "1.9.0": "QmRDNQfFQhMDt4JjfF76o2cQrTD1sANnDSWpbMXWrsuPJt",
-      "1.10.0": "QmcdQvSv1K3C15SPbh5SSJ24goZFymMfW9D1N9uxFTMu3F"
+      "2.0.0": "Qma9HHmmzyRgLLyFVsjZ26xmbGsaJJSzF479TrkS9aHhaK",
+      "2.1.0": "Qmb4KpeRYvXk8FAPWJFbp1MABu4VaoRpGmxaDbceJXssD3"
     }
   }
 }

@@ -20,8 +20,6 @@
 import Vue from 'vue';
 import { initializeVue } from '@evan.network/ui-vue-core';
 import { System, getDomainName } from '@evan.network/ui-dapp-browser';
-import { DropdownPlugin, TablePlugin } from 'bootstrap-vue';
-import 'bootstrap-vue/dist/bootstrap-vue.css';
 
 import components from './components/registry';
 import RootComponent from './components/root/root.vue';
@@ -48,9 +46,6 @@ export async function startDApp(
   dappEnsOrContract: any,
   dappBaseUrl: string,
 ): Promise<void> {
-  Vue.use(DropdownPlugin);
-  Vue.use(TablePlugin);
-
   await initializeVue({
     components,
     container,

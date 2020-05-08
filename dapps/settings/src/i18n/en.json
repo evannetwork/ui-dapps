@@ -1,0 +1,103 @@
+{
+  "_settings": {
+    "account": {
+      "encryption-key": {
+        "exported": "Exported Encryption Key and copied to clipboard",
+        "title": "Export Encryption Key"
+      },
+      "private-key": {
+        "exported": "Exported Private Key and copied to clipboard",
+        "title": "Export Private Key"
+      },
+      "runtime-config": {
+        "exported": "Exported api runtime configuration and copied to clipboard",
+        "title": "Export API runtime configuration"
+      },
+      "security-info": "Security information"
+    },
+    "browser": {
+      "dev-domain": {
+        "desc": "With this configuration the ending \".evan\" is replaced by the given address. With this logic it is possible to use applications on different domains simultaneously for test purposes (e.g.: myapp.test.evan).",
+        "title": "Applications from test-domain"
+      },
+      "developer-mode": "Developer Mode",
+      "language": "Language",
+      "languages": {
+        "browser": "Browser-Language",
+        "de": "German",
+        "en": "English"
+      },
+      "reload-hint": "Please reload the application if you have changed the language settings."
+    },
+    "header": "Settings",
+    "identity": {
+      "description": "In the following table, you can add or remove contacts that have access to the current identity. For example, they are authorized to access all data, edit information, share data, or perform transactions.",
+      "not-support": "You are currently logged in with an old, non-identity-based profile. User management for identities is only supported for current profiles.",
+      "dispatcher": {
+        "grant-access": "Granting access to identity ...",
+        "remove-access": "Removing permissions for identity ..."
+      },
+      "grant-access": {
+        "body": "You have been granted \"{access}\" access to the identity of {alias} ({identity}). Use the link below to save the reference in your profile to interact on behalf of this identity.",
+        "title": "Identity access",
+        "type": {
+          "read": "read",
+          "readWrite": "read and write"
+        }
+      },
+      "remove-access": {
+        "body": "Your access to the identity of {alias} {identity}} has been revoked. Use the following link to delete the reference in your profile.",
+        "title": "Identity access revoked"
+      },
+      "side-panel": {
+        "delete-modal": {
+          "confirm": "Remove",
+          "description": "Do you really want to revoke the permissions for this user? The write permissions will be removed and he will receive a request to delete the encryption key for your identity.",
+          "title": "Remove Permissions"
+        },
+        "remove-button": "Remove Permissions",
+        "cancel": "Cancel",
+        "form": {
+          "address": {
+            "error": "Please select a contact to grant access to.",
+            "label": "Contact",
+            "placeholder": "Contact to grant access to."
+          },
+          "note": {
+            "label": "Note / Role",
+            "placeholder": "Admin / Procurement / User XYZ"
+          }
+        },
+        "perm": {
+          "name": "Identity access",
+          "read": "read",
+          "readWrite": "write"
+        },
+        "submit": "Save",
+        "title": "Identity permissions",
+        "define-perm-for": "Define the permissions for {alias}.",
+        "transaction-cost": {
+          "add": "Adding will cause transaction fees.",
+          "edit": "Editing will cause transaction fees."
+        },
+        "select-contact": "Select a contact which may manage your identity"
+      },
+      "table": {
+        "columns": {
+          "grantedAt": "Access granted",
+          "name": "Name",
+          "note": "Note / Role"
+        },
+        "empty": {
+          "filtered": "No results found with the current filter.",
+          "text": "No contacts are yet authorized to interact via your identity."
+        }
+      }
+    },
+    "routes": {
+      "account": "Account",
+      "browser": "Browser",
+      "identity": "Identity Management"
+    }
+  }
+}

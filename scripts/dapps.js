@@ -109,6 +109,14 @@ const getCategoryDAppDirs = (category) => {
   return dappDirs.filter((dappDir) => dappDir.indexOf(categoryPath) !== -1);
 };
 
+const logError = (error) => {
+  const errText = error && error.message ? error.message : error || '';
+  const wrapper = '\n\t==================================================';
+  const out = errText.split('\n').map((line) => `\t|\t ${line}`).join('\n');
+
+  return `${wrapper}\n${out}${wrapper}`;
+};
+
 /**
  * Show the current wachting status
  */
@@ -153,7 +161,10 @@ const logServing = () => {
         ? `(${status.duration}s / ${status.lastDuration}s)`
         : `(${status.duration}s)`;
       let statusMsg;
-      if (serves[dappName].rebuild) {
+
+      if (serves[dappName].error) {
+        statusMsg = ` ${logDAppName} ⚠️     ${timeLog} ${logError(serves[dappName].error)}`;
+      } else if (serves[dappName].rebuild) {
         statusMsg = ` ${logDAppName} »»»»»» ${timeLog}`;
       } else if (serves[dappName].loading) {
         statusMsg = ` ${logDAppName} »»»   ${timeLog}`;
@@ -257,7 +268,7 @@ const startStaticServer = async () => {
   expressApp = express();
   const dappBrowserPath = path.resolve('../node_modules/@evan.network/ui-dapp-browser');
 
-  expressApp.use(serveStatic(`${dappBrowserPath}/runtime`));
+  expressApp.use(serveStatic(`${dappBrowserPath}/dist`));
   expressApp.use(serveStatic('.'));
   expressApp.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
@@ -266,9 +277,9 @@ const startStaticServer = async () => {
   });
 
   expressApp.use('/dev-dapps', (req, res) => {
-    const data = { externals: [] };
+    const data = { dapps: [] };
     try {
-      data.externals = getDirectories(path.resolve(`${dappBrowserPath}/runtime/external`))
+      data.dapps = getDirectories(path.resolve(`${dappBrowserPath}/dist/dapps`))
         .map((external) => external.split(path.sep).pop());
     } catch (ex) {
       console.error('external folder does not exist');
@@ -323,11 +334,12 @@ gulp.task('dapps-build', async (cb) => {
         buildDappPromises.push(() => buildDApp(dappDir));
       } catch (ex) {
         console.error(ex);
+        clearInterval(logLoop);
       }
     });
   });
 
-  await Throttle.all(buildDappPromises, { maxInProgress: 4 });
+  await Throttle.all(buildDappPromises, { maxInProgress: 10 });
   clearInterval(logLoop);
   return cb();
 });

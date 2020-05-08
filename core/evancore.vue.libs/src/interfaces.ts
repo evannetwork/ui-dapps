@@ -33,6 +33,7 @@ export interface RouteRegistrationInterface {
  * Used to map routes path including icon and title for dapp-wrapper sidebar
  */
 export interface DAppWrapperRouteInterface {
+  action?: Function; // () => ...
   fullPath?: string; // '/dashboard.evan/favorites.evan'
   icon: string; // 'mdi mdi-bookmark'
   id?: string; // 'synchronization'
@@ -72,6 +73,7 @@ export interface EvanVueOptionsInterface {
  */
 export interface EvanFormControlUISpecs {
   attr?: {
+    disabled?: boolean;
     error?: string;
     hint?: boolean | string | (() => boolean | string);
     id?: string;
@@ -83,8 +85,9 @@ export interface EvanFormControlUISpecs {
     size?: number;
     type?: string;
   };
-  type?: string;
+  input?: (($event: any) => void);
   prohibited?: boolean;
+  type?: string;
 }
 
 /**

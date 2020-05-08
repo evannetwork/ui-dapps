@@ -149,12 +149,9 @@ export async function getNextDApp(dappEnsOrContract?: string, contractRouting = 
   // that loads an contract, return it optionally
   let contractAddress;
 
-  // full base hash of the current dapp
-  let baseHash;
-
   if (dappEnsOrContract) {
     // start at index 1 to skip initial hash
-    for (let i = 1; i < ensParts.length; i++) {
+    for (let i = 1; i < ensParts.length; i += 1) {
       // check if the module id machtes the route one
       if (ensParts[i] === dappEnsOrContract) {
         dappIndex = i;
@@ -165,15 +162,16 @@ export async function getNextDApp(dappEnsOrContract?: string, contractRouting = 
   // if no dappEnsOrContract was applied or this one wasn't found, try to track it dynamically
   if (!dappIndex) {
     // start at index 1 to skip initial hash
-    for (let i = 1; i < ensParts.length; i++) {
+    for (let i = 1; i < ensParts.length; i += 1) {
       // if an dapp ens was applied, only check these module id's
       // if the module id should be checked, try to resolve the dbcp
       if (!document.getElementById(ensParts[i])) {
         try {
           // only load dapps with an valid description
-          const description = await dappBrowser.System.import(`${ ensParts[i] }!ens`);
+          // eslint-disable-next-line no-await-in-loop
+          const description = await dappBrowser.System.import(`${ensParts[i]}!ens`);
           // ensure, that the dapp wasn't loaded before
-          if (description && !document.getElementById(`${ description.name }.${ domainName }`)) {
+          if (description && !document.getElementById(`${description.name}.${domainName}`)) {
             dappIndex = i;
 
             break;
@@ -191,7 +189,8 @@ export async function getNextDApp(dappEnsOrContract?: string, contractRouting = 
     dappIndex = ensParts.length - 1;
   }
 
-  baseHash = `/${ ensParts.slice(1, dappIndex + 1).join('/') }`;
+  // full base hash of the current dapp
+  const baseHash = `/${ensParts.slice(1, dappIndex + 1).join('/')}`;
 
   // check for loading an contract
   //   => dappIndex loads an contract directly
@@ -211,7 +210,7 @@ export async function getNextDApp(dappEnsOrContract?: string, contractRouting = 
     contractAddress,
     domainName: getDomainName(),
     ens: ensParts[dappIndex],
-    fullUrl: window.location.href.replace(window.location.hash, `#${ baseHash }`),
+    fullUrl: window.location.href.replace(window.location.hash, `#${baseHash}`),
     rootEns: ensParts[1],
   };
 }
