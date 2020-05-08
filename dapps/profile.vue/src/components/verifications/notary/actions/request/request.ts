@@ -358,8 +358,8 @@ export default class IdentNotaryRequestComponent extends mixins(EvanComponent) {
       organizationCity: this.companyData.contact.city,
       organizationContact: this.requestForm.contact.value,
       organizationCountry: this.companyData.contact.country,
-      organizationEvanId: await bccUtils.getDidFromAddress(runtime, runtime.activeAccount),
-      accountId: runtime.activeAccount,
+      organizationEvanId: await bccUtils.getDidFromAddress(runtime, runtime.activeIdentity),
+      accountId: runtime.activeIdentity,
       court: this.companyData.registration.court,
       organizationRegistration: `${this.companyData.registration.register} ${this.companyData.registration.registerNumber}`,
       organizationName: await profileUtils.getUserAlias(

@@ -26,7 +26,7 @@ let notarySmartAgentAccountId = '0xD2Ce53253e56C0F7AF7A4AED096AEC11e59A2024';
 let verificationCost = '200000000000000000000'; // 200 EVE
 
 if (utils.environment === 'testcore') {
-  notarySmartAgentAccountId = '0x74479766e4997F397942cc607dc59f7cE5AC70b2';
+  notarySmartAgentAccountId = '0xa03f8849Dbbc1AEF2aD47A1444B118717043433c';
   verificationCost = '2000000000000000000'; // 2 EVE
 }
 
