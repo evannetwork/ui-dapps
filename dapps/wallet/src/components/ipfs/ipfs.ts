@@ -122,7 +122,7 @@ export default class IpfsComponent extends mixins(EvanComponent) {
    * @return     {string}  parsed displayable size
    */
   static formatBytes(bytes: number, decimals: number): string {
-    if (bytes === 0) {
+    if (bytes === 0 || Number.isNaN(bytes)) {
       return '0 Bytes';
     }
     const k = 1024;

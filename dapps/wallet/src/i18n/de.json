@@ -63,7 +63,7 @@
       "status-title": "Speicherguthaben Übersicht",
       "storage-fees": {
         "description": "Alle gespeicherten Daten werden verschlüsselt in ein verteiltes Dateisystem gespeichert und verursachen monatliche Kosten. Um die Datenaufberwahung zu gewährleisten, wird von der von Ihnen bereitgestellten EVE Menge jeden Monat die entsprechende Summe abgebucht. Bitte stellen Sie sicher, dass dem System genügend EVE zur Verfügung stehen um Ihre Dateien dauerhaft zu speichern.",
-        "title": "Monatliche Kosten"
+        "title": "Speicherguthaben"
       },
       "stored-files": "Anzahl abgelegte Daten",
       "stored-size": "Größe des genutzten Speichers",

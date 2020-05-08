@@ -83,11 +83,11 @@ export default class TopUpComponent extends mixins(EvanComponent) {
     this.listeners.push(ipfsPaymentDispatcher.watch(async () => {
       this.toppingUp = !!(await ipfsPaymentDispatcher.getInstances(this.getRuntime())).length;
     }));
-
-    this.loading = false;
   }
 
   async initialize(): Promise<void> {
+    this.loading = true;
+
     const gasFee = 0.001;
     const currBalance = await bccHelper.getBalance(this.getRuntime().activeAccount);
 
@@ -115,6 +115,8 @@ export default class TopUpComponent extends mixins(EvanComponent) {
         },
       },
     })) as TopupForm;
+
+    this.loading = false;
   }
 
   /**

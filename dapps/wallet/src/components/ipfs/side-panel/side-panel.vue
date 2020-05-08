@@ -39,7 +39,7 @@
 
       <template slot="footer">
         <evan-button
-          v-if="isLoading"
+          v-if="!loading"
           id="evan-eve-send"
           :disabled="!topupForm.isValid || toppingUp"
           :is-loading="toppingUp"
