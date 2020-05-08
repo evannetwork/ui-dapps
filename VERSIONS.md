@@ -14,6 +14,7 @@
     - add address to twin detail
   - add `settings` dapp
     - includes private / encryption key export
+    - includes runtime config export
     - includes browser settings
 - core
   - add new sidebar / bottom bar design with active identity display
@@ -29,6 +30,7 @@
 - Last transactions for twins created by identities are now appearing
 - fix old-dapp-browser `createDefaultRuntime` without initial created core runtime
 - fix profile design
+- fix login for rly old profiles
 
 ### Deprecations
 

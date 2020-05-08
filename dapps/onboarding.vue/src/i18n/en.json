@@ -110,12 +110,16 @@
       },
       "agree": "Agree",
       "alias": {
-        "company": "Name of the company",
         "error": "Please enter a account name!",
-        "hint-company": "The name of your company is only visible to you.",
-        "hint-user": "The account name is only visible to you.",
-        "placeholder": "John Doe | Sample Company Inc.",
-        "user": "Account name"
+        "hint": "The account name is only visible to you.",
+        "placeholder": "John Doe",
+        "label": "Account name"
+      },
+      "companyAlias": {
+        "hint": "The name of your company is only visible to you.",
+        "label": "Name of the company",
+        "error": "Please enter a company name!",
+        "placeholder": "Sample Company Inc."
       },
       "already-signed-up": "You are already signed up?",
       "cancel-riddle": "Cancel",

@@ -110,8 +110,9 @@ const getCategoryDAppDirs = (category) => {
 };
 
 const logError = (error) => {
+  const errText = error && error.message ? error.message : error || '';
   const wrapper = '\n\t==================================================';
-  const out = error.split('\n').map((line) => `\t|\t ${line}`).join('\n');
+  const out = errText.split('\n').map((line) => `\t|\t ${line}`).join('\n');
 
   return `${wrapper}\n${out}${wrapper}`;
 };
@@ -162,8 +163,7 @@ const logServing = () => {
       let statusMsg;
 
       if (serves[dappName].error) {
-        statusMsg = ` ${logDAppName} ⚠️    ${timeLog} ${logError(serves[dappName].error)}`;
-        clearInterval(logLoop);
+        statusMsg = ` ${logDAppName} ⚠️     ${timeLog} ${logError(serves[dappName].error)}`;
       } else if (serves[dappName].rebuild) {
         statusMsg = ` ${logDAppName} »»»»»» ${timeLog}`;
       } else if (serves[dappName].loading) {

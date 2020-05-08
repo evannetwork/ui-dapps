@@ -35,10 +35,17 @@
           {{ $t('_settings.account.private-key.title') }}
         </evan-button>
         <evan-button
+          class="mr-3"
           type="danger"
           @click="exportEncryptionKey()"
         >
           {{ $t('_settings.account.encryption-key.title') }}
+        </evan-button>
+        <evan-button
+          type="danger"
+          @click="exportRuntimeConfig()"
+        >
+          {{ $t('_settings.account.runtime-config.title') }}
         </evan-button>
       </div>
     </div>

@@ -58,6 +58,12 @@ export default class BccHelper {
 
         return false;
       }
+
+      // check rly old profiles
+      const profileAddress = await BccHelper.getProfileAddressFromIndex(accountId);
+      if (profileAddress !== nullAddress) {
+        return false;
+      }
     }
 
     return window.localStorage.getItem('evan-use-identity') !== 'false';
