@@ -249,6 +249,7 @@
     },
     "signed-in": {
       "accept-contact": "accept contact request",
+      "do-not-accept-contact": "continue without accepting the contact request",
       "go-to-evan": "Continue to evan.network",
       "invited": "Welcome to the evan.network <b>{alias} ({accountId})</b>.<br><br>You were invited by <b>{inviteeAlias}</b> to the evan.network. If you add this contact to your address book, you will receive <b>{eveAmount} EVE</b> as an invitation gift.",
       "title": "evan.network log in",

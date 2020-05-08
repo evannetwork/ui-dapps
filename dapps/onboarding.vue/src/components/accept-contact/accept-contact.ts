@@ -24,10 +24,15 @@ import { Prop } from 'vue-property-decorator';
 
 // evan.network imports
 import { EvanComponent, getDomainName } from '@evan.network/ui-vue-core';
+import { Runtime, Profile, ProfileOptions } from '@evan.network/api-blockchain-core';
 import * as bcc from '@evan.network/api-blockchain-core';
 import { utils } from '@evan.network/ui-dapp-browser';
 import { bccHelper, session, lightwallet } from '@evan.network/ui-session';
 import { agentUrl } from '@evan.network/ui';
+
+interface Modal extends EvanComponent {
+  show: Function;
+}
 
 @Component({ })
 export default class AcceptContact extends mixins(EvanComponent) {
@@ -46,7 +51,7 @@ export default class AcceptContact extends mixins(EvanComponent) {
   accountId = '';
 
   // was the current user invited by another one?
-  inviteeAddress = '' as any;
+  inviteeAddress = '';
 
   // is the current mnemonic / password is currently checking?
   checkingPassword = false;
@@ -57,25 +62,22 @@ export default class AcceptContact extends mixins(EvanComponent) {
   // check if the inserted password is wrong
   invalidPassword = false;
 
-  // current check password function that is bind to the lightwallet.setPasswordFunction
-  checkPassword = null as any;
-
   // is the current user signed in but not unlocked
   notLoadedButSignedIn = false;
 
   // current bcc runtime
-  runtime = null as any;
+  runtime: Runtime = null;
 
   // show loading for accepting contact request
   accepting = false;
 
   // show accepting error
-  acceptingError = false as any;
+  acceptingError: Modal;
 
   // was contact adding successful?
   accepted = false;
 
-  async created() {
+  async created(): Promise<void> {
     if (!this.$store.state.runtime) {
       this.loading = true;
 
@@ -96,12 +98,12 @@ export default class AcceptContact extends mixins(EvanComponent) {
 
     this.runtime = this.$store.state.runtime;
     this.accountId = session.activeAccount;
-    this.inviteeAddress = this.$route.query.inviteeAddress;
+    this.inviteeAddress = `${this.$route.query.inviteeAddress}`;
 
     if (this.inviteeAddress || this.$props.loadAlias) {
       // load the currents user alias
-      const addressBook = (await this.runtime.profile.getAddressBook()) || { profile: { } };
-      this.alias = addressBook.profile[this.accountId].alias;
+      const addressBook = await this.runtime.profile.getAddressBook();
+      this.alias = addressBook?.profile[this.accountId]?.alias || '';
     } else {
       this.notLoadedButSignedIn = true;
     }
@@ -109,10 +111,18 @@ export default class AcceptContact extends mixins(EvanComponent) {
     this.loading = false;
   }
 
+  getQueryParam(name: string): string {
+    if (!this.$route.query[name]) {
+      utils.log(`missing query param ${name}`, 'error');
+    }
+
+    return `${this.$route.query[name]}`;
+  }
+
   /**
    * Navigates to the previous opened application or use the default dapp ens.
    */
-  navigateToEvan() {
+  navigateToEvan(): void {
     // do not use $router.push to force navigation triggering!
     window.location.hash = `/${this.$route.query.origin || `dashboard.vue.${getDomainName()}`}`;
   }
@@ -120,8 +130,10 @@ export default class AcceptContact extends mixins(EvanComponent) {
   /**
    * Accept the contact invitation.
    */
-  async acceptContact() {
-    const queryParams = this.$route.query;
+  async acceptContact(): Promise<void> {
+    const inviteeAddress = this.getQueryParam('inviteeAddress');
+    const inviteeAlias = this.getQueryParam('inviteeAlias');
+    const email = this.getQueryParam('email');
 
     // show loading
     this.accepting = true;
@@ -134,30 +146,29 @@ export default class AcceptContact extends mixins(EvanComponent) {
       });
 
       // load my address book
-      await this.runtime.profile.loadForAccount(this.accountId,
-        this.runtime.profile.treeLabels.addressBook);
+      await this.runtime.profile.loadForAccount(this.runtime.profile.treeLabels.addressBook);
       // search for the target public key
-      const targetProfile = new bcc.Profile({
-        ...(this.runtime as bcc.ProfileOptions),
-        profileOwner: queryParams.inviteeAddress as string,
-        accountId: queryParams.inviteeAddress as string,
+      const targetProfile = new Profile({
+        ...(this.runtime as ProfileOptions),
+        profileOwner: inviteeAddress as string,
+        accountId: inviteeAddress as string,
       });
       const targetPubKey = await targetProfile.getPublicKey();
       if (!targetPubKey) {
-        throw new Error(`No public key found for account ${queryParams.inviteeAddress}`);
+        throw new Error(`No public key found for account ${inviteeAddress}`);
       }
 
       // create a new comm key for the contact and save it to my profile
       const commKey = await this.runtime.keyExchange.generateCommKey();
       await this.runtime.profile.addContactKey(
-        queryParams.inviteeAddress,
+        inviteeAddress,
         'commKey',
         commKey,
       );
 
       // add the new contact to my address book
       await this.runtime.profile.addProfileKey(
-        queryParams.inviteeAddress, 'alias', queryParams.inviteeAlias,
+        inviteeAddress, 'alias', inviteeAlias,
       );
 
       // save my address book
@@ -165,13 +176,13 @@ export default class AcceptContact extends mixins(EvanComponent) {
 
       // generate a new b mail and send it as response to the invitee
       const mail = {
-        title: (this as any).$t('_onboarding.mail-invitation-accepted.title'),
-        body: (this as any).$t('_onboarding.mail-invitation-accepted.body', {
-          userEmail: queryParams.email,
+        title: this.$t('_onboarding.mail-invitation-accepted.title'),
+        body: this.$t('_onboarding.mail-invitation-accepted.body', {
+          userEmail: email,
           userAlias: this.alias,
         }),
         fromAlias: this.alias,
-        fromMail: queryParams.email,
+        fromMail: email,
       };
       await this.runtime.keyExchange.sendInvite(this.inviteeAddress, targetPubKey,
         commKey, mail);
@@ -189,7 +200,7 @@ export default class AcceptContact extends mixins(EvanComponent) {
       }, 2000);
     } catch (ex) {
       utils.log(ex.message, 'error');
-      (this.$refs.acceptingError as any).show();
+      (this.$refs.acceptingError as Modal).show();
     }
 
     // show loading

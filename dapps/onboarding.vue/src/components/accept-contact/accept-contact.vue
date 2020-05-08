@@ -72,6 +72,12 @@
             >
               <span>{{ '_onboarding.signed-in.accept-contact' | translate }}</span>
             </button>
+            <router-Link
+              v-if="!accepting && inviteeAddress"
+              to="profile.vue.evan"
+            >
+              {{ '_onboarding.signed-in.do-not-accept-contact' | translate }}
+            </router-Link>
           </div>
         </div>
       </div>
