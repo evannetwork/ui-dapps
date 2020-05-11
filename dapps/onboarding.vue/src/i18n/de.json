@@ -249,6 +249,7 @@
     },
     "signed-in": {
       "accept-contact": "Kontaktanfrage akzeptieren",
+      "do-not-accept-contact": "Weiter ohne Kontaktanfrage zu akzeptieren",
       "go-to-evan": "Weiter zum evan.network",
       "invited": "Herzlich willkommen im evan.network <b>{alias} ({accountId})</b>.<br><br>Sie wurden von <b>{inviteeAlias}</b> in das evan.network eingeladen. Wenn Sie diesen Kontakt zu Ihrem Adressbuch hinzufügen, erhalten Sie <b>{eveAmount} EVE</b> als Einladungsgeschenk.",
       "title": "evan.network Anmeldung",
