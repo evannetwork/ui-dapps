@@ -3,6 +3,9 @@
 
 ## Next Version
 ### Features
+- `assets`
+  - add data sharing selection to `Add Contact` section
+  - show loading indicator, when contact gets invited
 
 ### Fixes
 

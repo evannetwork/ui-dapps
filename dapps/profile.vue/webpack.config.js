@@ -27,5 +27,6 @@ module.exports = require('../../scripts/dapp/webpack.config')(
   getExternals({
     '@evan.network/digital-twin-lib': '@evan.network/digital-twin-lib',
     '@evan.network/ui-countries': '@evan.network/ui-countries',
+    '@evan.network/profile.vue': '@evan.network/profile.vue',
   }),
 );

@@ -33,12 +33,13 @@ import updateDidDocumentDispatcher from './components/did/UpdateDidDocDispatcher
 
 export * from './components/registry';
 export * from './dispatchers/registry';
+export * from './components/utils/shareSortFilters.ts';
 export {
   translations, updateDidDocumentDispatcher, CompanyContactForm, CompanyRegistrationForm,
 };
 
-
 dappBrowser.System.map['@evan.network/profile.vue'] = `profile.vue.${getDomainName()}!dapp-content`;
+dappBrowser.System.map['@evan.network/profile'] = `profile.vue.${getDomainName()}!dapp-content`;
 
 /**
  * StartDapp function that is called by the ui-dapp-browser, including an container and the current

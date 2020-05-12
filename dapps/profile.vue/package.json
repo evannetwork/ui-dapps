@@ -9,8 +9,8 @@
     "DApp",
     "CSS"
   ],
-  "main": "dist/index.js",
-  "name": "@evan.network/dashboard.vue",
+  "main": "dist/profile.vue.js",
+  "name": "@evan.network/profile",
   "scripts": {
     "build": "gulp --gulpfile ../../scripts/dapp/gulpfile.js --dapp $(pwd)",
     "lint": "eslint --ext .ts,.vue --fix src/"
