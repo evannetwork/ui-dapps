@@ -107,7 +107,7 @@
       }
     },
     "routes": {
-      "account": "Technische Informationen",
+      "account": "Tech. Informationen",
       "browser": "Browser",
       "identity": "Identitätsmanagement"
     }

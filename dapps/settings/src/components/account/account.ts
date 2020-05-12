@@ -48,7 +48,7 @@ export default class AccountSettingsComponent extends mixins(EvanComponent) {
   /**
    * Show localstorage variables only in dev mode
    */
-  isLocalStorageEnabled = window.localStorage['evan-dev-mode'] === 'true';
+  isLocalStorageEnabled = window.localStorage['evan-developer-mode'] === 'true';
 
   async created(): void {
     const runtime = this.getRuntime();
