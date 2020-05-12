@@ -5,6 +5,7 @@
 ### Features
 
 ### Fixes
+- fix e-mail invitation
 
 ### Deprecations
 

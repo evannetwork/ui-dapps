@@ -25,7 +25,7 @@
     <evan-onboarding-layout-wrapper
       type="sign-in"
       :step="activeStep"
-      :images="[ '10.svg', '13.svg' ]"
+      :images="[ '10.svg', '13.svg', '13.svg' ]"
     >
       <div class="evan-steps">
         <div
@@ -90,6 +90,7 @@
             :account-id="accountId"
             :mnemonic="mnemonic"
             :show-signup="true"
+            @logged-in="loggedIn"
           />
         </div>
 

@@ -28,7 +28,7 @@
         />
         <div
           v-if="inviteeAddress"
-          class="border p-3 bg-level-3"
+          class="white-box"
         >
           <p
             v-html="$t('_onboarding.signed-in.invited', {
@@ -38,6 +38,31 @@
               'eveAmount': $route.query.eveAmount
             })"
           />
+
+          <div class="mt-5">
+            <evan-success v-if="accepted" />
+            <div
+              v-else
+              class="text-center"
+            >
+              <evan-loading v-if="accepting" />
+              <button
+                v-if="!accepting && inviteeAddress"
+                type="submit"
+                class="btn btn-primary"
+                @click="acceptContact()"
+              >
+                <span>{{ '_onboarding.signed-in.accept-contact' | translate }}</span>
+              </button>
+              <router-Link
+                v-if="!accepting && inviteeAddress"
+                class="d-block mt-3"
+                to="profile.vue.evan"
+              >
+                {{ '_onboarding.signed-in.do-not-accept-contact' | translate }}
+              </router-Link>
+            </div>
+          </div>
         </div>
 
         <evan-modal ref="acceptingError">
@@ -56,30 +81,6 @@
             </button>
           </template>
         </evan-modal>
-
-        <div class="mt-3">
-          <evan-success v-if="accepted" />
-          <div
-            v-else
-            class="text-center m-3"
-          >
-            <evan-loading v-if="accepting" />
-            <button
-              v-if="!accepting && inviteeAddress"
-              type="submit"
-              class="btn btn-primary btn-block"
-              @click="acceptContact()"
-            >
-              <span>{{ '_onboarding.signed-in.accept-contact' | translate }}</span>
-            </button>
-            <router-Link
-              v-if="!accepting && inviteeAddress"
-              to="profile.vue.evan"
-            >
-              {{ '_onboarding.signed-in.do-not-accept-contact' | translate }}
-            </router-Link>
-          </div>
-        </div>
       </div>
       <div
         v-if="notLoadedButSignedIn"

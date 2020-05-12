@@ -14,6 +14,10 @@
         "1": {
           "desc": "Your data security is very important to us. Therefore, the login process consists of two parts. Please insert your password, to unlock your profile and continue with your work.<br><br><b>Please note:</b> For security reasons, you must re-enter your password after each page load. In this way you remain completely self sovereign and master of your data.",
           "title": "Welcome to the evan.network"
+        },
+        "2": {
+          "desc": "Your data security is very important to us. Therefore, the login process consists of two parts. Please insert your password, to unlock your profile and continue with your work.<br><br><b>Please note:</b> For security reasons, you must re-enter your password after each page load. In this way you remain completely self sovereign and master of your data.",
+          "title": "Welcome to the evan.network"
         }
       },
       "sign-up": {
@@ -251,11 +255,11 @@
       "accept-contact": "accept contact request",
       "do-not-accept-contact": "continue without accepting the contact request",
       "go-to-evan": "Continue to evan.network",
-      "invited": "Welcome to the evan.network <b>{alias} ({accountId})</b>.<br><br>You were invited by <b>{inviteeAlias}</b> to the evan.network. If you add this contact to your address book, you will receive <b>{eveAmount} EVE</b> as an invitation gift.",
+      "invited": "Welcome to the evan.network <b>{alias}</b>.<br><br>You were invited by <b>{inviteeAlias}</b> to the evan.network. If you add this contact to your address book, you will receive <b>{eveAmount} EVE</b> as an invitation gift.",
       "title": "evan.network log in",
       "unlock-for-accept": "You are already signed in to the evan.network.<br><br>You have received a contact request from <b>{inviteeAlias}</b>. Unlock your profile to continue or use the back button, to log in with an other identity.",
-      "welcome-signed-in": "You are already signed in to the evan.network <b>({accountId})</b>.<br><br>Use the following button to start your work.",
-      "welcome-unlocked": "Welcome to the evan.network <b>{alias} ({accountId})</b>.<br><br>You can now start your work."
+      "welcome-signed-in": "You are already signed in to the evan.network.<br><br>Use the following button to start your work.",
+      "welcome-unlocked": "Welcome to the evan.network <b>{alias}</b>.<br><br>You can now start your work."
     }
   }
 }

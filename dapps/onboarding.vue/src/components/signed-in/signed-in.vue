@@ -18,21 +18,18 @@
 */
 
 <template>
-  <div class="
-    container mx-auto m-5 p-0
-    border bg-level-1">
-    <div class="d-flex p-4 align-items-center">
-      <h4 class="m-0">{{ '_onboarding.signed-in.title' | translate }}</h4>
-    </div>
-
+  <div class="evan-content-container">
+    <h4 class="m-0">
+      {{ '_onboarding.signed-in.title' | translate }}
+    </h4>
     <evan-onboarding-accept-contact
-      class="border-top p-3">
-    </evan-onboarding-accept-contact>
+      class="border-top p-3"
+    />
   </div>
 </template>
 
 <script lang="ts">
-  import SignedIn from './signed-in';
-  export default SignedIn;
-</script>
+import SignedIn from './signed-in';
 
+export default SignedIn;
+</script>
