@@ -84,19 +84,22 @@
       </div>
       <div
         v-if="notLoadedButSignedIn"
-        v-html="$t('_onboarding.signed-in.welcome-signed-in', { 'accountId': accountId })"
-      />
-
-      <div class="mt-3 text-center">
-        <button
-          v-if="!accepting && !inviteeAddress"
-          type="submit"
-          class="btn btn-outline-primary btn-block"
-          :class="inviteeAddress ? 'evan-button evan-cancel' : ''"
-          @click="navigateToEvan()"
-        >
-          <span>{{ '_onboarding.signed-in.go-to-evan' | translate }}</span>
-        </button>
+        class="white-box"
+      >
+        <p
+          v-html="$t('_onboarding.signed-in.welcome-signed-in', { 'accountId': accountId })"
+        />
+        <div class="mt-3 text-center">
+          <button
+            v-if="!accepting && !inviteeAddress"
+            type="submit"
+            class="btn btn-primary"
+            :class="inviteeAddress ? 'evan-button evan-cancel' : ''"
+            @click="navigateToEvan()"
+          >
+            <span>{{ '_onboarding.signed-in.go-to-evan' | translate }}</span>
+          </button>
+        </div>
       </div>
     </template>
 

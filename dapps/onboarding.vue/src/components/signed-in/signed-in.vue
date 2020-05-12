@@ -19,12 +19,11 @@
 
 <template>
   <div class="evan-content-container">
-    <h4 class="m-0">
+    <h4 class="mb-5">
       {{ '_onboarding.signed-in.title' | translate }}
     </h4>
-    <evan-onboarding-accept-contact
-      class="border-top p-3"
-    />
+
+    <evan-onboarding-accept-contact />
   </div>
 </template>
 
