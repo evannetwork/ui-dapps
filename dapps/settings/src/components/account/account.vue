@@ -76,38 +76,40 @@
         </evan-button>
       </div>
 
-      <h3 class="mt-7 d-block">
-        {{ $t('_settings.account.localStorage.title') }}
-      </h3>
-      <p>
-        {{ $t('_settings.account.localStorage.desc') }}
-      </p>
+      <template v-if="isLocalStorageEnabled">
+        <h3 class="mt-7 d-block">
+          {{ $t('_settings.account.localStorage.title') }}
+        </h3>
+        <p>
+          {{ $t('_settings.account.localStorage.desc') }}
+        </p>
 
-      <evan-base-list
-        class="localstorage-list mt-5"
-        :data="localStorageParams"
-      >
-        <template
-          v-slot:item="{ item }"
-          style="height: 80px;"
+        <evan-base-list
+          class="localstorage-list mt-5"
+          :data="localStorageParams"
         >
-          <div class="d-flex align-items-center h-100 px-3">
-            <div>
-              <p class="mb-0 font-weight-semibold">
-                {{ $t(item) }}
-              </p>
+          <template
+            v-slot:item="{ item }"
+            style="height: 80px;"
+          >
+            <div class="d-flex align-items-center h-100 px-3">
+              <div>
+                <p class="mb-0 font-weight-semibold">
+                  {{ $t(item) }}
+                </p>
+              </div>
+              <span class="mx-auto" />
+              <div style="width: 80%">
+                <evan-form-control-textarea
+                  class="mb-0"
+                  :value="localStorage[item]"
+                  @input="onLocalStorageChange(item, $event)"
+                />
+              </div>
             </div>
-            <span class="mx-auto" />
-            <div style="width: 80%">
-              <evan-form-control-textarea
-                class="mb-0"
-                :value="localStorage[item]"
-                @input="onLocalStorageChange(item, $event)"
-              />
-            </div>
-          </div>
-        </template>
-      </evan-base-list>
+          </template>
+        </evan-base-list>
+      </template>
     </template>
   </div>
 </template>
