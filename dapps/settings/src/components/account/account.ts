@@ -19,10 +19,99 @@
 
 import Component, { mixins } from 'vue-class-component';
 import { EvanComponent } from '@evan.network/ui-vue-core';
-import { session, lightwallet } from '@evan.network/ui-session';
+import { bccHelper, session, lightwallet } from '@evan.network/ui-session';
 
 @Component
 export default class AccountSettingsComponent extends mixins(EvanComponent) {
+  loading = true;
+
+  /**
+   * List with infos about the current logged in user.
+   */
+  loginInfoList: Array<any> = null;
+
+  /**
+   * Current connection config for the specific network (core / testcore)
+   */
+  connectionConfig: any = null;
+
+  /**
+   * Current localStorage params
+   */
+  localstorage = null;
+
+  /**
+   * All localstorage params, so we can show them in the ui
+   */
+  localStorageParams: Array<string>;
+
+  async created(): void {
+    const runtime = this.getRuntime();
+    this.connectionConfig = {
+      // ipfs configuration for evan.network storage
+      ipfs: {
+        host: `ipfs.${runtime.environment !== 'core' ? 'test' : ''}.evan.network`,
+        port: '443',
+        protocol: 'https',
+      },
+      // web3 provider config (currently evan.network testcore)
+      web3Provider: `wss://${runtime.environment !== 'core' ? 'test' : ''}core.evan.network/ws`,
+    };
+
+    const [
+      accountIdentity,
+      activeIdentityOwner,
+      balance,
+    ] = await Promise.all([
+      runtime.verifications.getIdentityForAccount(runtime.underlyingAccount, true),
+      runtime.verifications.getOwnerAddressForIdentity(runtime.activeIdentity),
+      bccHelper.getBalance(runtime.activeAccount),
+    ]);
+
+    this.loginInfoList = [
+      {
+        title: '_settings.account.info.underlyingAccount',
+        value: runtime.underlyingAccount,
+      },
+      {
+        title: '_settings.account.info.activeIdentity',
+        value: runtime.activeIdentity,
+      },
+      {
+        title: '_settings.account.info.accountIdentity',
+        value: accountIdentity,
+      },
+      {
+        title: '_settings.account.info.activeIdentityOwner',
+        value: activeIdentityOwner,
+      },
+      {
+        title: '_settings.account.info.balance',
+        value: `${parseFloat(balance.toString())} EVE`,
+      },
+    ];
+
+    this.localStorage = window.localStorage;
+    this.localStorageParams = [
+      'bc-dev-logs',
+      'bcc-dev-log',
+      'evan-account',
+      'evan-alias',
+      'evan-dev-log',
+      'evan-ens-cache',
+      'evan-identity',
+      'evan-language',
+      'evan-mail-read',
+      'evan-mail-read-count',
+      'evan-provider',
+      'evan-test-password',
+      'evan-vault',
+      'evan-warnings-disabled',
+    ];
+
+    this.loading = false;
+  }
+
   // TODO refactor to (renderless) vue component
   copyToClipboard(text: string, toastText: string): void {
     const textArea = document.createElement('textarea');
@@ -83,19 +172,23 @@ export default class AccountSettingsComponent extends mixins(EvanComponent) {
         [accountSha3]: encryptionKey,
         [accountSha9]: encryptionKey,
       },
-      // ipfs configuration for evan.network storage
-      ipfs: {
-        host: `ipfs.${runtime.environment !== 'core' ? 'test' : ''}.evan.network`,
-        port: '443',
-        protocol: 'https',
-      },
-      // web3 provider config (currently evan.network testcore)
-      web3Provider: `wss://${runtime.environment !== 'core' ? 'test' : ''}core.evan.network/ws`,
+      ...this.connectionConfig,
     };
 
     this.copyToClipboard(
       JSON.stringify(toCopy, null, 2),
       '_settings.account.runtime-config.exported',
     );
+  }
+
+  /**
+   * updates a localStorage entry with a specific value
+   *
+   * @param      {string}  entry   localStorage key
+   * @param      {string}  value   value to set
+   */
+  // eslint-disable-next-line class-methods-use-this
+  onLocalStorageChange(key: string, value): void {
+    window.localStorage.setItem(key, value);
   }
 }

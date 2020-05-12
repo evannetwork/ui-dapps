@@ -3,8 +3,10 @@
 
 ## Next Version
 ### Features
+- add technical info section to `settings` dapp
 
 ### Fixes
+- fix `profile.vue` overwrites translations of `wallet`
 
 ### Deprecations
 

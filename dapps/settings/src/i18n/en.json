@@ -13,7 +13,19 @@
         "exported": "Exported api runtime configuration and copied to clipboard",
         "title": "Export API runtime configuration"
       },
-      "security-info": "Security information"
+      "security-info": "Security information",
+      "info": {
+        "title": "Login Information",
+        "underlyingAccount": "Public Key / Account Address",
+        "activeIdentity": "Active Evan Identity",
+        "accountIdentity": "Identity of Account Address",
+        "activeIdentityOwner": "Owner of the active Evan Identity",
+        "balance": "Current Account balance"
+      },
+      "localStorage": {
+        "title": "Local Storage",
+        "desc": "Please be careful by adjusting these values. Note: Changing values may need a page reload."
+      }
     },
     "browser": {
       "dev-domain": {
@@ -32,7 +44,6 @@
     "header": "Settings",
     "identity": {
       "description": "In the following table, you can add or remove contacts that have access to the current identity. For example, they are authorized to access all data, edit information, share data, or perform transactions.",
-      "not-support": "You are currently logged in with an old, non-identity-based profile. User management for identities is only supported for current profiles.",
       "dispatcher": {
         "grant-access": "Granting access to identity ...",
         "remove-access": "Removing permissions for identity ..."
@@ -45,18 +56,19 @@
           "readWrite": "read and write"
         }
       },
+      "not-support": "You are currently logged in with an old, non-identity-based profile. User management for identities is only supported for current profiles.",
       "remove-access": {
         "body": "Your access to the identity of {alias} {identity}} has been revoked. Use the following link to delete the reference in your profile.",
         "title": "Identity access revoked"
       },
       "side-panel": {
+        "cancel": "Cancel",
+        "define-perm-for": "Define the permissions for {alias}.",
         "delete-modal": {
           "confirm": "Remove",
           "description": "Do you really want to revoke the permissions for this user? The write permissions will be removed and he will receive a request to delete the encryption key for your identity.",
           "title": "Remove Permissions"
         },
-        "remove-button": "Remove Permissions",
-        "cancel": "Cancel",
         "form": {
           "address": {
             "error": "Please select a contact to grant access to.",
@@ -73,14 +85,14 @@
           "read": "read",
           "readWrite": "write"
         },
+        "remove-button": "Remove Permissions",
+        "select-contact": "Select a contact which may manage your identity",
         "submit": "Save",
         "title": "Identity permissions",
-        "define-perm-for": "Define the permissions for {alias}.",
         "transaction-cost": {
           "add": "Adding will cause transaction fees.",
           "edit": "Editing will cause transaction fees."
-        },
-        "select-contact": "Select a contact which may manage your identity"
+        }
       },
       "table": {
         "columns": {
@@ -95,7 +107,7 @@
       }
     },
     "routes": {
-      "account": "Account",
+      "account": "Technical Infos",
       "browser": "Browser",
       "identity": "Identity Management"
     }
