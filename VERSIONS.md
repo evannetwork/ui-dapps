@@ -5,6 +5,7 @@
 ### Features
 
 ### Fixes
+- fix `profile.vue` overwrites translations of `wallet`
 
 ### Deprecations
 
