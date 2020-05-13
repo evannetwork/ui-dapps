@@ -26,9 +26,7 @@
         <div class="h-100 d-flex flex-column">
           <evan-loading v-if="loading" />
           <template v-else>
-            <evan-dapp-wrapper-level-2
-              v-if="$route.name !== 'wallet'"
-            >
+            <evan-dapp-wrapper-level-2>
               <evan-nav-list
                 :entries="navEntries"
                 header-icon="account-outline"
