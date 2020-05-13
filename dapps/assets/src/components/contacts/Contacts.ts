@@ -99,7 +99,7 @@ export default class ContactsComponent extends mixins(EvanComponent) {
   dispatcherContacts: Contact[] = [];
 
   /**
-   * Return the combined list fo contacts and currently added contacts.
+   * Return the combined list of contacts and currently added contacts.
    */
   get contactsList(): Contact[] {
     return [].concat(this.dispatcherContacts, this.contacts);
