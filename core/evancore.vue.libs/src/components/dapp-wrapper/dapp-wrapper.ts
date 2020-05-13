@@ -733,13 +733,7 @@ export default class DAppWrapperComponent extends mixins(EvanComponent) {
           duration: 3000,
           type: 'info',
         };
-        const toastMessage = this.$t(
-          `_evan.dapp-wrapper.dispatcher-status.${instance.status}`,
-          {
-            title: this.$t(instance.dispatcher.title),
-            percentage: Math.round((100 / instance.dispatcher.steps.length) * instance.stepIndex),
-          },
-        );
+        const toastMessage = this.getDispatcherTranslation(instance);
         switch (instance.status) {
           case 'accept': {
             this.startDispatcherInstance(instance);
@@ -803,5 +797,64 @@ export default class DAppWrapperComponent extends mixins(EvanComponent) {
     } else {
       instance.start();
     }
+  }
+
+  /**
+   * Get a translation for a dispatcher, a instance status and a specific step. Default translations
+   * will be used, when no i18n object is prepared for the specific entries. For custom
+   * translations, specify a translation object with the key of the dispatcher title and nest all
+   * the status and step translations in their. If you want to use default translations, just leave
+   * the entries out of your translation object, but do not forget to specify a title. Sample:
+   *
+   * {
+   *   "my-dapp": {
+   *     "dispatcher-status": {
+   *        "deleted": "deleted dispatcher",
+   *        "deleting": "deleting dispatcher",
+   *        "error": "error dispatcher",
+   *        "finished": "completed dispatcher",
+   *        "step1": "step 1 started",
+   *        "step2": "step 2 started",
+   *        "step3": "step 3 started",
+   *        "starting": "starting dispatcher",
+   *        "stopped": "Stopped dispatcher",
+   *        "stopping": "Stopping dispatcher",
+   *        "title": "My awesome dispatcher"
+   *      }
+   *   }
+   * }
+   *
+   * @param      {DispatcherInstance}  instance   dispatcher instance, with the dispatcher
+   *                                              specification, active step and status
+   * @param      {string}              status     pass a custom status, to get a specific state
+   * @param      {number}              stepIndex  get the translation for a certain step
+   * @return     {string}              translation
+   */
+  getDispatcherTranslation(
+    instance: DispatcherInstance,
+    status = instance.status,
+    stepIndex = instance.stepIndex,
+  ): string {
+    let customTranslation;
+    // check for custom step description
+    if (status === 'running') {
+      customTranslation = this.$t(`${instance.dispatcher.title}.step${stepIndex}`, null);
+    } else {
+      // check for custom status translation
+      customTranslation = this.$t(`${instance.dispatcher.title}.${status}`);
+    }
+    // early exit, when a custom translation exists
+    if (customTranslation !== null) {
+      return customTranslation;
+    }
+
+    // default translation
+    return this.$t(
+      `_evan.dapp-wrapper.dispatcher-status.${status}`,
+      {
+        title: this.$t(`${instance.dispatcher.title}.title`, this.$t(instance.dispatcher.title)),
+        percentage: Math.round((100 / instance.dispatcher.steps.length) * stepIndex),
+      },
+    );
   }
 }
