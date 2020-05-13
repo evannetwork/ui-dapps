@@ -6,6 +6,7 @@
 
 ### Fixes
 - fix e-mail invitation
+- fix `profile.vue` overwrites translations of `wallet`
 
 ### Deprecations
 
