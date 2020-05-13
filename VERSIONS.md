@@ -6,6 +6,7 @@
 
 ### Fixes
 - fix `profile.vue` overwrites translations of `wallet`
+- scope `read-mail-count` to identity
 
 ### Deprecations
 
