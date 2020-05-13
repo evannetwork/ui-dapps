@@ -76,7 +76,7 @@
         </evan-button>
       </div>
 
-      <template v-if="isLocalStorageEnabled">
+      <template v-if="isDeveloperModeEnabled">
         <h3 class="mt-7 d-block">
           {{ $t('_settings.account.localStorage.title') }}
         </h3>
