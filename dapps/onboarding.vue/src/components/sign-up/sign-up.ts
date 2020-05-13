@@ -99,11 +99,6 @@ export default class SignUp extends mixins(EvanComponent) {
   loading = true;
 
   /**
-   * Show onboarded dialog with optional contact accept dialog
-   */
-  onboardedDialog = false;
-
-  /**
    * override custom recaptcha ID
    */
   recaptchaId = window.localStorage['evan-test-recaptchaId'] || '6LfoK1IUAAAAAOK0EbTv-IqtBq2NS-bvKWcUbm8r';
@@ -131,7 +126,7 @@ export default class SignUp extends mixins(EvanComponent) {
    * selected country.
    */
   get steps() {
-    const creatingOrOnboarded = () => this.onboardedDialog;
+    const creatingOrOnboarded = () => this.activeStep === 99;
 
     // set if from the created function to keep the correct disabled function context
     const steps = [
@@ -338,7 +333,7 @@ export default class SignUp extends mixins(EvanComponent) {
             this.navigateToEvan();
           } else {
             this.creatingProfile = 0;
-            this.onboardedDialog = true;
+            this.activeStep = 99;
           }
         }, 2000);
       } catch (ex) {

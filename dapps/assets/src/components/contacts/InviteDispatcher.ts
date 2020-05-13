@@ -105,7 +105,9 @@ dispatcher
           fromAlias: data.fromAlias,
           lang: data.currLang,
         },
-        runtime.web3.utils.toWei('0'),
+        // send a minimum amount of ether, so that the invited person can save the contact without
+        // an error
+        runtime.web3.utils.toWei('0.3', 'ether'),
       );
     } else {
       // generate communication keys

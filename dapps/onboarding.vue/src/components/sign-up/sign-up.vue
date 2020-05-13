@@ -32,7 +32,7 @@
       :images="getLeftPanelImages()"
     >
       <div>
-        <div v-if="!onboardedDialog">
+        <div v-if="activeStep !== 99">
           <h4 class="text-center text-uppercase font-weight-bold">
             {{ '_onboarding.sign-up.create-account' | translate }}
           </h4>
