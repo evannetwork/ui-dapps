@@ -33,10 +33,19 @@
     "identity": {
       "description": "In der folgenden Tabelle können Sie Kontakte hinzufügen oder entfernen, denen der Zugriff auf die aktuelle Identität gewährt wird. Diese sind beispielsweise befugt auf alle Daten zuzugreifen, Informationen zu editieren, Daten freizugeben oder Transaktionen durchzuführen.",
       "dispatcher": {
-        "grant-access": "Identitätszugriff erteilen ...",
-        "remove-access": "Identitätszugriff entziehen ..."
+        "grant-access": {
+          "finished": "Identitätszugriff wurde erfolgreich erteilt",
+          "starting": "Identitätszugriff wird erteilt",
+          "step0": false,
+          "title": "Identitätszugriff erteilen"
+        },
+        "remove-access": {
+          "finished": "Identitätszugriff wurde erfolgreich entzogen",
+          "starting": "Identitätszugriff wird entzogen",
+          "step0": false,
+          "title": "Identitätszugriff entziehen"
+        }
       },
-      "not-support": "Sie sind aktuell mit einem alten, nicht identitätsbasierenden, Profil angemeldet. Die Nutzerverwaltung für Identititäten wird nur für aktuelle Profile unterstützt.",
       "grant-access": {
         "body": "Ihnen wurde \"{access}\" Zugriff auf die Identität von {alias} ({identity}) erteilt. Nutzen Sie den nachfolgenden Link, um die Referenz in Ihrem Profil abzuspeichern und im Namen dieser Identität zu interagieren.",
         "title": "Identitätszugriff",
@@ -45,6 +54,7 @@
           "readWrite": "schreibender und lesender"
         }
       },
+      "not-support": "Sie sind aktuell mit einem alten, nicht identitätsbasierenden, Profil angemeldet. Die Nutzerverwaltung für Identititäten wird nur für aktuelle Profile unterstützt.",
       "remove-access": {
         "body": "Ihnen wurde lesender und schreibender Zugriff auf die Identität von {alias} ({identity}) entzogen. Nutzen Sie den nachfolgenden Link, um die Referenz in Ihrem Profil löschen.",
         "title": "Identitätszugriff entzogen"

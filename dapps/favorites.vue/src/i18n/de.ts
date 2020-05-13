@@ -19,45 +19,54 @@
 
 /* tslint:disable */
 export default {
-  "_favorites": {
-    "add": "Favorit hinzufügen",
-    "add-form": {
-      "address": {
-        "desc": "Bitte geben Sie die Anwendungsadresse ein. (ENS- / Vertragsadresse)",
-        "error": "Bitte geben Sie eine Adresse ein!",
-        "title": "Anwendungsadresse"
+  _favorites: {
+    add: 'Favorit hinzufügen',
+    'add-form': {
+      address: {
+        desc: 'Bitte geben Sie die Anwendungsadresse ein. (ENS- / Vertragsadresse)',
+        error: 'Bitte geben Sie eine Adresse ein!',
+        title: 'Anwendungsadresse',
       },
-      "modal": {
-        "added": {
-          "desc": "Diese Anwendung ist bereits zu Ihren Favoriten hinzugefügt worden.",
-          "title": "Favorit hinzufügen"
+      modal: {
+        added: {
+          desc: 'Diese Anwendung ist bereits zu Ihren Favoriten hinzugefügt worden.',
+          title: 'Favorit hinzufügen',
         },
-        "notFound": {
-          "desc": "Für die angegebene Adresse konnte keine Anwendung gefunden werden.",
-          "title": "Nicht gefunden"
+        notFound: {
+          desc: 'Für die angegebene Adresse konnte keine Anwendung gefunden werden.',
+          title: 'Nicht gefunden',
         },
-        "ok": {
-          "desc": "Wollen sie die ausgewählte Anwendung zu Ihren Favoriten hinzufügen?",
-          "title": "Favorit hinzufügen"
-        }
-      }
+        ok: {
+          desc: 'Wollen sie die ausgewählte Anwendung zu Ihren Favoriten hinzufügen?',
+          title: 'Favorit hinzufügen',
+        },
+      },
     },
-    "dispatcher": {
-      "add": "Favorit hinzufügen",
-      "remove": "Favorit entfernen"
+    dispatcher: {
+      add: {
+        title: 'Favorit hinzufügen',
+        starting: 'Favorit wird hinzufügt',
+        step0: false,
+        finished: 'Favorit wurde erfolgreich hinzufgefügt',
+      },
+      remove: {
+        title: 'Favorit entfernen',
+        starting: 'Favorit wird entfernt',
+        step0: false,
+        finished: 'Favorit wurde erfolgreich entfernt',
+      },
     },
-    "favorites": "Favoriten",
-    "favorites-desc": "Übersicht meiner Favoriten",
-    "no-favorites": {
-      "desc": "Sie haben noch keine Favoriten in hinzugefügt. Nutzen Sie den nachfolgenden Button, um einen Favoriten hinzuzufügen.",
-      "title": "Keine Favoriten"
+    favorites: 'Favoriten',
+    'favorites-desc': 'Übersicht meiner Favoriten',
+    'no-favorites': {
+      desc: 'Sie haben noch keine Favoriten in hinzugefügt. Nutzen Sie den nachfolgenden Button, um einen Favoriten hinzuzufügen.',
+      title: 'Keine Favoriten',
     },
-    "overview": "Übersicht",
-    "remove": "Favorit löschen",
-    "remove-modal": {
-      "desc": "Wollen Sie diesen Favorit wirklich löschen?",
-      "title": "Favorit löschen"
-    }
-  }
-}
-/* tslint:enable */;
+    overview: 'Übersicht',
+    remove: 'Favorit löschen',
+    'remove-modal': {
+      desc: 'Wollen Sie diesen Favorit wirklich löschen?',
+      title: 'Favorit löschen',
+    },
+  },
+};

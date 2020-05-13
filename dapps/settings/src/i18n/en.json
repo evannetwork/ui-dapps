@@ -32,10 +32,19 @@
     "header": "Settings",
     "identity": {
       "description": "In the following table, you can add or remove contacts that have access to the current identity. For example, they are authorized to access all data, edit information, share data, or perform transactions.",
-      "not-support": "You are currently logged in with an old, non-identity-based profile. User management for identities is only supported for current profiles.",
       "dispatcher": {
-        "grant-access": "Granting access to identity ...",
-        "remove-access": "Removing permissions for identity ..."
+        "grant-access": {
+          "finished": "Identity access successfully granted",
+          "starting": "Granting identity access",
+          "step0": false,
+          "title": "Granting identity access"
+        },
+        "remove-access": {
+          "finished": "Identity access successfully removed",
+          "starting": "Removing identity access",
+          "step0": false,
+          "title": "Removing identity access"
+        }
       },
       "grant-access": {
         "body": "You have been granted \"{access}\" access to the identity of {alias} ({identity}). Use the link below to save the reference in your profile to interact on behalf of this identity.",
@@ -45,18 +54,19 @@
           "readWrite": "read and write"
         }
       },
+      "not-support": "You are currently logged in with an old, non-identity-based profile. User management for identities is only supported for current profiles.",
       "remove-access": {
         "body": "Your access to the identity of {alias} {identity}} has been revoked. Use the following link to delete the reference in your profile.",
         "title": "Identity access revoked"
       },
       "side-panel": {
+        "cancel": "Cancel",
+        "define-perm-for": "Define the permissions for {alias}.",
         "delete-modal": {
           "confirm": "Remove",
           "description": "Do you really want to revoke the permissions for this user? The write permissions will be removed and he will receive a request to delete the encryption key for your identity.",
           "title": "Remove Permissions"
         },
-        "remove-button": "Remove Permissions",
-        "cancel": "Cancel",
         "form": {
           "address": {
             "error": "Please select a contact to grant access to.",
@@ -73,14 +83,14 @@
           "read": "read",
           "readWrite": "write"
         },
+        "remove-button": "Remove Permissions",
+        "select-contact": "Select a contact which may manage your identity",
         "submit": "Save",
         "title": "Identity permissions",
-        "define-perm-for": "Define the permissions for {alias}.",
         "transaction-cost": {
           "add": "Adding will cause transaction fees.",
           "edit": "Editing will cause transaction fees."
-        },
-        "select-contact": "Select a contact which may manage your identity"
+        }
       },
       "table": {
         "columns": {

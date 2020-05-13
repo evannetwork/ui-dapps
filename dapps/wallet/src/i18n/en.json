@@ -54,8 +54,18 @@
       "vat": "VAT"
     },
     "dispatchers": {
-      "ipfs-payment-channel": "Topping up EVEs",
-      "send-eve": "Sending EVEs"
+      "ipfs-payment-channel": {
+        "finished": "EVE were successfully deposited",
+        "starting": "Depositing EVE",
+        "step0": false,
+        "title": "Depositing EVE"
+      },
+      "send-eve": {
+        "finished": "EVE were successfully sent",
+        "starting": "Sending EVE",
+        "step0": false,
+        "title": "Sending EVE"
+      }
     },
     "ipfs": {
       "available-funds": "Available credit",

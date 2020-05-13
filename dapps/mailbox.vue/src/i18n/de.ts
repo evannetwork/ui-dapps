@@ -59,10 +59,14 @@ export default {
     },
     detail: 'Nachrichtendetails',
     dispatcher: {
-      attachment: 'Kontakt/Vertrag sync',
+      attachment: {
+        title: 'Anhang wird verarbeitet',
+        starting: 'Anhang wird verarbeitet',
+        step0: false,
+        finished: 'Anhang wurde verarbeitet',
+      },
     },
     'load-more': 'Mehr Laden...',
-    mailbox: 'Nachrichten',
     received: 'Empfangen',
     sent: 'Gesendet',
     to: 'an',

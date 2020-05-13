@@ -64,10 +64,14 @@ export default {
     },
     detail: 'Message Details',
     dispatcher: {
-      attachment: 'Contact/Contract sync',
+      attachment: {
+        title: 'Attachment being processed',
+        starting: 'Attachment is processed',
+        step0: false,
+        finished: 'Attachment was processed',
+      },
     },
     'load-more': 'Load More...',
-    mailbox: 'Messages',
     received: 'Received',
     sent: 'Sent',
     to: 'to',
