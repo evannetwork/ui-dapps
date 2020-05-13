@@ -204,14 +204,15 @@ export default class AddContactComponent extends mixins(EvanComponent) {
     }));
     this.shareFilters = getPermissionSortFilter(profileData);
     // setup sharing obj
-    this.sharingObj = (await PermissionUtils.getContainerPermissionsForUser(
+    const permissionsForUser = await PermissionUtils.getContainerPermissionsForUser(
       runtime,
       {
         containerAddress: profileAddress,
         i18nScope: '_profile.sharing.profileContract',
       },
       this.idOrEmail,
-    )).permissions;
+    );
+    this.sharingObj = permissionsForUser?.permissions;
   }
 
   /**

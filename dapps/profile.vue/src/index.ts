@@ -33,7 +33,7 @@ import updateDidDocumentDispatcher from './components/did/UpdateDidDocDispatcher
 
 export * from './components/registry';
 export * from './dispatchers/registry';
-export * from './components/utils/shareSortFilters.ts';
+export * from './components/utils/shareSortFilters';
 export {
   translations, updateDidDocumentDispatcher, CompanyContactForm, CompanyRegistrationForm,
 };
