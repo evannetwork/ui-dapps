@@ -4,13 +4,15 @@
       "add-contact-btn": "Kontakt hinzufügen",
       "add-contact-desc": "Geben Sie die Evan-ID eines bestehenden Nutzers ein oder eine E-Mail-Adresse, um einen neuen Kontakt einzuladen.",
       "add-contact-title": "Neuen Kontakt hinzufügen",
-      "alias-max-length": "Max. 100 Zeichen",
       "added": "Hinzugefügt",
+      "alias-max-length": "Max. 100 Zeichen",
       "all": "Alle",
       "cancel": "Abbrechen",
       "companies": "Unternehmen",
       "confirm-delete": "Kontakt löschen",
       "confirm-delete-description": "Sind Sie sich sicher, dass Sie diesen Kontakt löschen wollen?",
+      "contact-name": "Kontaktname",
+      "contact-name-placeholder": "John Doe",
       "contacts-empty": "Sie haben noch keine Kontakte hinzugefügt.",
       "contacts-title": "Kontakte",
       "created": "Erstellt",
@@ -24,7 +26,13 @@
       "filtered-empty": "Keine Ergebnisse für dieses Kriterium.",
       "id-or-email": "Evan-ID oder E-Mail",
       "id-or-email-placeholder": "0x000... oder nutzer@mail.com",
-      "invite-dispatcher": "Kontakt einladen",
+      "invite-dispatcher": {
+        "finished": "Kontakt wurde erfolgreich eingeladen",
+        "starting": "Kontakt wird eingeladen",
+        "step0": "Synchronisiung mit E-Mail Smart Agent",
+        "step1": "Kontakt wird im Addressbuch gespeichert",
+        "title": "Kontakt einladen"
+      },
       "iot-devices": "IOT-Devices",
       "message": "Nachricht",
       "message-placeholder": "Nachricht an den ausgewählten Nutzer",
@@ -68,8 +76,18 @@
       "updated": "Aktualisiert"
     },
     "dispatcher": {
-      "remove-contact": "Kontakt löschen",
-      "update-contact": "Kontakt aktualisieren"
+      "remove-contact": {
+        "finished": "Kontakt wurde gelöscht",
+        "starting": "Kontakt wird gelöscht",
+        "step0": false,
+        "title": "Kontakt löschen"
+      },
+      "update-contact": {
+        "finished": "Kontakt wurde aktualisiert",
+        "starting": "Kontakt aktualisieren",
+        "step0": false,
+        "title": "Kontakt aktualisieren"
+      }
     },
     "my-assets": "Meine Assets",
     "optional": "optional",

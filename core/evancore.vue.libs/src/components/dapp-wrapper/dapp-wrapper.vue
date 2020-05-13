@@ -256,7 +256,7 @@
                     v-if="queueErrorCount"
                     class="mdi mdi-alert text-danger mr-2"
                   />
-                  {{ instance.dispatcher.title | translate }}
+                  {{ getDispatcherTranslation(instance, 'title') | translate }}
                 </strong>
                 <span class="mx-auto" />
                 <span>

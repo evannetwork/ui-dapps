@@ -723,7 +723,7 @@ export default class DAppWrapperComponent extends mixins(EvanComponent) {
         const { instance } = event.detail;
 
         // load missing translations
-        if (this.loadedDispatchers.indexOf(instance.dispatcher.id)) {
+        if (this.loadedDispatchers.indexOf(instance.dispatcher.id) === -1) {
           await this.loadDispatcher(instance.dispatcher.id);
         }
 
@@ -733,7 +733,7 @@ export default class DAppWrapperComponent extends mixins(EvanComponent) {
           duration: 3000,
           type: 'info',
         };
-        const toastMessage = this.getDispatcherTranslation(instance);
+        const toastMessage: string|boolean = this.getDispatcherTranslation(instance);
         switch (instance.status) {
           case 'accept': {
             this.startDispatcherInstance(instance);
@@ -770,8 +770,11 @@ export default class DAppWrapperComponent extends mixins(EvanComponent) {
           }
         }
 
-        // show user synchronisation status
-        this.$toasted.show(toastMessage, toastOpts);
+        // disable toast message, when developer set the custom transaltion to false
+        if (toastMessage !== false) {
+          // show user synchronisation status
+          this.$toasted.show(toastMessage, toastOpts);
+        }
 
         if (instance.status !== 'finished' && instance.status !== 'deleted') {
           /* if the watch was already defined and it's not the incoming instance, copy only the
@@ -804,7 +807,8 @@ export default class DAppWrapperComponent extends mixins(EvanComponent) {
    * will be used, when no i18n object is prepared for the specific entries. For custom
    * translations, specify a translation object with the key of the dispatcher title and nest all
    * the status and step translations in their. If you want to use default translations, just leave
-   * the entries out of your translation object, but do not forget to specify a title. Sample:
+   * the entries out of your translation object, but do not forget to specify a title. Set one entry
+   * to false, to disable the toast message for this.Sample:
    *
    * {
    *   "my-dapp": {
@@ -818,7 +822,7 @@ export default class DAppWrapperComponent extends mixins(EvanComponent) {
    *        "step3": "step 3 started",
    *        "starting": "starting dispatcher",
    *        "stopped": "Stopped dispatcher",
-   *        "stopping": "Stopping dispatcher",
+   *        "stopping": false,
    *        "title": "My awesome dispatcher"
    *      }
    *   }
@@ -828,20 +832,20 @@ export default class DAppWrapperComponent extends mixins(EvanComponent) {
    *                                              specification, active step and status
    * @param      {string}              status     pass a custom status, to get a specific state
    * @param      {number}              stepIndex  get the translation for a certain step
-   * @return     {string}              translation
+   * @return     {string}  translation or false, if it should be disabled
    */
   getDispatcherTranslation(
     instance: DispatcherInstance,
     status = instance.status,
     stepIndex = instance.stepIndex,
-  ): string {
+  ): string|boolean {
     let customTranslation;
     // check for custom step description
     if (status === 'running') {
       customTranslation = this.$t(`${instance.dispatcher.title}.step${stepIndex}`, null);
     } else {
       // check for custom status translation
-      customTranslation = this.$t(`${instance.dispatcher.title}.${status}`);
+      customTranslation = this.$t(`${instance.dispatcher.title}.${status}`, null);
     }
     // early exit, when a custom translation exists
     if (customTranslation !== null) {
