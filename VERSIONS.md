@@ -6,6 +6,7 @@
 
 ### Fixes
 - fix `profile.vue` overwrites translations of `wallet`
+- add support for custom dispatcher step and status translations
 
 ### Deprecations
 
