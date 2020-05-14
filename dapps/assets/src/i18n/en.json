@@ -44,7 +44,8 @@
       "subject-prefill": "Contact Request",
       "updated": "Updated",
       "users": "Users",
-      "automatic-share": "Choose the sections of your profile that should be shared with the new contact."
+      "automatic-share": "Choose the sections of your profile that should be shared with the new contact.",
+      "email-hint": "With the invitation by e-mail, 0.3 EVE will be sent by you to your partner to allow him to automatically accept your contact request."
     },
     "digitaltwins": {
       "add-digitaltwin-title": "Create a new Digital Twin",

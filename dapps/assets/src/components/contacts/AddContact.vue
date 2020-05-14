@@ -89,6 +89,16 @@
             :sort-filter="shareFilters"
           />
         </div>
+        <div
+          v-else-if="emailInvite"
+          class="d-flex align-items-center mt-7"
+        >
+          <i
+            class="mdi mdi-information-outline mr-2"
+            style="font-size: 40px"
+          />
+          <span>{{ $t('_assets.contacts.email-hint') }}</span>
+        </div>
       </template>
 
       <template v-slot:footer>
