@@ -43,7 +43,8 @@
       "subject-placeholder": "Subject",
       "subject-prefill": "Contact Request",
       "updated": "Updated",
-      "users": "Users"
+      "users": "Users",
+      "automatic-share": "Choose the sections of your profile that should be shared with the new contact."
     },
     "digitaltwins": {
       "add-digitaltwin-title": "Create a new Digital Twin",

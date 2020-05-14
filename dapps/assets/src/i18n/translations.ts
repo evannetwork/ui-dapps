@@ -17,8 +17,19 @@
   the following URL: https://evan.network/license/
 */
 
+import { translations as profileTranslations } from '@evan.network/profile';
+
 import de from './de.json';
 import en from './en.json';
 
-// map all languages
-export default { de, en };
+// map all langugages
+export default {
+  de: {
+    ...de,
+    ...profileTranslations.de,
+  },
+  en: {
+    ...en,
+    ...profileTranslations.en,
+  },
+};

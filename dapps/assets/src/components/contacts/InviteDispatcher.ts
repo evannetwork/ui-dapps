@@ -140,6 +140,14 @@ dispatcher
     await runtime.profile.storeForAccount(
       runtime.profile.treeLabels.addressBook,
     );
+  })
+  .step(async (instance: DispatcherInstance, data: any) => {
+    if (!data.emailInvite && data.shareData) {
+      await instance.runtime.profile.profileContainer.shareProperties([{
+        accountId: data.accountId,
+        ...data.shareData,
+      }]);
+    }
   });
 
 export default dispatcher;

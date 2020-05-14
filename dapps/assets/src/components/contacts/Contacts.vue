@@ -75,7 +75,7 @@
       <evan-table
         class="clickable-rows"
         primary-key="address"
-        :items="contacts"
+        :items="contactsList"
         :fields="columns"
         :filter="filter"
         :filter-included-fields="filterBy"
@@ -85,31 +85,29 @@
         :tbody-transition-props="{ name: 'list', mode: 'out-in' }"
         @row-clicked="handleRowClicked"
       >
-        <template v-slot:cell(alias)="contacts">
+        <template v-slot:cell(alias)="contact">
           {{
-            contacts.item.alias || contacts.item.address
+            contact.item.alias || contact.item.address
           }}
         </template>
-        <template v-slot:cell(icon)="contacts">
+        <template v-slot:cell(icon)="contact">
           <i
             class="table-icon"
-            :class="contacts.item.icon"
+            :class="contact.item.icon"
           />
         </template>
-        <template v-slot:cell(createdAt)="contacts">
-          <template v-if="contacts.item.createdAt && !contacts.item.isPending">
-            {{ contacts.item.createdAt | moment('L') }}
+        <template v-slot:cell(createdAt)="contact">
+          <template v-if="contact.item.createdAt && !contact.item.isPending">
+            {{ contact.item.createdAt | moment('L') }}
           </template>
-          <template v-else-if="contacts.item.isPending">
+          <template v-else-if="contact.item.isPending">
             {{ '_assets.contacts.pending' | translate }}
           </template>
         </template>
         <template v-slot:cell(actions)="contact">
           <evan-loading
-            v-if="
-              isFavoriteLoading.loading &&
-                isFavoriteLoading.id === contact.item.address
-            "
+            v-if="(isFavoriteLoading.loading && isFavoriteLoading.id === contact.item.address)
+              || contact.item.loading"
             classes=""
           />
           <evan-button
@@ -128,6 +126,7 @@
             @click="addFavorite(contact)"
           />
           <evan-button
+            v-if="!contact.item.loading"
             type="icon-secondary"
             class="visible-on-row-hover ml-1"
             icon="mdi mdi-pencil-outline"
