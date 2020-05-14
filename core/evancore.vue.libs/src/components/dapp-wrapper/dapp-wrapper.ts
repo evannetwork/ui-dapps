@@ -458,7 +458,7 @@ export default class DAppWrapperComponent extends mixins(EvanComponent) {
       try {
         // load mail inbox informations, load 10 for checking for +9 new mails
         this.userInfo.readMails = JSON.parse(
-          window.localStorage[`${this.getRuntime().activeIdentity}-mail-read`] || '[ ]',
+          window.localStorage.getItem(`${this.getRuntime().activeIdentity}-mail-read`) || '[ ]',
         );
 
         let mails = [];
@@ -498,12 +498,12 @@ export default class DAppWrapperComponent extends mixins(EvanComponent) {
 
         // check the last read mail count against the current one, to check for new mails
         const previousRead = parseInt(
-          window.localStorage[`${this.getRuntime().activeIdentity}-mail-read-count`] || 0,
+          window.localStorage.getItem(`${this.getRuntime().activeIdentity}-mail-read-count`) || '0',
           10,
         );
         this.userInfo.newMailCount = this.userInfo.totalMails - previousRead;
 
-        if (previousRead < this.userInfo.totalMails && !window.localStorage['evan-test-mode']) {
+        if (previousRead < this.userInfo.totalMails && !window.localStorage.getItem('evan-test-mode')) {
           // show a toast message for the last unread mails
           await Promise.all(this.userInfo.mails.slice(0, this.userInfo.newMailCount).map(async (mail) => {
             const alias = mail.fromAlias || await profileUtils.getUserAlias(runtime, mail.from);
@@ -570,19 +570,23 @@ export default class DAppWrapperComponent extends mixins(EvanComponent) {
     if (this.userInfo.readMails.indexOf(mail.address) === -1) {
       this.userInfo.readMails.push(mail.address);
 
-      window.localStorage[`${this.getRuntime().activeIdentity}-mail-read`] = JSON.stringify(
-        this.userInfo.readMails,
+      window.localStorage.setItem(
+        `${this.getRuntime().activeIdentity}-mail-read`,
+        JSON.stringify(this.userInfo.readMails),
       );
 
       // calculate new read mail count
       const currReadCount = parseInt(
-        window.localStorage[`${this.getRuntime().activeIdentity}-mail-read-count`] || 0,
+        window.localStorage.getItem(`${this.getRuntime().activeIdentity}-mail-read-count`) || '0',
         10,
       );
       const mailIndex = this.userInfo.mails.indexOf(mail);
       const newReadCount = this.userInfo.totalMails - mailIndex;
       if (mailIndex !== -1 && currReadCount < newReadCount) {
-        window.localStorage[`${this.getRuntime().activeIdentity}-mail-read-count`] = newReadCount;
+        window.localStorage.setItem(
+          `${this.getRuntime().activeIdentity}-mail-read-count`,
+          newReadCount.toString(),
+        );
       }
     }
   }
