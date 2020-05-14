@@ -6,8 +6,11 @@
 - `assets`
   - add data sharing selection to `Add Contact` section
   - show loading indicator, when contact gets invited
+- add technical info section to `settings` dapp
 
 ### Fixes
+- fix `profile.vue` overwrites translations of `wallet`
+- scope `read-mail-count` to identity
 
 ### Deprecations
 

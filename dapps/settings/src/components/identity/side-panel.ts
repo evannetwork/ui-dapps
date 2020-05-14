@@ -203,7 +203,6 @@ export default class IdentitySidePanelComponent extends mixins(EvanComponent) {
       note: {
         value: this.contact.note || '',
         uiSpecs: {
-          type: 'v-select',
           attr: {
             id: 'identity-contact-note',
           },

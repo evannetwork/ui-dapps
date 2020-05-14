@@ -13,7 +13,19 @@
         "exported": "Runtime Konfiguration wurde in die Zwischenablage kopiert",
         "title": "API runtime Konfiguration kopieren"
       },
-      "security-info": "Sicherheitsinformationen"
+      "security-info": "Sicherheitsinformationen",
+      "info": {
+        "title": "Login Informationen",
+        "underlyingAccount": "Public Key / Account Adresse",
+        "activeIdentity": "Aktive Evan Identität",
+        "accountIdentity": "Identität der Account Adresse",
+        "activeIdentityOwner": "Eigentümer der aktiven Evan Identität",
+        "balance": "Aktueller Kontostand"
+      },
+      "localStorage": {
+        "title": "Local Storage",
+        "desc": "Bitte seien Sie vorsichtig bei der Einstellung dieser Werte. Hinweis: Wenn Sie die Werte ändern, müssen Sie möglicherweise die Seite neu laden."
+      }
     },
     "browser": {
       "dev-domain": {
@@ -36,7 +48,6 @@
         "grant-access": "Identitätszugriff erteilen ...",
         "remove-access": "Identitätszugriff entziehen ..."
       },
-      "not-support": "Sie sind aktuell mit einem alten, nicht identitätsbasierenden, Profil angemeldet. Die Nutzerverwaltung für Identititäten wird nur für aktuelle Profile unterstützt.",
       "grant-access": {
         "body": "Ihnen wurde \"{access}\" Zugriff auf die Identität von {alias} ({identity}) erteilt. Nutzen Sie den nachfolgenden Link, um die Referenz in Ihrem Profil abzuspeichern und im Namen dieser Identität zu interagieren.",
         "title": "Identitätszugriff",
@@ -45,6 +56,7 @@
           "readWrite": "schreibender und lesender"
         }
       },
+      "not-support": "Sie sind aktuell mit einem alten, nicht identitätsbasierenden, Profil angemeldet. Die Nutzerverwaltung für Identititäten wird nur für aktuelle Profile unterstützt.",
       "remove-access": {
         "body": "Ihnen wurde lesender und schreibender Zugriff auf die Identität von {alias} ({identity}) entzogen. Nutzen Sie den nachfolgenden Link, um die Referenz in Ihrem Profil löschen.",
         "title": "Identitätszugriff entzogen"
@@ -95,7 +107,7 @@
       }
     },
     "routes": {
-      "account": "Account",
+      "account": "Tech. Informationen",
       "browser": "Browser",
       "identity": "Identitätsmanagement"
     }
