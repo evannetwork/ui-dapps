@@ -6,6 +6,10 @@
     "continue": "Fortfahren",
     "free-input": "Freie Eingabe",
     "headings": {
+      "accept-contact": {
+        "desc": "Sie wurden durch einen Partner in das evan.network eingeladen. In dem letzten Schritt Ihrer Anmeldung, können Sie diesen direkt zu Ihren Kontakten hinzufügen und auf sicherer und verschlüsselter Basis auf der Blockchain kommunizieren. Sobald Sie den Kontakt akzeptieren, wird eine Bestätigung mit Ihrer Identitätsadresse an Ihren Partner versendet.",
+        "title": "Willkommen im evan.network"
+      },
       "sign-in": {
         "0": {
           "desc": "Die Absicherung Ihrer Daten ist uns sehr wichtig. Daher ist der Login-Prozess zweigeteilt. Der <b>Wiederherstellungsschlüssel</b> unterstützt Sie bei der Absicherung Ihrer Informationen. Bitte bewahren Sie diesen für Dritte unzugänglich an einem sicheren Ort auf.",
@@ -112,17 +116,17 @@
       "alias": {
         "error": "Bitte geben Sie einen Account-Namen an!",
         "hint": "Der Account-Name ist nur für Sie sichtbar.",
-        "placeholder": "John Doe",
-        "label": "Nutzername"
-      },
-      "companyAlias": {
-        "hint": "Der Name Ihres Unternehmens ist nur für Sie sichtbar.",
-        "label": "Name des Unternehmens",
-        "error": "Please enter a company name!",
-        "placeholder": "Sample Company Inc."
+        "label": "Nutzername",
+        "placeholder": "John Doe"
       },
       "already-signed-up": "Sie sind bereits registriert?",
       "cancel-riddle": "Abbrechen",
+      "companyAlias": {
+        "error": "Please enter a company name!",
+        "hint": "Der Name Ihres Unternehmens ist nur für Sie sichtbar.",
+        "label": "Name des Unternehmens",
+        "placeholder": "Sample Company Inc."
+      },
       "create-account": "Erstellen Sie Ihren Account",
       "create-profile": {
         "company": {
@@ -251,11 +255,11 @@
       "accept-contact": "Kontaktanfrage akzeptieren",
       "do-not-accept-contact": "Weiter ohne Kontaktanfrage zu akzeptieren",
       "go-to-evan": "Weiter zum evan.network",
-      "invited": "Herzlich willkommen im evan.network <b>{alias} ({accountId})</b>.<br><br>Sie wurden von <b>{inviteeAlias}</b> in das evan.network eingeladen. Wenn Sie diesen Kontakt zu Ihrem Adressbuch hinzufügen, erhalten Sie <b>{eveAmount} EVE</b> als Einladungsgeschenk.",
+      "invited": "Herzlich willkommen im evan.network <b>{alias}</b>.<br><br>Sie wurden von <b>{inviteeAlias}</b> in das evan.network eingeladen.",
       "title": "evan.network Anmeldung",
       "unlock-for-accept": "Sie sind bereits im evan.network angemeldet.<br><br>Sie haben eine Kontaktanfrage von <b>{inviteeAlias}</b> erhalten. Entsperren Sie Ihr Profil, um fortzufahren oder nutzen Sie den \"zurück\" Button, um sich mit einer anderen Identität anzumelden.",
-      "welcome-signed-in": "Sie sind bereits im evan.network angemeldet <b>({accountId})</b>.<br><br>Nutzen Sie den nachfolgenden Button, um mit Ihrer Arbeit fortzufahren.",
-      "welcome-unlocked": "Herzlich willkommen im evan.network <b>{alias} ({accountId})</b>.<br><br>Sie können nun mit Ihrer Arbeit starten."
+      "welcome-signed-in": "Sie sind bereits im evan.network angemeldet.<br><br>Nutzen Sie den nachfolgenden Button, um mit Ihrer Arbeit fortzufahren.",
+      "welcome-unlocked": "Herzlich willkommen im evan.network <b>{alias}</b>.<br><br>Sie können nun mit Ihrer Arbeit starten."
     }
   }
 }

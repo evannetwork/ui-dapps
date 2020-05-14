@@ -28,7 +28,7 @@ import { Runtime, Profile, ProfileOptions } from '@evan.network/api-blockchain-c
 import * as bcc from '@evan.network/api-blockchain-core';
 import { utils } from '@evan.network/ui-dapp-browser';
 import { bccHelper, session, lightwallet } from '@evan.network/ui-session';
-import { agentUrl } from '@evan.network/ui';
+import { agentUrl, profileUtils } from '@evan.network/ui';
 
 interface Modal extends EvanComponent {
   show: Function;
@@ -77,8 +77,8 @@ export default class AcceptContact extends mixins(EvanComponent) {
   // was contact adding successful?
   accepted = false;
 
-  async created(): Promise<void> {
-    if (!this.$store.state.runtime) {
+  async created() {
+    if (!this.$store.state.isLoggedin) {
       this.loading = true;
 
       // unlock the profile directly
@@ -97,13 +97,12 @@ export default class AcceptContact extends mixins(EvanComponent) {
     }
 
     this.runtime = this.$store.state.runtime;
-    this.accountId = session.activeAccount;
-    this.inviteeAddress = `${this.$route.query.inviteeAddress}`;
+    this.accountId = session.activeIdentity;
+    this.inviteeAddress = this.$route.query.inviteeAddress;
 
     if (this.inviteeAddress || this.$props.loadAlias) {
       // load the currents user alias
-      const addressBook = await this.runtime.profile.getAddressBook();
-      this.alias = addressBook?.profile[this.accountId]?.alias || '';
+      this.alias = await profileUtils.getUserAlias(this.runtime, this.accountId);
     } else {
       this.notLoadedButSignedIn = true;
     }
@@ -142,9 +141,13 @@ export default class AcceptContact extends mixins(EvanComponent) {
       // trigger smart agent to pay out credit eves
       await axios.post(`${agentUrl}/api/smart-agents/onboarding/accept`, {
         invitationId: this.$route.query.onboardingID,
-        accountId: this.runtime.activeIdentity,
+        accountId: this.runtime.underlyingAccount,
       });
+    } catch (ex) {
+      this.runtime.logger.log(ex.message, 'warning');
+    }
 
+    try {
       // load my address book
       await this.runtime.profile.loadForAccount(this.runtime.profile.treeLabels.addressBook);
       // search for the target public key

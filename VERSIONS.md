@@ -9,6 +9,7 @@
 - add technical info section to `settings` dapp
 
 ### Fixes
+- fix e-mail invitation
 - fix `profile.vue` overwrites translations of `wallet`
 - scope `read-mail-count` to identity
 

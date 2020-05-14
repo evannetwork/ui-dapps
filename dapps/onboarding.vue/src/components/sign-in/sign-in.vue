@@ -90,11 +90,12 @@
             :account-id="accountId"
             :mnemonic="mnemonic"
             :show-signup="true"
+            @logged-in="loggedIn"
           />
         </div>
 
         <div
-          v-if="activeStep === 2"
+          v-if="activeStep === 99"
           class="step"
         >
           <h5 class="text-center">

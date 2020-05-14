@@ -28,15 +28,30 @@
         <div class="w-100">
           <div class="banner-wrapper">
             <img
-              :src="$store.state.onboardingBaseUrl + `/assets/left-panel/${ images[step] }`"
+              :src="$store.state.onboardingBaseUrl + `/assets/left-panel/${ activeImg }`"
               class="desc-banner"
               @load="setImageStyle()"
             >
           </div>
-          <h2 class="mx-8 mb-2 font-weight-bold text-dark">
+          <h2
+            v-if="step === 99"
+            class="mx-8 mb-2 font-weight-bold text-dark"
+          >
+            {{ `_onboarding.headings.accept-contact.title` | translate }}
+          </h2>
+          <h2
+            v-else
+            class="mx-8 mb-2 font-weight-bold text-dark"
+          >
             {{ `_onboarding.headings.${ type }.${ step }.title` | translate }}
           </h2>
           <p
+            v-if="step === 99"
+            class="mx-8 mt-8 text-dark"
+            v-html="$t(`_onboarding.headings.accept-contact.desc`)"
+          />
+          <p
+            v-else
             class="mx-8 mt-8 text-dark"
             v-html="$t(`_onboarding.headings.${ type }.${ step }.desc`)"
           />

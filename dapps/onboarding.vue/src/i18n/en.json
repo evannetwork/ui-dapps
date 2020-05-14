@@ -6,6 +6,10 @@
     "continue": "Continue",
     "free-input": "Free input",
     "headings": {
+      "accept-contact": {
+        "desc": "You were invited to the evan.network by a partner. In the last step of your sign in, you can add this partner directly to your contacts and communicate on a secure and encrypted basis on the evan.network. Once you accept the contact, a confirmation with your identity address will be sent to your partner.",
+        "title": "Welcome to the evan.network"
+      },
       "sign-in": {
         "0": {
           "desc": "Your data security is very important to us. Therefore, the login process consists of two parts. The <b>recovery key</b> helps you to secure your information. Please keep it inaccessible to third parties in a safe place.",
@@ -251,11 +255,11 @@
       "accept-contact": "accept contact request",
       "do-not-accept-contact": "continue without accepting the contact request",
       "go-to-evan": "Continue to evan.network",
-      "invited": "Welcome to the evan.network <b>{alias} ({accountId})</b>.<br><br>You were invited by <b>{inviteeAlias}</b> to the evan.network. If you add this contact to your address book, you will receive <b>{eveAmount} EVE</b> as an invitation gift.",
+      "invited": "Welcome to the evan.network <b>{alias}</b>.<br><br>You were invited by <b>{inviteeAlias}</b> to the evan.network.",
       "title": "evan.network log in",
       "unlock-for-accept": "You are already signed in to the evan.network.<br><br>You have received a contact request from <b>{inviteeAlias}</b>. Unlock your profile to continue or use the back button, to log in with an other identity.",
-      "welcome-signed-in": "You are already signed in to the evan.network <b>({accountId})</b>.<br><br>Use the following button to start your work.",
-      "welcome-unlocked": "Welcome to the evan.network <b>{alias} ({accountId})</b>.<br><br>You can now start your work."
+      "welcome-signed-in": "You are already signed in to the evan.network.<br><br>Use the following button to start your work.",
+      "welcome-unlocked": "Welcome to the evan.network <b>{alias}</b>.<br><br>You can now start your work."
     }
   }
 }
