@@ -43,7 +43,7 @@
         "favorite": {
           "add": {
             "finished": "Digitaler Zwilling wurde erfolgreich als Favorit markiert",
-            "starting": "Digitaler Zwilling wird favoritisiert",
+            "starting": "Digitaler Zwilling wird favorisiert",
             "step0": false,
             "title": "Digitalen Zwilling favoritisieren"
           },
