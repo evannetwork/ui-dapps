@@ -113,7 +113,7 @@ export default class SignIn extends mixins(EvanComponent) {
 
   loggedIn() {
     if (this.$route.query.inviteeAddress) {
-      this.activeStep = 2;
+      this.activeStep = 99;
     }
   }
 

@@ -26,6 +26,9 @@
       ],
       "@evan.network/ui-vue-core": [
         "./core/evancore.vue.libs"
+      ],
+      "@evan.network/profile": [
+        "./dapps/profile.vue"
       ]
     },
     "resolveJsonModule": true,

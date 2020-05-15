@@ -13,7 +13,19 @@
         "exported": "Runtime Konfiguration wurde in die Zwischenablage kopiert",
         "title": "API runtime Konfiguration kopieren"
       },
-      "security-info": "Sicherheitsinformationen"
+      "security-info": "Sicherheitsinformationen",
+      "info": {
+        "title": "Login Informationen",
+        "underlyingAccount": "Public Key / Account Adresse",
+        "activeIdentity": "Aktive Evan Identität",
+        "accountIdentity": "Identität der Account Adresse",
+        "activeIdentityOwner": "Eigentümer der aktiven Evan Identität",
+        "balance": "Aktueller Kontostand"
+      },
+      "localStorage": {
+        "title": "Local Storage",
+        "desc": "Bitte seien Sie vorsichtig bei der Einstellung dieser Werte. Hinweis: Wenn Sie die Werte ändern, müssen Sie möglicherweise die Seite neu laden."
+      }
     },
     "browser": {
       "dev-domain": {
@@ -105,7 +117,7 @@
       }
     },
     "routes": {
-      "account": "Account",
+      "account": "Tech. Informationen",
       "browser": "Browser",
       "identity": "Identitätsmanagement"
     }

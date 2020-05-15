@@ -105,7 +105,9 @@ dispatcher
           fromAlias: data.fromAlias,
           lang: data.currLang,
         },
-        runtime.web3.utils.toWei('0'),
+        // send a minimum amount of ether, so that the invited person can save the contact without
+        // an error
+        runtime.web3.utils.toWei('0.3', 'ether'),
       );
     } else {
       // generate communication keys
@@ -140,6 +142,14 @@ dispatcher
     await runtime.profile.storeForAccount(
       runtime.profile.treeLabels.addressBook,
     );
+  })
+  .step(async (instance: DispatcherInstance, data: any) => {
+    if (!data.emailInvite && data.shareData) {
+      await instance.runtime.profile.profileContainer.shareProperties([{
+        accountId: data.accountId,
+        ...data.shareData,
+      }]);
+    }
   });
 
 export default dispatcher;
