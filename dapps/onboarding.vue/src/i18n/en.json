@@ -130,7 +130,7 @@
           "status-2": "Creation of the company account",
           "status-3": "Creation of corporate identity on the basis of specific data",
           "status-4": "Creation of verification management",
-          "status-5": "Identity was successfully created"
+          "status-5": "Identity successfully created"
         },
         "title": "Create Account",
         "twin": {
@@ -138,14 +138,14 @@
           "status-2": "Encrypting user information",
           "status-3": "Creating mailbox, address book, ...",
           "status-4": "Creating Digital Twin",
-          "status-5": "Digital Twin was successfully created!"
+          "status-5": "Digital Twin successfully created"
         },
         "user": {
           "status-1": "Initialize connection to network",
           "status-2": "Creation of the company account",
           "status-3": "Creation of the identity",
           "status-4": "Creation of verification management",
-          "status-5": "Identity was successfully created"
+          "status-5": "Identity successfully created"
         }
       },
       "desc": "Create your evan.network identity",
