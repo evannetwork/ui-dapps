@@ -3,10 +3,16 @@
 
 ## Next Version
 ### Features
+- `assets`
+  - add data sharing selection to `Add Contact` section
+  - show loading indicator, when contact gets invited
+- add technical info section to `settings` dapp
 
 ### Fixes
+- fix e-mail invitation
 - fix `profile.vue` overwrites translations of `wallet`
 - add support for custom dispatcher step and status translations
+- scope `read-mail-count` to identity
 
 ### Deprecations
 

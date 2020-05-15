@@ -19,14 +19,41 @@
 
 <template>
   <div class="evan-content-container">
-    <div
-      class="white-box mb-5"
-    >
-      <h3 class="mb-5 d-block">
+    <evan-loading v-if="loading" />
+    <template v-else>
+      <h3 class="d-block">
+        {{ $t('_settings.account.info.title') }}
+      </h3>
+
+      <evan-base-list
+        class="mt-5"
+        :data="loginInfoList"
+      >
+        <template
+          v-slot:item="{ item }"
+          style="height: 80px;"
+        >
+          <div class="d-flex align-items-center h-100 px-3">
+            <div>
+              <p class="mb-0 font-weight-semibold">
+                {{ $t(item.title) }}
+              </p>
+            </div>
+            <span class="mx-auto" />
+            <span>
+              {{ item.value }}
+            </span>
+          </div>
+        </template>
+      </evan-base-list>
+
+      <h3 class="mt-7 d-block">
         {{ $t('_settings.account.security-info') }}
       </h3>
 
-      <div class="d-flex justify-content-center mt-3">
+      <div
+        class="mt-5 white-box d-flex justify-content-center"
+      >
         <evan-button
           class="mr-3"
           type="danger"
@@ -48,7 +75,42 @@
           {{ $t('_settings.account.runtime-config.title') }}
         </evan-button>
       </div>
-    </div>
+
+      <template v-if="isDeveloperModeEnabled">
+        <h3 class="mt-7 d-block">
+          {{ $t('_settings.account.localStorage.title') }}
+        </h3>
+        <p>
+          {{ $t('_settings.account.localStorage.desc') }}
+        </p>
+
+        <evan-base-list
+          class="localstorage-list mt-5"
+          :data="localStorageParams"
+        >
+          <template
+            v-slot:item="{ item }"
+            style="height: 80px;"
+          >
+            <div class="d-flex align-items-center h-100 px-3">
+              <div>
+                <p class="mb-0 font-weight-semibold">
+                  {{ $t(item) }}
+                </p>
+              </div>
+              <span class="mx-auto" />
+              <div style="width: 80%">
+                <evan-form-control-textarea
+                  class="mb-0"
+                  :value="localStorage[item]"
+                  @input="onLocalStorageChange(item, $event)"
+                />
+              </div>
+            </div>
+          </template>
+        </evan-base-list>
+      </template>
+    </template>
   </div>
 </template>
 
@@ -57,3 +119,15 @@ import Component from './account';
 
 export default Component;
 </script>
+
+<style lang="scss" scoped>
+@import '~@evan.network/ui/src/style/utils';
+/deep/ {
+  .localstorage-list {
+    li {
+      height: auto;
+      padding: 10px;
+    }
+  }
+}
+</style>

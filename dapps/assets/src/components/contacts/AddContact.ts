@@ -23,6 +23,9 @@ import Component, { mixins } from 'vue-class-component';
 // evan.network imports
 import { EvanComponent, EvanForm, SwipePanelComponentClass } from '@evan.network/ui-vue-core';
 import { profileUtils } from '@evan.network/ui';
+import { getPermissionSortFilter } from '@evan.network/profile';
+import { PermissionUtils } from '@evan.network/digital-twin-lib';
+
 import { ContactFormData } from './ContactInterfaces';
 import { ContactsService } from './ContactsService';
 
@@ -50,6 +53,23 @@ export default class AddContactComponent extends mixins(EvanComponent) {
 
   msgTitle = null;
 
+  loading = true;
+
+  /**
+   * Filters for hiding specific profile description data schema entries
+   */
+  shareFilters: any = null;
+
+  /**
+   * Current automatic share config
+   */
+  sharingObj: any = null;
+
+  /**
+   * Result of the evan-permissions component
+   */
+  selectedSharings = null;
+
   async created(): Promise<void> {
     await this.initState();
     const runtime = this.getRuntime();
@@ -61,6 +81,8 @@ export default class AddContactComponent extends mixins(EvanComponent) {
    * Init and reset component state
    */
   private async initState(): Promise<void> {
+    this.loading = true;
+
     this.idOrEmailErrorMessage = '';
     this.idOrEmail = null;
 
@@ -73,6 +95,9 @@ export default class AddContactComponent extends mixins(EvanComponent) {
       this.fromAlias
     }`;
     this.msgTitle = this.$t('_assets.contacts.subject-prefill');
+
+    await this.setupAutomaticShareData();
+    this.loading = false;
   }
 
   /**
@@ -93,6 +118,7 @@ export default class AddContactComponent extends mixins(EvanComponent) {
         msgBody: this.msgBody,
         msgTitle: this.msgTitle,
         updatedAt: now,
+        shareData: this.selectedSharings,
       };
 
       this.closePanel();
@@ -150,5 +176,66 @@ export default class AddContactComponent extends mixins(EvanComponent) {
 
   closePanel(): void {
     (this.$refs.addContactPanel as SwipePanelComponentClass).hide();
+  }
+
+  /**
+   * Returns the permissions mapping for certain user. If nothing is shared with the user, copy from own and set all to
+   * denied.
+   *
+   * @param user: string - the user id.
+   */
+  async setupAutomaticShareData(): Promise<void> {
+    const runtime = this.getRuntime();
+    const { profile } = runtime;
+
+    await profile.loadForAccount();
+    const profileAddress = profile.profileContract.options.address;
+    // load profile data, so we can get the correct sort filters
+    const description = await profile.profileContainer.getDescription();
+    const entryKeys = Object.keys(description.dataSchema);
+    const profileData = {};
+    await Promise.all(entryKeys.map(async (key: string) => {
+      try {
+        // load account details
+        profileData[key] = await profile.getProfileProperty(key);
+      } catch (ex) {
+        runtime.logger.log(ex.message, 'error');
+      }
+    }));
+    this.shareFilters = getPermissionSortFilter(profileData);
+    // setup sharing obj
+    const permissionsForUser = await PermissionUtils.getContainerPermissionsForUser(
+      runtime,
+      {
+        containerAddress: profileAddress,
+        i18nScope: '_profile.sharing.profileContract',
+      },
+      this.idOrEmail,
+    );
+    this.sharingObj = permissionsForUser?.permissions;
+  }
+
+  /**
+   * Is the current idOrEmail a eth address
+   */
+  isAddress(): boolean {
+    return this.getRuntime().web3.utils.isAddress(this.idOrEmail);
+  }
+
+  /**
+   * Set the selected sharings to the latest data, provided by the evan-permission component.
+   *
+   * @param      {any}  currSharing  curr sharing selection
+   */
+  handlePermissionUpdate(currSharing: any): void {
+    this.selectedSharings = { read: [], readWrite: [] };
+
+    Object.keys(currSharing.permissions).forEach((key: string) => {
+      if (currSharing.permissions[key].readWrite) {
+        this.selectedSharings.readWrite.push(key);
+      } else if (currSharing.permissions[key].read) {
+        this.selectedSharings.read.push(key);
+      }
+    });
   }
 }

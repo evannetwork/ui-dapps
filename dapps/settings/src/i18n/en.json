@@ -13,7 +13,19 @@
         "exported": "Exported api runtime configuration and copied to clipboard",
         "title": "Export API runtime configuration"
       },
-      "security-info": "Security information"
+      "security-info": "Security information",
+      "info": {
+        "title": "Login Information",
+        "underlyingAccount": "Public Key / Account Address",
+        "activeIdentity": "Active Evan Identity",
+        "accountIdentity": "Identity of Account Address",
+        "activeIdentityOwner": "Owner of the active Evan Identity",
+        "balance": "Current Account balance"
+      },
+      "localStorage": {
+        "title": "Local Storage",
+        "desc": "Please be careful by adjusting these values. Note: Changing values may need a page reload."
+      }
     },
     "browser": {
       "dev-domain": {
@@ -105,7 +117,7 @@
       }
     },
     "routes": {
-      "account": "Account",
+      "account": "Tech. Infos",
       "browser": "Browser",
       "identity": "Identity Management"
     }

@@ -24,10 +24,13 @@ import Component, { mixins } from 'vue-class-component';
 import {
   EvanComponent, EvanTableColumn, EvanTableItem,
 } from '@evan.network/ui-vue-core';
+import { DispatcherInstance } from '@evan.network/ui';
+
 import { ContactsService } from './ContactsService';
 import { Contact } from './ContactInterfaces';
 import EditContactComponent from './EditContact';
 import updateContactDispatcher from './UpdateContactDispatcher';
+import inviteContactDispatcher from './InviteDispatcher';
 
 @Component
 export default class ContactsComponent extends mixins(EvanComponent) {
@@ -85,12 +88,42 @@ export default class ContactsComponent extends mixins(EvanComponent) {
     },
   ];
 
+  /**
+   * Stop watch for dispatcher updates.
+   */
+  clearContactDispatcherWatcher: Function;
+
+  /**
+   * All contacts that are currently added by the  dispatchers.
+   */
+  dispatcherContacts: Contact[] = [];
+
+  /**
+   * Return the combined list of contacts and currently added contacts.
+   */
+  get contactsList(): Contact[] {
+    return [].concat(this.dispatcherContacts, this.contacts);
+  }
+
+  beforeDestroy(): void {
+    this.clearContactDispatcherWatcher();
+  }
+
   async created(): Promise<void> {
     const runtime = this.getRuntime();
     this.contactService = new ContactsService(runtime);
 
     this.contacts = await this.fetchContacts();
     this.isLoading = false;
+
+    this.clearContactDispatcherWatcher = inviteContactDispatcher
+      .watch(async ($event) => {
+        if ($event.detail.status === 'finished') {
+          this.contacts = await this.fetchContacts();
+        }
+        await this.loadDispatcherContacts();
+      });
+    await this.loadDispatcherContacts();
   }
 
   /**
@@ -163,6 +196,27 @@ export default class ContactsComponent extends mixins(EvanComponent) {
       id,
       loading: flag,
     };
+  }
+
+  /**
+   * Load all contacts that are currently in synchronization.
+   */
+  async loadDispatcherContacts(): Promise<void> {
+    const instances = (await inviteContactDispatcher.getInstances(
+      this.getRuntime(),
+    )) as DispatcherInstance[];
+    this.dispatcherContacts = instances.map(({ data }) => ({
+      address: data.accountId || data.email,
+      alias: data.alias,
+      createdAt: data.createdAt,
+      displayName: data.accountId || data.email,
+      icon: 'mdi mdi-cube-outline',
+      isFavorite: 'false',
+      isPending: !!data.email,
+      type: 'user',
+      updatedAt: data.updatedAt,
+      loading: true,
+    } as Contact));
   }
 
   filterByType(type: string): void {

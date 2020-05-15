@@ -38,9 +38,10 @@ export interface ContactFormData {
   currLang: string;
   email: string;
   emailInvite: boolean;
-  isFavorite: boolean;
   fromAlias: string;
+  isFavorite: boolean;
   msgBody: string;
   msgTitle: string;
+  shareData: any;
   updatedAt: string;
 }

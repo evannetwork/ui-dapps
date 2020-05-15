@@ -71,6 +71,10 @@ export default class LayoutWrapperComponent extends mixins(EvanComponent) {
     '14.svg': 'width: 176px; margin-bottom: 51px; margin-left: 8px;',
   };
 
+  get activeImg(): string {
+    return this.step === 99 ? '13.svg' : this.images[this.step];
+  }
+
   /**
    * Set initial image size.
    */
@@ -84,7 +88,7 @@ export default class LayoutWrapperComponent extends mixins(EvanComponent) {
   setImageStyle() {
     const banner: any = this.$el.querySelector('img.desc-banner');
     if (banner) {
-      banner.style.cssText = `${this.imageSizes[this.images[this.step]]} z-index: 1`;
+      banner.style.cssText = `${this.imageSizes[this.activeImg]} z-index: 1`;
     }
   }
 }

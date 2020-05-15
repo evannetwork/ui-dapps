@@ -23,7 +23,7 @@
         "starting": "Bescheibung wird gespeichert",
         "step0": "Bilder werden aufbereitet",
         "step1": "Daten werden geschrieben",
-        "title": "Bescheibung wird gespeichert"
+        "title": "Beschreibung wird gespeichert"
       },
       "twin": {
         "create": {
@@ -43,9 +43,9 @@
         "favorite": {
           "add": {
             "finished": "Digitaler Zwilling wurde erfolgreich als Favorit markiert",
-            "starting": "Digitaler Zwilling wird favoritisiert",
+            "starting": "Digitaler Zwilling wird favorisiert",
             "step0": false,
-            "title": "Digitalen Zwilling favoritisieren"
+            "title": "Digitalen Zwilling favorisieren"
           },
           "remove": {
             "finished": "Digitaler Zwilling wurde erfolgreich von den Favoriten entfernt",

@@ -7,6 +7,7 @@
       "added": "Hinzugefügt",
       "alias-max-length": "Max. 100 Zeichen",
       "all": "Alle",
+      "automatic-share": "Wählen Sie Datenbereiche, die sie direkt mit dem neuen Kontakt teilen wollen.",
       "cancel": "Abbrechen",
       "companies": "Unternehmen",
       "confirm-delete": "Kontakt löschen",
@@ -49,7 +50,8 @@
       "subject-placeholder": "Betreff",
       "subject-prefill": "Kontaktanfrage",
       "updated": "Aktualisiert",
-      "users": "Nutzer"
+      "users": "Nutzer",
+      "email-hint": "Mit dem Einladen per E-Mail werden 0.3 EVE von Ihnen an Ihren Partner versendet, um diesem die automatische Kontaktannahme zu ermöglichen."
     },
     "digitaltwins": {
       "add-digitaltwin-title": "Digitalen Zwilling erstellen",
