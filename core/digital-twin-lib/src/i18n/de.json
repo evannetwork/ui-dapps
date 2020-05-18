@@ -2,16 +2,57 @@
   "_digital-twin-lib": {
     "dispatchers": {
       "container": {
-        "save": "Daten speichern ...",
-        "share": "Daten freigeben ..."
+        "save": {
+          "finished": "Daten wurden erfolgreich gespeichert",
+          "starting": "Daten werden gespeichert",
+          "step0": "Daten werden aufbereitet",
+          "step1": false,
+          "title": "Daten speichern"
+        },
+        "share": {
+          "finished": "Partner wurde erfolgreich eingeladen",
+          "starting": "Partner wird eingeladen",
+          "step0": "Kontakt wird eingeladen",
+          "step1": "Kontakt wird aufgeräumt",
+          "step2": "Kontakt wird benachrichtigt",
+          "title": "Partner einladen"
+        }
       },
-      "description": "Beschreibung speichern ...",
+      "description": {
+        "finished": "Beschreibung wurden erfolgreich gespeichert",
+        "starting": "Bescheibung wird gespeichert",
+        "step0": "Bilder werden aufbereitet",
+        "step1": "Daten werden geschrieben",
+        "title": "Beschreibung wird gespeichert"
+      },
       "twin": {
-        "create": "Digitaler Zwilling wird erstellt ...",
-        "delete": "Digitaler Zwilling wird gelöscht ...",
+        "create": {
+          "finished": "Digitaler Zwilling wurden erfolgreich erstellt",
+          "starting": "Digitaler Zwilling wird erstellt",
+          "step0": "Vorlagen werden aufbereitet",
+          "step1": "Bilder werden aufbereitet",
+          "step2": "Vertrag wird erstellt",
+          "title": "Digitalen Zwilling erstellen"
+        },
+        "delete": {
+          "finished": "Digitaler Zwilling wurden erfolgreich gelöscht",
+          "starting": "Digitaler Zwilling wird gelöscht",
+          "step0": false,
+          "title": "Digitalen Zwilling löschen"
+        },
         "favorite": {
-          "add": "Favorit hinzufügen ...",
-          "remove": "Favorit entfernen ..."
+          "add": {
+            "finished": "Digitaler Zwilling wurde erfolgreich als Favorit markiert",
+            "starting": "Digitaler Zwilling wird favorisiert",
+            "step0": false,
+            "title": "Digitalen Zwilling favorisieren"
+          },
+          "remove": {
+            "finished": "Digitaler Zwilling wurde erfolgreich von den Favoriten entfernt",
+            "starting": "Digitaler Zwilling wird von Favoriten entfnernt",
+            "step0": false,
+            "title": "Digitalen Zwilling von Favoriten entfernt"
+          }
         }
       }
     }

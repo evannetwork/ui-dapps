@@ -4,8 +4,8 @@
       "add-contact-btn": "Add contact",
       "add-contact-desc": "Enter an Evan ID to add an existing account or an email to invite a new user to the evan.network.",
       "add-contact-title": "Add new Contact",
-      "alias-max-length": "Max. 100 characters",
       "added": "Added",
+      "alias-max-length": "Max. 100 characters",
       "all": "All",
       "cancel": "Cancel",
       "companies": "Companies",
@@ -26,7 +26,13 @@
       "filtered-empty": "No results for this filter.",
       "id-or-email": "Evan ID or email",
       "id-or-email-placeholder": "0x000... or user@mail.com",
-      "invite-dispatcher": "Invite Contact",
+      "invite-dispatcher": {
+        "finished": "Contact successfully added",
+        "starting": "Inviting Contact",
+        "step0": "Synchronization with E-Mail Smart Agent",
+        "step1": "Contact is saved in the address book",
+        "title": "Inviting Contact"
+      },
       "iot-devices": "IOT Devices",
       "message": "Message",
       "message-placeholder": "Message sent to the specified user",
@@ -72,8 +78,18 @@
       "updated": "Updated"
     },
     "dispatcher": {
-      "remove-contact": "Remove Contact",
-      "update-contact": "Save Contact Changes"
+      "remove-contact": {
+        "finished": "Contact is removed",
+        "starting": "Removing Contact",
+        "step0": false,
+        "title": "Removing Contact"
+      },
+      "update-contact": {
+        "finished": "Update completed",
+        "starting": "Upading contact",
+        "step0": false,
+        "title": "Update contact"
+      }
     },
     "my-assets": "My Assets",
     "optional": "optional",

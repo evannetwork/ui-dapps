@@ -54,8 +54,18 @@
       "vat": "USt."
     },
     "dispatchers": {
-      "ipfs-payment-channel": "EVE werden eingezahlt",
-      "send-eve": "EVEs werden gesendet"
+      "ipfs-payment-channel": {
+        "finished": "EVE wurden erfolgreich eingezahlt",
+        "starting": "EVE werden eingezahlt",
+        "step0": false,
+        "title": "EVE werden eingezahlt"
+      },
+      "send-eve": {
+        "finished": "EVE wurden erfolgreich gesendet",
+        "starting": "EVE werden gesendet",
+        "step0": false,
+        "title": "EVE werden gesendet"
+      }
     },
     "ipfs": {
       "available-funds": "Verfügbares Guthaben",

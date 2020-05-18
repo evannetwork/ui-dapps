@@ -176,12 +176,38 @@
       "url-placeholder": "URL"
     },
     "dispatchers": {
-      "did-document-update": "Update DID Document",
-      "profile-share": "Share Identity information",
-      "profile-type": "Changing Identity type",
-      "profile-update": "Updating Identity information",
-      "request-verification": "Requesting Verification",
-      "verification-accept": "Accepting Verification"
+      "did-document-update": {
+        "finished": "Did was saved successfully",
+        "starting": "DiD is saved",
+        "step0": false,
+        "title": "DiD is saved"
+      },
+      "profile update": {
+        "finished": "Data was successfully saved",
+        "starting": "Data is being stored",
+        "step0": false,
+        "title": "Save data"
+      },
+      "profile-share": {
+        "finished": "Profile Data has been successfully shared",
+        "starting": "Profile data is shared",
+        "step0": "Contact is invited",
+        "step1": "Contact is cleared",
+        "step2": "Contact is notified",
+        "title": "Profile Data is shared"
+      },
+      "request-verification": {
+        "finished": "Notary verification has been successfully requested",
+        "starting": "Notary verification is requested",
+        "step0": false,
+        "title": "Notary verification is requested"
+      },
+      "verification-accept": {
+        "finished": "Verification has been successfully accepted",
+        "starting": "Accepting Verification",
+        "step0": false,
+        "title": "Accepting Verification"
+      }
     },
     "my-profile": "My Profile",
     "not-permitted": {

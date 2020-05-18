@@ -1,17 +1,58 @@
 {
   "_digital-twin-lib": {
     "dispatchers": {
-      "container": {
-        "save": "Saving data ...",
-        "share": "Sharing data ..."
+      "containers": {
+        "save": {
+          "finished": "Data has been successfully saved",
+          "starting": "Data is being stored",
+          "step0": "Data is being prepared",
+          "step1": false,
+          "title": "save data"
+        },
+        "share": {
+          "finished": "Partner has been successfully invited",
+          "starting": "Partner is invited",
+          "step0": "Contact are invited",
+          "step1": "contact are cleaned up",
+          "step2": "Contact are notified",
+          "title": "Invite partners"
+        }
       },
-      "description": "Saving description ...",
+      "description": {
+        "finished": "Description has been successfully saved",
+        "starting": "Description is stored",
+        "step0": "Images are being processed",
+        "step1": "Data is written",
+        "title": "Description is saved"
+      },
       "twin": {
-        "create": "Creating Digital Twin ...",
-        "delete": "Deleting Digital Twin ...",
+        "create": {
+          "finished": "Digital twin successfully created",
+          "starting": "Digital twin being created",
+          "step0": "Templates are prepared",
+          "step1": "Images are being processed",
+          "step2": "Contract is created",
+          "title": "Creating a digital twin"
+        },
+        "delete": {
+          "finished": "Digital twin successfully deleted",
+          "starting": "Digital twin to be deleted",
+          "step0": false,
+          "title": "Delete digital twin"
+        },
         "favorite": {
-          "add": "Adding favorite ...",
-          "remove": "Removing favorite ..."
+          "add": {
+            "finished": "Digital twin successfully marked as favorite",
+            "starting": "Digital twin favored",
+            "step0": false,
+            "title": "Favorite Digital Gemini"
+          },
+          "remove": {
+            "finished": "Digital twin successfully removed from favorites",
+            "starting": "Digital twin is removed from favorites",
+            "step0": false,
+            "title": "Digital twin removed from favorites"
+          }
         }
       }
     }

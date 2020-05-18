@@ -176,12 +176,38 @@
       "url-placeholder": "URL"
     },
     "dispatchers": {
-      "did-document-update": "DID Dokument speichern",
-      "profile-share": "Identitätsinformationen teilen",
-      "profile-type": "Identitätstyp wird geändert",
-      "profile-update": "Identitätinformationen werden gespeichert",
-      "request-verification": "Verifikation wird beantragt",
-      "verification-accept": "Verifikation wird angenommen"
+      "did-document-update": {
+        "finished": "Did wurde erfolgreich gespeichert",
+        "starting": "DiD wird gespeichert",
+        "step0": false,
+        "title": "DiD wird gespeichert"
+      },
+      "profile-share": {
+        "finished": "Daten wurde erfolgreich geteilt",
+        "starting": "Profildaten werden geteilt",
+        "step0": "Kontakt wird eingeladen",
+        "step1": "Kontakt wird aufgeräumt",
+        "step2": "Kontakt wird benachrichtigt",
+        "title": "Profildaten werden geteilt"
+      },
+      "profile-update": {
+        "finished": "Daten wurde erfolgreich gespeichert",
+        "starting": "Daten werden gespeichert",
+        "step0": false,
+        "title": "Daten speichern"
+      },
+      "request-verification": {
+        "finished": "Notar Verifikation wurde erfolgreich beantragt",
+        "starting": "Notar Verifikation wird beantragt",
+        "step0": false,
+        "title": "Notar Verifikation wird beantragt"
+      },
+      "verification-accept": {
+        "finished": "Verifikation wurde erfolgreich angenommen",
+        "starting": "Verifikation wird angenommen",
+        "step0": false,
+        "title": "Verifikation wird angenommen"
+      }
     },
     "my-profile": "Mein Profil",
     "not-permitted": {

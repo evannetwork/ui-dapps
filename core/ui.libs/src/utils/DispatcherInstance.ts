@@ -185,8 +185,11 @@ export default class DispatcherInstance {
 
           // increase the stepIndex
           this.stepIndex += 1;
-          // trigger event again to update status
-          this.status = 'running';
+          // prevent from triggering again a step index event, if it was the last step
+          if (this.stepIndex < this.dispatcher.steps.length) {
+            // trigger event again to update status
+            this.status = 'running';
+          }
         } catch (ex) {
           this.error = `${ex.message} (${ex.stack})`;
           this.status = 'error';

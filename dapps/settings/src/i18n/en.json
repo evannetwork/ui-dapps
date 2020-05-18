@@ -45,8 +45,18 @@
     "identity": {
       "description": "In the following table, you can add or remove contacts that have access to the current identity. For example, they are authorized to access all data, edit information, share data, or perform transactions.",
       "dispatcher": {
-        "grant-access": "Granting access to identity ...",
-        "remove-access": "Removing permissions for identity ..."
+        "grant-access": {
+          "finished": "Identity access successfully granted",
+          "starting": "Granting identity access",
+          "step0": false,
+          "title": "Granting identity access"
+        },
+        "remove-access": {
+          "finished": "Identity access successfully removed",
+          "starting": "Removing identity access",
+          "step0": false,
+          "title": "Removing identity access"
+        }
       },
       "grant-access": {
         "body": "You have been granted \"{access}\" access to the identity of {alias} ({identity}). Use the link below to save the reference in your profile to interact on behalf of this identity.",
