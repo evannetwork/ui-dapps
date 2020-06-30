@@ -52,7 +52,7 @@ interface OptionInterface {
   label: string;
 }
 
-const GERMAN_VAT = 19;
+const GERMAN_VAT = 16; // TODO: #VAT
 
 @Component({})
 export default class BuyEveComponent extends mixins(EvanComponent) {
