@@ -53,6 +53,92 @@
       "try-again": "Erneut versuchen",
       "vat": "USt."
     },
+    "company": {
+      "contact": {
+        "city": {
+          "error": "Bitte geben Sie einen Ort ein!",
+          "label": "Ort",
+          "placeholder": "Berlin, London, Paris"
+        },
+        "company": {
+          "error": "Bitte geben Sie den Namen Ihres Unternehmens an!",
+          "label": "Firma",
+          "placeholder": "Beispiel GmbH"
+        },
+        "country": {
+          "desc": "Firmensitz eingeben",
+          "error": "Bitte geben Sie einen Firmensitz an!",
+          "label": "Firmensitz"
+        },
+        "email": {
+          "error": "Bitte geben Sie eine korrekt E-Mail Adresse an!",
+          "label": "E-Mail",
+          "placeholder": "test@test.de"
+        },
+        "name": {
+          "error": "Bitte geben Sie Ihren Namen ein!",
+          "label": "Name",
+          "placeholder": "Max Mustermann"
+        },
+        "postalCode": {
+          "error": "Bitte geben Sie eine gültige Postleitzahl ein!",
+          "label": "Postleitzahl",
+          "placeholder": "12345"
+        },
+        "streetAndNumber": {
+          "error": "Bitte geben Sie eine Straße und eine Hausnummer ein!",
+          "label": "Straße und Hausnummer",
+          "placeholder": "Meine Straße 15"
+        },
+        "title": "Kontaktdaten",
+        "vat": {
+          "billing_country_and_vat_missmatch": "Die angegebene USt-IdNr. passt nicht zu dem angegebenen Land.",
+          "error": "USt-IdNr. konnte nicht validiert werden.",
+          "eu_billing_vat_not_given": "Bei Kaufvorgängen außerhalb Deutschlands und innerhalb der EU muss eine valide USt-IdNr. angegeben werden.",
+          "label": "USt-IdNr.",
+          "not_eu_billing_not_possible": "EVEs können aktuell nur innerhalb der EU gekauft werden.",
+          "placeholder": "DE99999999999",
+          "vat_number_invalid": "Die angegebene USt-IdNr. scheint ungültig zu sein."
+        },
+        "website": {
+          "error": "Bitte geben Sie eine gültige URL ein!",
+          "label": "Website",
+          "placeholder": "https://website.com"
+        }
+      },
+      "registration": {
+        "company": {
+          "error": "Bitte geben Sie einen Firmennamen ein!",
+          "label": "Unternehmen",
+          "placeholder": "Muster GmbH"
+        },
+        "court": {
+          "error": "Bitte geben Sie die Informationen der Registrierungsstelle ein!",
+          "label": "Registergericht",
+          "placeholder": "Berlin"
+        },
+        "register": {
+          "error": "Bitte wählen Sie den Registertyp aus!",
+          "label": "Register",
+          "placeholder": "Art des Registers",
+          "types": {
+            "hra": "HRA",
+            "hrb": "HRB"
+          }
+        },
+        "registerNumber": {
+          "error": "Bitte geben Sie die Registernummer ein.",
+          "label": "Registernummer",
+          "placeholder": "HRA 12345"
+        },
+        "salesTaxID": {
+          "error": "Bitte geben Sie die Umsatzsteuer-ID ein.",
+          "label": "Umsatzsteuer-ID",
+          "placeholder": "DE999999999"
+        },
+        "title": "Registrierungsdaten"
+      }
+    },
     "dispatchers": {
       "ipfs-payment-channel": {
         "finished": "EVE wurden erfolgreich eingezahlt",

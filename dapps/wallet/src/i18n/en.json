@@ -53,6 +53,92 @@
       "try-again": "Try again",
       "vat": "VAT"
     },
+    "company": {
+      "contact": {
+        "city": {
+          "error": "Please insert city name!",
+          "label": "City",
+          "placeholder": "Berlin, London, Paris"
+        },
+        "company": {
+          "error": "Please insert name of your company!",
+          "label": "Company Name",
+          "placeholder": "Sample GmbH"
+        },
+        "country": {
+          "desc": "Company headquarters country",
+          "error": "Please select the company headquarters country",
+          "label": "Company HQ Country"
+        },
+        "email": {
+          "error": "Please insert a correct email address!",
+          "label": "E-Mail",
+          "placeholder": "test@test.de"
+        },
+        "name": {
+          "error": "Please insert your name!",
+          "label": "Name",
+          "placeholder": "Max Mustermann"
+        },
+        "postalCode": {
+          "error": "Please insert a valid postal code!",
+          "label": "Postal Code",
+          "placeholder": "12345"
+        },
+        "streetAndNumber": {
+          "error": "Please insert a street and a number!",
+          "label": "Street and Number",
+          "placeholder": "My street 15"
+        },
+        "title": "Contact",
+        "vat": {
+          "billing_country_and_vat_missmatch": "Provided VAT ID does not match given country code.",
+          "error": "The VAT ID could not be validated!",
+          "eu_billing_vat_not_given": "When buying EVEs from outside of Germany and in the European Union a valid VAT ID is required.",
+          "label": "VAT ID",
+          "not_eu_billing_not_possible": "Buying EVEs from outside of the European Union is currently not possible.",
+          "placeholder": "DE99999999999",
+          "vat_number_invalid": "VAT ID seems to be invalid."
+        },
+        "website": {
+          "error": "Please insert a valid url!",
+          "label": "Website",
+          "placeholder": "https://website.com"
+        }
+      },
+      "registration": {
+        "company": {
+          "error": "Please insert a company name!",
+          "label": "Company",
+          "placeholder": "Sample Company"
+        },
+        "court": {
+          "error": "Please enter the information of the registration authority!",
+          "label": "Register Court",
+          "placeholder": "Berlin"
+        },
+        "register": {
+          "error": "Please select the register type!",
+          "label": "Register",
+          "placeholder": "Type of register",
+          "types": {
+            "hra": "HRA",
+            "hrb": "HRB"
+          }
+        },
+        "registerNumber": {
+          "error": "Please enter the registration number",
+          "label": "Registration Number",
+          "placeholder": "HRA 12345"
+        },
+        "salesTaxID": {
+          "error": "Please enter the VAT ID",
+          "label": "VAT ID",
+          "placeholder": "DE999999999"
+        },
+        "title": "Registration"
+      }
+    },
     "dispatchers": {
       "ipfs-payment-channel": {
         "finished": "EVE were successfully deposited",
