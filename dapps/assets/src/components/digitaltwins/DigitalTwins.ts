@@ -26,6 +26,7 @@ import { debounce } from 'lodash';
 import {
   dispatchers,
   DigitalTwin,
+  SearchService,
 } from '@evan.network/digital-twin-lib';
 import { EvanComponent, EvanTableItem } from '@evan.network/ui-vue-core';
 import { Prop, Watch } from 'vue-property-decorator';
@@ -111,6 +112,8 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
   // contains list of favorites and their state
   favoriteList: Favorite[] = [];
 
+  loadedFavorites = null;
+
   /**
    * Used to cancel delayed search, when user already navigated to different page
    */
@@ -140,10 +143,6 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
   @Watch('selectedFilter') onFilterChanged(newFilter: string, oldFilter: string): void{
     if (newFilter !== oldFilter) {
       if (newFilter === 'favorites') {
-        // TODO: query by all IDs from favorites
-
-        this.selectedFilter = oldFilter;
-
         return;
       }
 
@@ -165,14 +164,7 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
     window.addEventListener('keydown', this.handleSearchShortcut);
 
     // initial loading of favorites
-    const favorites = await bcc.DigitalTwin.getFavorites(this.getRuntime() as any);
-    favorites.forEach((fav) => {
-      this.favoriteList.push({
-        id: fav,
-        isFavorite: true,
-        isLoading: false,
-      });
-    });
+    this.loadFavorites();
 
     this.clearTwinDeleteWatcher = dispatchers.twinDeleteDispatcher
       .watch(({ detail: { status } }: CustomEvent) => {
@@ -258,6 +250,28 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
     this.performSearch();
   }
 
+  async loadFavorites(): Promise<void> {
+    const favorites = await bcc.DigitalTwin.getFavorites(this.getRuntime() as any);
+    try {
+      const search = new SearchService(this.getRuntime());
+      this.loadedFavorites = await Promise.all(favorites.map(async (favorite) => (
+        await search.query('twins', {
+          searchTerm: favorite,
+        })).result[0]));
+    } catch (ex) {
+      this.loadedFavorites = [];
+      // ignore
+      console.log(ex);
+    }
+    favorites.forEach((fav) => {
+      this.favoriteList.push({
+        id: fav,
+        isFavorite: true,
+        isLoading: false,
+      });
+    });
+  }
+
   async addFavorite(twin: EvanTableItem<DigitalTwin>): Promise<void> {
     const newFav = {
       id: twin.item.address,
@@ -265,6 +279,11 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
       isLoading: true,
     };
     this.favoriteList = [...this.favoriteList, newFav];
+
+    const search = new SearchService(this.getRuntime());
+    this.loadedFavorites.push((await search.query('twins', {
+      searchTerm: twin.item.address,
+    })).result[0]);
 
     await dispatchers.twinFavoriteAddDispatcher.start(this.getRuntime(), {
       address: twin.item.address,
@@ -284,6 +303,9 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
     });
 
     this.favoriteList = this.favoriteList.filter(
+      (fav) => twin.item.address !== fav.id,
+    );
+    this.loadedFavorites = this.loadedFavorites.filter(
       (fav) => twin.item.address !== fav.id,
     );
   }

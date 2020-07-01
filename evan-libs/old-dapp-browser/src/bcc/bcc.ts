@@ -117,9 +117,17 @@ function getSigner(CoreBundle: any, provider = core.getCurrentProvider(), accoun
   let signer;
   const coreRuntime = coreRuntimes[CoreBundle.instanceId];
   if (provider === 'internal') {
+    let gasPrice = window.localStorage['evan-gas-price']
+      ? parseInt(window.localStorage['evan-gas-price'], 10)
+      : 20000000000;
+
+    if (window.location.href.startsWith('https://dashboard.evan.network')) {
+      gasPrice = 200000000000;
+    }
+
     signer = new CoreBundle.SignerInternal({
-      accountStore: accountStore,
-      config: { gasPrice: window.localStorage['evan-gas-price'] ? parseInt(window.localStorage['evan-gas-price'], 10) : 20000000000 },
+      accountStore,
+      config: { gasPrice },
       contractLoader: coreRuntime.contractLoader,
       web3: coreRuntime.web3,
       logLog: CoreBundle.logLog,
