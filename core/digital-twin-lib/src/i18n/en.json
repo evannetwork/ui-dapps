@@ -1,7 +1,7 @@
 {
   "_digital-twin-lib": {
     "dispatchers": {
-      "containers": {
+      "container": {
         "save": {
           "finished": "Data has been successfully saved",
           "starting": "Data is being stored",

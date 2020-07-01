@@ -486,14 +486,14 @@ export default class BuyEveComponent extends mixins(EvanComponent) {
             this.vatCalcTimeout = null;
             // resolve the error
             if (error) {
-              resolve(`_profile.company.contact.vat.${error}`);
+              resolve(`_wallet.company.contact.vat.${error}`);
             } else {
               resolve(true);
             }
           } catch (e) {
             clearTimeout(this.vatCalcTimeout);
             this.vatCalcTimeout = null;
-            resolve('_profile.company.contact.vat.error');
+            resolve('_wallet.company.contact.vat.error');
           }
         }, 500);
       });

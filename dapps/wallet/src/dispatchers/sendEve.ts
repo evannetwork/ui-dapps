@@ -25,7 +25,7 @@ const dispatcher = new Dispatcher(
   `profile.vue.${dappBrowser.getDomainName()}`,
   'sendEveDispatcher',
   40 * 1000,
-  '_profile.dispatchers.send-eve',
+  '_wallet.dispatchers.send-eve',
 );
 
 dispatcher

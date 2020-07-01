@@ -72,7 +72,7 @@
       >
         <evan-form
           :form="contactForm"
-          :i18n-scope="'_profile.company.contact'"
+          :i18n-scope="'_wallet.company.contact'"
           :only-form="true"
           :stacked="true"
         />
